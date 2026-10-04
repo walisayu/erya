@@ -1,0 +1,292 @@
+      <!-- ══════════ 4.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.1.1</span>
+        <h2>Why the default is “terminal safe”</h2>
+        <p class="dek">Because terminals do not deliver every combination you press.</p>
+
+        <p>The built-in default profile is called <span class="term">Erya Terminal Safe</span>. It deliberately avoids three families of combination that fail in many environments:</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Avoided</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl</kbd> + function keys</td><td>macOS reserves these for the system (Spaces, Mission Control); the program never sees them.</td></tr>
+            <tr><td>Combinations relying on <kbd>Alt</kbd> / Option</td><td>Option types special characters on macOS, and many terminals need configuring before they send it as Meta.</td></tr>
+            <tr><td>Modified arrow keys (<kbd>Alt+Shift+←</kbd> and friends)</td><td>A good number of terminals do not report them at all.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>The price is that <strong>sixteen advanced actions have no default key</strong>: eight for phrases and macros (see 2.4.8), four block shifts and one block fill (see 2.2.6), two for paragraph reflow (see 3.1.8), and “show cursor position”, which the status bar already covers. The features are all present; they just need a key. The full list is in 4.4.6.</p>
+
+        <div class="callout ok">
+          <span class="co-title">The old set has not gone anywhere</span>
+          <p>The complete 1.0 bindings survive as <span class="term">Erya Classic</span>, and <strong>one press of <kbd>F2</kbd> switches back</strong>. If your terminal does report modified arrows and <kbd>Alt</kbd> combinations — GNOME Terminal or Windows Terminal usually do — Classic is the more comfortable set.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.1.2</span>
+        <h2>The twelve bundled profiles</h2>
+        <p class="dek">All in the <span class="path">keymap/</span> directory, all selectable as they are.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">File</th><th>Who it is for</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">erya-terminal-safe.toml</span></td><td><strong>The default.</strong> Works everywhere; the safest choice across platforms.</td></tr>
+            <tr><td><span class="path">erya-classic.toml</span></td><td>Anyone wanting the complete bindings, phrases, macros, and block shifts included.</td></tr>
+            <tr><td><span class="path">nano.toml</span></td><td>People coming from nano.</td></tr>
+            <tr><td><span class="path">vim.toml</span></td><td>People who want vim's keys (<strong>not</strong> modal editing — only the bindings).</td></tr>
+            <tr><td><span class="path">emacs.toml</span></td><td>People coming from emacs.</td></tr>
+            <tr><td><span class="path">macos.toml</span></td><td>Anyone who prefers macOS application conventions.</td></tr>
+            <tr><td><span class="path">vscode.toml</span> / <span class="path">vscode-macos.toml</span></td><td>People coming from VS Code.</td></tr>
+            <tr><td><span class="path">visual-studio.toml</span> / <span class="path">visual-studio-macos.toml</span></td><td>People coming from Visual Studio.</td></tr>
+            <tr><td><span class="path">intellij-idea-classic.toml</span></td><td>People coming from IntelliJ IDEA.</td></tr>
+            <tr><td><span class="path">eclipse.toml</span></td><td>People coming from Eclipse.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>Where the default and Classic differ most</h3>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">Action</th><th style="width:24%">Terminal Safe</th><th>Erya Classic</th></tr></thead>
+          <tbody>
+            <tr><td>Open file</td><td><kbd>Ctrl+O</kbd></td><td><kbd>Alt+O</kbd></td></tr>
+            <tr><td>Save As</td><td><kbd>F12</kbd></td><td><kbd>Ctrl+O</kbd></td></tr>
+            <tr><td>Replace</td><td><kbd>Ctrl+R</kbd></td><td><kbd>Ctrl+H</kbd></td></tr>
+            <tr><td><strong>Redo</strong></td><td><kbd>Ctrl+Y</kbd></td><td><kbd>Ctrl+R</kbd></td></tr>
+            <tr><td><strong>Delete line</strong></td><td><kbd>Ctrl+D</kbd></td><td><kbd>Ctrl+Y</kbd></td></tr>
+            <tr><td>Copy</td><td><kbd>Ctrl+C</kbd></td><td><kbd>Ctrl+Insert</kbd></td></tr>
+            <tr><td>Close tab</td><td><kbd>F11</kbd></td><td><kbd>Ctrl+F4</kbd></td></tr>
+            <tr><td>Previous / next tab</td><td><kbd>F9</kbd> / <kbd>F10</kbd></td><td><kbd>Ctrl+Shift+Tab</kbd> / <kbd>Ctrl+Tab</kbd></td></tr>
+            <tr><td>Hexadecimal view</td><td><kbd>Ctrl+P</kbd></td><td><kbd>Alt+H</kbd></td></tr>
+            <tr><td>Block selection</td><td><kbd>Ctrl+B</kbd></td><td><kbd>Alt+B</kbd></td></tr>
+            <tr><td>Format document</td><td><kbd>Ctrl+T</kbd></td><td><kbd>Ctrl+Shift+F</kbd></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>Ctrl+Y</kbd> and <kbd>Ctrl+R</kbd> mean the opposite in the two profiles</span>
+          <p>In the default, <kbd>Ctrl+Y</kbd> is <strong>redo</strong>; in Classic it <strong>deletes a line</strong>, and <kbd>Ctrl+R</kbd> swaps the other way. This is the pair people press by mistake after switching — glance at the hint bar first (see 1.3.3).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.1.3</span>
+        <h2>Switching profiles in system settings</h2>
+        <p class="dek">The simplest route: no files involved.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ System settings</div>
+            <div class="s-bar"> ↑/↓ Field  ←/→ Choose  E Edit keys  Enter Apply  Esc Cancel</div>
+            <div class="s-body"><u> ▶ Key bindings:  ◀ Erya Terminal Safe ▶          </u>
+
+   Interface language:  ◀ English (en) ▶</div>
+            <div class="s-status"> Erya Terminal Safe │ English </div>
+            <div class="s-msg"> Choose with the arrow keys; Enter applies to every tab</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b>Press <kbd>F2</kbd></b> for system settings.</li>
+          <li><b><kbd>↑</kbd> <kbd>↓</kbd> to the key-bindings row</b> (the selected row is highlighted and marked ▶).</li>
+          <li><b><kbd>←</kbd> <kbd>→</kbd> to change profile.</b> The list is read from the <span class="path">keymap/</span> directory.</li>
+          <li><b><kbd>Enter</kbd> to apply.</b> “Applied settings: Erya Classic / English”, and it takes effect <strong>in every tab immediately</strong>.</li>
+          <li><b><kbd>Esc</kbd> to cancel</b> and change nothing.</li>
+        </ol>
+
+        <div class="callout">
+          <span class="co-title">Is the list empty?</span>
+          <p>Then Erya cannot find the <span class="path">keymap/</span> directory. Point <span class="path">ERYA_KEYMAPS_DIR</span> at wherever it is (see 1.2.7) — the usual cause is unpacking only the executable from a release archive.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.1.4</span>
+        <h2>The keymap editor</h2>
+        <p class="dek">Change bindings inside Erya, then save them as your own TOML.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ Keymap editor │ Erya Terminal Safe</div>
+            <div class="s-bar"> ↑/↓ Select  Enter Edit  Delete Disable  S Save as  Esc Back</div>
+            <div class="s-body"> Save the document                          Ctrl+S
+ Save the document under another name       F12
+ Exit Erya                                  Ctrl+X
+<u> Capture the selection or current line as a phrase              </u>
+ Insert the next saved phrase
+ Fill the block selection with a character</div>
+            <div class="s-status"> Erya Terminal Safe │ 32/62 </div>
+            <div class="s-msg"> Select an action and press Enter to edit; press S to save as a new file</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Choose an action. Description on the left, current keys on the right (<strong>blank means unbound</strong>).</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>Edit this action's keys. The input is pre-filled; <strong>separate several keys with commas</strong>.</td></tr>
+            <tr><td><kbd>Delete</kbd></td><td>Disable it (the same as leaving it blank): “Disabled shortcuts for the selected action”.</td></tr>
+            <tr><td><kbd>S</kbd></td><td>Save the whole profile as a new TOML file.</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Back to system settings.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>Keys that cannot be parsed, or that clash with another action, give “Could not update keymap: …” and <strong>nothing changes</strong>.</li>
+          <li>Saving asks for a filename and confirms with “Saved keymap as …”.</li>
+          <li><strong>Save As never overwrites an existing file.</strong> An existing name fails rather than quietly replacing someone else's profile.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">Making your profile the one you always get</span>
+          <p>Two options: save it into the <span class="path">keymap/</span> directory so <kbd>F2</kbd> can list it, or put it at the platform's default path (see 4.1.7) so Erya loads it on every start.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.1.5</span>
+        <h2>What the file looks like</h2>
+        <p class="dek">A <span class="path">name</span> and a <span class="path">[bindings]</span> section.</p>
+
+        <p>Start from a file that lists every action:</p>
+        <p><span class="path">erya --print-default-keymap &gt; keymap.toml</span></p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>
+              <span class="path">name = "My profile"</span><br><br>
+              <span class="path">[bindings]</span><br>
+              <span class="path">save = "Alt+S"</span><br>
+              <span class="path">quit = "Ctrl+X"</span><br>
+              <span class="path">search = ["Ctrl+W", "Ctrl+F"]</span><br>
+              <span class="path">toggle_rectangular_selection = "Alt+M"</span><br>
+              <span class="path">redo = []</span>
+            </td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li><strong>An action can have several keys</strong>: write an array.</li>
+          <li><strong>An empty array <span class="path">[]</span> disables</strong> the action.</li>
+          <li><strong>Anything you leave out keeps its default.</strong> To change two keys, the file needs only those two lines.</li>
+          <li><span class="path">name</span> is what appears in system settings and in row 1 of the keymap editor.</li>
+          <li>The complete list of action names is in 4.4, or in the output of <span class="path">--print-default-keymap</span>.</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 4.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.1.6</span>
+        <h2>How to write key names</h2>
+        <p class="dek">Join modifiers with <span class="path">+</span>; case does not matter.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Category</th><th>Accepted names</th></tr></thead>
+          <tbody>
+            <tr><td>Modifiers</td><td><span class="path">Ctrl</span>, <span class="path">Alt</span>, <span class="path">Shift</span>, <span class="path">Super</span>, <span class="path">Hyper</span>, <span class="path">Meta</span></td></tr>
+            <tr><td>Ordinary characters</td><td><span class="path">A</span>–<span class="path">Z</span>, <span class="path">0</span>–<span class="path">9</span>, punctuation</td></tr>
+            <tr><td>Function keys</td><td><span class="path">F1</span> to <span class="path">F24</span></td></tr>
+            <tr><td>Navigation and editing</td><td><span class="path">Left</span>, <span class="path">Right</span>, <span class="path">Up</span>, <span class="path">Down</span>, <span class="path">Home</span>, <span class="path">End</span>, <span class="path">PageUp</span>, <span class="path">PageDown</span>, <span class="path">Insert</span>, <span class="path">Delete</span>, <span class="path">Backspace</span>, <span class="path">Tab</span>, <span class="path">Enter</span>, <span class="path">Esc</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>Examples: <span class="path">"Ctrl+S"</span>, <span class="path">"Alt+Shift+Right"</span>, <span class="path">"F12"</span>, <span class="path">"ctrl+shift+f"</span> (case-insensitive).</p>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>F1</kbd> cannot be bound</span>
+          <p>Plain <kbd>F1</kbd> is reserved for keyboard help, and putting it in a config file is an error (see 1.3.8). It is the deliberate escape hatch: whatever a profile does to the rest, one key still lists everything.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.1.7</span>
+        <h2>Where the file has to live</h2>
+        <p class="dek">Three ways to point at one, highest priority first.</p>
+
+        <ol class="rule-list">
+          <li><b><span class="path">--keymap &lt;file&gt;</span></b> — this run only, and it wins.</li>
+          <li><b>The <span class="path">ERYA_KEYMAP</span> environment variable</b> — used when there is no <span class="path">--keymap</span>.</li>
+          <li><b>The platform default path</b> — consulted when neither of the above is set:</li>
+        </ol>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">Platform</th><th>Path</th></tr></thead>
+          <tbody>
+            <tr><td>macOS</td><td><span class="path">~/Library/Application Support/Erya/keymap.toml</span></td></tr>
+            <tr><td>Linux</td><td><span class="path">$XDG_CONFIG_HOME/erya/keymap.toml</span>, or <span class="path">~/.config/erya/keymap.toml</span> when XDG is unset</td></tr>
+            <tr><td>Windows</td><td><span class="path">%APPDATA%\Erya\keymap.toml</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">No file at the default path is perfectly normal</span>
+          <p>Erya does not create one. If it is missing, the built-in defaults are used <strong>with no warning at all</strong>. A path you named explicitly with <span class="path">--keymap</span> or <span class="path">ERYA_KEYMAP</span> <strong>does</strong> produce a message when it cannot be read — because you said you wanted it.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.1.8</span>
+        <h2>Conflicts and the fallback</h2>
+        <p class="dek">A broken profile does not stop the program; it just is not used.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg"> Could not load key bindings; using defaults: save and search are both bound to F9</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b>Two actions on one key</b> — a conflict, because Erya cannot decide which to run.</li>
+          <li><b>A misspelled key name or invalid TOML</b> — a parse failure.</li>
+          <li><b>Plain <kbd>F1</kbd> bound to an action</b> — reserved, and refused.</li>
+        </ol>
+
+        <p>In each case Erya <strong>falls back to the complete default profile</strong> — not “ignore the bad line” — and explains why in the message row at startup. The program still runs.</p>
+
+        <div class="callout tip">
+          <span class="co-title">Checking which profile you are actually using</span>
+          <p>Look at the hint bar on row 2 (it shows real keys), press <kbd>F1</kbd> for the full list, or press <kbd>F2</kbd> and read the profile name. All three tell you the truth.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">4.1.9</span>
+        <h2>Common problems</h2>
+        <p class="dek">Seven situations when changing keys.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>You edited the file and nothing changed</td><td>It is not where Erya looks (4.1.7), or it was rejected and the defaults took over (4.1.8). Read the startup message.</td></tr>
+            <tr><td>“Could not load key bindings” at startup</td><td>A conflict or a syntax error; the reason follows the colon (4.1.8).</td></tr>
+            <tr><td><kbd>F2</kbd> lists no profiles</td><td>The <span class="path">keymap/</span> directory was not found. Set <span class="path">ERYA_KEYMAPS_DIR</span> (4.1.3).</td></tr>
+            <tr><td>An <kbd>Alt</kbd> binding does nothing</td><td>The terminal is not sending Option/Alt as Meta. Bind something else, or enable it in the terminal (4.1.1).</td></tr>
+            <tr><td>Binding <kbd>F1</kbd> is refused</td><td><kbd>F1</kbd> is reserved (4.1.6).</td></tr>
+            <tr><td>Save As fails</td><td>The filename exists. Erya never overwrites; choose another (4.1.4).</td></tr>
+            <tr><td>After switching, undo deletes a line</td><td><kbd>Ctrl+Y</kbd> means different things in the two profiles (4.1.2).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

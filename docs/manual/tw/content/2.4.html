@@ -1,0 +1,268 @@
+      <!-- ══════════ 2.4.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.4.1</span>
+        <h2>復原與重做</h2>
+        <p class="dek"><kbd>Ctrl+Z</kbd> 往回、<kbd>Ctrl+Y</kbd> 往前，各自最多 100 步。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">按鍵</th><th style="width:20%">動作</th><th>訊息列</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+Z</kbd></td><td>復原</td><td>已復原上次動作／沒有可復原的動作</td></tr>
+            <tr><td><kbd>Ctrl+Y</kbd></td><td>重做</td><td>已重做上次動作／沒有可重做的動作</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>復原會<strong>連游標位置一起還原</strong>，跳回你當時在改的地方。</li>
+          <li>復原之後只要沒有再打字，就可以一路 <kbd>Ctrl+Y</kbd> 重做回來。</li>
+          <li><strong>復原之後又輸入新內容，重做紀錄就清空了</strong>——這是所有編輯器的通例。</li>
+          <li>每個頁籤各自有一份紀錄，互不影響（見 2.1.4）。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">兩種情況會讓復原紀錄消失</span>
+          <ul>
+            <li><strong>檔案被外部改掉而自動重新載入</strong>：舊步驟套不回新內容，所以整份清掉（見 2.1.7）。</li>
+            <li><strong>關掉頁籤</strong>：紀錄跟著頁籤走，重新開檔不會恢復。</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Erya Classic 的重做鍵不一樣</span>
+          <p>預設配置的重做是 <kbd>Ctrl+Y</kbd>，但 Erya Classic 的重做是 <kbd>Ctrl+R</kbd>（而 <kbd>Ctrl+Y</kbd> 在那套裡是刪除整行）。換配置之後這一組特別容易按錯，記得看提示列（見 4.1.2）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.4.2</span>
+        <h2>一步是多大一步</h2>
+        <p class="dek">大部分情況下「一個按鍵＝一步」，但有五個動作整批算一步。</p>
+
+        <div class="duo">
+          <div>
+            <h4>一個按鍵一步</h4>
+            <ul>
+              <li>打一個字</li>
+              <li>刪一個字（<kbd>Backspace</kbd> / <kbd>Delete</kbd>）</li>
+              <li>按一次 <kbd>Enter</kbd></li>
+              <li>剪一行、刪一行</li>
+              <li>貼上一次</li>
+            </ul>
+            <p style="margin-top:8px"><strong>所以 100 步大約就是打 100 個字。</strong>連續打了一大段之後想全部退掉，用復原不是好方法。</p>
+          </div>
+          <div>
+            <h4>整批算一步</h4>
+            <ul>
+              <li><strong>全部取代</strong>（<kbd>F6</kbd>）——不管換掉幾百處</li>
+              <li><strong>格式化文件</strong>（<kbd>Ctrl+T</kbd>）</li>
+              <li><strong>段落重新編排</strong></li>
+              <li><strong>插入一筆常用語</strong></li>
+              <li><strong>執行一次巨集</strong>——中間做了多少事都算一步</li>
+            </ul>
+            <p style="margin-top:8px">這五個都是「一個指令造成大範圍變動」，所以刻意合併成一步，按一次 <kbd>Ctrl+Z</kbd> 就整批退回。</p>
+          </div>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">十六進位的位元組編輯也有自己的規則</span>
+          <p>輸入一個位元組要打兩個十六進位數字（先高半位再低半位），<strong>這兩次輸入算同一步</strong>。詳見 3.3.6。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.4.3</span>
+        <h2>常用語在做什麼</h2>
+        <p class="dek">把重複要打的字收起來，之後一鍵插入，而且會自動輪到下一筆。</p>
+
+        <p>常用語（片語）適合這些場合：公文的固定用語、程式碼樣板、常打的路徑或人名、要反覆插入的一組標籤。它的特別之處是<strong>插入之後會自動輪到下一筆</strong>——連按幾次就依序把整組貼出來。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 200" role="img" aria-label="常用語循環插入示意">
+              <rect x="0" y="0" width="960" height="200" fill="#FAFBFD"/>
+              <defs><marker id="arrow24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#1F4E79"/></marker></defs>
+
+              <rect x="60" y="46" width="200" height="60" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="160" y="72" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">第 1 筆</text>
+              <text x="160" y="94" text-anchor="middle" font-size="13" fill="#3F485D">此致　敬禮</text>
+
+              <rect x="300" y="46" width="200" height="60" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="400" y="72" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">第 2 筆</text>
+              <text x="400" y="94" text-anchor="middle" font-size="13" fill="#3F485D">承辦人：</text>
+
+              <rect x="540" y="46" width="200" height="60" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="640" y="72" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">第 3 筆</text>
+              <text x="640" y="94" text-anchor="middle" font-size="13" fill="#3F485D">（以下空白）</text>
+
+              <path d="M262 76 L296 76" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow24)"/>
+              <path d="M502 76 L536 76" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow24)"/>
+              <path d="M740 76 C800 76 800 150 400 150 C120 150 100 110 108 108" stroke="#1F4E79" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow24)"/>
+              <text x="440" y="172" text-anchor="middle" font-size="13.5" fill="#1F4E79">插到最後一筆之後，再按一次會回到第 1 筆</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 2.4.1</b>　常用語是一個循環清單。每插入一次，下一次就換成下一筆；訊息列會顯示「已插入第 2/3 筆常用語」讓你知道現在輪到哪裡。</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 2.4.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.4.4</span>
+        <h2>收錄與插入常用語</h2>
+        <p class="dek">四個動作：收錄、插入、載入、儲存。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">動作名稱</th><th style="width:18%">Classic 的鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">capture_phrase</span></td><td><kbd>F9</kbd></td><td>把<strong>選取的文字</strong>收錄成一筆常用語；沒有選取就收錄<strong>目前整行</strong>。</td></tr>
+            <tr><td><span class="path">insert_phrase</span></td><td><kbd>F10</kbd></td><td>在游標處插入下一筆常用語；有選取範圍時會取代掉它。</td></tr>
+            <tr><td><span class="path">load_phrases</span></td><td><kbd>Shift+F9</kbd></td><td>從 <span class="path">.erya-phrases.json</span> 載入。</td></tr>
+            <tr><td><span class="path">save_phrases</span></td><td><kbd>Shift+F10</kbd></td><td>存到 <span class="path">.erya-phrases.json</span>。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>訊息列的回報：</p>
+        <ul>
+          <li>收錄成功：「已收錄常用語；目前共 3 筆」</li>
+          <li>收錄到重複的：「這段常用語已經存在」——<strong>同樣的內容不會收第二次</strong></li>
+          <li>要收錄的是空行：「目前沒有可收錄的常用語」</li>
+          <li>還沒有任何常用語就想插入：「常用語庫是空的；請先收錄一筆常用語」</li>
+          <li>插入成功：「已插入第 2/3 筆常用語」</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 2.4.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.4.5</span>
+        <h2>常用語的存檔位置</h2>
+        <p class="dek">存在<strong>目前文件所在的目錄</strong>，而且只有你主動叫它存才會寫。</p>
+
+        <div class="callout warn">
+          <span class="co-title">收錄不等於存檔</span>
+          <p>收錄只是放進記憶體。<strong>沒有按過「儲存常用語」就離開，這些常用語就沒了。</strong>爾雅不會自動寫這個檔——這是刻意的，免得在別人的目錄裡留下不請自來的檔案。</p>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">檔案</th><th>放在哪裡</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">.erya-phrases.json</span></td><td rowspan="2">目前文件所在的目錄。編輯 <span class="path">/home/user/docs/報告.txt</span> 時就是 <span class="path">/home/user/docs/</span>。</td></tr>
+            <tr><td><span class="path">.erya-macro.json</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>所以常用語與巨集實際上是<strong>「跟著資料夾走」</strong>的：在專案 A 的目錄存一組，在專案 B 的目錄存另一組，各用各的。想共用就把 JSON 複製過去。</p>
+
+        <div class="callout tip">
+          <span class="co-title">JSON 可以直接用爾雅編輯</span>
+          <p>常用語檔就是一個字串陣列，格式很單純。用 <kbd>Ctrl+O</kbd> 打開它、用 <kbd>Ctrl+T</kbd> 格式化（見 3.1.7），手動加幾筆再存回去，下次 <span class="path">load_phrases</span> 就讀得到。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.4.6</span>
+        <h2>錄製與執行巨集</h2>
+        <p class="dek">錄下一串按鍵，之後整串重播。</p>
+
+        <ol class="rule-list">
+          <li><b>開始錄製。</b>訊息列說「開始錄製巨集；再次執行錄製巨集動作即可停止」。從這一刻起你按的每一個鍵都被記下來。</li>
+          <li><b>做你要重複的事。</b>移動、打字、刪除、搜尋都可以。<strong>巨集管理本身的按鍵不會被錄進去。</strong></li>
+          <li><b>再按一次停止。</b>訊息列說「巨集錄製完成，共 12 個按鍵」。</li>
+          <li><b>執行。</b>訊息列說「已執行巨集，共 12 個按鍵」。想重複很多次就連按幾次。</li>
+        </ol>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">動作名稱</th><th style="width:22%">Classic 的鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">toggle_macro_recording</span></td><td><kbd>Ctrl+F2</kbd></td><td>開始／停止錄製</td></tr>
+            <tr><td><span class="path">run_macro</span></td><td><kbd>Ctrl+F3</kbd></td><td>執行已錄製的巨集</td></tr>
+            <tr><td><span class="path">load_macro</span></td><td><kbd>Ctrl+Shift+F2</kbd></td><td>從 <span class="path">.erya-macro.json</span> 載入</td></tr>
+            <tr><td><span class="path">save_macro</span></td><td><kbd>Ctrl+Shift+F3</kbd></td><td>存到 <span class="path">.erya-macro.json</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout ok">
+          <span class="co-title">整段巨集只算一步復原</span>
+          <p>不管巨集裡做了多少事，執行一次之後按一下 <kbd>Ctrl+Z</kbd> 就<strong>全部退回執行前</strong>。所以放心試——效果不對就復原再改。</p>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">錄製中不能執行巨集</span>
+          <p>會被擋下來：「請先停止錄製再執行巨集」。另外，還沒錄過任何東西就執行會說「目前沒有可執行的巨集」。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.4.7</span>
+        <h2>巨集的存檔位置</h2>
+        <p class="dek">跟常用語一樣：同目錄、要自己存。</p>
+
+        <ul>
+          <li>檔名是 <span class="path">.erya-macro.json</span>，內容是錄下來的按鍵序列。</li>
+          <li>載入之後<strong>會取代掉目前記憶體裡的巨集</strong>，並且自動停止錄製狀態。</li>
+          <li>載入／儲存失敗（權限不足、JSON 壞掉）時，訊息列顯示「常用語／巨集操作失敗：…」。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">巨集記的是按鍵，不是動作</span>
+          <p>錄下來的是<strong>實體按鍵</strong>（例如 <kbd>Ctrl+K</kbd>），不是「剪下目前行」這個語意。所以<strong>換過按鍵配置之後，舊巨集重播出來的結果可能不一樣</strong>。要跟別人共用巨集檔的話，記得兩邊用同一套配置。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">2.4.8</span>
+        <h2>先綁按鍵才用得到</h2>
+        <p class="dek">常用語與巨集這八個動作，預設配置裡全部是空的。</p>
+
+        <div class="callout warn">
+          <span class="co-title">按了沒反應是正常的</span>
+          <p>Erya Terminal Safe 為了在各種終端機上都按得動，把八個常用語／巨集動作與五個矩形進階動作<strong>全部留空</strong>（見 1.3.9）。在 <kbd>F1</kbd> 按鍵說明裡，這些動作的按鍵欄會是空白，代表「功能在，但沒有鍵可以叫它」。</p>
+        </div>
+
+        <p>兩條路可以用起來：</p>
+
+        <div class="duo">
+          <div>
+            <h4>① 換成 Erya Classic</h4>
+            <p>按 <kbd>F2</kbd> → 用 <kbd>←</kbd> <kbd>→</kbd> 選到 <span class="term">Erya Classic</span> → <kbd>Enter</kbd>。</p>
+            <p>八個動作立刻有鍵可用（<kbd>F9</kbd>、<kbd>F10</kbd>、<kbd>Ctrl+F2</kbd>…），代價是其他快捷鍵也一起換成舊的那一套。</p>
+          </div>
+          <div>
+            <h4>② 只綁你要的那幾個</h4>
+            <p>按 <kbd>F2</kbd> → 在「按鍵配置」項目上按 <kbd>E</kbd> 進編輯器 → 找到動作按 <kbd>Enter</kbd> 輸入按鍵 → 按 <kbd>S</kbd> 另存成自己的 TOML。</p>
+            <p>保留預設配置的其他部分，只補上你會用到的（見 4.1.4）。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">2.4.9</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">復原、常用語與巨集最常見的六個狀況。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>復原按到底了還退不完</td><td>只保留 100 步，而且一個字算一步（2.4.2）。大範圍還原請改用未存檔的原檔：關掉頁籤不存，再重開。</td></tr>
+            <tr><td>復原突然全部失效</td><td>檔案被外部改過而自動重新載入（2.1.7）。</td></tr>
+            <tr><td>常用語重開就不見了</td><td>沒有存檔。收錄之後要執行「儲存常用語」（2.4.5）。</td></tr>
+            <tr><td>在別的目錄載不到常用語</td><td>JSON 是跟著文件所在目錄走的。把檔案複製過去（2.4.5）。</td></tr>
+            <tr><td>巨集重播出來結果不對</td><td>巨集記的是按鍵，配置換過就會走樣（2.4.7）。</td></tr>
+            <tr><td>這些鍵按了都沒反應</td><td>預設沒綁鍵（2.4.8）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

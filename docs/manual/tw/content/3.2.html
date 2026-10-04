@@ -1,0 +1,215 @@
+      <!-- ══════════ 3.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.2.1</span>
+        <h2>什麼時候會進入大型檔案模式</h2>
+        <p class="dek">門檻只有一個數字：<strong>64 MiB</strong>。</p>
+
+        <p>開檔時檔案大小達到 64 MiB，爾雅就不會把它整份讀進記憶體，而是換成一種<strong>唯讀的閱讀模式</strong>。訊息列會說「已以大型檔案唯讀模式開啟 access.log（512 MB）」，狀態列的模式那一格變成 <span class="path">大型檔案唯讀</span>。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [access.log]</div>
+            <div class="s-bar"> F1 說明  Ctrl+S 儲存  Ctrl+W 搜尋  Ctrl+R 取代  Ctrl+B 矩形選取  Ctrl+K 剪行  Ctrl+X 離開</div>
+            <div class="s-body">198.51.100.24 - - [25/Aug/2026:09:14:02 +0800] "GET /api/v1/orders HTTP/1.1" 200
+198.51.100.31 - - [25/Aug/2026:09:14:02 +0800] "POST /api/v1/login HTTP/1.1" 302
+203.0.113.10 - - [25/Aug/2026:09:14:03 +0800] "GET /static/app.js HTTP/1.1" 304</div>
+            <div class="s-status"> access.log │ 1284391:1 │ 大型檔案唯讀 │ UTF-8 │ LF </div>
+            <div class="s-msg"> 已以大型檔案唯讀模式開啟 access.log（512 MB）</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">三種大檔的走法不一樣</span>
+          <ul>
+            <li><strong>大的 UTF-8 文字檔</strong> → 大型檔案唯讀模式（本章）。</li>
+            <li><strong>大的二進位檔</strong> → 串流的十六進位檢視，一樣唯讀（見 3.3.8）。</li>
+            <li><strong>大的非 UTF-8 文字檔</strong>（例如 200 MB 的 Big5 匯出檔）→ 爾雅無法串流解碼，會<strong>當成二進位檔用十六進位開啟</strong>。要編輯的話得先在外面轉成 UTF-8。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.2.2</span>
+        <h2>這個模式下能做什麼</h2>
+        <p class="dek">看得到、找得到、複製得走；但改不了。</p>
+
+        <div class="duo">
+          <div>
+            <h4>可以做</h4>
+            <ul>
+              <li>捲動、翻頁、<kbd>Ctrl+Home</kbd>／<kbd>Ctrl+End</kbd></li>
+              <li><kbd>Ctrl+G</kbd> 跳到指定行</li>
+              <li><kbd>Ctrl+W</kbd> 搜尋、<kbd>F3</kbd> 找下一個</li>
+              <li>選取與 <kbd>Ctrl+C</kbd> 複製</li>
+              <li><kbd>Ctrl+L</kbd> 自動換行</li>
+              <li><kbd>Ctrl+P</kbd> 十六進位檢視</li>
+              <li>開新頁籤、切換頁籤、離開</li>
+            </ul>
+          </div>
+          <div>
+            <h4>做不到（會顯示「大型檔案使用唯讀模式；無法修改內容」）</h4>
+            <ul>
+              <li>打字、刪除、貼上、剪下、刪行</li>
+              <li>儲存與另存新檔</li>
+              <li>取代（<kbd>Ctrl+R</kbd>／<kbd>F5</kbd>／<kbd>F6</kbd>）</li>
+              <li>復原與重做</li>
+              <li>編碼與換行轉換（<kbd>F7</kbd>／<kbd>F8</kbd>）</li>
+              <li>格式化、段落重排、矩形填滿與搬動</li>
+              <li>插入常用語、執行巨集</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">兩件事在這個模式下不會發生</span>
+          <ul>
+            <li><strong>沒有語法高亮。</strong>整份都是純文字顏色——高亮需要解析整份內容，這裡刻意關掉。</li>
+            <li><strong>不能雙欄比對。</strong>按 <kbd>F4</kbd> 選到大型檔案會被擋下來：「大型檔案唯讀模式暫不支援雙欄比對，以避免載入完整內容造成記憶體耗盡」（見 3.4.9）。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.2.3</span>
+        <h2>記憶體是怎麼省下來的</h2>
+        <p class="dek">只記「路標」，需要哪一行才去磁碟讀哪一行。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 260" role="img" aria-label="稀疏行索引示意">
+              <rect x="0" y="0" width="960" height="260" fill="#FAFBFD"/>
+
+              <rect x="40" y="40" width="880" height="52" rx="8" fill="#EFECF6" stroke="#D6CFE6" stroke-width="2"/>
+              <text x="60" y="72" font-size="14.5" font-weight="700" fill="#4C3F72">磁碟上的 512 MB 檔案</text>
+              <text x="880" y="72" text-anchor="end" font-size="13" fill="#667085">從頭到尾串流掃描一次</text>
+
+              <g fill="#1F4E79">
+                <rect x="60" y="120" width="10" height="26" rx="2"/>
+                <rect x="230" y="120" width="10" height="26" rx="2"/>
+                <rect x="400" y="120" width="10" height="26" rx="2"/>
+                <rect x="570" y="120" width="10" height="26" rx="2"/>
+                <rect x="740" y="120" width="10" height="26" rx="2"/>
+                <rect x="898" y="120" width="10" height="26" rx="2"/>
+              </g>
+              <text x="60" y="166" font-size="12.5" fill="#12314F">第 1 行</text>
+              <text x="216" y="166" font-size="12.5" fill="#12314F">第 4097 行</text>
+              <text x="386" y="166" font-size="12.5" fill="#12314F">第 8193 行</text>
+              <text x="556" y="166" font-size="12.5" fill="#12314F">第 12289 行</text>
+              <text x="726" y="166" font-size="12.5" fill="#12314F">第 16385 行</text>
+              <text x="884" y="166" text-anchor="end" font-size="12.5" fill="#12314F">…</text>
+
+              <text x="480" y="200" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1F4E79">記憶體裡只留這些檢查點：每 4096 行一筆位移</text>
+              <text x="480" y="228" text-anchor="middle" font-size="13.5" fill="#3F485D">要顯示第 9000 行時，從第 8193 行那個檢查點開始往下讀 807 行就到了</text>
+              <text x="480" y="250" text-anchor="middle" font-size="13" fill="#98A2B3">不使用 memory mapping；單一超長行最多只預覽前 1 MiB，避免一行吃掉整個記憶體</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 3.2.1</b>　稀疏行索引。開檔時掃一遍建立檢查點，之後畫面要哪一行才去讀哪一行，所以 512 MB 的檔案也不會把記憶體吃光。這個模式已經用 500 MiB 的檔案實測過。</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 3.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.2.4</span>
+        <h2>跟著 log 一直長</h2>
+        <p class="dek">爾雅每 250 毫秒看一次檔案，新內容會自己出現。</p>
+
+        <p>這是大型檔案模式最實用的地方：<strong>拿它當 <span class="path">tail -f</span> 用，而且可以搜尋、可以往回捲</strong>。</p>
+
+        <ol class="rule-list">
+          <li><b>純追加時只補新的。</b>爾雅只重建「最後一個還沒寫完的行」加上新增內容，不會重新掃描整個檔案，所以檔案再大也不會卡。</li>
+          <li><b>游標在檔尾就自動跟隨。</b>停在最後一行的行尾時，新內容進來會自動把畫面推到最新。這就是 follow 模式。</li>
+          <li><b>游標移開就停住。</b>只要你往回捲去看別的地方，畫面就固定在你正在讀的位置，不會被新進來的內容拉走。想繼續跟隨就按 <kbd>Ctrl+End</kbd> 回到檔尾。</li>
+          <li><b>更新時訊息列會說</b>「偵測到檔案更新；已重新整理內容」。</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">看 log 的標準流程</span>
+          <p><span class="path">erya /var/log/nginx/access.log</span> → <kbd>Ctrl+End</kbd> 跳到檔尾開始跟隨 → 想查東西就 <kbd>Ctrl+W</kbd> 搜尋、<kbd>F3</kbd> 逐一往下 → 看完按 <kbd>Ctrl+End</kbd> 回到跟隨狀態。全程不用離開編輯器。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.2.5</span>
+        <h2>截斷與 rotation</h2>
+        <p class="dek">檔案不是「變長」而是「換了一份」的時候。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">磁碟上發生的事</th><th style="width:26%">爾雅的反應</th><th>常見情境</th></tr></thead>
+          <tbody>
+            <tr><td>結尾追加內容</td><td>只補新的部分，很快</td><td>服務持續寫 log</td></tr>
+            <tr><td>檔案被清空（截斷）</td><td><strong>重新開啟並重建索引</strong></td><td><span class="path">&gt; access.log</span>、logrotate 的 copytruncate</td></tr>
+            <tr><td>檔案被原地改寫</td><td>重新開啟並重建索引</td><td>整份重新產生的報表</td></tr>
+            <tr><td>檔案被換掉（rotation）</td><td>重新開啟並重建索引</td><td>logrotate 換新檔</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">rotation 之後你看的是新檔案</span>
+          <p>爾雅追的是<strong>路徑</strong>，所以 <span class="path">access.log</span> 被換掉之後，你看到的會是新的那一份（通常是空的或很短），舊內容跑到 <span class="path">access.log.1</span> 去了。要看舊的就另外開一個頁籤。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.2.6</span>
+        <h2>一般檔案的外部變更</h2>
+        <p class="dek">小檔案也在盯，只是反應方式不同。</p>
+
+        <p>同一個 250 毫秒的檢查，對一般大小的檔案也在做——差別在於一般檔案<strong>可以編輯</strong>，所以要先判斷你有沒有改過（完整說明見 2.1.7）：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">檔案類型</th><th style="width:24%">你沒改過</th><th>你改過</th></tr></thead>
+          <tbody>
+            <tr><td>一般文字檔</td><td>自動重新載入，<strong>復原紀錄清空</strong></td><td>只提醒，等你按 <kbd>Ctrl+S</kbd> 時才用紅色確認列問（O／R／N）</td></tr>
+            <tr><td>大型檔案</td><td>自動重新整理</td><td colspan="1">不可能發生——這個模式本來就不能改</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.2.7</span>
+        <h2>三種外部變更的處理</h2>
+        <p class="dek">整理成一張表，遇到時照著看就好。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">訊息列</th><th style="width:16%">顏色</th><th>你該做什麼</th></tr></thead>
+          <tbody>
+            <tr><td>偵測到外部更新；已安全重新載入檔案</td><td>黃</td><td>不用做什麼。內容已經是最新的了，但<strong>復原紀錄沒了</strong>。</td></tr>
+            <tr><td>偵測到檔案更新；已重新整理內容</td><td>黃</td><td>大型檔案模式的自動更新，不用做什麼。</td></tr>
+            <tr><td>檔案已被外部程式修改；儲存前需要確認</td><td>黃</td><td>提醒而已，還沒擋你。<strong>存檔時會跳確認</strong>。</td></tr>
+            <tr><td>外部檔案已有更新：[O]覆寫、[R]重新載入、[N/Esc]取消</td><td><b style="color:#8C2B2B">紅</b></td><td>要做決定了。不確定就按 <kbd>N</kbd>，再 <kbd>F12</kbd> 另存一份（2.1.7）。</td></tr>
+            <tr><td>重新整理外部檔案失敗：…</td><td>黃</td><td>檔案被刪掉、權限變了或磁碟出問題。先確認檔案還在不在。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.2.8</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">大型檔案模式的六個常見疑問。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>打字沒反應，說唯讀</td><td>檔案超過 64 MiB，這個模式不能編輯（3.2.2）。要改請用其他工具切小，或先取出片段。</td></tr>
+            <tr><td>沒有語法高亮</td><td>大型檔案模式刻意停用（3.2.2）。</td></tr>
+            <tr><td>畫面一直被拉到最後面</td><td>游標停在檔尾，正在跟隨。往回捲就會停住（3.2.4）。</td></tr>
+            <tr><td>畫面不會自己更新</td><td>游標已經不在檔尾了。按 <kbd>Ctrl+End</kbd> 回去（3.2.4）。</td></tr>
+            <tr><td>log 突然變空的</td><td>被截斷或 rotation 了，你看的是新的那一份（3.2.5）。</td></tr>
+            <tr><td>大的中文檔開起來變十六進位</td><td>非 UTF-8 的大檔無法串流解碼，會走二進位路線（3.2.1）。先在外面轉成 UTF-8。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

@@ -1,0 +1,327 @@
+      <!-- ══════════ 1.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.3.1</span>
+        <h2>画面を囲む 4 行</h2>
+        <p class="dek">上に 2 行、下に 2 行。残りはすべて文書です。</p>
+
+        <p>編集・ファイルを開く・比較・16 進数・設定——どの画面でも構成は同じで、<strong>4 行の枠と、その内側の内容領域</strong>です。この 4 行を読めるようになれば迷いません。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 330" role="img" aria-label="Erya の画面を構成する 4 行">
+              <rect x="0" y="0" width="960" height="330" fill="#FAFBFD"/>
+
+              <rect x="180" y="24" width="600" height="40" rx="6" fill="#1D3E77"/>
+              <text x="196" y="50" font-size="14.5" fill="#fff" font-family="monospace"> 爾雅 Erya │ [報告.txt] 付録.md</text>
+              <text x="164" y="50" text-anchor="end" font-size="14" font-weight="700" fill="#7A382F">1 行目</text>
+              <text x="796" y="44" font-size="13.5" fill="#3F485D">タブ／画面名</text>
+              <text x="796" y="62" font-size="12.5" fill="#98A2B3">濃紺地に白</text>
+
+              <rect x="180" y="70" width="600" height="40" rx="6" fill="#34A6B6"/>
+              <text x="196" y="96" font-size="14.5" fill="#06222B" font-family="monospace"> F1 ヘルプ  Ctrl+S 保存  Ctrl+W 検索  …</text>
+              <text x="164" y="96" text-anchor="end" font-size="14" font-weight="700" fill="#1A4268">2 行目</text>
+              <text x="796" y="90" font-size="13.5" fill="#3F485D">ヒント行：いま押せるキー</text>
+              <text x="796" y="108" font-size="12.5" fill="#98A2B3">青地に黒</text>
+
+              <rect x="180" y="116" width="600" height="118" rx="6" fill="#000"/>
+              <text x="196" y="146" font-size="14.5" fill="#5CC9D6" font-family="monospace">第一章　プロジェクトの背景</text>
+              <text x="196" y="172" font-size="14.5" fill="#5CC9D6" font-family="monospace">　　本プロジェクトは二〇二六年三月に……</text>
+              <text x="196" y="198" font-size="14.5" fill="#35637A" font-family="monospace">~</text>
+              <text x="196" y="222" font-size="14.5" fill="#35637A" font-family="monospace">~</text>
+              <text x="164" y="176" text-anchor="end" font-size="14" font-weight="700" fill="#12314F">内容領域</text>
+              <text x="796" y="164" font-size="13.5" fill="#3F485D">文書・一覧・比較内容</text>
+              <text x="796" y="182" font-size="12.5" fill="#98A2B3">高さ＝ウィンドウ高 − 4</text>
+
+              <rect x="180" y="240" width="600" height="40" rx="6" fill="#34A6B6"/>
+              <text x="196" y="266" font-size="14.5" fill="#06222B" font-family="monospace"> 報告.txt │ 5:24 │ 挿入 │ UTF-8 │ LF</text>
+              <text x="164" y="266" text-anchor="end" font-size="14" font-weight="700" fill="#1A4268">下から 2 行目</text>
+              <text x="796" y="260" font-size="13.5" fill="#3F485D">ステータス行：いまの状態</text>
+              <text x="796" y="278" font-size="12.5" fill="#98A2B3">青地に黒</text>
+
+              <rect x="180" y="286" width="600" height="34" rx="6" fill="#000"/>
+              <text x="196" y="309" font-size="14.5" fill="#E4C23C" font-family="monospace"> 報告.txt を保存しました</text>
+              <text x="164" y="309" text-anchor="end" font-size="14" font-weight="700" fill="#7A5312">最終行</text>
+              <text x="796" y="309" font-size="13.5" fill="#3F485D">メッセージ行：直前の結果</text>
+            </svg>
+          </div>
+          <figcaption><b>図 1.3.1</b>　4 行の枠。内容領域の高さはウィンドウの高さから 4 を引いた値なので、ウィンドウを高くすれば表示行数が増えます。</figcaption>
+        </figure>
+
+        <div class="callout">
+          <span class="co-title">上 2 行と下 2 行、という配置には理由があります</span>
+          <p>上 2 行は「<strong>いまどこにいて、何が押せるか</strong>」、下 2 行は「<strong>いまどんな状態で、直前に何が起きたか</strong>」に答えます。詰まったら、まず 2 行目で目当てのキーを探し、次に最終行が何か言っていないか確かめてください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.3.2</span>
+        <h2>1 行目：タブとタイトル</h2>
+        <p class="dek">編集中はタブ、それ以外の画面では画面名です。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [報告.txt*] 付録.md nginx.conf</div>
+            <div class="s-body"><i>（編集画面：3 つのタブを開き、1 つ目が選択中で未保存）</i></div>
+          </div>
+        </div>
+
+        <ul>
+          <li><strong>選択中のタブは角括弧で囲まれます</strong>：<span class="path">[報告.txt]</span>。</li>
+          <li><strong>アスタリスクは未保存の印</strong>：<span class="path">[報告.txt*]</span>。保存すると消えます。</li>
+          <li>タブに出るのは<strong>ファイル名</strong>だけでパスは含みません。新規文書は <span class="path">[無題]</span> と表示されます。</li>
+          <li>タブが入りきらないときは左端に <span class="path">‹</span> が出ます。選択中のタブは必ず見えます。</li>
+        </ul>
+
+        <p>他の画面では、この行が画面名に変わります。付加情報が付くものもあります：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">画面</th><th>1 行目の表示</th></tr></thead>
+          <tbody>
+            <tr><td>編集</td><td><span class="path"> 爾雅 Erya │ [報告.txt] 付録.md</span></td></tr>
+            <tr><td>ファイルを開く（<kbd>Ctrl+O</kbd>）</td><td><span class="path"> 爾雅 Erya │ ファイルを開く │ /home/user/docs</span>（現在のディレクトリ）</td></tr>
+            <tr><td>比較ファイルの選択（<kbd>F4</kbd>）</td><td><span class="path"> 爾雅 Erya │ 左ファイルを選択 │ /home/user</span></td></tr>
+            <tr><td>比較</td><td><span class="path"> 爾雅 Erya │ ファイル比較</span></td></tr>
+            <tr><td>キー操作ヘルプ（<kbd>F1</kbd>）</td><td><span class="path"> 爾雅 Erya │ キー操作ヘルプ</span></td></tr>
+            <tr><td>システム設定（<kbd>F2</kbd>）</td><td><span class="path"> 爾雅 Erya │ システム設定</span></td></tr>
+            <tr><td>キーマップエディター</td><td><span class="path"> 爾雅 Erya │ キーマップエディター │ Erya Terminal Safe</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">1 行目がタブでなければ、編集画面ではありません</span>
+          <p>現在地を知るいちばん速い方法です。戻るにはたいてい <kbd>Esc</kbd> で済みます（1.3.7 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.3.3</span>
+        <h2>2 行目：ヒント行</h2>
+        <p class="dek">いま押せるキーが並び、キープロファイルに追随します。</p>
+
+        <p>編集中は、よく使う 7 つの操作が常に並びます：</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> F1 ヘルプ  Ctrl+S 保存  Ctrl+W 検索  Ctrl+R 置換  Ctrl+B 矩形選択  Ctrl+K 行切取  Ctrl+X 終了</div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">ここに出るのは「あなたの」キーです</span>
+          <p>変わらない <kbd>F1</kbd> を除き、すべて<strong>現在のキープロファイル</strong>から取っています。nano プロファイルに切り替えれば nano のキーになります。つまり<strong>手引きと画面が食い違ったら、画面が正しい</strong>ということです（4.1 参照）。</p>
+        </div>
+
+        <p>他の画面では、この行がその画面の操作説明に丸ごと入れ替わります。Erya にメニューが無くても迷わないのはこのためです：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">画面</th><th>ヒント行</th></tr></thead>
+          <tbody>
+            <tr><td>ファイルを開く</td><td><span class="path">↑/↓ 選択　Enter/→ 開く　←/Backspace 親へ　Esc/Q キャンセル</span></td></tr>
+            <tr><td>1 行入力</td><td><span class="path"> Enter 確定  Esc 取消  ←/→ カーソル移動  Backspace/Delete 削除</span></td></tr>
+            <tr><td>置換の入力</td><td><span class="path"> Enter/F5 次を置換  F6 すべて置換  Esc 取消</span></td></tr>
+            <tr><td>16 進数表示</td><td><span class="path">W 1 行 16/32  O オフセット 10/16  Ctrl+G/G 移動  Ctrl+P/Esc 編集に戻る</span></td></tr>
+            <tr><td>比較</td><td>左右のファイル名が半分ずつ（3.4.2 参照）</td></tr>
+            <tr><td>キー操作ヘルプ</td><td><span class="path"> ↑/↓ スクロール  PageUp/PageDown ページ  Home/End 先頭/末尾  F1/Esc 戻る</span></td></tr>
+            <tr><td>システム設定</td><td><span class="path"> ↑/↓ 項目  ←/→ 選択  E キー編集  Enter 適用  Esc キャンセル</span></td></tr>
+            <tr><td>キーマップエディター</td><td><span class="path"> ↑/↓ 選択  Enter 編集  Delete 無効化  S 名前を付けて保存  Esc 戻る</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.3.4</span>
+        <h2>本文領域と ~ 記号</h2>
+        <p class="dek">真ん中の大きな部分と、あの暗い青のチルダについて。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-body">第一章　プロジェクトの背景
+
+　　本プロジェクトは二〇二六年三月に始動しました。
+　　既存の文書をプレーンテキストへ変換します。
+<i>~</i>
+<i>~</i>
+<i>~</i></div>
+          </div>
+        </div>
+
+        <ul>
+          <li><strong>暗い青の <span class="path">~</span> は「文書はここで終わり」</strong>という印で、空行ではありません。空行は本当に何も無い行です。</li>
+          <li>内容領域の高さは<strong>ウィンドウの高さ − 4</strong>。広げれば増えます。</li>
+          <li>カーソルはターミナルが描くもので、形（ブロック・下線・縦棒）はターミナルの設定によります。</li>
+          <li>選択範囲は<strong>灰地に黒</strong>、検索一致と比較の差分は<strong>黄地に黒</strong>です。</li>
+          <li>シンタックスハイライトはファイル名から自動的に適用されます（3.1.5 参照）。選択の灰色はその上に重なり、互いに干渉しません。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">全角文字は 2 桁</span>
+          <p>Erya は端末の桁数で計算します。漢字・仮名・全角記号と多くの絵文字は<strong>2 桁</strong>、ASCII は 1 桁、タブはタブ幅に展開されます。そのため和欧混在でも桁がそろい、ステータス行の「列」はバイトではなく文字数で数えます（2.2.3 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.3.5</span>
+        <h2>下から 2 行目：ステータス行</h2>
+        <p class="dek">│ で区切られた 5〜7 個のマス。どれも「いまの事実」です。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-status"> /home/user/docs/報告.txt │ 5:24 │ 挿入 │ Markdown │ 折り返し │ UTF-8 │ LF </div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">マス</th><th style="width:26%">例</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td>ファイル名</td><td><span class="path">/home/user/docs/報告.txt</span></td><td>開いたときのパス（名前だけではありません）。新規文書は <span class="path">[無題]</span>。</td></tr>
+            <tr><td>行:列</td><td><span class="path">5:24</span></td><td>5 行目の 24 文字目。どちらも 1 から数えます。</td></tr>
+            <tr><td>モード</td><td><span class="path">挿入</span></td><td>5 通り。下の表を参照。</td></tr>
+            <tr><td>シンタックス</td><td><span class="path">Markdown</span></td><td><strong>認識できたときだけ出ます。</strong>プレーンテキストにはこのマスがありません。</td></tr>
+            <tr><td>折り返し</td><td><span class="path">折り返し</span></td><td><strong>有効なときだけ出ます</strong>（<kbd>Ctrl+L</kbd> で切り替え）。</td></tr>
+            <tr><td>文字コード</td><td><span class="path">UTF-8</span></td><td>次の保存で使う文字コード（3.1.2 参照）。</td></tr>
+            <tr><td>改行</td><td><span class="path">LF</span></td><td>次の保存で使う改行コード（3.1.4 参照）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>モードの 5 通り</h3>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">表示</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">挿入</span></td><td>入力すると後ろの文字が右へ押し出されます。既定はこちら。</td></tr>
+            <tr><td><span class="path">上書き</span></td><td>入力するとカーソル位置の文字を置き換えます（<kbd>Insert</kbd> で切替）。</td></tr>
+            <tr><td><span class="path">選択</span></td><td>通常の選択範囲があります。<strong>挿入／上書きの表示より優先されます。</strong></td></tr>
+            <tr><td><span class="path">矩形選択</span></td><td>矩形の選択範囲があります（2.2.5 参照）。</td></tr>
+            <tr><td><span class="path">大容量ファイル・読み取り専用</span></td><td>64 MiB 以上のため編集できません（3.2 参照）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>16 進数表示と比較画面には専用の書式があり、それぞれ 3.3.2 と 3.4.2 で説明します。</p>
+      </section>
+
+      <!-- ══════════ 1.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.3.6</span>
+        <h2>最終行：メッセージと色</h2>
+        <p class="dek">色が深刻度です。黄は報告、白は入力待ち、赤は判断待ち。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg"> 報告.txt を保存しました</div>
+            <div class="s-msg ask">検索：探したい文字列<em> </em></div>
+            <div class="s-msg warn"> 文書は未保存です：S 保存して終了／Y 破棄／N 編集に戻る</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:16%">色</th><th style="width:26%">意味</th><th>例</th></tr></thead>
+          <tbody>
+            <tr><td><b style="color:#7A5312">黄</b></td><td>直前に何をしたかの報告</td><td>保存しました、元に戻しました、一致する文字列が見つかりません</td></tr>
+            <tr><td><b style="color:#3F485D">白</b></td><td>入力を待っています</td><td>検索：、名前を付けて保存：、行／列へ移動：</td></tr>
+            <tr><td><b style="color:#8C2B2B">赤</b></td><td><strong>判断待ち。答えるまで先へ進みません</strong></td><td>文書は未保存です、タブは未保存です、外部ファイルが更新されています</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">赤が出たら、押す前に読んでください</span>
+          <p>赤い確認は 3 つだけです。<strong>終了時の未保存確認</strong>（S／Y／N）、<strong>タブを閉じるときの未保存確認</strong>（S／Y／N）、<strong>外部で変更されたファイルの保存確認</strong>（O／R／N）。どれも各文字の意味を同じ行に書いてあり、押し間違えると実際に内容を失います。とくに <span class="path">Y</span> は常に「破棄」です（2.1.8 参照）。</p>
+        </div>
+
+        <p>メッセージ行は次のキー操作では消えず、新しいメッセージが来るまで残ります。読むときは、それが<strong>いま</strong>の出来事かどうかを確かめてください。</p>
+      </section>
+
+      <!-- ══════════ 1.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.3.7</span>
+        <h2>6 つの画面、1 つの Esc</h2>
+        <p class="dek">編集以外に全画面が 6 つ。出口はどれも同じです。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">画面</th><th style="width:20%">入る</th><th style="width:20%">出る</th><th>参照</th></tr></thead>
+          <tbody>
+            <tr><td>ファイルダイアログ</td><td><kbd>Ctrl+O</kbd> / <kbd>F4</kbd></td><td><kbd>Esc</kbd> か <kbd>Q</kbd></td><td>2.1.2</td></tr>
+            <tr><td>比較</td><td><kbd>F4</kbd> で 2 ファイル選択</td><td><kbd>Esc</kbd></td><td>3.4</td></tr>
+            <tr><td>16 進数表示</td><td><kbd>Ctrl+P</kbd></td><td><kbd>Esc</kbd> か <kbd>Ctrl+P</kbd></td><td>3.3</td></tr>
+            <tr><td>キー操作ヘルプ</td><td><kbd>F1</kbd></td><td><kbd>Esc</kbd> か <kbd>F1</kbd></td><td>1.3.8</td></tr>
+            <tr><td>システム設定</td><td><kbd>F2</kbd></td><td><kbd>Esc</kbd></td><td>4.2.1</td></tr>
+            <tr><td>キーマップエディター</td><td>設定画面で <kbd>E</kbd></td><td><kbd>Esc</kbd> で設定へ</td><td>4.1.4</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>ほかに、最終行だけを使う状態が 2 つあります。<strong>1 行入力</strong>（検索・置換・行移動・名前を付けて保存など）と<strong>確認</strong>（赤いもの）です。どちらも <kbd>Esc</kbd> で取り消せます。</p>
+
+        <div class="callout ok">
+          <span class="co-title"><kbd>Esc</kbd> は常に「1 階層戻る」</span>
+          <p>編集中は選択を解除し、入力中は入力を取り消し、全画面では 1 つ前に戻ります。<strong>どこにいるか分からず、何も壊したくないときは <kbd>Esc</kbd> が常に安全です。</strong>唯一の例外はバイナリファイルの 16 進数表示で、戻れるテキスト編集が存在しないため、<kbd>Esc</kbd> は出口をもう一度伝えるだけです（3.3.5 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.3.8</span>
+        <h2>F1 キー操作ヘルプ</h2>
+        <p class="dek">メニューが無い代わりに、この一覧が機能の総目次です。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ キー操作ヘルプ</div>
+            <div class="s-bar"> ↑/↓ スクロール  PageUp/PageDown ページ  Home/End 先頭/末尾  F1/Esc 戻る</div>
+            <div class="s-body"> F1                       キー操作ヘルプの表示／非表示
+ Up / Down / Left / Right カーソルを移動
+ Shift+Up/Down/Left/Right 選択範囲を広げる／狭める
+ PageUp / PageDown        1 ページ上下へ
+ Home / End               現在行の先頭／末尾へ
+ Ctrl+Home / Ctrl+End     文書の先頭／末尾へ
+ Ctrl+N                   空のタブを作成
+ Ctrl+O                   新しいタブでファイルを開く</div>
+            <div class="s-status"> キー操作ヘルプ │ 1-8 / 62 </div>
+            <div class="s-msg"> F1 は固定ヘルプキーです。カスタムキーマップでは変更できません</div>
+          </div>
+        </div>
+
+        <ul>
+          <li>左がキー、右が説明。<kbd>↑</kbd><kbd>↓</kbd>、<kbd>PageUp</kbd><kbd>PageDown</kbd>、<kbd>Home</kbd><kbd>End</kbd> でスクロールします。</li>
+          <li>ステータス行に<strong>いま何件目まで／全何件</strong>が出ます。</li>
+          <li>最初の 10 件は<strong>変更できない固定キー</strong>（矢印、<kbd>Enter</kbd>、<kbd>Backspace</kbd>、<kbd>Tab</kbd>、<kbd>Esc</kbd> など）で、その後が設定可能な操作です。</li>
+          <li><strong>ここに出るのは実際に使えるキーです。</strong>プロファイルを変えれば表示も変わります。</li>
+          <li>既定でキーの無い操作（定型文、マクロ、矩形の移動など）はキー欄が空欄になり、「機能はあるが呼び出すキーがまだ無い」ことを示します（2.4.8 参照）。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title"><kbd>F1</kbd> は必ず <kbd>F1</kbd></span>
+          <p>他のすべての操作は割り当て直せますが、これだけはできません。意図的な非常口です。<strong>プロファイルをどれだけ変えても、全一覧を呼び出すキーが 1 つ残ります。</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">1.3.9</span>
+        <h2>手引きでのキー表記</h2>
+        <p class="dek">押しても反応しない、を防ぐための小さな約束です。</p>
+
+        <ol class="rule-list">
+          <li><b>本書の <kbd>Ctrl+S</kbd> は「Erya Terminal Safe における保存キー」を指します。</b>内蔵の既定プロファイルで、何も変えていなければこれです。</li>
+          <li><b>プロファイルを変えた方は操作名で照合してください。</b>各機能にはプログラム内で固定の操作名があり（保存なら <span class="path">save</span>）、4.4 の表に両方載せています。設定ファイルに書くのもこの名前です（4.1.5 参照）。</li>
+          <li><b>最終的な答えは常に画面です。</b>2 行目と <kbd>F1</kbd> に出ているのが実際のキーです。手引きと違えば画面を信じてください。</li>
+        </ol>
+
+        <div class="callout">
+          <span class="co-title">なぜ既定は「ありがちな組み合わせ」を避けているのか</span>
+          <p>ターミナルがすべての組み合わせを届けてくれるとは限らないからです。macOS は <kbd>Ctrl</kbd>+ファンクションキーを予約し、<kbd>Alt</kbd> 組み合わせは特殊文字の入力に使われ、修飾付き矢印（<kbd>Ctrl+←</kbd> など）は多くのターミナルでそもそも届きません。既定プロファイルはこれらを避けているので<strong>いちばん多くのターミナルで動き</strong>、代わりに一部の応用操作が未割り当てです。元の完全な組み合わせは <span class="term">Erya Classic</span> として残っており、いつでも戻せます（4.1.1 参照）。</p>
+        </div>
+      </section>

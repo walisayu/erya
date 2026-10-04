@@ -1,0 +1,271 @@
+      <!-- ══════════ 3.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.1.1</span>
+        <h2>開檔時的編碼偵測</h2>
+        <p class="dek">爾雅會自己猜，猜完把結果寫在狀態列上。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 280" role="img" aria-label="開檔時的編碼判斷流程">
+              <rect x="0" y="0" width="960" height="280" fill="#FAFBFD"/>
+              <defs><marker id="arrow31" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="30" y="112" width="150" height="56" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="105" y="146" text-anchor="middle" font-size="15.5" font-weight="700" fill="#12314F">讀進位元組</text>
+
+              <rect x="220" y="24" width="230" height="52" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="335" y="46" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1E5C39">開頭有 UTF-8 BOM</text>
+              <text x="335" y="66" text-anchor="middle" font-size="13" fill="#3F485D">→ UTF-8 BOM</text>
+
+              <rect x="220" y="86" width="230" height="52" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="335" y="108" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1E5C39">整份是合法 UTF-8</text>
+              <text x="335" y="128" text-anchor="middle" font-size="13" fill="#3F485D">→ UTF-8</text>
+
+              <rect x="220" y="148" width="230" height="52" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="335" y="170" text-anchor="middle" font-size="14.5" font-weight="700" fill="#7A5312">交給偵測器猜</text>
+              <text x="335" y="190" text-anchor="middle" font-size="13" fill="#3F485D">→ Big5／GBK／Shift_JIS</text>
+
+              <rect x="220" y="210" width="230" height="52" rx="10" fill="#FBEDEC" stroke="#EFCFCC" stroke-width="2"/>
+              <text x="335" y="232" text-anchor="middle" font-size="14.5" font-weight="700" fill="#8C2B2B">猜不到或有 NUL</text>
+              <text x="335" y="252" text-anchor="middle" font-size="13" fill="#3F485D">→ 報錯，或改走位元組檢視</text>
+
+              <path d="M180 140 L214 50" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 112" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 174" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 236" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+
+              <rect x="500" y="86" width="430" height="108" rx="10" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <text x="715" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="#1F4E79">偵測到什麼，狀態列就寫什麼</text>
+              <text x="715" y="144" text-anchor="middle" font-size="13.5" fill="#3F485D">報告.txt │ 5:24 │ 插入 │ Big5 │ CRLF</text>
+              <text x="715" y="172" text-anchor="middle" font-size="13" fill="#667085">不改它的話，存檔就會照原本的編碼寫回去</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 3.1.1</b>　偵測順序。UTF-8 是先看有沒有 BOM、再看整份能不能當 UTF-8 解；都不行才交給偵測器在 Big5、GBK、Shift_JIS 之間猜。</figcaption>
+        </figure>
+
+        <ul>
+          <li><strong>爾雅認得五種編碼</strong>：UTF-8、UTF-8 BOM、Big5、GBK、Shift_JIS。</li>
+          <li><strong>開檔不會改變檔案</strong>。偵測出來的編碼只是「下次存檔要用哪一種」的預設值。</li>
+          <li>偵測是靠內容統計猜的，<strong>短檔案有可能猜錯</strong>（例如只有幾個中文字的 Big5 檔被當成 GBK）。看到亂碼就直接按 <kbd>F7</kbd> 換一個試（見 3.1.2）。</li>
+          <li>UTF-16／UTF-32 這類寬字元編碼<strong>不在支援範圍</strong>，開啟時會直接回報「detected unsupported text encoding: UTF-16LE」之類的訊息，不會硬解成亂碼，也不會偽裝成二進位檔讓你去改位元組。</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 3.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.1.2</span>
+        <h2><kbd>F7</kbd> 切換儲存編碼</h2>
+        <p class="dek">按一次換一種，循環五個選項。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 150" role="img" aria-label="F7 的編碼循環順序">
+              <rect x="0" y="0" width="960" height="150" fill="#FAFBFD"/>
+              <defs><marker id="arrow32" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#1F4E79"/></marker></defs>
+
+              <rect x="24" y="34" width="150" height="46" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="99" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#12314F">UTF-8</text>
+              <rect x="210" y="34" width="164" height="46" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="292" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#12314F">UTF-8 BOM</text>
+              <rect x="410" y="34" width="140" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="480" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">Big5</text>
+              <rect x="586" y="34" width="140" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="656" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">GBK</text>
+              <rect x="762" y="34" width="164" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="844" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">Shift_JIS</text>
+
+              <path d="M174 57 L206 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M374 57 L406 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M550 57 L582 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M726 57 L758 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M926 57 C946 57 946 118 480 118 C60 118 40 92 44 84" stroke="#1F4E79" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow32)"/>
+              <text x="480" y="140" text-anchor="middle" font-size="13.5" fill="#1F4E79">再按一次回到 UTF-8</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 3.1.2</b>　<kbd>F7</kbd> 的循環順序。狀態列最後第二格會跟著換，訊息列說「已切換為 Big5；儲存後完成編碼轉換」。</figcaption>
+        </figure>
+
+        <div class="callout warn">
+          <span class="co-title">按 <kbd>F7</kbd> 不會馬上改檔案</span>
+          <p>它改的是「<strong>下一次儲存要用哪一種編碼</strong>」。真正的轉換發生在 <kbd>Ctrl+S</kbd> 的時候。所以按完 <kbd>F7</kbd> 之後：想轉就存檔，不想轉就再按幾次轉回去，或直接 <kbd>Ctrl+Z</kbd> 復原——<strong>編碼切換也算一步，可以復原與重做</strong>。</p>
+        </div>
+
+        <p>最常見的用法就是把舊的 Big5 文件轉成 UTF-8：開檔（狀態列顯示 Big5）→ 按 <kbd>F7</kbd> 到 UTF-8 → <kbd>Ctrl+S</kbd>。反過來要交給只吃 Big5 的老系統也是同一招。</p>
+      </section>
+
+      <!-- ══════════ 3.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.1.3</span>
+        <h2>轉不過去的時候</h2>
+        <p class="dek">爾雅會跳過那個編碼，不會用問號把你的字換掉。</p>
+
+        <p>Big5 沒有「𠮟」、Shift_JIS 沒有「愛心 Emoji」——這種情況下很多工具會默默寫入 <span class="path">?</span> 或 <span class="path">□</span>，等你發現已經來不及。爾雅的做法不一樣：</p>
+
+        <ol class="rule-list">
+          <li><b>先試著轉。</b>整份文件都能用目標編碼表示才算成功。</li>
+          <li><b>有字表示不了就跳過這個編碼</b>，自動試下一個。所以按一次 <kbd>F7</kbd> 有可能直接從 UTF-8 跳到 GBK——因為中間的 Big5 表示不了文件裡的某個字。</li>
+          <li><b>五種都試過都不行</b>，才顯示「無法切換為 …：文件含有此編碼無法表示的字元」，並且<strong>維持原本的編碼不變</strong>。</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">寧可不轉，也不破壞內容</span>
+          <p>這是爾雅在編碼上最重要的一條原則。<strong>存檔之後的檔案，要嘛完整、要嘛就是原本的編碼</strong>，不會出現一半正常一半問號的檔案。找不出是哪個字轉不過去時，先轉成 UTF-8 存一份，再用其他工具比對。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.1.4</span>
+        <h2><kbd>F8</kbd> 切換 LF／CRLF</h2>
+        <p class="dek">跟編碼一樣，是「下次存檔」才生效。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">顯示</th><th style="width:26%">是什麼</th><th>常見於</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">LF</span></td><td>換行 <span class="path">\n</span></td><td>Linux、macOS、大部分程式語言與設定檔</td></tr>
+            <tr><td><span class="path">CRLF</span></td><td>回車＋換行 <span class="path">\r\n</span></td><td>Windows 的文字檔、部分老系統匯出的資料</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>爾雅開檔時會看出來原本是哪一種，狀態列最後一格顯示。</li>
+          <li><kbd>F8</kbd> 在兩者之間切換，訊息列說「已切換為 CRLF；儲存後完成換行格式轉換」。</li>
+          <li>一樣可以 <kbd>Ctrl+Z</kbd> 復原。</li>
+          <li><strong>檔案結尾有沒有換行也會被保留</strong>：原本沒有結尾換行的檔案，存回去也不會被硬加一個。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">Git 一直說整個檔案都改了？</span>
+          <p>那通常就是換行格式被換掉了。用爾雅開檔看狀態列最後一格，按 <kbd>F8</kbd> 轉回原本那一種再存，diff 就乾淨了。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.1.5</span>
+        <h2>語法高亮怎麼決定</h2>
+        <p class="dek">看完整檔名，再看副檔名；認得出來就上色，認不出來就純文字。</p>
+
+        <ul>
+          <li>認得的語言會顯示在<strong>狀態列的第四格</strong>（例如 <span class="path">Markdown</span>、<span class="path">TOML</span>）。<strong>沒有那一格就是沒有高亮。</strong></li>
+          <li>常見程式語言都有：Rust、C／C++、Go、Python、Java、JavaScript／TypeScript、Shell、SQL、Markdown 等。</li>
+          <li>結構化格式：TOML、YAML、JSON、XML、<span class="path">.ini</span>、<span class="path">.conf</span>。</li>
+          <li>選取的灰底會蓋在高亮顏色上面，<strong>兩者不會互相干擾</strong>。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">遇到超長行會自動節制</span>
+          <p>單行超過 64 KiB，或游標一次跳過大量行時，爾雅會改用<strong>有界的高亮策略</strong>，避免語法解析把畫面卡住。這時候可能會看到某些行暫時沒有上色——內容沒事，只是沒替它上色。另外<strong>大型檔案唯讀模式完全停用語法高亮</strong>（見 3.2.2）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.1.6</span>
+        <h2>Linux 設定檔也有高亮</h2>
+        <p class="dek">很多設定檔沒有副檔名，爾雅是<strong>認完整檔名</strong>的。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">類別</th><th>認得的檔名或副檔名</th></tr></thead>
+          <tbody>
+            <tr><td>通用設定</td><td><span class="path">.conf</span>、<span class="path">.ini</span>、<span class="path">.editorconfig</span></td></tr>
+            <tr><td>systemd unit</td><td><span class="path">.service</span>、<span class="path">.socket</span>、<span class="path">.timer</span>、<span class="path">.mount</span>、<span class="path">.target</span>、<span class="path">.network</span></td></tr>
+            <tr><td>環境變數</td><td><span class="path">.env</span>、<span class="path">.env.*</span></td></tr>
+            <tr><td>結構化格式</td><td>TOML、YAML、JSON、XML</td></tr>
+            <tr><td>Shell 啟動檔</td><td><span class="path">.bashrc</span>、<span class="path">.profile</span>、<span class="path">.zshrc</span>、<span class="path">/etc/default/*</span></td></tr>
+            <tr><td>系統設定</td><td><span class="path">.gitconfig</span>、<span class="path">sshd_config</span>、<span class="path">ssh_config</span>、<span class="path">sudoers</span>、<span class="path">fstab</span>、<span class="path">hosts</span>、<span class="path">resolv.conf</span></td></tr>
+            <tr><td>服務設定</td><td><span class="path">nginx.conf</span>、Apache 設定、<span class="path">crontab</span>、<span class="path">Dockerfile</span>／<span class="path">Containerfile</span>、<span class="path">Makefile</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>這一份清單是刻意列進必要支援範圍的——爾雅預期的使用情境之一，就是<strong>SSH 進伺服器改設定檔</strong>。</p>
+      </section>
+
+      <!-- ══════════ 3.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.1.7</span>
+        <h2><kbd>Ctrl+T</kbd> 格式化文件</h2>
+        <p class="dek">只做三種格式：TOML、YAML、JSON。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:38%">訊息列</th><th>意思</th></tr></thead>
+          <tbody>
+            <tr><td>已格式化文件；Ctrl+Z 可復原</td><td>成功。整批算<strong>一步</strong>復原（見 2.4.2）。</td></tr>
+            <tr><td>文件格式已是最新狀態</td><td>本來就整齊，什麼都沒改。</td></tr>
+            <tr><td>目前僅支援格式化 TOML、YAML 與 JSON 文件</td><td>這個檔案不是那三種。爾雅看的是副檔名。</td></tr>
+            <tr><td>格式化失敗，文件未變更：…</td><td><strong>語法有錯</strong>。錯誤訊息通常會指出哪一行，文件維持原樣。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout ok">
+          <span class="co-title">TOML 與 YAML 的註解會被保留</span>
+          <p>很多格式化工具會把註解吃掉，爾雅不會。這一點對設定檔特別重要——註解常常是唯一寫著「為什麼要這樣設」的地方。</p>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">拿它當語法檢查用</span>
+          <p>改完一個 <span class="path">.yaml</span> 之後按一下 <kbd>Ctrl+T</kbd>：沒事就代表語法是對的，有錯它會直接告訴你錯在哪。<strong>比部署上去才發現快得多。</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.1.8</span>
+        <h2>段落重排與段落寬度</h2>
+        <p class="dek">把一段長文字重新斷行到指定寬度。預設沒有綁按鍵。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">動作名稱</th><th style="width:18%">Classic 的鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">set_paragraph_width</span></td><td><kbd>Alt+M</kbd></td><td>設定重排寬度，範圍 <strong>20–500</strong> 欄，預設 80。</td></tr>
+            <tr><td><span class="path">reflow_paragraph</span></td><td><kbd>Alt+Q</kbd></td><td>把<strong>游標所在的段落</strong>依設定寬度重新編排。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>「段落」的界線是<strong>空行</strong>：從游標往上下找到最近的空行為止。</li>
+          <li>游標停在空行上按重排，會說「目前游標不在段落內」。</li>
+          <li>成功時說「已依 80 欄重新編排段落」。整段算<strong>一步</strong>復原。</li>
+          <li>寬度輸入超出 20–500 會說「段落寬度必須是 20 到 500 的整數」。</li>
+          <li>重排會依終端欄寬計算，<strong>中文全形字算兩欄</strong>，所以排出來的右邊界是真的對齊的。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">這兩個動作預設是空的</span>
+          <p>跟常用語、巨集一樣（見 2.4.8）。要用就換 Erya Classic，或在按鍵配置編輯器裡自己綁（見 4.1.4）。</p>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">重排（改內容）跟自動換行（只改顯示）不一樣</span>
+          <p><kbd>Ctrl+L</kbd> 的自動換行<strong>只影響畫面</strong>，檔案內容一個字都不會動；段落重排是<strong>真的在文件裡插入換行</strong>。要交出去的純文字稿用重排，自己閱讀長行用自動換行。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.1.9</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">編碼與格式最容易踩到的六件事。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>開起來整份是亂碼</td><td>偵測猜錯了。按 <kbd>F7</kbd> 換一種看看，對了再存（3.1.2）。</td></tr>
+            <tr><td>按了 <kbd>F7</kbd> 檔案沒變</td><td>要存檔才會真的轉（3.1.2）。</td></tr>
+            <tr><td>按 <kbd>F7</kbd> 跳過了某一種編碼</td><td>那一種表示不了文件裡的某個字，被自動跳過了（3.1.3）。</td></tr>
+            <tr><td>Git diff 顯示整個檔案都改了</td><td>換行格式被換掉。<kbd>F8</kbd> 轉回去（3.1.4）。</td></tr>
+            <tr><td>設定檔沒有語法高亮</td><td>檔名不在認得的清單裡（3.1.6），或它是大型檔案（3.2.2）。</td></tr>
+            <tr><td><kbd>Ctrl+T</kbd> 說不支援</td><td>只做 TOML／YAML／JSON 三種（3.1.7）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

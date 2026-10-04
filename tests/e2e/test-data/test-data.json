@@ -1,0 +1,7 @@
+{
+  "locale": "zh-TW",
+  "terminal": "xterm-256color",
+  "viewport": { "rows": 24, "columns": 80 },
+  "filePrefix": "erya-e2e-<pid>-<nanos>-<counter>",
+  "cleanup": "remove only the per-test temporary directory"
+}

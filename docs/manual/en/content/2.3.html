@@ -1,0 +1,162 @@
+      <!-- ══════════ 2.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.3.1</span>
+        <h2>Search: <kbd>Ctrl+W</kbd></h2>
+        <p class="dek"><kbd>Ctrl+F</kbd> works too — both are bound to search by default.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter confirm  Esc cancel  ←/→ move caret  Backspace/Delete edit</div>
+            <div class="s-msg ask">Search: project<em> </em></div>
+          </div>
+        </div>
+
+        <ul>
+          <li>The input is pre-filled with <strong>your previous search</strong>, so <kbd>Enter</kbd> simply repeats it.</li>
+          <li>Searching starts <strong>at the cursor</strong> and continues to the end, then wraps to the beginning.</li>
+          <li>A match moves the cursor there and highlights it in yellow.</li>
+          <li>An empty search is refused: “Search text cannot be empty”.</li>
+          <li><kbd>Esc</kbd> cancels and leaves the cursor where it was.</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">Erya searches for exactly what you typed</span>
+          <p><strong>Case sensitive, no regular expressions, no wildcards.</strong> Searching for <span class="path">Error</span> will not find <span class="path">error</span>. Full-width and half-width characters are different too — which, when you are working on CJK documents, is usually exactly what you want.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.3.2</span>
+        <h2>Find next and wrapping around</h2>
+        <p class="dek">Just keep pressing <kbd>F3</kbd>.</p>
+
+        <ul>
+          <li><kbd>F3</kbd> finds the next match <strong>using the previous search</strong>, with nothing to retype.</li>
+          <li>Pressing <kbd>F3</kbd> before you have searched simply opens the search input for you.</li>
+          <li>At the end of the document it <strong>wraps to the beginning</strong> and says “Search continued from the start; F3 finds the next match” — that message means you have been all the way round.</li>
+          <li>With no match anywhere: “No match found”, and the cursor does not move.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">How to tell how far you have got</span>
+          <p>Erya does not display “match 3 of 12”. Read the message row instead: “Match found” means you are still moving forwards; <strong>“Search continued from the start” means you have wrapped</strong>.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.3.3</span>
+        <h2>Replace: <kbd>Ctrl+R</kbd></h2>
+        <p class="dek">Two questions: what to find, then what to put in its place.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter confirm  Esc cancel  ←/→ move caret  Backspace/Delete edit</div>
+            <div class="s-msg ask">Replace: search for: 2025<em> </em></div>
+          </div>
+        </div>
+        <div class="screen-scroll" style="margin-top:10px">
+          <div class="screen">
+            <div class="s-bar"> Enter/F5 replace next  F6 replace all  Esc cancel</div>
+            <div class="s-msg ask">Replace with: 2026<em> </em></div>
+          </div>
+        </div>
+
+        <p>Notice that <strong>the hint bar changes</strong> for the second input: you now have three choices.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Enter</kbd> or <kbd>F5</kbd></td><td>Replaces the next match and returns to editing.</td></tr>
+            <tr><td><kbd>F6</kbd></td><td><strong>Replaces every match in the document</strong> and reports the count.</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Cancels; nothing changes.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Identical search and replacement text is refused</span>
+          <p>Erya will not do the work for nothing: “Search and replacement text are identical; document unchanged”. In practice that usually means one of the two has a typo.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.3.4</span>
+        <h2><kbd>F5</kbd> replaces next, <kbd>F6</kbd> replaces all</h2>
+        <p class="dek">The terms are remembered per tab, so you can keep going.</p>
+
+        <ul>
+          <li>After one replacement, <kbd>F5</kbd> continues with <strong>the same pair of strings</strong>; nothing to retype.</li>
+          <li><kbd>F6</kbd> finishes off everything that is left in one go.</li>
+          <li>Pressing <kbd>F5</kbd> or <kbd>F6</kbd> before any terms are set opens the replace input for you.</li>
+          <li>Replacement wraps at the end of the document too: “Replaced 1 match from the start”.</li>
+          <li>With nothing left to change: “No replaceable match found”.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">Replace-with-confirmation, the Erya way</span>
+          <p>There is no “ask me each time” mode, but <kbd>F3</kbd> and <kbd>F5</kbd> together are one: <strong><kbd>F3</kbd> to look at the next match, <kbd>F5</kbd> to replace it, or <kbd>F3</kbd> again to skip</strong>. Both keys share the same search terms.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.3.5</span>
+        <h2>The six things the message row says</h2>
+        <p class="dek">Almost all feedback from search and replace lands in the last row.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:46%">Message</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Match found; F3 finds the next match</td><td>Found it, and the cursor has moved there.</td></tr>
+            <tr><td>Search continued from the start; F3 finds the next match</td><td>Found it, <strong>but the search has wrapped</strong>.</td></tr>
+            <tr><td>No match found</td><td>Nowhere in the document. Check case and full-width characters.</td></tr>
+            <tr><td>Search text cannot be empty</td><td>You pressed <kbd>Enter</kbd> on an empty input.</td></tr>
+            <tr><td>Search and replacement text are identical; document unchanged</td><td>Both fields are the same.</td></tr>
+            <tr><td>Replaced 1 match; F5 replaces next, F6 replaces all<br>Replaced all N matches</td><td>It worked, and it reminds you what to press next.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.3.6</span>
+        <h2>Undoing a replacement</h2>
+        <p class="dek"><kbd>Ctrl+Z</kbd>, but know how big one step is.</p>
+
+        <ul>
+          <li><strong>A single replacement (<kbd>F5</kbd>)</strong>: one <kbd>Ctrl+Z</kbd> puts it back.</li>
+          <li><strong>Replace all (<kbd>F6</kbd>)</strong>: <strong>the whole batch is one step</strong>, so one <kbd>Ctrl+Z</kbd> reverts all of it.</li>
+          <li><kbd>Ctrl+Y</kbd> redoes it afterwards.</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">Think before replacing everything</span>
+          <p><kbd>F6</kbd> neither asks nor previews — it simply does it. <strong>When you are unsure, walk the matches with <kbd>F3</kbd> first</strong>, particularly if the search string is short. If it does go wrong, <kbd>Ctrl+Z</kbd> is there, provided you have not saved and left.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.3.7</span>
+        <h2>Common problems</h2>
+        <p class="dek">The five misunderstandings that come up most.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>The text is there but is not found</td><td>Different case, or full-width versus half-width. Matching is exact (2.3.1).</td></tr>
+            <tr><td>You wanted to use <span class="path">.*</span></td><td>Regular expressions are not supported; those characters are searched for literally.</td></tr>
+            <tr><td>It keeps finding the same place</td><td>The search has wrapped. Look for “Search continued from the start” (2.3.2).</td></tr>
+            <tr><td>You only want to replace inside a selection</td><td>Not supported. Work through it with <kbd>F3</kbd> and <kbd>F5</kbd> (2.3.4).</td></tr>
+            <tr><td>The replacement was wrong</td><td><kbd>Ctrl+Z</kbd>. Replace-all reverts as a single step (2.3.6).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

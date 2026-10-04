@@ -1,0 +1,309 @@
+      <!-- ══════════ 2.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.1.1</span>
+        <h2>Four ways to open a file</h2>
+        <p class="dek">Bring it in from the command line, or fetch it from inside the editor.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">Method</th><th>How it behaves</th></tr></thead>
+          <tbody>
+            <tr><td>Name it at startup</td><td><span class="path">erya a.txt b.txt</span> — one tab per file, starting on the first (see 1.2.5).</td></tr>
+            <tr><td><kbd>Ctrl+O</kbd> file dialog</td><td>A directory listing you navigate with the arrow keys; the file you choose <strong>opens in a new tab</strong>.</td></tr>
+            <tr><td><kbd>Ctrl+N</kbd> new tab</td><td>A blank, untitled document; you name it on the first save.</td></tr>
+            <tr><td><kbd>F12</kbd> Save As</td><td>Saves the current text under a different name. <strong>Afterwards the tab follows the new file</strong>; the original stays on disk, untouched by this tab.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">The same file never opens twice</span>
+          <p>If the path is already open in a tab, Erya <strong>switches to it</strong> and says “report.txt is already open in a tab”. That prevents the classic disaster of two tabs each holding half your edits and overwriting each other.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.1.2</span>
+        <h2>Using the file dialog</h2>
+        <p class="dek">Five keys are enough: up, down, in, up a level, cancel.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ Open file │ /home/user/docs</div>
+            <div class="s-bar">↑/↓ select  Enter/→ open  ←/Backspace parent  Esc/Q cancel</div>
+            <div class="s-body">    ┌────────────────────────────────────────────┐
+    │   📂 ..                                    │
+    │   📂 archive                               │
+    │<u>▶  📂 drafts                                </u>│
+    │      report.txt                            │
+    │      appendix.md                           │
+    │      nginx.conf                            │
+    └────────────────────────────────────────────┘</div>
+            <div class="s-status"> /home/user/docs │ 3/6 </div>
+            <div class="s-msg">↑/↓ select  Enter/→ open  ←/Backspace parent  Esc/Q cancel</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Move the selection. The list scrolls when it is taller than the panel.</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>Move a page at a time.</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>Jump to the top or bottom of the list.</td></tr>
+            <tr><td><kbd>Enter</kbd> or <kbd>→</kbd></td><td>Enter a directory, or open a file.</td></tr>
+            <tr><td><kbd>←</kbd> or <kbd>Backspace</kbd></td><td>Go up one level. <strong>The directory you just left stays selected.</strong></td></tr>
+            <tr><td><kbd>Esc</kbd> or <kbd>Q</kbd></td><td>Cancel and return to editing.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>Directories are marked <span class="path">📂</span>; files have a blank marker, so directories visually group together.</li>
+          <li>Sorting is <strong>directories first, then files</strong>, each alphabetically and case-insensitively.</li>
+          <li>The <span class="path">..</span> entry at the top is the parent, the same as <kbd>←</kbd>.</li>
+          <li>The selected row is <strong>black on grey with a ▶</strong>.</li>
+          <li>The status bar shows the current directory and “which of how many”.</li>
+          <li>The dialog opens in <strong>the directory of the current document</strong>; for an untitled document, the working directory.</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>Esc</kbd> cancels; it does not go up</span>
+          <p>This differs from most file browsers. <strong>Up one level is <kbd>←</kbd> or <kbd>Backspace</kbd>; <kbd>Esc</kbd> closes the dialog entirely.</strong> Erya's <kbd>Esc</kbd> means “leave this screen” everywhere, and this screen is no exception (see 1.3.7).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.1.3</span>
+        <h2>Tabs: new, switch, close</h2>
+        <p class="dek">Four keys, and you see the result in row 1.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">Key</th><th style="width:26%">Action</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+N</kbd></td><td>New blank tab</td><td>Creates an untitled document and switches to it.</td></tr>
+            <tr><td><kbd>F10</kbd></td><td>Next tab</td><td>Wraps around from the last to the first.</td></tr>
+            <tr><td><kbd>F9</kbd></td><td>Previous tab</td><td>Wraps the other way.</td></tr>
+            <tr><td><kbd>F11</kbd></td><td>Close this tab</td><td>Asks first if there are unsaved changes (see 2.1.8).</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Closing the last tab does not exit</span>
+          <p>Erya always keeps at least one tab. Close the last one and you are left with <strong>a fresh untitled document</strong>. To leave the program, press <kbd>Ctrl+X</kbd>.</p>
+        </div>
+
+        <p>On exit, Erya <strong>walks through every background tab</strong> looking for unsaved changes, switching to each one that has them and asking (S save / Y discard / N return) before it finally quits. “I thought I had saved, but the third tab was not” cannot happen.</p>
+      </section>
+
+      <!-- ══════════ 2.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.1.4</span>
+        <h2>What each tab remembers</h2>
+        <p class="dek">Almost everything is per tab; two things are shared.</p>
+
+        <div class="duo">
+          <div>
+            <h4>Per tab</h4>
+            <ul>
+              <li>Cursor and scroll position</li>
+              <li>The selection and its kind</li>
+              <li>Undo and redo history (100 steps each)</li>
+              <li>The last search and replacement text</li>
+              <li>Insert / overwrite mode</li>
+              <li>Line wrap on or off</li>
+              <li>Encoding and line endings</li>
+              <li>Paragraph width</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Shared by all tabs</h4>
+            <ul>
+              <li><strong>The clipboard</strong> — copy in tab A, paste in tab B</li>
+              <li><strong>Key profile and interface language</strong> — changing them in system settings applies to every tab at once (see 4.2.2)</li>
+            </ul>
+            <p style="margin-top:10px">Phrases and macros live <strong>in files</strong>; once loaded they apply to the current tab (see 2.4.5).</p>
+          </div>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">Moving text between files</span>
+          <p>Select in file A, <kbd>Ctrl+C</kbd>, <kbd>F10</kbd> to file B, <kbd>Ctrl+V</kbd>. Erya's clipboard is internal, though — <strong>it is not the system clipboard</strong>. To exchange text with other applications, use the terminal's own copy and paste (see 2.2.7).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.1.5</span>
+        <h2>Save and Save As</h2>
+        <p class="dek"><kbd>Ctrl+S</kbd> writes back; <kbd>F12</kbd> writes somewhere new.</p>
+
+        <ol class="rule-list">
+          <li><b>A document with a name</b>: <kbd>Ctrl+S</kbd> writes it, the message row says “Saved …”, and the asterisk in row 1 disappears.</li>
+          <li><b>An untitled document</b>: <kbd>Ctrl+S</kbd> <strong>opens the “Save as:” input automatically</strong>. Type a name and press <kbd>Enter</kbd>. You do not have to remember to press <kbd>F12</kbd> instead.</li>
+          <li><b>Save As</b>: <kbd>F12</kbd> pre-fills the current path; edit it and press <kbd>Enter</kbd>. <strong>Afterwards the tab belongs to the new file.</strong></li>
+        </ol>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter confirm  Esc cancel  ←/→ move caret  Backspace/Delete edit</div>
+            <div class="s-msg ask">Save as: /home/user/docs/report-backup.txt<em> </em></div>
+          </div>
+        </div>
+
+        <ul>
+          <li>The input supports <kbd>←</kbd> <kbd>→</kbd>, <kbd>Backspace</kbd>, and <kbd>Delete</kbd>, and scrolls for long paths.</li>
+          <li>An empty name is refused with “Filename cannot be empty”, and it asks again.</li>
+          <li>An existing directory as the target fails with “Cannot save a document as a directory”.</li>
+          <li>Directories in the path must already exist; <strong>Erya does not create them</strong>.</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 2.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.1.6</span>
+        <h2>What actually happens on save</h2>
+        <p class="dek">Nothing is written over the original; a temporary file is swapped in.</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 220" role="img" aria-label="The atomic save sequence">
+              <rect x="0" y="0" width="960" height="220" fill="#FAFBFD"/>
+              <defs><marker id="arrow21" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="30" y="52" width="190" height="80" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="125" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#12314F">① Temporary file</text>
+              <text x="125" y="106" text-anchor="middle" font-size="13" fill="#3F485D">in the same directory</text>
+
+              <rect x="260" y="52" width="190" height="80" rx="10" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="355" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#7A382F">② Flush</text>
+              <text x="355" y="106" text-anchor="middle" font-size="13" fill="#3F485D">really on the disk</text>
+
+              <rect x="490" y="52" width="190" height="80" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="585" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#7A5312">③ Rename</text>
+              <text x="585" y="106" text-anchor="middle" font-size="13" fill="#3F485D">one atomic step</text>
+
+              <rect x="720" y="52" width="210" height="80" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="825" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1E5C39">④ Permissions</text>
+              <text x="825" y="106" text-anchor="middle" font-size="13" fill="#3F485D">restored on Unix</text>
+
+              <path d="M220 92 L256 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+              <path d="M450 92 L486 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+              <path d="M680 92 L716 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+
+              <text x="480" y="176" text-anchor="middle" font-size="14.5" fill="#3F485D">If any step fails, the original is exactly as it was — there is never a half-written file</text>
+              <text x="480" y="200" text-anchor="middle" font-size="13.5" fill="#98A2B3">The temporary file must share the directory, because only then is the rename atomic</text>
+            </svg>
+          </div>
+          <figcaption><b>Figure 2.1.1</b>　The atomic save. Power loss, a full disk, or a killed process all leave the previous version intact.</figcaption>
+        </figure>
+
+        <ul>
+          <li><strong>The temporary file is always in the same directory as the original.</strong> So the directory itself must be writable — a writable file in a read-only directory cannot be saved.</li>
+          <li><strong>On Unix the original permissions are preserved.</strong> A <span class="path">chmod</span> you applied earlier is not reset, and the executable bit on a script survives.</li>
+          <li>Saving as UTF-8 streams the content in chunks, so large documents are not copied into memory just to be written.</li>
+          <li>The save also carries out any pending <strong>encoding and line-ending conversion</strong> (see 3.1.2).</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 2.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.1.7</span>
+        <h2>When another program changes the file</h2>
+        <p class="dek">Erya checks the disk every 250 ms; what happens next depends on whether you have edited.</p>
+
+        <div class="duo">
+          <div>
+            <h4>You have not edited (clean document)</h4>
+            <p><strong>It reloads automatically</strong> and says “External update detected; file safely reloaded”. What you see is always the current file.</p>
+            <p>Typical causes: another window just saved, or <span class="path">git pull</span> replaced the file.</p>
+          </div>
+          <div>
+            <h4>You have edited (unsaved changes)</h4>
+            <p><strong>Nothing of yours is overwritten.</strong> The message row warns “The file changed externally; confirmation is required before saving”, and the red confirmation appears when you press <kbd>Ctrl+S</kbd>.</p>
+            <p>Typical cause: you are editing and a colleague saved a version too.</p>
+          </div>
+        </div>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn"> File changed externally: [O]verwrite, [R]eload, [N/Esc] cancel</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">Key</th><th style="width:22%">Action</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>O</kbd></td><td>Overwrite</td><td>Your version wins. <strong>The changes on disk are gone.</strong></td></tr>
+            <tr><td><kbd>R</kbd></td><td>Reload</td><td>Discards your edits and reads the file again. <strong>What you typed is gone.</strong></td></tr>
+            <tr><td><kbd>N</kbd> / <kbd>Esc</kbd></td><td>Cancel</td><td>Nothing happens. Both versions still exist, so you can save yours elsewhere and deal with it calmly.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">When in doubt: <kbd>N</kbd>, then <kbd>F12</kbd></span>
+          <p>Both <kbd>O</kbd> and <kbd>R</kbd> throw one side away, and <strong>neither can be undone</strong>. The safe move is <kbd>N</kbd> to cancel, <kbd>F12</kbd> to save your version under a new name, and then <kbd>F4</kbd> to merge the two with the comparison view (see 3.4).</p>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">An automatic reload clears the undo history</span>
+          <p>After a clean document is reloaded, <strong>the undo and redo history is cleared too</strong> — those steps applied to the old content and would do damage if replayed onto the new. It is deliberate, but it startles everyone the first time.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">2.1.8</span>
+        <h2>Leaving with unsaved changes</h2>
+        <p class="dek">Two situations stop you, both answered with S / Y / N.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn"> Unsaved document: S save and exit / Y discard / N return</div>
+            <div class="s-msg warn"> Unsaved tab: S save and close / Y discard / N return</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>S</kbd></td><td>Save first, then exit or close. An unnamed document is asked for a name.</td></tr>
+            <tr><td><kbd>Y</kbd></td><td><strong>Discard the changes</strong> and go. Nothing recovers them after this.</td></tr>
+            <tr><td><kbd>N</kbd> / <kbd>Esc</kbd></td><td>Cancel and return to editing.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Y does not mean “yes”; it means “discard”</span>
+          <p>Answering a question with a reflexive <kbd>Y</kbd> is the single easiest way to lose work. <strong>In Erya, <kbd>Y</kbd> always means “discard changes”</strong> — to save, press <kbd>S</kbd>. All three confirmations spell out every letter on the same row; read it first.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">2.1.9</span>
+        <h2>Common problems</h2>
+        <p class="dek">The six that come up most often around opening and saving.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>“Save failed: Permission denied”</td><td>The file or <strong>its directory</strong> is not writable. The atomic save needs to create a temporary file in that directory (2.1.6).</td></tr>
+            <tr><td>“Save failed: No such file or directory”</td><td>A directory in the path does not exist. Create it first with <span class="path">mkdir -p</span>.</td></tr>
+            <tr><td>“Cannot save a document as a directory”</td><td>Save As was given an existing directory. Add a filename.</td></tr>
+            <tr><td>“Filename cannot be empty”</td><td>You pressed <kbd>Enter</kbd> on an empty input; it simply asks again.</td></tr>
+            <tr><td>You edited the wrong version</td><td>The file changed externally and you missed the warning. Press <kbd>N</kbd> and save a copy (2.1.7).</td></tr>
+            <tr><td>Undo suddenly does nothing</td><td>The document was just reloaded automatically, which clears the history (2.1.7).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

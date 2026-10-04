@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.2 Large files and live logs | Erya Manual</title>
+<style>
+  :root {
+    /* 墨藍 × 朱砂：《漢書》刻本的色感，畫面示意圖仍用爾雅實際的終端配色 */
+    --primary: #1F4E79;
+    --primary-hover: #1A4268;
+    --primary-deep: #12314F;
+    --primary-soft: #E8EFF7;
+    --primary-line: #C7D8EA;
+    --teal: #9B4B3F;
+    --teal-soft: #F6EBE9;
+    --teal-line: #E6CCC7;
+    --gold: #C08A2E;
+    --gold-soft: #FBF3E3;
+    --gold-line: #EDD9AE;
+    --gold-ink: #7A5312;
+    --success: #2E7D4F;
+    --success-soft: #E8F2EB;
+    --success-ink: #1E5C39;
+    --warning: #E8943A;
+    --warning-soft: #FDF1E3;
+    --danger: #B33A3A;
+    --danger-soft: #FBEDEC;
+    --danger-line: #EFCFCC;
+    --danger-ink: #8C2B2B;
+    --purple: #6B5B95;
+    --purple-soft: #EFECF6;
+    --purple-line: #D6CFE6;
+    --purple-ink: #4C3F72;
+
+    --ink: #161C2E;
+    --text: #3F485D;
+    --soft: #667085;
+    --muted: #98A2B3;
+    --canvas: #E9EDF4;
+    --surface: #FFFFFF;
+    --surface-soft: #FAFBFD;
+    --line: #E8ECF2;
+    --line-strong: #D9E0E9;
+
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-card: 0 2px 10px rgba(40, 55, 95, .055);
+    --shadow-hover: 0 10px 26px rgba(40, 55, 95, .10);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--text);
+    background: var(--canvas);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC",
+      "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--primary-deep); }
+  strong { color: var(--ink); font-weight: 700; }
+
+  /* ── 版面 ───────────────────────────── */
+  .layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    min-height: 100vh;
+    transition: grid-template-columns .22s ease;
+  }
+  .layout.nav-collapsed { grid-template-columns: 0 minmax(0, 1fr); }
+  .layout.nav-collapsed .sidebar { opacity: 0; pointer-events: none; }
+
+  .side-toggle {
+    position: fixed; top: 14px; left: 14px; z-index: 40;
+    width: 36px; height: 36px; display: grid; place-items: center;
+    color: #fff; background: rgba(14, 22, 38, .82);
+    border: 1px solid rgba(255,255,255,.18); border-radius: 9px;
+    cursor: pointer; font-size: 16px; line-height: 1;
+  }
+  .side-toggle:hover { background: rgba(14, 22, 38, .95); }
+
+  /* ── 側欄 ───────────────────────────── */
+  .sidebar {
+    position: sticky; top: 0; height: 100vh; overflow: auto;
+    padding: 24px 18px 40px; color: #C6D4EA;
+    background:
+      radial-gradient(circle at 16% 6%, rgba(31, 78, 121, .46), transparent 40%),
+      linear-gradient(180deg, #18243E, #0E1626);
+    transition: opacity .18s ease;
+  }
+  .brand { display: flex; gap: 12px; align-items: center; margin: 6px 0 18px; padding-left: 44px; }
+  .brand-mark {
+    display: grid; place-items: center; width: 42px; height: 42px; flex: none;
+    color: #fff; font-weight: 800; font-size: 15px; border-radius: 12px;
+    background: linear-gradient(135deg, #1F4E79, #9B4B3F);
+    box-shadow: 0 8px 20px rgba(31, 78, 121, .38);
+  }
+  .brand strong { display: block; color: #fff; font-size: 15px; line-height: 1.4; }
+  .brand span { display: block; color: #7E93B5; font-size: 12.5px; }
+
+  .search-wrap { position: relative; margin: 10px 2px 6px; }
+  .search-wrap input {
+    width: 100%; padding: 10px 34px 10px 34px; color: #fff;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 9px; font-size: 14.5px; font-family: inherit; outline: none;
+  }
+  .search-wrap input::placeholder { color: #7E93B5; }
+  .search-wrap input:focus { border-color: rgba(47,128,232,.9); background: rgba(255,255,255,.12); }
+  .search-ico { position: absolute; left: 11px; top: 9px; color: #7E93B5; font-size: 15px; }
+  .search-kbd {
+    position: absolute; right: 9px; top: 10px; color: #7E93B5;
+    font-size: 11.5px; letter-spacing: .04em; pointer-events: none;
+  }
+  .search-stat { margin: 6px 4px 0; color: #8FA6C6; font-size: 12.5px; min-height: 18px; }
+  .search-stat b { color: #D9A441; font-weight: 700; }
+  .search-nav { display: inline-flex; gap: 4px; margin-left: 6px; }
+  .search-nav button {
+    padding: 0 6px; color: #C6D4EA; background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.14); border-radius: 5px;
+    font-size: 11.5px; cursor: pointer; font-family: inherit;
+  }
+  .search-nav button:hover { background: rgba(255,255,255,.2); }
+
+  .jump { margin: 8px 0 4px; padding: 8px; background: rgba(47,128,232,.14);
+          border: 1px solid rgba(47,128,232,.3); border-radius: 9px; }
+  .jump.hidden { display: none; }
+  .jump-label { color: #8FA6C6; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; margin: 0 4px 4px; }
+  .jump a { display: block; padding: 5px 8px; color: #DCE7F7; border-radius: 6px;
+            font-size: 13.5px; text-decoration: none; }
+  .jump a:hover { background: rgba(255,255,255,.12); color: #fff; }
+  .jump a i { font-style: normal; color: #D9A441; font-weight: 700; margin-right: 6px; }
+
+  .toc-part {
+    margin: 18px 8px 6px; color: #6E86AC; font-size: 11px;
+    font-weight: 800; letter-spacing: .14em;
+  }
+  .toc { display: grid; gap: 2px; }
+  .toc a {
+    display: flex; gap: 8px; align-items: baseline; padding: 6px 9px;
+    color: #AFC2DD; border-radius: 7px; font-size: 13.5px; line-height: 1.5;
+    text-decoration: none; transition: .15s ease;
+  }
+  .toc a i { font-style: normal; color: #7E93B5; font-size: 12px; font-variant-numeric: tabular-nums; flex: none; width: 26px; }
+  .toc a:hover { color: #fff; background: rgba(255,255,255,.09); }
+  .toc a.current { color: #fff; background: rgba(47,128,232,.28); font-weight: 700; }
+  .toc a.current i { color: #D9A441; }
+  .toc a.pending { color: #7E93B5; }
+  .toc a.pending::after { content: "草稿中"; margin-left: auto; color: #5D7196; font-size: 11px; }
+  .toc a.hit-kw { box-shadow: inset 0 0 0 1px rgba(245,166,35,.55); }
+
+  .sub-toc { display: grid; gap: 1px; margin: 2px 0 2px 26px; padding-left: 10px;
+             border-left: 1px solid rgba(255,255,255,.14); }
+  .sub-toc a { padding: 4px 8px; color: #96AAC9; font-size: 12.5px; }
+  .sub-toc a.active { color: #fff; background: rgba(255,255,255,.12); }
+
+  .side-note {
+    margin-top: 22px; padding: 12px; color: #96AAC9; background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08); border-radius: 10px; font-size: 12.5px; line-height: 1.7;
+  }
+
+  /* ── 主內容 ─────────────────────────── */
+  main { min-width: 0; grid-column: 2; }
+  .hero {
+    position: relative; overflow: hidden; color: #fff;
+    padding: 58px clamp(24px, 5vw, 70px) 46px;
+    background: linear-gradient(118deg, #0A2430, #1F4E79 58%, #9B4B3F);
+  }
+  .hero::after {
+    content: ""; position: absolute; width: 420px; height: 420px; right: -130px; top: -190px;
+    border: 62px solid rgba(255,255,255,.08); border-radius: 50%;
+  }
+  .hero::before {
+    content: ""; position: absolute; width: 220px; height: 220px; right: -30px; top: -100px;
+    border: 24px solid rgba(245,166,35,.20); border-radius: 50%;
+  }
+  .eyebrow {
+    display: inline-flex; gap: 8px; align-items: center; padding: 6px 12px;
+    color: #EAF2FC; background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.24); border-radius: 999px;
+    font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
+  }
+  .hero h1 {
+    max-width: 900px; margin: 18px 0 14px; font-weight: 800;
+    font-size: clamp(28px, 4.2vw, 46px); line-height: 1.24; letter-spacing: .01em;
+  }
+  .hero h1 em { font-style: normal; color: #FFD98E; }
+  .hero p { max-width: 780px; margin: 0; color: #DDEAFB; font-size: clamp(15px, 2vw, 17px); }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+  .hero-meta span {
+    padding: 6px 11px; background: rgba(8, 24, 46, .30); border-radius: 8px;
+    font-size: 12.5px; font-variant-numeric: tabular-nums;
+  }
+
+  .content { padding: 34px clamp(16px, 3vw, 46px) 80px; }
+  section {
+    scroll-margin-top: 18px; margin: 0 0 18px; padding: clamp(22px, 3.4vw, 38px);
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
+  }
+  .sec-no {
+    display: inline-block; padding: 2px 9px; color: #fff; background: var(--primary);
+    border-radius: 6px; font-size: 12.5px; font-weight: 800;
+    letter-spacing: .06em; font-variant-numeric: tabular-nums;
+  }
+  h2 { margin: 10px 0 6px; color: var(--ink); font-weight: 800;
+       font-size: clamp(20px, 2.7vw, 27px); line-height: 1.35; }
+  h3 { margin: 26px 0 6px; color: var(--ink); font-weight: 800; font-size: 17.5px; }
+  .dek { margin: 0 0 18px; color: var(--soft); font-size: 14.5px; }
+  p { margin: 10px 0 14px; max-width: 88ch; }
+  section ul, section ol { max-width: 88ch; margin: 10px 0 16px; padding-left: 22px; }
+  section li { margin-bottom: 7px; }
+  section ul li::marker { color: var(--primary); }
+  section ol li::marker { color: var(--primary); font-weight: 700; }
+
+  .path {
+    display: inline-block; padding: 1px 7px; color: var(--primary-deep);
+    background: var(--primary-soft); border: 1px solid var(--primary-line);
+    border-radius: 5px; font-size: .93em; white-space: nowrap;
+  }
+  .term { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--gold-line); }
+
+  .callout {
+    position: relative; margin: 18px 0; padding: 15px 18px 15px 20px; max-width: 92ch;
+    background: var(--primary-soft); border: 1px solid var(--primary-line);
+    border-radius: var(--radius-md);
+  }
+  .callout::before {
+    content: ""; position: absolute; left: 0; top: 14px; bottom: 14px;
+    width: 4px; background: var(--primary); border-radius: 0 4px 4px 0;
+  }
+  .callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
+  .callout p:first-child { margin-top: 0; }
+  .callout .co-title { display: block; margin-bottom: 4px; color: var(--primary-deep); font-weight: 800; }
+  .callout.warn { background: var(--danger-soft); border-color: var(--danger-line); }
+  .callout.warn::before { background: var(--danger); }
+  .callout.warn .co-title { color: var(--danger-ink); }
+  .callout.tip { background: var(--gold-soft); border-color: var(--gold-line); }
+  .callout.tip::before { background: var(--gold); }
+  .callout.tip .co-title { color: var(--gold-ink); }
+  .callout.ok { background: var(--success-soft); border-color: #C3DECD; }
+  .callout.ok::before { background: var(--success); }
+  .callout.ok .co-title { color: var(--success-ink); }
+
+  figure { margin: 26px calc(-1 * clamp(10px, 1.8vw, 20px)); }
+  .fig-frame {
+    padding: 16px clamp(8px, 1.6vw, 20px); background: var(--surface-soft);
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    overflow-x: auto;
+  }
+  /* 圖不縮小：viewBox 寬 960，min-width 鎖住 1:1，寧可橫向捲動也不讓字變小 */
+  .fig-frame svg { display: block; width: 100%; min-width: 960px; height: auto; }
+  figcaption { margin-top: 10px; color: var(--soft); font-size: 14px; line-height: 1.7; }
+  figcaption b { color: var(--ink); }
+
+  table { width: 100%; margin: 18px 0; border-collapse: collapse; font-size: 15px; }
+  th, td { padding: 10px 12px; text-align: left; vertical-align: top;
+           border-bottom: 1px solid var(--line); }
+  thead th { color: var(--ink); background: var(--surface-soft); font-weight: 800;
+             border-bottom: 2px solid var(--line-strong); }
+  tbody tr:hover { background: #FBFCFE; }
+  .tbl-wrap { overflow-x: auto; }
+
+  .role-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin: 20px 0; }
+  .role-card { padding: 18px; background: var(--surface-soft); border: 1px solid var(--line);
+               border-top: 4px solid var(--primary); border-radius: var(--radius-md); }
+  .role-card.mgr { border-top-color: var(--purple); }
+  .role-card.hr { border-top-color: var(--teal); }
+  .role-card h4 { margin: 0 0 2px; color: var(--ink); font-size: 17px; font-weight: 800; }
+  .role-card .who { margin: 0 0 10px; color: var(--soft); font-size: 13.5px; }
+  .role-card ul { margin: 0 0 10px; padding-left: 20px; font-size: 14.5px; }
+  .role-card li { margin-bottom: 4px; }
+  .role-card .go { color: var(--primary-deep); font-size: 13.5px; font-weight: 700; }
+
+  .rule-list { counter-reset: rule; list-style: none; padding: 0; margin: 20px 0; max-width: 92ch; }
+  .rule-list li {
+    counter-increment: rule; position: relative; margin: 0 0 10px;
+    padding: 14px 16px 14px 56px; background: var(--surface-soft);
+    border: 1px solid var(--line); border-radius: var(--radius-md);
+  }
+  .rule-list li::before {
+    content: counter(rule); position: absolute; left: 16px; top: 14px;
+    display: grid; place-items: center; width: 28px; height: 28px;
+    color: #fff; background: var(--primary); border-radius: 8px;
+    font-size: 14px; font-weight: 800;
+  }
+  .rule-list b { display: block; color: var(--ink); font-size: 16px; }
+
+  .pager { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;
+           margin-top: 22px; padding: 0 4px; }
+  .pager a {
+    flex: 1 1 260px; padding: 14px 18px; color: var(--text); background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card); text-decoration: none; transition: .16s ease;
+  }
+  .pager a:hover { border-color: var(--primary-line); box-shadow: var(--shadow-hover); }
+  .pager span { display: block; color: var(--soft); font-size: 12.5px; }
+  .pager b { color: var(--ink); font-size: 16px; }
+  .pager .next { text-align: right; }
+
+  mark.hit { background: #FFE9B8; color: inherit; border-radius: 3px; padding: 0 1px; }
+  mark.hit.cur { background: var(--gold); color: #fff; box-shadow: 0 0 0 3px rgba(245,166,35,.3); }
+  .svg-hit { fill: #B4530B !important; font-weight: 800 !important; }
+
+
+  /* ── 畫面 Mockup：用 HTML 重畫系統畫面（不是截圖，圖上的字可搜尋、可選取） ── */
+  .mock-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .mock { position: relative; min-width: 700px; background: var(--surface); border: 1px solid var(--line-strong);
+          border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; font-size: 14px; line-height: 1.55; }
+  .mock * { box-sizing: border-box; }
+  .mock-app { display: grid; grid-template-columns: 210px minmax(0, 1fr); }
+  .mock-side { position: relative; padding: 12px 10px; color: #C6D4EA; background: linear-gradient(180deg, #18243E, #0E1626); }
+  .mock-brand { display: flex; gap: 8px; align-items: center; padding: 4px 6px 12px; color: #fff; font-weight: 700; }
+  .mock-logo { display: grid; place-items: center; width: 28px; height: 28px; flex: none; color: #fff;
+               background: linear-gradient(135deg, #1F4E79, #9B4B3F); border-radius: 8px; font-size: 12px; font-weight: 800; }
+  .mock-field { display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 10px; color: var(--muted);
+                background: #fff; border: 1px solid var(--line-strong); border-radius: 8px; font-size: 13.5px; }
+  .mock-side .mock-field { color: #8FA6C6; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.16); }
+  .mock-menu { margin-top: 10px; display: grid; gap: 2px; }
+  .mock-mi { padding: 6px 10px; border-radius: 7px; font-size: 13.5px; }
+  .mock-mi.grp { color: #fff; font-weight: 700; }
+  .mock-mi.sub { padding-left: 24px; color: #AFC2DD; }
+  .mock-mi.cur { color: #fff; background: rgba(47,128,232,.34); font-weight: 700; }
+  .mock-sfoot { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,.14); font-size: 13px; }
+  .mock-sfoot .u { margin-top: 8px; color: #fff; }
+  .mock-sfoot .u small { display: block; color: #7E93B5; font-size: 11.5px; font-weight: 400; }
+  .mock-main { display: flex; flex-direction: column; min-width: 0; background: #EEF1F6; }
+  .mock-tabs { position: relative; display: flex; gap: 6px; align-items: center; padding: 8px 10px;
+               background: #fff; border-bottom: 1px solid var(--line); }
+  .mock-tab { padding: 5px 10px; color: var(--soft); background: var(--surface-soft); border: 1px solid var(--line);
+              border-radius: 7px; font-size: 13px; white-space: nowrap; }
+  .mock-tab.on { color: var(--primary-deep); background: var(--primary-soft); border-color: var(--primary-line); font-weight: 700; }
+  .mock-tab .x { color: var(--muted); margin-left: 5px; }
+  .mock-tab .pin { color: var(--primary); margin-right: 4px; }
+  .mock-closeall { margin-left: auto; color: var(--soft); font-size: 12.5px; }
+  .mock-body { position: relative; display: flex; min-width: 0; }
+  .mock-ws { position: relative; flex: 1; min-width: 0; margin: 12px; padding: 14px; background: #fff;
+             border: 1px solid var(--line); border-radius: 10px; }
+  .mock-toolbar { position: relative; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+  .mock-btn { display: inline-flex; gap: 5px; align-items: center; height: 32px; padding: 0 12px;
+              border: 1px solid transparent; border-radius: 8px; font-size: 13.5px; white-space: nowrap; }
+  .mock-btn.b-search { color: var(--primary-deep); background: var(--primary-soft); border-color: var(--primary-line); }
+  .mock-btn.b-save { color: #fff; background: var(--primary); }
+  .mock-btn.b-ok { color: #fff; background: var(--success); }
+  .mock-btn.b-cancel { color: var(--text); background: #fff; border-color: var(--line-strong); }
+  .mock-btn.b-void { color: var(--danger-ink); background: var(--danger-soft); border-color: var(--danger-line); }
+  .mock-btn.b-del { color: #fff; background: var(--danger); }
+  .mock-dot { display: inline-grid; place-items: center; min-width: 18px; height: 18px; margin-left: 4px; padding: 0 5px;
+              color: #fff; background: var(--danger); border-radius: 9px; font-size: 11.5px; font-weight: 700; }
+  .mock-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .mock-table th, .mock-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .mock-table th { color: var(--ink); background: #F5F8FC; font-weight: 700; }
+  .mock-pager { margin-top: 10px; color: var(--soft); font-size: 13px; }
+  .mock-num { position: absolute; z-index: 3; display: grid; place-items: center; width: 22px; height: 22px;
+              color: #fff; background: var(--gold); border-radius: 50%; box-shadow: 0 0 0 2px #fff;
+              font-size: 12.5px; font-weight: 800; }
+  .mock-drawer { position: relative; width: 290px; flex: none; padding: 14px; background: #fff;
+                 border-left: 1px solid var(--line-strong); box-shadow: -10px 0 24px rgba(40,55,95,.07); }
+  .mock-dtitle { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; color: var(--ink); font-weight: 700; }
+  .mock-dsum { margin-bottom: 10px; color: var(--soft); font-size: 12.5px; }
+  .mock-lbl { margin: 10px 0 4px; color: var(--soft); font-size: 12.5px; }
+  .mock-dfoot { display: flex; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .mock-login { display: grid; place-items: center; padding: 30px; background: #F4F6FA; }
+  .login-card { width: 330px; padding: 26px; background: #fff; border: 1px solid var(--line);
+                border-radius: 18px; box-shadow: var(--shadow-hover); text-align: center; }
+  .login-card .l-logo { display:inline-block; padding:6px 18px; color: var(--soft); background:var(--surface-soft); border:1px dashed var(--line-strong); border-radius:8px; font-size: 15px; font-weight: 700; letter-spacing: .06em; }
+  .login-card .l-title { margin-top: 14px; color: var(--ink); font-size: 17px; font-weight: 700; }
+  .login-card .l-sub { margin-bottom: 14px; color: var(--soft); font-size: 13px; }
+  .login-card .mock-field { margin-top: 10px; }
+  .login-card .l-btn { width: 100%; height: 38px; margin-top: 16px; justify-content: center; font-size: 15px; font-weight: 700; }
+  .login-card .l-ver { margin-top: 14px; color: var(--muted); font-size: 12px; }
+  .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin: 20px 0; }
+  .btn-cell { padding: 14px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .btn-cell .mock-btn { margin-bottom: 8px; }
+  .btn-cell p { margin: 0; color: var(--soft); font-size: 13.5px; line-height: 1.65; max-width: none; }
+  .btn-cell b { display: block; color: var(--ink); font-size: 14px; }
+  .mock-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+  .mock-phone { position: relative; width: 262px; flex: none; padding: 12px 10px; background: #fff;
+                border: 1px solid var(--line-strong); border-radius: 22px; box-shadow: var(--shadow-card); }
+  .mock-phone .ph-bar { display: flex; align-items: center; gap: 8px; padding: 6px 8px; color: var(--ink);
+                        border-bottom: 1px solid var(--line); font-weight: 700; font-size: 13.5px; }
+  .mock-phone .ph-crumb { padding: 6px 8px; color: var(--muted); font-size: 12px; }
+  .mock-acc { display: flex; align-items: center; justify-content: space-between; margin: 6px 8px; padding: 8px 10px;
+              color: var(--primary-deep); background: var(--primary-soft); border: 1px solid var(--primary-line); border-radius: 8px; font-size: 13.5px; }
+  .mock-card { margin: 6px 8px; padding: 10px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+  .mock-card b { display: block; color: var(--ink); font-size: 13.5px; }
+
+  /* ── Mockup 補充：樹狀、對話框、標籤 ── */
+  .mock-tree { padding: 4px 2px; }
+  .mock-tnode { display: flex; align-items: center; gap: 8px; margin: 5px 0; padding: 7px 10px;
+                background: #fff; border: 1px solid var(--line); border-radius: 8px; font-size: 13.5px; }
+  .mock-tnode.co { color: var(--primary-deep); background: var(--primary-soft); border-color: var(--primary-line); font-weight: 700; }
+  .mock-tnode.grp { border-style: dashed; }
+  .mock-tnode .who { margin-left: auto; color: var(--soft); font-size: 12.5px; }
+  .mock-i1 { margin-left: 26px; } .mock-i2 { margin-left: 52px; } .mock-i3 { margin-left: 78px; }
+  .chip { padding: 1px 8px; border-radius: 999px; font-size: 11.5px; white-space: nowrap; }
+  .chip.c1 { color: #7A5312; background: var(--gold-soft); border: 1px solid var(--gold-line); }
+  .chip.c2 { color: var(--primary-deep); background: var(--primary-soft); border: 1px solid var(--primary-line); }
+  .chip.c3 { color: var(--success-ink); background: var(--success-soft); border: 1px solid #C3DECD; }
+  .chip.c4 { color: var(--soft); background: var(--surface-soft); border: 1px solid var(--line-strong); }
+  .chip.c5 { color: var(--purple-ink); background: var(--purple-soft); border: 1px solid var(--purple-line); }
+  .mock-dialog { width: 430px; flex: none; background: #fff; border: 1px solid var(--line-strong);
+                 border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-hover); }
+  .mock-dlg-head { padding: 11px 14px; color: var(--primary-deep); background: var(--primary-soft);
+                   border-bottom: 1px solid var(--primary-line); font-weight: 700; }
+  .mock-frow { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; align-items: center; margin: 10px 14px; }
+  .mock-frow > span { color: var(--soft); font-size: 13px; text-align: right; }
+  .mock-frow > span em { font-style: normal; color: var(--danger); }
+  .mock-dlg-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--line); }
+  .mock-note { margin: 8px 14px 12px; color: var(--soft); font-size: 12.5px; }
+
+  /* ── Mockup 補充：月曆格 ── */
+  .mock-cal { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 5px; }
+  .mock-cal .h { padding: 4px 0; color: var(--soft); font-size: 12.5px; text-align: center; font-weight: 700; }
+  .mock-cell { min-height: 62px; padding: 5px 7px; background: #fff; border: 1px solid var(--line);
+               border-radius: 7px; font-size: 12.5px; }
+  .mock-cell .d { color: var(--muted); font-size: 11.5px; }
+  .mock-cell .s { display: inline-block; margin-top: 4px; padding: 1px 7px; border-radius: 5px; font-size: 12px; }
+  .mock-cell.off { background: var(--surface-soft); }
+  .mock-cell.hol { background: var(--danger-soft); border-color: var(--danger-line); }
+  .mock-cell.hol .d { color: var(--danger-ink); }
+
+  /* ── 字級縮放：main 用 zoom 放大，設定存在 localStorage，跨章沿用 ── */
+  main { zoom: var(--zoom, 1); }
+  .fontctl { display: flex; align-items: center; gap: 6px; margin: 10px 2px 2px; }
+  .fontctl .fc-label { color: #6E86AC; font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+  .fontctl button {
+    flex: none; min-width: 34px; height: 26px; padding: 0 8px; color: #C6D4EA;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 7px; font-family: inherit; font-size: 13px; line-height: 1; cursor: pointer;
+    transition: .15s ease;
+  }
+  .fontctl button:hover { color: #fff; background: rgba(255,255,255,.2); }
+  .fontctl .fc-val { flex: 1; min-width: 56px; color: #D9A441; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .fontctl .fc-val:hover { color: #fff; }
+  @media print { main { zoom: 1; } }
+
+  /* ── 圖說上的實際頁面連結 ── */
+  .fig-link { color: var(--primary-deep); text-decoration: none; border-bottom: 1px solid var(--primary-line); }
+  .fig-link:hover { color: var(--primary); border-bottom-color: var(--primary); }
+  .fig-link .ext { margin-left: 3px; font-size: .85em; opacity: .75; }
+  .baseurl { margin: 10px 2px 0; }
+  .baseurl .fc-label { display: block; margin-bottom: 4px; color: #6E86AC; font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+  .baseurl input {
+    width: 100%; padding: 6px 9px; color: #C6D4EA; background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16); border-radius: 7px;
+    font-family: inherit; font-size: 12px; outline: none;
+  }
+  .baseurl input:focus { color: #fff; border-color: rgba(47,128,232,.9); }
+  .baseurl small { display: block; margin-top: 4px; color: #6E86AC; font-size: 11px; line-height: 1.5; }
+
+  /* ── Mockup 補充：麵包屑、卡片標題列、Element 風格細節 ── */
+  .mock-crumb { padding: 7px 14px; color: var(--muted); background: #fff;
+                border-bottom: 1px solid var(--line); font-size: 13px; }
+  .mock-crumb b { color: var(--text); font-weight: 700; }
+  .mock-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .mock-cardhead { display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+                   padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .mock-cardhead .ttl { color: var(--ink); font-size: 14px; font-weight: 700; }
+  .mock-circle { display: inline-grid; place-items: center; width: 26px; height: 26px;
+                 color: var(--soft); background: #fff; border: 1px solid var(--line-strong);
+                 border-radius: 50%; font-size: 12px; }
+  .mock-count { margin-bottom: 8px; color: var(--soft); font-size: 13px; }
+  .mock-footnote { margin-top: 12px; color: var(--muted); font-size: 13px; }
+  .mock-table.bordered th, .mock-table.bordered td { border: 1px solid var(--line); }
+  .mock-empty { padding: 26px 0; color: var(--muted); text-align: center; }
+  .mock-ico { color: var(--primary); }
+  .mock-ico.del { color: var(--danger); }
+  .mock-sort { color: var(--muted); font-size: 11px; }
+
+  /* ── Mockup 補充：整合後台外殼（頂端列／白底全站選單／儀表板卡） ── */
+  .mock-topbar { display: flex; align-items: center; gap: 10px; padding: 11px 14px;
+                 background: #fff; border-bottom: 1px solid var(--line); }
+  .mock-topbar .logo { color: #C08A2E; font-size: 18px; font-weight: 800; font-style: italic; letter-spacing: .02em; }
+  .mock-topbar .sys { padding-left: 10px; color: #C08A2E; font-size: 13.5px; font-weight: 700;
+                      border-left: 1px solid var(--line); }
+  .mock-topbar .right { display: flex; align-items: center; gap: 9px; margin-left: auto;
+                        color: #C08A2E; font-size: 13.5px; font-weight: 700; }
+  .mock-avatar { display: grid; place-items: center; width: 26px; height: 26px; color: #fff;
+                 background: #C7CFDA; border-radius: 50%; font-size: 12px; font-weight: 700; }
+  .mock-side.light { color: var(--text); background: #fff; border-right: 1px solid var(--line); }
+  .mock-side.light .mock-mi { color: var(--text); }
+  .mock-side.light .mock-mi.cur { color: var(--primary-deep); background: var(--primary-soft); }
+  .mock-side.light .mock-mi.grp { color: var(--ink); }
+  .mock-sec { margin: 12px 6px 6px; padding-top: 9px; color: #E8943A; font-size: 11.5px;
+              font-weight: 800; text-align: center; border-top: 1px solid var(--line); }
+  .mock-dash { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .mock-dashcard { position: relative; padding: 14px 16px; background: #fff;
+                   border: 1px solid var(--line); border-radius: 10px; }
+  .mock-dashcard .k { color: var(--soft); font-size: 13px; }
+  .mock-dashcard .v { margin: 2px 0; color: var(--ink); font-size: 22px; font-weight: 800; }
+  .mock-dashcard .v small { color: var(--soft); font-size: 13px; font-weight: 400; }
+  .mock-dashcard .d { color: var(--muted); font-size: 12px; }
+  .mock-dashcard .ic { position: absolute; top: 14px; right: 14px; display: grid; place-items: center;
+                       width: 30px; height: 30px; border-radius: 8px; font-size: 14px; }
+  .mock-btn.b-export { color: #fff; background: #E8943A; }
+  .mock-btn.b-ghost { color: var(--text); background: #fff; border-color: var(--line-strong); }
+  .mock-btn.b-disabled { color: #fff; background: #A8CBF5; }
+  .mock-tag-cur { display: inline-block; padding: 3px 12px; color: #fff; background: var(--primary);
+                  border-radius: 7px; font-size: 13px; }
+  .mock-tag-alt { display: inline-block; padding: 3px 12px; color: var(--soft); border-radius: 7px; font-size: 13px; }
+  .mock-info { display: flex; gap: 8px; padding: 10px 12px; color: var(--text); background: var(--surface-soft);
+               border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+  .mock-hint { margin: 8px 0; color: var(--soft); font-size: 12.5px; line-height: 1.7; }
+
+  /* ── Mockup 補充：導入精靈（進度環、階段卡、檢核列） ── */
+  .mock-ring { display: grid; place-items: center; width: 64px; height: 64px; flex: none;
+               border: 5px solid var(--line); border-radius: 50%; color: var(--soft);
+               font-size: 14px; font-weight: 800; }
+  .mock-ring.on { border-color: var(--primary); color: var(--primary); }
+  .mock-stages { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; }
+  .mock-stage { position: relative; width: 190px; flex: none; padding: 12px 14px; background: #fff;
+                border: 1px solid var(--line); border-radius: 10px; }
+  .mock-stage.on { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary-line); }
+  .mock-stage h5 { margin: 0 0 6px; color: var(--ink); font-size: 14.5px; font-weight: 700; }
+  .mock-stage p { margin: 0 0 10px; color: var(--soft); font-size: 12.5px; line-height: 1.6; max-width: none; }
+  .mock-stage .cnt { position: absolute; top: 12px; right: 12px; padding: 1px 8px; color: var(--danger);
+                     background: var(--danger-soft); border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+  .mock-stage .miss { color: var(--danger); font-size: 12.5px; }
+  .mock-bar { height: 5px; margin: 8px 0; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .mock-bar span { display: block; height: 100%; background: var(--primary); }
+  .mock-stage .st { color: var(--danger); font-size: 12.5px; }
+  .mock-stage .st.ok { color: var(--success-ink); }
+  .mock-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; margin-top: 8px;
+               background: #fff; border: 1px solid var(--line); border-radius: 10px; }
+  .mock-item .no { display: grid; place-items: center; width: 26px; height: 26px; flex: none; color: #fff;
+                   background: var(--danger); border-radius: 50%; font-size: 13px; font-weight: 700; }
+  .mock-item .no.ok { background: var(--success); }
+  .mock-item b { color: var(--ink); font-size: 14.5px; }
+  .mock-item .tag { margin-left: 6px; padding: 1px 8px; color: var(--warning); background: var(--warning-soft);
+                    border-radius: 6px; font-size: 11.5px; }
+  .mock-item .tag.ok { color: var(--success-ink); background: var(--success-soft); }
+  .mock-item small { display: block; color: var(--soft); font-size: 12.5px; line-height: 1.6; }
+  .mock-btn.b-goto { color: #fff; background: var(--teal); }
+
+  @media (max-width: 900px) {
+    /* The fixed sidebar must not leave main in a zero-width grid column. */
+    .layout, .layout.nav-collapsed { display: block; }
+    .sidebar { position: fixed; top: 0; left: 0; z-index: 30; width: min(300px, 100vw); }
+    .layout:not(.nav-open) .sidebar { opacity: 0; pointer-events: none; }
+    .layout.nav-open .sidebar { opacity: 1; pointer-events: auto; }
+    .hero h1 { text-wrap: balance; }
+    .path { white-space: normal; overflow-wrap: anywhere; }
+    .role-grid, .duo { grid-template-columns: minmax(0, 1fr); }
+    .hero p, section p, section li { overflow-wrap: anywhere; }
+    .side-toggle { width: 44px; height: 44px; }
+  }
+  @media (max-width: 480px) {
+    .hero { padding: 72px 20px 30px; }
+    .content { padding: 20px 12px 48px; }
+    section { padding: 20px 16px; }
+    .eyebrow { border-radius: 12px; }
+  }
+  @media print {
+    .sidebar, .side-toggle, .pager { display: none; }
+    .layout { grid-template-columns: 1fr; }
+    section { break-inside: avoid; box-shadow: none; }
+    .hero { color: #000; background: none; }
+    .hero p, .hero-meta span { color: #333; }
+  }
+
+  /* ── 按鍵標示 ─────────────────────── */
+  kbd {
+    display: inline-block; padding: 1px 7px; margin: 0 1px;
+    color: var(--ink); background: #F4F6FA;
+    border: 1px solid var(--line-strong); border-bottom-width: 2px;
+    border-radius: 5px; white-space: nowrap;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .88em; font-weight: 600;
+  }
+  .callout kbd { background: #fff; }
+
+  /* ── 終端機畫面模擬：配色對齊爾雅實際輸出 ── */
+  .screen-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .screen {
+    min-width: 640px; overflow: hidden; background: #000;
+    border: 1px solid #16323F; border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas,
+      "Noto Sans Mono CJK TC", "Sarasa Mono TC", monospace;
+    font-size: 13px; line-height: 1.85; white-space: pre; tab-size: 8;
+  }
+  .screen > div { padding: 0 10px; }
+  .screen .s-title  { color: #fff;     background: #1D3E77; }
+  .screen .s-bar    { color: #06222B;  background: #34A6B6; }
+  .screen .s-body   { color: #5CC9D6;  background: #000; }
+  .screen .s-status { color: #06222B;  background: #34A6B6; }
+  .screen .s-msg    { color: #E4C23C;  background: #000; }
+  .screen .s-msg.warn { color: #F0736F; }
+  .screen .s-msg.ask  { color: #fff; }
+  .screen .s-body.pad { padding-top: 2px; padding-bottom: 2px; }
+  .screen b   { color: #BFF2F8; font-weight: 700; }
+  .screen i   { color: #35637A; font-style: normal; }     /* ~ 與說明字 */
+  .screen u   { color: #000; background: #C9CDD3; text-decoration: none; }  /* 選取／選取列 */
+  .screen s   { color: #000; background: #D6B34A; text-decoration: none; }  /* 差異／搜尋命中 */
+  .screen em  { color: #000; background: #5CC9D6; font-style: normal; }     /* 游標 */
+  .screen mark.hit { color: #000; background: #FFE08A; }
+  .screen-cap { margin-top: 10px; color: var(--soft); font-size: 14px; line-height: 1.7; }
+  .screen-cap b { color: var(--ink); }
+
+  /* ── 兩欄對照（配置 A／配置 B、之前／之後） ── */
+  .duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0; }
+  .duo > div { padding: 14px 16px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .duo h4 { margin: 0 0 8px; color: var(--ink); font-size: 15.5px; font-weight: 800; }
+  .duo p { margin: 0 0 8px; font-size: 14.5px; }
+  .duo p:last-child { margin-bottom: 0; }
+  .duo ul { margin: 0; padding-left: 20px; font-size: 14.5px; }
+
+  /* ── 側欄語言切換 ───────────────────── */
+  .lang-switch { display: flex; align-items: center; gap: 8px; margin: 14px 2px 0;
+                 padding-top: 12px; border-top: 1px solid rgba(255,255,255,.10); }
+  .lang-switch > div { display: flex; flex-wrap: wrap; gap: 6px; }
+  .lang-switch a, .lang-switch .cur {
+    padding: 2px 9px; border-radius: 7px; font-size: 12.5px; line-height: 1.7;
+    border: 1px solid rgba(255,255,255,.16); text-decoration: none;
+  }
+  .lang-switch a { color: #C6D4EA; background: rgba(255,255,255,.06); }
+  .lang-switch a:hover { color: #fff; background: rgba(255,255,255,.18); }
+  .lang-switch .cur { color: #0E1626; background: #D9A441; border-color: #D9A441; font-weight: 700; }
+</style>
+<script>
+/* 字級：在畫面繪製前先套用，避免閃動。設定跨章共用（同一個瀏覽器） */
+try { var _z = localStorage.getItem('eryaManualZoom'); if (_z) document.documentElement.style.setProperty('--zoom', _z); } catch (e) {}
+</script>
+
+</head>
+<body>
+<div class="layout" id="layout">
+  <button class="side-toggle" id="sideToggle" title="Show or hide the menu" aria-label="Show or hide the menu">☰</button>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">爾</div>
+      <div>
+        <strong>Erya Manual</strong>
+        <span>Terminal text editor · the user-facing edition</span>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input id="q" type="search" placeholder="Search this chapter and the whole manual…" autocomplete="off" spellcheck="false">
+      <span class="search-kbd">⌘K</span>
+    </div>
+    <div class="search-stat" id="stat">This chapter is fully searchable, including the text inside the screen mock-ups.</div>
+    <div class="fontctl">
+      <span class="fc-label">Text size</span>
+      <button type="button" data-fs="-" title="Smaller text">A－</button>
+      <button type="button" class="fc-val" data-fs="0" title="Click to return to 100%">100%</button>
+      <button type="button" data-fs="+" title="Larger text">A＋</button>
+    </div>
+
+    <div class="jump hidden" id="jump">
+      <div class="jump-label">Related chapters</div>
+      <div id="jumpList"></div>
+    </div>
+    <div class="toc-part">Part 1 · Getting to know Erya</div>
+    <nav class="toc">
+      <a href="Erya Manual・1.1・What This Editor Does.html" data-ch="1.1" data-kw="Erya overview scope terminal TUI who uses it life of a document how to read vim nano"><i>1.1</i>What this editor does</a>
+      <a href="Erya Manual・1.2・Installing and Starting.html" data-ch="1.2" data-kw="install download release archive target architecture PATH cargo install options environment variables TTY terminal"><i>1.2</i>Installing and starting</a>
+      <a href="Erya Manual・1.3・The Screen and Its Conventions.html" data-ch="1.3" data-kw="screen layout title bar tabs hint bar status bar message bar colours modes cursor F1 help confirmations"><i>1.3</i>The screen and its conventions</a>
+    </nav>
+    <div class="toc-part">Part 2 · Everyday editing</div>
+    <nav class="toc">
+      <a href="Erya Manual・2.1・Opening Tabs and Saving.html" data-ch="2.1" data-kw="open Ctrl+O file dialog directory tabs F9 F10 F11 new Ctrl+N save Ctrl+S save as F12 atomic save permissions external change conflict unsaved"><i>2.1</i>Opening, tabs, and saving</a>
+      <a href="Erya Manual・2.2・Moving Selecting and the Clipboard.html" data-ch="2.2" data-kw="cursor movement Home End PageUp PageDown Ctrl+G go to line selection Shift block selection Ctrl+B fill cut copy paste clipboard delete line insert overwrite grapheme full width"><i>2.2</i>Moving, selecting, and the clipboard</a>
+      <a href="Erya Manual・2.3・Search and Replace.html" data-ch="2.3" data-kw="search Ctrl+W Ctrl+F F3 find next wrap replace Ctrl+R F5 F6 replace all not found case sensitive"><i>2.3</i>Search and replace</a>
+      <a href="Erya Manual・2.4・Undo Phrases and Macros.html" data-ch="2.4" data-kw="undo Ctrl+Z redo Ctrl+Y 100 steps phrases macros record run JSON save load unbound"><i>2.4</i>Undo, phrases, and macros</a>
+    </nav>
+    <div class="toc-part">Part 3 · Advanced features</div>
+    <nav class="toc">
+      <a href="Erya Manual・3.1・Encodings Line Endings and Syntax.html" data-ch="3.1" data-kw="encoding UTF-8 BOM Big5 GBK Shift_JIS F7 line ending LF CRLF F8 detection conversion syntax highlighting Linux config format Ctrl+T TOML YAML JSON paragraph reflow"><i>3.1</i>Encodings, line endings, and syntax</a>
+      <a class="current" href="#top" data-ch="3.2" data-kw="large file 64 MiB read-only sparse index checkpoint memory log follow append truncate rotation external update reload"><i>3.2</i>Large files and live logs</a>
+      <div class="sub-toc" id="subToc">
+        <a href="#s1">3.2.1 When large-file mode kicks in</a>
+        <a href="#s2">3.2.2 What you can do in this mode</a>
+        <a href="#s3">3.2.3 How the memory is saved</a>
+        <a href="#s4">3.2.4 Following a growing log</a>
+        <a href="#s5">3.2.5 Truncation and rotation</a>
+        <a href="#s6">3.2.6 External changes to ordinary files</a>
+        <a href="#s7">3.2.7 The three external-change outcomes</a>
+        <a href="#s8">3.2.8 Common problems</a>
+      </div>
+      <a href="Erya Manual・3.3・Hexadecimal and Binary Editing.html" data-ch="3.3" data-kw="hexadecimal hex Ctrl+P offset 16 32 bytes W O G binary NUL byte editing insert overwrite I nibble streamed read-only"><i>3.3</i>Hexadecimal and binary editing</a>
+      <a href="Erya Manual・3.4・Side-by-Side Comparison.html" data-ch="3.4" data-kw="compare F4 left right differences alignment cursor N P Shift copy temporary apply overwrite exit WinMerge synchronised scrolling"><i>3.4</i>Side-by-side comparison</a>
+    </nav>
+    <div class="toc-part">Part 4 · Settings and reference</div>
+    <nav class="toc">
+      <a href="Erya Manual・4.1・Key Bindings.html" data-ch="4.1" data-kw="keymap TOML shortcuts custom Terminal Safe Classic nano vim emacs vscode conflict fallback editor save as disable ERYA_KEYMAP"><i>4.1</i>Key bindings</a>
+      <a href="Erya Manual・4.2・System Settings and Language.html" data-ch="4.2" data-kw="system settings F2 interface language ERYA_LANG locales translation English Japanese Chinese add a language fallback languages"><i>4.2</i>System settings and language</a>
+      <a href="Erya Manual・4.3・Troubleshooting.html" data-ch="4.3" data-kw="troubleshooting problems will not start cannot open cannot save keys do nothing garbled missing feature FAQ"><i>4.3</i>Troubleshooting</a>
+      <a href="Erya Manual・4.4・Key and Term Reference.html" data-ch="4.4" data-kw="reference shortcuts action names glossary terms appendix lookup"><i>4.4</i>Key and term reference</a>
+    </nav>
+    <div class="toc-part">At a glance</div>
+    <nav class="toc">
+      <a href="Erya Manual・Pitfalls at a Glance.html" data-ch="gotchas" data-kw="pitfalls gotchas traps checklist data loss irreversible silent order forgotten interface traps"><i>★</i>Pitfalls at a glance</a>
+    </nav>
+
+    <div class="side-note">
+      This manual describes the program as it is today; planned features are not covered. Shortcuts always follow the built-in <b style="color:#DCE7F7">Erya Terminal Safe</b> profile (see 4.1).<br>Search: <b style="color:#DCE7F7">⌘K / Ctrl+K</b> opens it, <b style="color:#DCE7F7">Enter</b> jumps to the next hit, <b style="color:#DCE7F7">Esc</b> clears it.
+    </div>
+    <div class="lang-switch">
+      <span class="fc-label">Language</span>
+      <div><a href="../tw/Erya使用手冊・3.2・大型檔案與即時日誌.html">正體中文</a><span class="cur">English</span><a href="../ja/Erya使用手引き・3.2・大容量ファイルとログ追跡.html">日本語</a></div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <header class="hero" id="top">
+      <span class="eyebrow">Part 3 · Advanced features / 3.2</span>
+      <h1>Large files <em>and live logs</em></h1>
+      <p>Files of 64 MiB or more are never loaded whole. Erya switches to a read-only reading mode and checks the file for changes every 250 milliseconds, which makes it a rather good log viewer.</p>
+      <div class="hero-meta">
+        <span>Reading time about 10 min</span>
+        <span>Audience Anyone reading big files or logs</span>
+        <span>Prerequisites 2.1</span>
+        <span>Version v1.0 ・ 2026-08-26</span>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- ══════════ 3.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.2.1</span>
+        <h2>When large-file mode kicks in</h2>
+        <p class="dek">There is one number: <strong>64 MiB</strong>.</p>
+
+        <p>If a file is 64 MiB or larger, Erya does not read it into memory. It switches to a <strong>read-only reading mode</strong> instead, says “Opened access.log in large-file read-only mode (512 MB)”, and the mode cell of the status bar reads <span class="path">Large file read-only</span>.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [access.log]</div>
+            <div class="s-bar"> F1 Help  Ctrl+S Save  Ctrl+W Search  Ctrl+R Replace  Ctrl+B Block  Ctrl+K Cut line  Ctrl+X Exit</div>
+            <div class="s-body">198.51.100.24 - - [26/Aug/2026:09:14:02 +0800] "GET /api/v1/orders HTTP/1.1" 200
+198.51.100.31 - - [26/Aug/2026:09:14:02 +0800] "POST /api/v1/login HTTP/1.1" 302
+203.0.113.10 - - [26/Aug/2026:09:14:03 +0800] "GET /static/app.js HTTP/1.1" 304</div>
+            <div class="s-status"> access.log │ 1284391:1 │ Large file read-only │ UTF-8 │ LF </div>
+            <div class="s-msg"> Opened access.log in large-file read-only mode (512 MB)</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Three kinds of big file take three different routes</span>
+          <ul>
+            <li><strong>A large UTF-8 text file</strong> → large-file read-only mode (this chapter).</li>
+            <li><strong>A large binary file</strong> → a streamed hexadecimal view, also read-only (see 3.3.8).</li>
+            <li><strong>A large non-UTF-8 text file</strong> (say a 200 MB Big5 export) → Erya cannot decode it as a stream, so it <strong>opens as a binary file in the hexadecimal view</strong>. Convert it to UTF-8 outside Erya if you need to edit it.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.2.2</span>
+        <h2>What you can do in this mode</h2>
+        <p class="dek">Read it, search it, copy from it — but not change it.</p>
+
+        <div class="duo">
+          <div>
+            <h4>Available</h4>
+            <ul>
+              <li>Scrolling, paging, <kbd>Ctrl+Home</kbd> / <kbd>Ctrl+End</kbd></li>
+              <li><kbd>Ctrl+G</kbd> to a line number</li>
+              <li><kbd>Ctrl+W</kbd> search and <kbd>F3</kbd></li>
+              <li>Selecting and <kbd>Ctrl+C</kbd></li>
+              <li><kbd>Ctrl+L</kbd> line wrap</li>
+              <li><kbd>Ctrl+P</kbd> hexadecimal view</li>
+              <li>New tabs, switching tabs, exiting</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Refused with “Large files use read-only mode and cannot be edited”</h4>
+            <ul>
+              <li>Typing, deleting, pasting, cutting, deleting lines</li>
+              <li>Save and Save As</li>
+              <li>Replace (<kbd>Ctrl+R</kbd> / <kbd>F5</kbd> / <kbd>F6</kbd>)</li>
+              <li>Undo and redo</li>
+              <li>Encoding and line-ending conversion (<kbd>F7</kbd> / <kbd>F8</kbd>)</li>
+              <li>Formatting, paragraph reflow, block fill and shift</li>
+              <li>Inserting phrases, running macros</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Two things simply do not happen here</span>
+          <ul>
+            <li><strong>No syntax highlighting.</strong> Highlighting needs to parse the whole file, so it is switched off on purpose.</li>
+            <li><strong>No side-by-side comparison.</strong> Choosing a large file with <kbd>F4</kbd> is refused: “Side-by-side comparison is unavailable in large-file mode to avoid loading the complete file into memory” (see 3.4.9).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.2.3</span>
+        <h2>How the memory is saved</h2>
+        <p class="dek">It keeps signposts, and reads a line from disk when the screen asks for it.</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 260" role="img" aria-label="The sparse line index">
+              <rect x="0" y="0" width="960" height="260" fill="#FAFBFD"/>
+
+              <rect x="40" y="40" width="880" height="52" rx="8" fill="#EFECF6" stroke="#D6CFE6" stroke-width="2"/>
+              <text x="60" y="72" font-size="14.5" font-weight="700" fill="#4C3F72">A 512 MB file on disk</text>
+              <text x="880" y="72" text-anchor="end" font-size="13" fill="#667085">scanned once, as a stream</text>
+
+              <g fill="#1F4E79">
+                <rect x="60" y="120" width="10" height="26" rx="2"/>
+                <rect x="230" y="120" width="10" height="26" rx="2"/>
+                <rect x="400" y="120" width="10" height="26" rx="2"/>
+                <rect x="570" y="120" width="10" height="26" rx="2"/>
+                <rect x="740" y="120" width="10" height="26" rx="2"/>
+                <rect x="898" y="120" width="10" height="26" rx="2"/>
+              </g>
+              <text x="60" y="166" font-size="12.5" fill="#12314F">line 1</text>
+              <text x="216" y="166" font-size="12.5" fill="#12314F">line 4097</text>
+              <text x="386" y="166" font-size="12.5" fill="#12314F">line 8193</text>
+              <text x="556" y="166" font-size="12.5" fill="#12314F">line 12289</text>
+              <text x="726" y="166" font-size="12.5" fill="#12314F">line 16385</text>
+              <text x="884" y="166" text-anchor="end" font-size="12.5" fill="#12314F">…</text>
+
+              <text x="480" y="200" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1F4E79">Memory holds only these checkpoints: one file offset every 4096 lines</text>
+              <text x="480" y="228" text-anchor="middle" font-size="13.5" fill="#3F485D">To show line 9000, start at the checkpoint for line 8193 and read 807 lines forward</text>
+              <text x="480" y="250" text-anchor="middle" font-size="13" fill="#98A2B3">No memory mapping is used, and a single very long line is previewed to at most 1 MiB</text>
+            </svg>
+          </div>
+          <figcaption><b>Figure 3.2.1</b>　The sparse line index. One scan on open builds the checkpoints; after that, lines are read as the screen needs them, so a 512 MB file does not exhaust memory. The mode has been tested with a 500 MiB file.</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 3.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.2.4</span>
+        <h2>Following a growing log</h2>
+        <p class="dek">Erya checks the file every 250 milliseconds, and new content simply appears.</p>
+
+        <p>This is where large-file mode earns its place: <strong>it is <span class="path">tail -f</span> that you can also search and scroll back through</strong>.</p>
+
+        <ol class="rule-list">
+          <li><b>Appends are cheap.</b> Erya rebuilds only the last incomplete line plus whatever is new; it does not rescan the file, so size does not slow it down.</li>
+          <li><b>The cursor at the end means follow.</b> Sitting at the end of the last line, new content pushes the view along. That is follow mode.</li>
+          <li><b>Move away and it holds still.</b> Scroll back to read something and the view stays where you are, undisturbed by new arrivals. Press <kbd>Ctrl+End</kbd> to resume following.</li>
+          <li><b>Updates are announced</b> with “External file update detected; content refreshed”.</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">The standard way to watch a log</span>
+          <p><span class="path">erya /var/log/nginx/access.log</span> → <kbd>Ctrl+End</kbd> to start following → <kbd>Ctrl+W</kbd> and <kbd>F3</kbd> when you need to find something → <kbd>Ctrl+End</kbd> again to resume. You never leave the editor.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.2.5</span>
+        <h2>Truncation and rotation</h2>
+        <p class="dek">When the file does not grow but is replaced.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">What happened on disk</th><th style="width:26%">What Erya does</th><th>Typical cause</th></tr></thead>
+          <tbody>
+            <tr><td>Content appended</td><td>Adds just the new part; fast</td><td>A service writing its log</td></tr>
+            <tr><td>File emptied (truncated)</td><td><strong>Reopens and rebuilds the index</strong></td><td><span class="path">&gt; access.log</span>, logrotate with copytruncate</td></tr>
+            <tr><td>File rewritten in place</td><td>Reopens and rebuilds the index</td><td>A report regenerated from scratch</td></tr>
+            <tr><td>File replaced (rotation)</td><td>Reopens and rebuilds the index</td><td>logrotate moving the old file aside</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">After a rotation you are looking at the new file</span>
+          <p>Erya follows <strong>the path</strong>. Once <span class="path">access.log</span> has been rotated, what you see is the new file (usually empty or very short); the old content is in <span class="path">access.log.1</span>. Open that in another tab if you need it.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.2.6</span>
+        <h2>External changes to ordinary files</h2>
+        <p class="dek">Small files are watched too; only the response differs.</p>
+
+        <p>The same 250 ms check runs for ordinary files. The difference is that ordinary files <strong>can be edited</strong>, so Erya has to know whether you have (the full account is in 2.1.7):</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">File type</th><th style="width:26%">You have not edited</th><th>You have edited</th></tr></thead>
+          <tbody>
+            <tr><td>Ordinary text file</td><td>Reloads automatically; <strong>undo history cleared</strong></td><td>Warns only, then asks with the red row (O/R/N) when you save</td></tr>
+            <tr><td>Large file</td><td>Refreshes automatically</td><td>Cannot happen — the mode does not allow edits</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.2.7</span>
+        <h2>The three external-change outcomes</h2>
+        <p class="dek">One table to consult when it happens.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Message row</th><th style="width:14%">Colour</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td>External update detected; file safely reloaded</td><td>Yellow</td><td>Nothing. You have the current content — but <strong>the undo history is gone</strong>.</td></tr>
+            <tr><td>External file update detected; content refreshed</td><td>Yellow</td><td>Nothing; the automatic refresh in large-file mode.</td></tr>
+            <tr><td>The file changed externally; confirmation is required before saving</td><td>Yellow</td><td>A warning only, nothing blocked yet. <strong>The question comes at save time.</strong></td></tr>
+            <tr><td>File changed externally: [O]verwrite, [R]eload, [N/Esc] cancel</td><td><b style="color:#8C2B2B">Red</b></td><td>A decision. When unsure press <kbd>N</kbd>, then <kbd>F12</kbd> to save a copy (2.1.7).</td></tr>
+            <tr><td>Failed to refresh external file: …</td><td>Yellow</td><td>The file was deleted, permissions changed, or the disk misbehaved. Check that it still exists.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.2.8</span>
+        <h2>Common problems</h2>
+        <p class="dek">Six questions about large-file mode.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>Typing does nothing; it says read-only</td><td>The file is past 64 MiB (3.2.2). To edit it, split it outside Erya or extract the part you need.</td></tr>
+            <tr><td>No syntax highlighting</td><td>Deliberately disabled in this mode (3.2.2).</td></tr>
+            <tr><td>The view keeps jumping to the end</td><td>The cursor is at the end, so it is following. Scroll back to stop it (3.2.4).</td></tr>
+            <tr><td>The view stopped updating</td><td>The cursor is no longer at the end. Press <kbd>Ctrl+End</kbd> (3.2.4).</td></tr>
+            <tr><td>The log suddenly went empty</td><td>Truncation or rotation; you are on the new file (3.2.5).</td></tr>
+            <tr><td>A large CJK file opened as hexadecimal</td><td>A large non-UTF-8 file cannot be decoded as a stream (3.2.1). Convert it to UTF-8 first.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <nav class="pager">
+        <a href="Erya Manual・3.1・Encodings Line Endings and Syntax.html">
+          <span>Previous chapter</span>
+          <b>← 3.1 Encodings, line endings, and syntax</b>
+        </a>
+        <a class="next" href="Erya Manual・3.3・Hexadecimal and Binary Editing.html">
+          <span>Next chapter</span>
+          <b>3.3 Hexadecimal and binary editing →</b>
+        </a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var layout = document.getElementById('layout');
+  var toggle = document.getElementById('sideToggle');
+  var main = document.getElementById('main');
+  var q = document.getElementById('q');
+  var stat = document.getElementById('stat');
+  var jump = document.getElementById('jump');
+  var jumpList = document.getElementById('jumpList');
+
+  /* ── 側欄收合 ─────────────────────── */
+  toggle.addEventListener('click', function () {
+    if (window.innerWidth <= 900) layout.classList.toggle('nav-open');
+    else layout.classList.toggle('nav-collapsed');
+  });
+
+  /* ── 捲動時標示目前小節 ───────────── */
+  var subLinks = Array.prototype.slice.call(document.querySelectorAll('#subToc a'));
+  var sections = subLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function spy() {
+    var y = window.scrollY + 140, cur = 0;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i] && sections[i].offsetTop <= y) cur = i;
+    }
+    subLinks.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  spy();
+
+  /* ── 字級縮放 ─────────────────────── */
+  var ZOOMS = [0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.25, 1.4, 1.6, 1.8, 2];
+  var zoomVal = 1;
+  try { var stored = parseFloat(localStorage.getItem('eryaManualZoom')); if (stored) zoomVal = stored; } catch (e) {}
+  var fcVal = document.querySelector('.fontctl .fc-val');
+
+  function applyZoom(v) {
+    zoomVal = v;
+    document.documentElement.style.setProperty('--zoom', String(v));
+    if (fcVal) fcVal.textContent = Math.round(v * 100) + '%';
+    try { localStorage.setItem('eryaManualZoom', String(v)); } catch (e) {}
+  }
+
+  function stepZoom(dir) {
+    var i = 1;
+    for (var k = 0; k < ZOOMS.length; k++) { if (Math.abs(ZOOMS[k] - zoomVal) < 0.001) i = k; }
+    applyZoom(ZOOMS[Math.min(ZOOMS.length - 1, Math.max(0, i + dir))]);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.fontctl button'), function (b) {
+    b.addEventListener('click', function () {
+      var d = b.getAttribute('data-fs');
+      if (d === '0') applyZoom(1); else stepZoom(d === '+' ? 1 : -1);
+    });
+  });
+  applyZoom(zoomVal);
+
+  /* 用 file:// 直接開檔時，部分瀏覽器不給用 localStorage
+     → 把字級掛在網址參數上，翻到下一章時帶過去 */
+  try {
+    var qz = parseFloat(new URLSearchParams(location.search).get('z'));
+    if (qz) applyZoom(qz);
+  } catch (e) {}
+
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (/^https?:/i.test(href) || !/\.html(\?|#|$)/i.test(href)) return;
+    var hash = href.indexOf('#') === -1 ? '' : href.slice(href.indexOf('#'));
+    var file = href.split('#')[0].split('?')[0];
+    a.setAttribute('href', file + '?z=' + zoomVal + hash);
+  }, true);
+
+  /* ── 搜尋 ─────────────────────────── */
+  var marks = [], cur = -1;
+  var chapters = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+
+  function clearHits() {
+    document.querySelectorAll('mark.hit').forEach(function (m) {
+      var t = document.createTextNode(m.textContent);
+      var p = m.parentNode;
+      p.replaceChild(t, m);
+      p.normalize();
+    });
+    document.querySelectorAll('.svg-hit').forEach(function (e) { e.classList.remove('svg-hit'); });
+    chapters.forEach(function (a) { a.classList.remove('hit-kw'); });
+    marks = []; cur = -1;
+  }
+
+  function inSvg(node) {
+    var p = node.parentNode;
+    while (p) { if (p.nodeName.toLowerCase() === 'svg') return true; p = p.parentNode; }
+    return false;
+  }
+
+  function highlight(term) {
+    var walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || n.nodeValue.indexOf(term) === -1) return NodeFilter.FILTER_REJECT;
+        var pn = n.parentNode.nodeName.toLowerCase();
+        if (pn === 'script' || pn === 'style' || pn === 'mark') return NodeFilter.FILTER_REJECT;
+        if (inSvg(n)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var targets = [], n;
+    while ((n = walker.nextNode())) targets.push(n);
+
+    targets.forEach(function (node) {
+      var parts = node.nodeValue.split(term);
+      var frag = document.createDocumentFragment();
+      parts.forEach(function (piece, i) {
+        if (i > 0) {
+          var m = document.createElement('mark');
+          m.className = 'hit';
+          m.textContent = term;
+          frag.appendChild(m);
+          marks.push(m);
+        }
+        if (piece) frag.appendChild(document.createTextNode(piece));
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+
+    /* SVG 內的文字不能包 mark，改標顏色 */
+    var svgHits = 0;
+    main.querySelectorAll('svg text').forEach(function (t) {
+      if (t.textContent.indexOf(term) !== -1) { t.classList.add('svg-hit'); svgHits++; }
+    });
+    return svgHits;
+  }
+
+  function matchChapters(term) {
+    var hits = [];
+    chapters.forEach(function (a) {
+      var ch = a.getAttribute('data-ch') || '';
+      var kw = (a.getAttribute('data-kw') || '') + ' ' + a.textContent + ' ' + ch;
+      if (kw.indexOf(term) === -1) return;
+      a.classList.add('hit-kw');
+      if (!a.classList.contains('current')) hits.push(a);
+    });
+    return hits;
+  }
+
+  function render(term) {
+    clearHits();
+    if (!term) {
+      stat.textContent = '本章可全文搜尋，圖上的字也找得到。';
+      jump.classList.add('hidden');
+      return;
+    }
+    var svgHits = highlight(term);
+    var chs = matchChapters(term);
+
+    var msg = '本章 <b>' + marks.length + '</b> 處';
+    if (svgHits) msg += '，圖上 <b>' + svgHits + '</b> 處';
+    if (marks.length) {
+      msg += '<span class="search-nav"><button type="button" data-nav="prev">↑</button><button type="button" data-nav="next">↓</button></span>';
+    }
+    if (!marks.length && !svgHits && !chs.length) msg = '沒找到「' + term + '」';
+    stat.innerHTML = msg;
+
+    var navBtns = stat.querySelectorAll('[data-nav]');
+    Array.prototype.forEach.call(navBtns, function (b) {
+      b.addEventListener('click', function () { step(b.getAttribute('data-nav') === 'next' ? 1 : -1); });
+    });
+
+    jumpList.innerHTML = '';
+    if (chs.length) {
+      chs.forEach(function (a) {
+        var link = document.createElement('a');
+        link.href = a.getAttribute('href');
+        link.innerHTML = '<i>' + (a.getAttribute('data-ch') || '') + '</i>' +
+                         a.textContent.replace(a.querySelector('i') ? a.querySelector('i').textContent : '', '');
+        jumpList.appendChild(link);
+      });
+      jump.classList.remove('hidden');
+    } else {
+      jump.classList.add('hidden');
+    }
+
+    if (marks.length) step(1);
+  }
+
+  function step(dir) {
+    if (!marks.length) return;
+    if (cur >= 0 && marks[cur]) marks[cur].classList.remove('cur');
+    cur = (cur + dir + marks.length) % marks.length;
+    var m = marks[cur];
+    m.classList.add('cur');
+    m.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
+  var timer = null;
+  q.addEventListener('input', function () {
+    clearTimeout(timer);
+    var v = q.value.trim();
+    timer = setTimeout(function () { render(v); }, 180);
+  });
+  q.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); step(e.shiftKey ? -1 : 1); }
+    if (e.key === 'Escape') { q.value = ''; render(''); q.blur(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (window.innerWidth <= 900) layout.classList.add('nav-open');
+      layout.classList.remove('nav-collapsed');
+      q.focus(); q.select();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.1 這個編輯器在做什麼｜爾雅 Erya 使用手冊</title>
+<style>
+  :root {
+    /* 墨藍 × 朱砂：《漢書》刻本的色感，畫面示意圖仍用爾雅實際的終端配色 */
+    --primary: #1F4E79;
+    --primary-hover: #1A4268;
+    --primary-deep: #12314F;
+    --primary-soft: #E8EFF7;
+    --primary-line: #C7D8EA;
+    --teal: #9B4B3F;
+    --teal-soft: #F6EBE9;
+    --teal-line: #E6CCC7;
+    --gold: #C08A2E;
+    --gold-soft: #FBF3E3;
+    --gold-line: #EDD9AE;
+    --gold-ink: #7A5312;
+    --success: #2E7D4F;
+    --success-soft: #E8F2EB;
+    --success-ink: #1E5C39;
+    --warning: #E8943A;
+    --warning-soft: #FDF1E3;
+    --danger: #B33A3A;
+    --danger-soft: #FBEDEC;
+    --danger-line: #EFCFCC;
+    --danger-ink: #8C2B2B;
+    --purple: #6B5B95;
+    --purple-soft: #EFECF6;
+    --purple-line: #D6CFE6;
+    --purple-ink: #4C3F72;
+
+    --ink: #161C2E;
+    --text: #3F485D;
+    --soft: #667085;
+    --muted: #98A2B3;
+    --canvas: #E9EDF4;
+    --surface: #FFFFFF;
+    --surface-soft: #FAFBFD;
+    --line: #E8ECF2;
+    --line-strong: #D9E0E9;
+
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-card: 0 2px 10px rgba(40, 55, 95, .055);
+    --shadow-hover: 0 10px 26px rgba(40, 55, 95, .10);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--text);
+    background: var(--canvas);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC",
+      "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--primary-deep); }
+  strong { color: var(--ink); font-weight: 700; }
+
+  /* ── 版面 ───────────────────────────── */
+  .layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    min-height: 100vh;
+    transition: grid-template-columns .22s ease;
+  }
+  .layout.nav-collapsed { grid-template-columns: 0 minmax(0, 1fr); }
+  .layout.nav-collapsed .sidebar { opacity: 0; pointer-events: none; }
+
+  .side-toggle {
+    position: fixed; top: 14px; left: 14px; z-index: 40;
+    width: 36px; height: 36px; display: grid; place-items: center;
+    color: #fff; background: rgba(14, 22, 38, .82);
+    border: 1px solid rgba(255,255,255,.18); border-radius: 9px;
+    cursor: pointer; font-size: 16px; line-height: 1;
+  }
+  .side-toggle:hover { background: rgba(14, 22, 38, .95); }
+
+  /* ── 側欄 ───────────────────────────── */
+  .sidebar {
+    position: sticky; top: 0; height: 100vh; overflow: auto;
+    padding: 24px 18px 40px; color: #C6D4EA;
+    background:
+      radial-gradient(circle at 16% 6%, rgba(31, 78, 121, .46), transparent 40%),
+      linear-gradient(180deg, #18243E, #0E1626);
+    transition: opacity .18s ease;
+  }
+  .brand { display: flex; gap: 12px; align-items: center; margin: 6px 0 18px; padding-left: 44px; }
+  .brand-mark {
+    display: grid; place-items: center; width: 42px; height: 42px; flex: none;
+    color: #fff; font-weight: 800; font-size: 15px; border-radius: 12px;
+    background: linear-gradient(135deg, #1F4E79, #9B4B3F);
+    box-shadow: 0 8px 20px rgba(31, 78, 121, .38);
+  }
+  .brand strong { display: block; color: #fff; font-size: 15px; line-height: 1.4; }
+  .brand span { display: block; color: #7E93B5; font-size: 12.5px; }
+
+  .search-wrap { position: relative; margin: 10px 2px 6px; }
+  .search-wrap input {
+    width: 100%; padding: 10px 34px 10px 34px; color: #fff;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 9px; font-size: 14.5px; font-family: inherit; outline: none;
+  }
+  .search-wrap input::placeholder { color: #7E93B5; }
+  .search-wrap input:focus { border-color: rgba(47,128,232,.9); background: rgba(255,255,255,.12); }
+  .search-ico { position: absolute; left: 11px; top: 9px; color: #7E93B5; font-size: 15px; }
+  .search-kbd {
+    position: absolute; right: 9px; top: 10px; color: #7E93B5;
+    font-size: 11.5px; letter-spacing: .04em; pointer-events: none;
+  }
+  .search-stat { margin: 6px 4px 0; color: #8FA6C6; font-size: 12.5px; min-height: 18px; }
+  .search-stat b { color: #D9A441; font-weight: 700; }
+  .search-nav { display: inline-flex; gap: 4px; margin-left: 6px; }
+  .search-nav button {
+    padding: 0 6px; color: #C6D4EA; background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.14); border-radius: 5px;
+    font-size: 11.5px; cursor: pointer; font-family: inherit;
+  }
+  .search-nav button:hover { background: rgba(255,255,255,.2); }
+
+  .jump { margin: 8px 0 4px; padding: 8px; background: rgba(47,128,232,.14);
+          border: 1px solid rgba(47,128,232,.3); border-radius: 9px; }
+  .jump.hidden { display: none; }
+  .jump-label { color: #8FA6C6; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; margin: 0 4px 4px; }
+  .jump a { display: block; padding: 5px 8px; color: #DCE7F7; border-radius: 6px;
+            font-size: 13.5px; text-decoration: none; }
+  .jump a:hover { background: rgba(255,255,255,.12); color: #fff; }
+  .jump a i { font-style: normal; color: #D9A441; font-weight: 700; margin-right: 6px; }
+
+  .toc-part {
+    margin: 18px 8px 6px; color: #6E86AC; font-size: 11px;
+    font-weight: 800; letter-spacing: .14em;
+  }
+  .toc { display: grid; gap: 2px; }
+  .toc a {
+    display: flex; gap: 8px; align-items: baseline; padding: 6px 9px;
+    color: #AFC2DD; border-radius: 7px; font-size: 13.5px; line-height: 1.5;
+    text-decoration: none; transition: .15s ease;
+  }
+  .toc a i { font-style: normal; color: #7E93B5; font-size: 12px; font-variant-numeric: tabular-nums; flex: none; width: 26px; }
+  .toc a:hover { color: #fff; background: rgba(255,255,255,.09); }
+  .toc a.current { color: #fff; background: rgba(47,128,232,.28); font-weight: 700; }
+  .toc a.current i { color: #D9A441; }
+  .toc a.pending { color: #7E93B5; }
+  .toc a.pending::after { content: "草稿中"; margin-left: auto; color: #5D7196; font-size: 11px; }
+  .toc a.hit-kw { box-shadow: inset 0 0 0 1px rgba(245,166,35,.55); }
+
+  .sub-toc { display: grid; gap: 1px; margin: 2px 0 2px 26px; padding-left: 10px;
+             border-left: 1px solid rgba(255,255,255,.14); }
+  .sub-toc a { padding: 4px 8px; color: #96AAC9; font-size: 12.5px; }
+  .sub-toc a.active { color: #fff; background: rgba(255,255,255,.12); }
+
+  .side-note {
+    margin-top: 22px; padding: 12px; color: #96AAC9; background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08); border-radius: 10px; font-size: 12.5px; line-height: 1.7;
+  }
+
+  /* ── 主內容 ─────────────────────────── */
+  main { min-width: 0; grid-column: 2; }
+  .hero {
+    position: relative; overflow: hidden; color: #fff;
+    padding: 58px clamp(24px, 5vw, 70px) 46px;
+    background: linear-gradient(118deg, #0A2430, #1F4E79 58%, #9B4B3F);
+  }
+  .hero::after {
+    content: ""; position: absolute; width: 420px; height: 420px; right: -130px; top: -190px;
+    border: 62px solid rgba(255,255,255,.08); border-radius: 50%;
+  }
+  .hero::before {
+    content: ""; position: absolute; width: 220px; height: 220px; right: -30px; top: -100px;
+    border: 24px solid rgba(245,166,35,.20); border-radius: 50%;
+  }
+  .eyebrow {
+    display: inline-flex; gap: 8px; align-items: center; padding: 6px 12px;
+    color: #EAF2FC; background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.24); border-radius: 999px;
+    font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
+  }
+  .hero h1 {
+    max-width: 900px; margin: 18px 0 14px; font-weight: 800;
+    font-size: clamp(28px, 4.2vw, 46px); line-height: 1.24; letter-spacing: .01em;
+  }
+  .hero h1 em { font-style: normal; color: #FFD98E; }
+  .hero p { max-width: 780px; margin: 0; color: #DDEAFB; font-size: clamp(15px, 2vw, 17px); }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+  .hero-meta span {
+    padding: 6px 11px; background: rgba(8, 24, 46, .30); border-radius: 8px;
+    font-size: 12.5px; font-variant-numeric: tabular-nums;
+  }
+
+  .content { padding: 34px clamp(16px, 3vw, 46px) 80px; }
+  section {
+    scroll-margin-top: 18px; margin: 0 0 18px; padding: clamp(22px, 3.4vw, 38px);
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
+  }
+  .sec-no {
+    display: inline-block; padding: 2px 9px; color: #fff; background: var(--primary);
+    border-radius: 6px; font-size: 12.5px; font-weight: 800;
+    letter-spacing: .06em; font-variant-numeric: tabular-nums;
+  }
+  h2 { margin: 10px 0 6px; color: var(--ink); font-weight: 800;
+       font-size: clamp(20px, 2.7vw, 27px); line-height: 1.35; }
+  h3 { margin: 26px 0 6px; color: var(--ink); font-weight: 800; font-size: 17.5px; }
+  .dek { margin: 0 0 18px; color: var(--soft); font-size: 14.5px; }
+  p { margin: 10px 0 14px; max-width: 88ch; }
+  section ul, section ol { max-width: 88ch; margin: 10px 0 16px; padding-left: 22px; }
+  section li { margin-bottom: 7px; }
+  section ul li::marker { color: var(--primary); }
+  section ol li::marker { color: var(--primary); font-weight: 700; }
+
+  .path {
+    display: inline-block; padding: 1px 7px; color: var(--primary-deep);
+    background: var(--primary-soft); border: 1px solid var(--primary-line);
+    border-radius: 5px; font-size: .93em; white-space: nowrap;
+  }
+  .term { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--gold-line); }
+
+  .callout {
+    position: relative; margin: 18px 0; padding: 15px 18px 15px 20px; max-width: 92ch;
+    background: var(--primary-soft); border: 1px solid var(--primary-line);
+    border-radius: var(--radius-md);
+  }
+  .callout::before {
+    content: ""; position: absolute; left: 0; top: 14px; bottom: 14px;
+    width: 4px; background: var(--primary); border-radius: 0 4px 4px 0;
+  }
+  .callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
+  .callout p:first-child { margin-top: 0; }
+  .callout .co-title { display: block; margin-bottom: 4px; color: var(--primary-deep); font-weight: 800; }
+  .callout.warn { background: var(--danger-soft); border-color: var(--danger-line); }
+  .callout.warn::before { background: var(--danger); }
+  .callout.warn .co-title { color: var(--danger-ink); }
+  .callout.tip { background: var(--gold-soft); border-color: var(--gold-line); }
+  .callout.tip::before { background: var(--gold); }
+  .callout.tip .co-title { color: var(--gold-ink); }
+  .callout.ok { background: var(--success-soft); border-color: #C3DECD; }
+  .callout.ok::before { background: var(--success); }
+  .callout.ok .co-title { color: var(--success-ink); }
+
+  figure { margin: 26px calc(-1 * clamp(10px, 1.8vw, 20px)); }
+  .fig-frame {
+    padding: 16px clamp(8px, 1.6vw, 20px); background: var(--surface-soft);
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    overflow-x: auto;
+  }
+  /* 圖不縮小：viewBox 寬 960，min-width 鎖住 1:1，寧可橫向捲動也不讓字變小 */
+  .fig-frame svg { display: block; width: 100%; min-width: 960px; height: auto; }
+  figcaption { margin-top: 10px; color: var(--soft); font-size: 14px; line-height: 1.7; }
+  figcaption b { color: var(--ink); }
+
+  table { width: 100%; margin: 18px 0; border-collapse: collapse; font-size: 15px; }
+  th, td { padding: 10px 12px; text-align: left; vertical-align: top;
+           border-bottom: 1px solid var(--line); }
+  thead th { color: var(--ink); background: var(--surface-soft); font-weight: 800;
+             border-bottom: 2px solid var(--line-strong); }
+  tbody tr:hover { background: #FBFCFE; }
+  .tbl-wrap { overflow-x: auto; }
+
+  .role-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin: 20px 0; }
+  .role-card { padding: 18px; background: var(--surface-soft); border: 1px solid var(--line);
+               border-top: 4px solid var(--primary); border-radius: var(--radius-md); }
+  .role-card.mgr { border-top-color: var(--purple); }
+  .role-card.hr { border-top-color: var(--teal); }
+  .role-card h4 { margin: 0 0 2px; color: var(--ink); font-size: 17px; font-weight: 800; }
+  .role-card .who { margin: 0 0 10px; color: var(--soft); font-size: 13.5px; }
+  .role-card ul { margin: 0 0 10px; padding-left: 20px; font-size: 14.5px; }
+  .role-card li { margin-bottom: 4px; }
+  .role-card .go { color: var(--primary-deep); font-size: 13.5px; font-weight: 700; }
+
+  .rule-list { counter-reset: rule; list-style: none; padding: 0; margin: 20px 0; max-width: 92ch; }
+  .rule-list li {
+    counter-increment: rule; position: relative; margin: 0 0 10px;
+    padding: 14px 16px 14px 56px; background: var(--surface-soft);
+    border: 1px solid var(--line); border-radius: var(--radius-md);
+  }
+  .rule-list li::before {
+    content: counter(rule); position: absolute; left: 16px; top: 14px;
+    display: grid; place-items: center; width: 28px; height: 28px;
+    color: #fff; background: var(--primary); border-radius: 8px;
+    font-size: 14px; font-weight: 800;
+  }
+  .rule-list b { display: block; color: var(--ink); font-size: 16px; }
+
+  .pager { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;
+           margin-top: 22px; padding: 0 4px; }
+  .pager a {
+    flex: 1 1 260px; padding: 14px 18px; color: var(--text); background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card); text-decoration: none; transition: .16s ease;
+  }
+  .pager a:hover { border-color: var(--primary-line); box-shadow: var(--shadow-hover); }
+  .pager span { display: block; color: var(--soft); font-size: 12.5px; }
+  .pager b { color: var(--ink); font-size: 16px; }
+  .pager .next { text-align: right; }
+
+  mark.hit { background: #FFE9B8; color: inherit; border-radius: 3px; padding: 0 1px; }
+  mark.hit.cur { background: var(--gold); color: #fff; box-shadow: 0 0 0 3px rgba(245,166,35,.3); }
+  .svg-hit { fill: #B4530B !important; font-weight: 800 !important; }
+
+
+  /* ── 畫面 Mockup：用 HTML 重畫系統畫面（不是截圖，圖上的字可搜尋、可選取） ── */
+  .mock-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .mock { position: relative; min-width: 700px; background: var(--surface); border: 1px solid var(--line-strong);
+          border-radius: var(--radius-lg); box-shadow: var(--shadow-card); overflow: hidden; font-size: 14px; line-height: 1.55; }
+  .mock * { box-sizing: border-box; }
+  .mock-app { display: grid; grid-template-columns: 210px minmax(0, 1fr); }
+  .mock-side { position: relative; padding: 12px 10px; color: #C6D4EA; background: linear-gradient(180deg, #18243E, #0E1626); }
+  .mock-brand { display: flex; gap: 8px; align-items: center; padding: 4px 6px 12px; color: #fff; font-weight: 700; }
+  .mock-logo { display: grid; place-items: center; width: 28px; height: 28px; flex: none; color: #fff;
+               background: linear-gradient(135deg, #1F4E79, #9B4B3F); border-radius: 8px; font-size: 12px; font-weight: 800; }
+  .mock-field { display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 10px; color: var(--muted);
+                background: #fff; border: 1px solid var(--line-strong); border-radius: 8px; font-size: 13.5px; }
+  .mock-side .mock-field { color: #8FA6C6; background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.16); }
+  .mock-menu { margin-top: 10px; display: grid; gap: 2px; }
+  .mock-mi { padding: 6px 10px; border-radius: 7px; font-size: 13.5px; }
+  .mock-mi.grp { color: #fff; font-weight: 700; }
+  .mock-mi.sub { padding-left: 24px; color: #AFC2DD; }
+  .mock-mi.cur { color: #fff; background: rgba(47,128,232,.34); font-weight: 700; }
+  .mock-sfoot { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,.14); font-size: 13px; }
+  .mock-sfoot .u { margin-top: 8px; color: #fff; }
+  .mock-sfoot .u small { display: block; color: #7E93B5; font-size: 11.5px; font-weight: 400; }
+  .mock-main { display: flex; flex-direction: column; min-width: 0; background: #EEF1F6; }
+  .mock-tabs { position: relative; display: flex; gap: 6px; align-items: center; padding: 8px 10px;
+               background: #fff; border-bottom: 1px solid var(--line); }
+  .mock-tab { padding: 5px 10px; color: var(--soft); background: var(--surface-soft); border: 1px solid var(--line);
+              border-radius: 7px; font-size: 13px; white-space: nowrap; }
+  .mock-tab.on { color: var(--primary-deep); background: var(--primary-soft); border-color: var(--primary-line); font-weight: 700; }
+  .mock-tab .x { color: var(--muted); margin-left: 5px; }
+  .mock-tab .pin { color: var(--primary); margin-right: 4px; }
+  .mock-closeall { margin-left: auto; color: var(--soft); font-size: 12.5px; }
+  .mock-body { position: relative; display: flex; min-width: 0; }
+  .mock-ws { position: relative; flex: 1; min-width: 0; margin: 12px; padding: 14px; background: #fff;
+             border: 1px solid var(--line); border-radius: 10px; }
+  .mock-toolbar { position: relative; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+  .mock-btn { display: inline-flex; gap: 5px; align-items: center; height: 32px; padding: 0 12px;
+              border: 1px solid transparent; border-radius: 8px; font-size: 13.5px; white-space: nowrap; }
+  .mock-btn.b-search { color: var(--primary-deep); background: var(--primary-soft); border-color: var(--primary-line); }
+  .mock-btn.b-save { color: #fff; background: var(--primary); }
+  .mock-btn.b-ok { color: #fff; background: var(--success); }
+  .mock-btn.b-cancel { color: var(--text); background: #fff; border-color: var(--line-strong); }
+  .mock-btn.b-void { color: var(--danger-ink); background: var(--danger-soft); border-color: var(--danger-line); }
+  .mock-btn.b-del { color: #fff; background: var(--danger); }
+  .mock-dot { display: inline-grid; place-items: center; min-width: 18px; height: 18px; margin-left: 4px; padding: 0 5px;
+              color: #fff; background: var(--danger); border-radius: 9px; font-size: 11.5px; font-weight: 700; }
+  .mock-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .mock-table th, .mock-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .mock-table th { color: var(--ink); background: #F5F8FC; font-weight: 700; }
+  .mock-pager { margin-top: 10px; color: var(--soft); font-size: 13px; }
+  .mock-num { position: absolute; z-index: 3; display: grid; place-items: center; width: 22px; height: 22px;
+              color: #fff; background: var(--gold); border-radius: 50%; box-shadow: 0 0 0 2px #fff;
+              font-size: 12.5px; font-weight: 800; }
+  .mock-drawer { position: relative; width: 290px; flex: none; padding: 14px; background: #fff;
+                 border-left: 1px solid var(--line-strong); box-shadow: -10px 0 24px rgba(40,55,95,.07); }
+  .mock-dtitle { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; color: var(--ink); font-weight: 700; }
+  .mock-dsum { margin-bottom: 10px; color: var(--soft); font-size: 12.5px; }
+  .mock-lbl { margin: 10px 0 4px; color: var(--soft); font-size: 12.5px; }
+  .mock-dfoot { display: flex; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .mock-login { display: grid; place-items: center; padding: 30px; background: #F4F6FA; }
+  .login-card { width: 330px; padding: 26px; background: #fff; border: 1px solid var(--line);
+                border-radius: 18px; box-shadow: var(--shadow-hover); text-align: center; }
+  .login-card .l-logo { display:inline-block; padding:6px 18px; color: var(--soft); background:var(--surface-soft); border:1px dashed var(--line-strong); border-radius:8px; font-size: 15px; font-weight: 700; letter-spacing: .06em; }
+  .login-card .l-title { margin-top: 14px; color: var(--ink); font-size: 17px; font-weight: 700; }
+  .login-card .l-sub { margin-bottom: 14px; color: var(--soft); font-size: 13px; }
+  .login-card .mock-field { margin-top: 10px; }
+  .login-card .l-btn { width: 100%; height: 38px; margin-top: 16px; justify-content: center; font-size: 15px; font-weight: 700; }
+  .login-card .l-ver { margin-top: 14px; color: var(--muted); font-size: 12px; }
+  .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin: 20px 0; }
+  .btn-cell { padding: 14px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .btn-cell .mock-btn { margin-bottom: 8px; }
+  .btn-cell p { margin: 0; color: var(--soft); font-size: 13.5px; line-height: 1.65; max-width: none; }
+  .btn-cell b { display: block; color: var(--ink); font-size: 14px; }
+  .mock-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+  .mock-phone { position: relative; width: 262px; flex: none; padding: 12px 10px; background: #fff;
+                border: 1px solid var(--line-strong); border-radius: 22px; box-shadow: var(--shadow-card); }
+  .mock-phone .ph-bar { display: flex; align-items: center; gap: 8px; padding: 6px 8px; color: var(--ink);
+                        border-bottom: 1px solid var(--line); font-weight: 700; font-size: 13.5px; }
+  .mock-phone .ph-crumb { padding: 6px 8px; color: var(--muted); font-size: 12px; }
+  .mock-acc { display: flex; align-items: center; justify-content: space-between; margin: 6px 8px; padding: 8px 10px;
+              color: var(--primary-deep); background: var(--primary-soft); border: 1px solid var(--primary-line); border-radius: 8px; font-size: 13.5px; }
+  .mock-card { margin: 6px 8px; padding: 10px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+  .mock-card b { display: block; color: var(--ink); font-size: 13.5px; }
+
+  /* ── Mockup 補充：樹狀、對話框、標籤 ── */
+  .mock-tree { padding: 4px 2px; }
+  .mock-tnode { display: flex; align-items: center; gap: 8px; margin: 5px 0; padding: 7px 10px;
+                background: #fff; border: 1px solid var(--line); border-radius: 8px; font-size: 13.5px; }
+  .mock-tnode.co { color: var(--primary-deep); background: var(--primary-soft); border-color: var(--primary-line); font-weight: 700; }
+  .mock-tnode.grp { border-style: dashed; }
+  .mock-tnode .who { margin-left: auto; color: var(--soft); font-size: 12.5px; }
+  .mock-i1 { margin-left: 26px; } .mock-i2 { margin-left: 52px; } .mock-i3 { margin-left: 78px; }
+  .chip { padding: 1px 8px; border-radius: 999px; font-size: 11.5px; white-space: nowrap; }
+  .chip.c1 { color: #7A5312; background: var(--gold-soft); border: 1px solid var(--gold-line); }
+  .chip.c2 { color: var(--primary-deep); background: var(--primary-soft); border: 1px solid var(--primary-line); }
+  .chip.c3 { color: var(--success-ink); background: var(--success-soft); border: 1px solid #C3DECD; }
+  .chip.c4 { color: var(--soft); background: var(--surface-soft); border: 1px solid var(--line-strong); }
+  .chip.c5 { color: var(--purple-ink); background: var(--purple-soft); border: 1px solid var(--purple-line); }
+  .mock-dialog { width: 430px; flex: none; background: #fff; border: 1px solid var(--line-strong);
+                 border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-hover); }
+  .mock-dlg-head { padding: 11px 14px; color: var(--primary-deep); background: var(--primary-soft);
+                   border-bottom: 1px solid var(--primary-line); font-weight: 700; }
+  .mock-frow { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; align-items: center; margin: 10px 14px; }
+  .mock-frow > span { color: var(--soft); font-size: 13px; text-align: right; }
+  .mock-frow > span em { font-style: normal; color: var(--danger); }
+  .mock-dlg-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--line); }
+  .mock-note { margin: 8px 14px 12px; color: var(--soft); font-size: 12.5px; }
+
+  /* ── Mockup 補充：月曆格 ── */
+  .mock-cal { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 5px; }
+  .mock-cal .h { padding: 4px 0; color: var(--soft); font-size: 12.5px; text-align: center; font-weight: 700; }
+  .mock-cell { min-height: 62px; padding: 5px 7px; background: #fff; border: 1px solid var(--line);
+               border-radius: 7px; font-size: 12.5px; }
+  .mock-cell .d { color: var(--muted); font-size: 11.5px; }
+  .mock-cell .s { display: inline-block; margin-top: 4px; padding: 1px 7px; border-radius: 5px; font-size: 12px; }
+  .mock-cell.off { background: var(--surface-soft); }
+  .mock-cell.hol { background: var(--danger-soft); border-color: var(--danger-line); }
+  .mock-cell.hol .d { color: var(--danger-ink); }
+
+  /* ── 字級縮放：main 用 zoom 放大，設定存在 localStorage，跨章沿用 ── */
+  main { zoom: var(--zoom, 1); }
+  .fontctl { display: flex; align-items: center; gap: 6px; margin: 10px 2px 2px; }
+  .fontctl .fc-label { color: #6E86AC; font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+  .fontctl button {
+    flex: none; min-width: 34px; height: 26px; padding: 0 8px; color: #C6D4EA;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 7px; font-family: inherit; font-size: 13px; line-height: 1; cursor: pointer;
+    transition: .15s ease;
+  }
+  .fontctl button:hover { color: #fff; background: rgba(255,255,255,.2); }
+  .fontctl .fc-val { flex: 1; min-width: 56px; color: #D9A441; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .fontctl .fc-val:hover { color: #fff; }
+  @media print { main { zoom: 1; } }
+
+  /* ── 圖說上的實際頁面連結 ── */
+  .fig-link { color: var(--primary-deep); text-decoration: none; border-bottom: 1px solid var(--primary-line); }
+  .fig-link:hover { color: var(--primary); border-bottom-color: var(--primary); }
+  .fig-link .ext { margin-left: 3px; font-size: .85em; opacity: .75; }
+  .baseurl { margin: 10px 2px 0; }
+  .baseurl .fc-label { display: block; margin-bottom: 4px; color: #6E86AC; font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+  .baseurl input {
+    width: 100%; padding: 6px 9px; color: #C6D4EA; background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16); border-radius: 7px;
+    font-family: inherit; font-size: 12px; outline: none;
+  }
+  .baseurl input:focus { color: #fff; border-color: rgba(47,128,232,.9); }
+  .baseurl small { display: block; margin-top: 4px; color: #6E86AC; font-size: 11px; line-height: 1.5; }
+
+  /* ── Mockup 補充：麵包屑、卡片標題列、Element 風格細節 ── */
+  .mock-crumb { padding: 7px 14px; color: var(--muted); background: #fff;
+                border-bottom: 1px solid var(--line); font-size: 13px; }
+  .mock-crumb b { color: var(--text); font-weight: 700; }
+  .mock-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .mock-cardhead { display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+                   padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .mock-cardhead .ttl { color: var(--ink); font-size: 14px; font-weight: 700; }
+  .mock-circle { display: inline-grid; place-items: center; width: 26px; height: 26px;
+                 color: var(--soft); background: #fff; border: 1px solid var(--line-strong);
+                 border-radius: 50%; font-size: 12px; }
+  .mock-count { margin-bottom: 8px; color: var(--soft); font-size: 13px; }
+  .mock-footnote { margin-top: 12px; color: var(--muted); font-size: 13px; }
+  .mock-table.bordered th, .mock-table.bordered td { border: 1px solid var(--line); }
+  .mock-empty { padding: 26px 0; color: var(--muted); text-align: center; }
+  .mock-ico { color: var(--primary); }
+  .mock-ico.del { color: var(--danger); }
+  .mock-sort { color: var(--muted); font-size: 11px; }
+
+  /* ── Mockup 補充：整合後台外殼（頂端列／白底全站選單／儀表板卡） ── */
+  .mock-topbar { display: flex; align-items: center; gap: 10px; padding: 11px 14px;
+                 background: #fff; border-bottom: 1px solid var(--line); }
+  .mock-topbar .logo { color: #C08A2E; font-size: 18px; font-weight: 800; font-style: italic; letter-spacing: .02em; }
+  .mock-topbar .sys { padding-left: 10px; color: #C08A2E; font-size: 13.5px; font-weight: 700;
+                      border-left: 1px solid var(--line); }
+  .mock-topbar .right { display: flex; align-items: center; gap: 9px; margin-left: auto;
+                        color: #C08A2E; font-size: 13.5px; font-weight: 700; }
+  .mock-avatar { display: grid; place-items: center; width: 26px; height: 26px; color: #fff;
+                 background: #C7CFDA; border-radius: 50%; font-size: 12px; font-weight: 700; }
+  .mock-side.light { color: var(--text); background: #fff; border-right: 1px solid var(--line); }
+  .mock-side.light .mock-mi { color: var(--text); }
+  .mock-side.light .mock-mi.cur { color: var(--primary-deep); background: var(--primary-soft); }
+  .mock-side.light .mock-mi.grp { color: var(--ink); }
+  .mock-sec { margin: 12px 6px 6px; padding-top: 9px; color: #E8943A; font-size: 11.5px;
+              font-weight: 800; text-align: center; border-top: 1px solid var(--line); }
+  .mock-dash { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .mock-dashcard { position: relative; padding: 14px 16px; background: #fff;
+                   border: 1px solid var(--line); border-radius: 10px; }
+  .mock-dashcard .k { color: var(--soft); font-size: 13px; }
+  .mock-dashcard .v { margin: 2px 0; color: var(--ink); font-size: 22px; font-weight: 800; }
+  .mock-dashcard .v small { color: var(--soft); font-size: 13px; font-weight: 400; }
+  .mock-dashcard .d { color: var(--muted); font-size: 12px; }
+  .mock-dashcard .ic { position: absolute; top: 14px; right: 14px; display: grid; place-items: center;
+                       width: 30px; height: 30px; border-radius: 8px; font-size: 14px; }
+  .mock-btn.b-export { color: #fff; background: #E8943A; }
+  .mock-btn.b-ghost { color: var(--text); background: #fff; border-color: var(--line-strong); }
+  .mock-btn.b-disabled { color: #fff; background: #A8CBF5; }
+  .mock-tag-cur { display: inline-block; padding: 3px 12px; color: #fff; background: var(--primary);
+                  border-radius: 7px; font-size: 13px; }
+  .mock-tag-alt { display: inline-block; padding: 3px 12px; color: var(--soft); border-radius: 7px; font-size: 13px; }
+  .mock-info { display: flex; gap: 8px; padding: 10px 12px; color: var(--text); background: var(--surface-soft);
+               border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+  .mock-hint { margin: 8px 0; color: var(--soft); font-size: 12.5px; line-height: 1.7; }
+
+  /* ── Mockup 補充：導入精靈（進度環、階段卡、檢核列） ── */
+  .mock-ring { display: grid; place-items: center; width: 64px; height: 64px; flex: none;
+               border: 5px solid var(--line); border-radius: 50%; color: var(--soft);
+               font-size: 14px; font-weight: 800; }
+  .mock-ring.on { border-color: var(--primary); color: var(--primary); }
+  .mock-stages { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; }
+  .mock-stage { position: relative; width: 190px; flex: none; padding: 12px 14px; background: #fff;
+                border: 1px solid var(--line); border-radius: 10px; }
+  .mock-stage.on { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary-line); }
+  .mock-stage h5 { margin: 0 0 6px; color: var(--ink); font-size: 14.5px; font-weight: 700; }
+  .mock-stage p { margin: 0 0 10px; color: var(--soft); font-size: 12.5px; line-height: 1.6; max-width: none; }
+  .mock-stage .cnt { position: absolute; top: 12px; right: 12px; padding: 1px 8px; color: var(--danger);
+                     background: var(--danger-soft); border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+  .mock-stage .miss { color: var(--danger); font-size: 12.5px; }
+  .mock-bar { height: 5px; margin: 8px 0; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .mock-bar span { display: block; height: 100%; background: var(--primary); }
+  .mock-stage .st { color: var(--danger); font-size: 12.5px; }
+  .mock-stage .st.ok { color: var(--success-ink); }
+  .mock-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; margin-top: 8px;
+               background: #fff; border: 1px solid var(--line); border-radius: 10px; }
+  .mock-item .no { display: grid; place-items: center; width: 26px; height: 26px; flex: none; color: #fff;
+                   background: var(--danger); border-radius: 50%; font-size: 13px; font-weight: 700; }
+  .mock-item .no.ok { background: var(--success); }
+  .mock-item b { color: var(--ink); font-size: 14.5px; }
+  .mock-item .tag { margin-left: 6px; padding: 1px 8px; color: var(--warning); background: var(--warning-soft);
+                    border-radius: 6px; font-size: 11.5px; }
+  .mock-item .tag.ok { color: var(--success-ink); background: var(--success-soft); }
+  .mock-item small { display: block; color: var(--soft); font-size: 12.5px; line-height: 1.6; }
+  .mock-btn.b-goto { color: #fff; background: var(--teal); }
+
+  @media (max-width: 900px) {
+    /* The fixed sidebar must not leave main in a zero-width grid column. */
+    .layout, .layout.nav-collapsed { display: block; }
+    .sidebar { position: fixed; top: 0; left: 0; z-index: 30; width: min(300px, 100vw); }
+    .layout:not(.nav-open) .sidebar { opacity: 0; pointer-events: none; }
+    .layout.nav-open .sidebar { opacity: 1; pointer-events: auto; }
+    .hero h1 { text-wrap: balance; }
+    .path { white-space: normal; overflow-wrap: anywhere; }
+    .role-grid, .duo { grid-template-columns: minmax(0, 1fr); }
+    .hero p, section p, section li { overflow-wrap: anywhere; }
+    .side-toggle { width: 44px; height: 44px; }
+  }
+  @media (max-width: 480px) {
+    .hero { padding: 72px 20px 30px; }
+    .content { padding: 20px 12px 48px; }
+    section { padding: 20px 16px; }
+    .eyebrow { border-radius: 12px; }
+  }
+  @media print {
+    .sidebar, .side-toggle, .pager { display: none; }
+    .layout { grid-template-columns: 1fr; }
+    section { break-inside: avoid; box-shadow: none; }
+    .hero { color: #000; background: none; }
+    .hero p, .hero-meta span { color: #333; }
+  }
+
+  /* ── 按鍵標示 ─────────────────────── */
+  kbd {
+    display: inline-block; padding: 1px 7px; margin: 0 1px;
+    color: var(--ink); background: #F4F6FA;
+    border: 1px solid var(--line-strong); border-bottom-width: 2px;
+    border-radius: 5px; white-space: nowrap;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .88em; font-weight: 600;
+  }
+  .callout kbd { background: #fff; }
+
+  /* ── 終端機畫面模擬：配色對齊爾雅實際輸出 ── */
+  .screen-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .screen {
+    min-width: 640px; overflow: hidden; background: #000;
+    border: 1px solid #16323F; border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas,
+      "Noto Sans Mono CJK TC", "Sarasa Mono TC", monospace;
+    font-size: 13px; line-height: 1.85; white-space: pre; tab-size: 8;
+  }
+  .screen > div { padding: 0 10px; }
+  .screen .s-title  { color: #fff;     background: #1D3E77; }
+  .screen .s-bar    { color: #06222B;  background: #34A6B6; }
+  .screen .s-body   { color: #5CC9D6;  background: #000; }
+  .screen .s-status { color: #06222B;  background: #34A6B6; }
+  .screen .s-msg    { color: #E4C23C;  background: #000; }
+  .screen .s-msg.warn { color: #F0736F; }
+  .screen .s-msg.ask  { color: #fff; }
+  .screen .s-body.pad { padding-top: 2px; padding-bottom: 2px; }
+  .screen b   { color: #BFF2F8; font-weight: 700; }
+  .screen i   { color: #35637A; font-style: normal; }     /* ~ 與說明字 */
+  .screen u   { color: #000; background: #C9CDD3; text-decoration: none; }  /* 選取／選取列 */
+  .screen s   { color: #000; background: #D6B34A; text-decoration: none; }  /* 差異／搜尋命中 */
+  .screen em  { color: #000; background: #5CC9D6; font-style: normal; }     /* 游標 */
+  .screen mark.hit { color: #000; background: #FFE08A; }
+  .screen-cap { margin-top: 10px; color: var(--soft); font-size: 14px; line-height: 1.7; }
+  .screen-cap b { color: var(--ink); }
+
+  /* ── 兩欄對照（配置 A／配置 B、之前／之後） ── */
+  .duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0; }
+  .duo > div { padding: 14px 16px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-md); }
+  .duo h4 { margin: 0 0 8px; color: var(--ink); font-size: 15.5px; font-weight: 800; }
+  .duo p { margin: 0 0 8px; font-size: 14.5px; }
+  .duo p:last-child { margin-bottom: 0; }
+  .duo ul { margin: 0; padding-left: 20px; font-size: 14.5px; }
+
+  /* ── 側欄語言切換 ───────────────────── */
+  .lang-switch { display: flex; align-items: center; gap: 8px; margin: 14px 2px 0;
+                 padding-top: 12px; border-top: 1px solid rgba(255,255,255,.10); }
+  .lang-switch > div { display: flex; flex-wrap: wrap; gap: 6px; }
+  .lang-switch a, .lang-switch .cur {
+    padding: 2px 9px; border-radius: 7px; font-size: 12.5px; line-height: 1.7;
+    border: 1px solid rgba(255,255,255,.16); text-decoration: none;
+  }
+  .lang-switch a { color: #C6D4EA; background: rgba(255,255,255,.06); }
+  .lang-switch a:hover { color: #fff; background: rgba(255,255,255,.18); }
+  .lang-switch .cur { color: #0E1626; background: #D9A441; border-color: #D9A441; font-weight: 700; }
+</style>
+<script>
+/* 字級：在畫面繪製前先套用，避免閃動。設定跨章共用（同一個瀏覽器） */
+try { var _z = localStorage.getItem('eryaManualZoom'); if (_z) document.documentElement.style.setProperty('--zoom', _z); } catch (e) {}
+</script>
+
+</head>
+<body>
+<div class="layout" id="layout">
+  <button class="side-toggle" id="sideToggle" title="顯示／隱藏選單" aria-label="顯示／隱藏選單">☰</button>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">爾</div>
+      <div>
+        <strong>爾雅 Erya 使用手冊</strong>
+        <span>終端文字編輯器・給使用者看的版本</span>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input id="q" type="search" placeholder="搜尋本章與全書章節…" autocomplete="off" spellcheck="false">
+      <span class="search-kbd">⌘K</span>
+    </div>
+    <div class="search-stat" id="stat">本章可全文搜尋，畫面示意圖上的字也找得到。</div>
+    <div class="fontctl">
+      <span class="fc-label">字級</span>
+      <button type="button" data-fs="-" title="縮小字級">A－</button>
+      <button type="button" class="fc-val" data-fs="0" title="點一下回到 100%">100%</button>
+      <button type="button" data-fs="+" title="放大字級">A＋</button>
+    </div>
+
+    <div class="jump hidden" id="jump">
+      <div class="jump-label">相關章節・小節</div>
+      <div id="jumpList"></div>
+    </div>
+    <div class="toc-part">第一部・認識爾雅</div>
+    <nav class="toc">
+      <a class="current" href="#top" data-ch="1.1" data-kw="爾雅 Erya 漢書 定位 概觀 全景 管什麼 不管 終端 TUI 誰用 一份文件的一生 怎麼讀"><i>1.1</i>這個編輯器在做什麼</a>
+      <div class="sub-toc" id="subToc">
+        <a href="#s1">1.1.1 這本手冊怎麼讀</a>
+        <a href="#s2">1.1.2 爾雅在做什麼、不做什麼</a>
+        <a href="#s3">1.1.3 和 vim、nano 有什麼不一樣</a>
+        <a href="#s4">1.1.4 系統全景：五塊功能</a>
+        <a href="#s5">1.1.5 一份文件的一生</a>
+        <a href="#s6">1.1.6 三種人、三條路線</a>
+        <a href="#s7">1.1.7 先記住這六件事</a>
+        <a href="#s8">1.1.8 名詞去哪一章看</a>
+      </div>
+      <a href="Erya使用手冊・1.2・安裝與啟動.html" data-ch="1.2" data-kw="安裝 下載 Release 壓縮檔 target 架構 PATH cargo install 啟動 參數 選項 環境變數 版本 TTY 終端"><i>1.2</i>安裝與啟動</a>
+      <a href="Erya使用手冊・1.3・畫面與操作慣例.html" data-ch="1.3" data-kw="畫面 版面 標題列 頁籤 提示列 狀態列 訊息列 顏色 模式 游標 F1 說明 慣例 確認 提示"><i>1.3</i>畫面與操作慣例</a>
+    </nav>
+    <div class="toc-part">第二部・基本編輯</div>
+    <nav class="toc">
+      <a href="Erya使用手冊・2.1・開檔頁籤與儲存.html" data-ch="2.1" data-kw="開檔 Ctrl+O 檔案對話盒 目錄 頁籤 F9 F10 F11 新增 Ctrl+N 儲存 Ctrl+S 另存 F12 原子儲存 權限 外部修改 衝突 未儲存"><i>2.1</i>開檔、頁籤與儲存</a>
+      <a href="Erya使用手冊・2.2・移動選取與剪貼.html" data-ch="2.2" data-kw="游標 移動 Home End PageUp PageDown Ctrl+G 跳行 選取 Shift 矩形選取 Ctrl+B 填滿 剪下 複製 貼上 剪貼區 刪除行 插入 覆寫 字素 全形"><i>2.2</i>移動、選取與剪貼</a>
+      <a href="Erya使用手冊・2.3・搜尋與取代.html" data-ch="2.3" data-kw="搜尋 Ctrl+W Ctrl+F F3 尋找下一個 循環 取代 Ctrl+R F5 F6 全部取代 找不到 大小寫 提示列"><i>2.3</i>搜尋與取代</a>
+      <a href="Erya使用手冊・2.4・復原常用語與巨集.html" data-ch="2.4" data-kw="復原 Ctrl+Z 重做 Ctrl+Y 100 步 常用語 片語 phrases 巨集 macro 錄製 執行 JSON 儲存 載入"><i>2.4</i>復原、常用語與巨集</a>
+    </nav>
+    <div class="toc-part">第三部・進階功能</div>
+    <nav class="toc">
+      <a href="Erya使用手冊・3.1・編碼換行與語法.html" data-ch="3.1" data-kw="編碼 UTF-8 BOM Big5 GBK Shift_JIS F7 換行 LF CRLF F8 偵測 轉換 語法高亮 Linux 設定檔 格式化 Ctrl+T TOML YAML JSON 段落 重排"><i>3.1</i>編碼、換行與語法</a>
+      <a href="Erya使用手冊・3.2・大型檔案與即時日誌.html" data-ch="3.2" data-kw="大型檔案 64 MiB 唯讀 稀疏索引 檢查點 記憶體 log 追蹤 追加 截斷 rotation 跟隨 外部更新 重新載入"><i>3.2</i>大型檔案與即時日誌</a>
+      <a href="Erya使用手冊・3.3・十六進位與二進位編輯.html" data-ch="3.3" data-kw="十六進位 hex Ctrl+P 位移 offset 16 32 位元組 W O G 二進位 binary NUL 位元組編輯 插入 覆寫 I 半位元組 串流 唯讀"><i>3.3</i>十六進位與二進位編輯</a>
+      <a href="Erya使用手冊・3.4・雙欄檔案比對.html" data-ch="3.4" data-kw="比對 F4 左側 右側 差異 對齊 ≠ - + 游標 N P Shift 複製 暫存 套用 覆蓋 離開 WinMerge 同步捲動"><i>3.4</i>雙欄檔案比對</a>
+    </nav>
+    <div class="toc-part">第四部・設定與附錄</div>
+    <nav class="toc">
+      <a href="Erya使用手冊・4.1・按鍵配置.html" data-ch="4.1" data-kw="按鍵配置 keymap TOML 快捷鍵 自訂 Terminal Safe Classic nano vim emacs vscode 衝突 回退 編輯器 另存 停用 ERYA_KEYMAP"><i>4.1</i>按鍵配置</a>
+      <a href="Erya使用手冊・4.2・系統設定與介面語言.html" data-ch="4.2" data-kw="系統設定 F2 介面語言 ERYA_LANG locales 翻譯 正體中文 簡體 英文 日文 新增語言 回退 languages"><i>4.2</i>系統設定與介面語言</a>
+      <a href="Erya使用手冊・4.3・疑難排解.html" data-ch="4.3" data-kw="疑難 排解 問題 打不開 存不了 顯示怪 按鍵沒反應 亂碼 找不到 錯誤 FAQ 常見問題"><i>4.3</i>疑難排解</a>
+      <a href="Erya使用手冊・4.4・快捷鍵與名詞對照表.html" data-ch="4.4" data-kw="快捷鍵 一覽 對照 動作 名稱 名詞 術語 詞彙 附錄 查表"><i>4.4</i>快捷鍵與名詞對照表</a>
+    </nav>
+    <div class="toc-part">速查</div>
+    <nav class="toc">
+      <a href="Erya使用手冊・重點與地雷速查.html" data-ch="gotchas" data-kw="重點 地雷 陷阱 速查 常見錯誤 檢查清單 資料不見 不可逆 沒提示 順序 常漏 介面陷阱"><i>★</i>重點與地雷速查</a>
+    </nav>
+
+    <div class="side-note">
+      這份手冊照「現在的程式」寫，不寫規劃中的功能。快捷鍵一律以內建的<b style="color:#DCE7F7">Erya Terminal Safe</b> 預設配置為準（見 4.1）。<br>搜尋：<b style="color:#DCE7F7">⌘K / Ctrl+K</b> 開啟、<b style="color:#DCE7F7">Enter</b> 下一個、<b style="color:#DCE7F7">Esc</b> 清除。
+    </div>
+    <div class="lang-switch">
+      <span class="fc-label">語言</span>
+      <div><span class="cur">正體中文</span><a href="../en/Erya Manual・1.1・What This Editor Does.html">English</a><a href="../ja/Erya使用手引き・1.1・このエディターの役割.html">日本語</a></div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <header class="hero" id="top">
+      <span class="eyebrow">第一部・認識爾雅 ／ 1.1</span>
+      <h1>這個編輯器<em>在做什麼</em></h1>
+      <p>爾雅是一套跑在終端機裡的文字編輯器，也是三十年前 DOS《漢書》文書系統的 Rust 重生。動手改任何設定之前，先花十分鐘看清楚它管到哪、不管什麼，以及一份文件從開啟到存檔會經過哪些畫面。</p>
+      <div class="hero-meta">
+        <span>閱讀時間 約 10 分鐘</span>
+        <span>對象 全體使用者</span>
+        <span>先備知識 無</span>
+        <span>版本 v1.0 ・ 2026-08-26</span>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- ══════════ 1.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.1.1</span>
+        <h2>這本手冊怎麼讀</h2>
+        <p class="dek">四個部分、十四章，不必從頭讀到尾。</p>
+
+        <p>手冊分成四部：<strong>第一部講觀念與安裝</strong>（爾雅是什麼、怎麼裝、畫面怎麼看）、<strong>第二部講基本編輯</strong>（開檔、打字、搜尋、復原）、<strong>第三部講進階功能</strong>（編碼、大型檔案、十六進位、雙欄比對）、<strong>第四部是設定與附錄</strong>（改快捷鍵、換語言、查表）。</p>
+
+        <p>編號規則是「<strong>部-章</strong>」，例如 <span class="path">3.4</span> 是第三部第四章；章裡面的小節再加一碼，例如本節是 <span class="path">1.1.1</span>。內文寫「見 4.1」就是叫你翻到第四部第一章，左邊選單點得到。</p>
+
+        <h3>三種讀法</h3>
+        <ul>
+          <li><strong>第一次用爾雅</strong>：把第一部 1.1 到 1.3 讀完，再讀 2.1（開檔與儲存）。四章讀完就能正常工作了。</li>
+          <li><strong>已經會用其他編輯器</strong>：直接看 1.3（畫面）與 4.4（快捷鍵一覽），需要什麼再回頭翻。習慣 nano 或 vim 的人記得先看 4.1，換一套按鍵配置比重新學快得多。</li>
+          <li><strong>只是臨時要開一個檔來看</strong>：1.2.5 講怎麼啟動，1.3 講畫面，<kbd>Ctrl+X</kbd> 離開。三分鐘。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">搜尋怎麼用</span>
+          <p>左上角的搜尋框（或按 <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd>）會做兩件事：一是把<strong>本章內文</strong>的關鍵字標成黃色，按 <kbd>Enter</kbd> 逐一跳過去；二是列出<strong>其他章節</strong>裡談這個主題的篇章，直接點就跳過去。畫面示意圖上的字也在搜尋範圍內。</p>
+        </div>
+
+        <p>手冊裡出現 <kbd>Ctrl+S</kbd> 這種標示代表按鍵，<span class="path">~/.config/erya/keymap.toml</span> 這種灰色標示代表檔案路徑或指令。要注意的是<strong>爾雅的快捷鍵可以整套換掉</strong>（見 4.1），手冊一律以內建的 <span class="term">Erya Terminal Safe</span> 預設配置為準；如果你換過配置，實際按鍵請以畫面第二列的提示列與 <kbd>F1</kbd> 說明為準——那兩個地方顯示的永遠是你當下真正在用的鍵。</p>
+
+        <div class="callout">
+          <span class="co-title">這份手冊描述「現況」</span>
+          <p>內容依照目前的程式碼撰寫，<strong>不寫規劃中的功能，也不寫「應該要怎樣」</strong>。看到某個功能在手冊裡被標成「預設沒有綁按鍵」或「這個模式下不支援」，那就是現在的實際狀況。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.1.2</span>
+        <h2>爾雅在做什麼、不做什麼</h2>
+        <p class="dek">一句話：它是一套跑在終端機裡、為中文文件而寫的文字編輯器。</p>
+
+        <p>爾雅 Erya 的名字取自「<span class="term">爾，近也；雅，正也</span>」，是三十年前 DOS 上《漢書》中文文書系統的 Rust 重生。它以規格驅動、文件先行的方式從零重寫，<strong>不含原《漢書》的任何原始程式碼或資產</strong>，與原開發團隊也沒有隸屬關係。</p>
+
+        <p>它跑在終端機裡（Terminal、iTerm2、Windows Terminal、SSH 連線都算），啟動之後佔滿整個視窗，離開之後把視窗還原成原本的樣子。畫面長這樣：</p>
+
+        <figure>
+          <div class="screen-scroll">
+            <div class="screen">
+              <div class="s-title"> 爾雅 Erya │ [報告.txt] 附錄.md</div>
+              <div class="s-bar"> F1 說明  Ctrl+S 儲存  Ctrl+W 搜尋  Ctrl+R 取代  Ctrl+B 矩形選取  Ctrl+K 剪行  Ctrl+X 離開</div>
+              <div class="s-body">第一章　專案背景
+
+　　本專案自二〇二六年三月啟動，目標是把既有的
+　　文件系統整批轉成純文字格式，並保留原有的
+　　編碼與換行慣例。<em>目</em>前已完成第一階段。
+<i>~</i>
+<i>~</i></div>
+              <div class="s-status"> 報告.txt │ 5:24 │ 插入 │ UTF-8 │ LF </div>
+              <div class="s-msg"> 已儲存 報告.txt</div>
+            </div>
+          </div>
+          <figcaption><b>圖 1.1.1</b>　爾雅的主畫面。上面兩列、下面兩列是固定的框架，中間才是你的文件；示意圖上反白的那一格是游標的位置。每一列各代表什麼，1.3 會逐列拆開講。</figcaption>
+        </figure>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:50%">爾雅做這些</th><th>爾雅不做這些</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>開啟、編輯、儲存純文字檔</td>
+              <td>排版、字型、粗體斜體（它不是 Word）</td>
+            </tr>
+            <tr>
+              <td>UTF-8／UTF-8 BOM／Big5／GBK／Shift_JIS 的偵測與轉換</td>
+              <td>UTF-16、UTF-32 等寬字元編碼（開啟時會直接回報不支援）</td>
+            </tr>
+            <tr>
+              <td>多頁籤、搜尋取代、復原重做</td>
+              <td>分割視窗、同時看同一個檔的兩個地方</td>
+            </tr>
+            <tr>
+              <td>依副檔名自動語法高亮</td>
+              <td>語法檢查、自動完成、跳到定義（它不是 IDE）</td>
+            </tr>
+            <tr>
+              <td>TOML／YAML／JSON 的格式化</td>
+              <td>其他語言的格式化（不會呼叫外部工具）</td>
+            </tr>
+            <tr>
+              <td>十六進位檢視與二進位檔案的位元組編輯</td>
+              <td>反組譯、結構解析（它不是 010 Editor）</td>
+            </tr>
+            <tr>
+              <td>雙欄檔案比對與差異互抄</td>
+              <td>三方合併、版本控制整合（沒有 Git 功能）</td>
+            </tr>
+            <tr>
+              <td>64 MiB 以上大檔的唯讀閱讀與 log 跟隨</td>
+              <td>在大型檔案模式下編輯內容</td>
+            </tr>
+            <tr>
+              <td>常用語與按鍵巨集</td>
+              <td>外掛、腳本語言、套件管理</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">最常見的誤會</span>
+          <p><strong>爾雅沒有「自動存檔」，也沒有離開時的暫存還原。</strong>沒有按過 <kbd>Ctrl+S</kbd> 的內容只活在記憶體裡。它會在你關頁籤或離開時攔下來問你要不要存（見 2.1.8），但如果整個終端機被關掉、SSH 斷線、機器當掉，未存的內容就是沒了。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.1.3</span>
+        <h2>和 vim、nano 有什麼不一樣</h2>
+        <p class="dek">最短的答案：不用背模式，而且中文是第一等公民。</p>
+
+        <p>終端機編輯器不缺，爾雅想解決的是很具體的一組問題：<strong>中文文件</strong>在終端機裡常常對不齊、編碼常常轉壞、舊檔案常常是 Big5。所以它在幾件事上跟其他編輯器不一樣。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:22%"></th><th style="width:26%">爾雅</th><th style="width:26%">vim</th><th>nano</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>要不要切模式</td><td>不用。打開就能打字</td><td>要。指令模式／插入模式</td><td>不用</td></tr>
+            <tr><td>怎麼知道能按什麼</td><td>第二列永遠列著常用鍵，<kbd>F1</kbd> 有完整清單</td><td>要先學</td><td>底下兩列列著常用鍵</td></tr>
+            <tr><td>中文編碼</td><td>自動偵測，狀態列常駐顯示，<kbd>F7</kbd> 直接轉</td><td>要下指令設 fileencoding</td><td>不處理</td></tr>
+            <tr><td>全形對齊</td><td>依終端欄寬計算，全形字算兩欄</td><td>大致可以</td><td>大致可以</td></tr>
+            <tr><td>Emoji 與組合字</td><td>依 Unicode 字素叢集移動與刪除</td><td>視版本而定</td><td>常會拆開</td></tr>
+            <tr><td>矩形選取</td><td>內建，可填字、可整塊搬</td><td>有（Ctrl+V 區塊模式）</td><td>沒有</td></tr>
+            <tr><td>雙欄比對</td><td>內建 <kbd>F4</kbd></td><td>要開 vimdiff</td><td>沒有</td></tr>
+            <tr><td>十六進位</td><td>內建 <kbd>Ctrl+P</kbd></td><td>要接 xxd</td><td>沒有</td></tr>
+            <tr><td>改快捷鍵</td><td>一份 TOML，附十二套現成配置</td><td>vimrc（很強但要學）</td><td>nanorc（有限）</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">如果你原本就在用 nano 或 vim</span>
+          <p><span class="path">keymap/</span> 目錄裡附了 <strong>nano、vim、emacs</strong> 三套配置，還有 VSCode、Visual Studio、IntelliJ、Eclipse 與 macOS 版本。按 <kbd>F2</kbd> 選一套按 <kbd>Enter</kbd> 就換過去了，不必改設定檔（見 4.1.3）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.1.4</span>
+        <h2>系統全景：五塊功能</h2>
+        <p class="dek">爾雅的每一個畫面都可以歸到這五塊其中之一。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 400" role="img" aria-label="爾雅五塊功能全景圖">
+              <rect x="0" y="0" width="960" height="400" fill="#FAFBFD"/>
+
+              <rect x="24" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#C7D8EA" stroke-width="2"/>
+              <rect x="24" y="24" width="176" height="46" rx="12" fill="#E8EFF7"/>
+              <text x="112" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#12314F">① 編輯</text>
+              <text x="42" y="102" font-size="14" fill="#3F485D">打字、選取、剪貼</text>
+              <text x="42" y="130" font-size="14" fill="#3F485D">搜尋與取代</text>
+              <text x="42" y="158" font-size="14" fill="#3F485D">復原與重做</text>
+              <text x="42" y="186" font-size="14" fill="#3F485D">矩形選取</text>
+              <text x="42" y="214" font-size="14" fill="#3F485D">常用語與巨集</text>
+              <text x="42" y="258" font-size="13" fill="#98A2B3">每天在用的就是</text>
+              <text x="42" y="278" font-size="13" fill="#98A2B3">這一塊</text>
+              <text x="42" y="330" font-size="13.5" fill="#1F4E79">詳見第二部</text>
+
+              <rect x="216" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#E6CCC7" stroke-width="2"/>
+              <rect x="216" y="24" width="176" height="46" rx="12" fill="#F6EBE9"/>
+              <text x="304" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#7A382F">② 檔案</text>
+              <text x="234" y="102" font-size="14" fill="#3F485D">檔案對話盒</text>
+              <text x="234" y="130" font-size="14" fill="#3F485D">多頁籤</text>
+              <text x="234" y="158" font-size="14" fill="#3F485D">儲存與另存</text>
+              <text x="234" y="186" font-size="14" fill="#3F485D">外部變更偵測</text>
+              <text x="234" y="214" font-size="14" fill="#3F485D">大型檔案唯讀</text>
+              <text x="234" y="258" font-size="13" fill="#98A2B3">開進來與寫回去</text>
+              <text x="234" y="278" font-size="13" fill="#98A2B3">的每一件事</text>
+              <text x="234" y="330" font-size="13.5" fill="#9B4B3F">詳見 2.1、3.2</text>
+
+              <rect x="408" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#EDD9AE" stroke-width="2"/>
+              <rect x="408" y="24" width="176" height="46" rx="12" fill="#FBF3E3"/>
+              <text x="496" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#7A5312">③ 文字格式</text>
+              <text x="426" y="102" font-size="14" fill="#3F485D">編碼偵測與轉換</text>
+              <text x="426" y="130" font-size="14" fill="#3F485D">LF／CRLF 換行</text>
+              <text x="426" y="158" font-size="14" fill="#3F485D">語法高亮</text>
+              <text x="426" y="186" font-size="14" fill="#3F485D">TOML/YAML/JSON</text>
+              <text x="426" y="214" font-size="14" fill="#3F485D">段落重新編排</text>
+              <text x="426" y="258" font-size="13" fill="#98A2B3">中文文件最常</text>
+              <text x="426" y="278" font-size="13" fill="#98A2B3">卡住的那些事</text>
+              <text x="426" y="330" font-size="13.5" fill="#7A5312">詳見 3.1</text>
+
+              <rect x="600" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#D6CFE6" stroke-width="2"/>
+              <rect x="600" y="24" width="176" height="46" rx="12" fill="#EFECF6"/>
+              <text x="688" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#4C3F72">④ 檢視工具</text>
+              <text x="618" y="102" font-size="14" fill="#3F485D">十六進位檢視</text>
+              <text x="618" y="130" font-size="14" fill="#3F485D">二進位位元組編輯</text>
+              <text x="618" y="158" font-size="14" fill="#3F485D">雙欄檔案比對</text>
+              <text x="618" y="186" font-size="14" fill="#3F485D">差異左右互抄</text>
+              <text x="618" y="214" font-size="14" fill="#3F485D">即時日誌跟隨</text>
+              <text x="618" y="258" font-size="13" fill="#98A2B3">平常用不到，</text>
+              <text x="618" y="278" font-size="13" fill="#98A2B3">要用時很省事</text>
+              <text x="618" y="330" font-size="13.5" fill="#4C3F72">詳見 3.3、3.4</text>
+
+              <rect x="792" y="24" width="144" height="352" rx="12" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <rect x="792" y="24" width="144" height="46" rx="12" fill="#F4F6FA"/>
+              <text x="864" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#3F485D">⑤ 設定</text>
+              <text x="810" y="102" font-size="14" fill="#3F485D">按鍵配置</text>
+              <text x="810" y="130" font-size="14" fill="#3F485D">配置編輯器</text>
+              <text x="810" y="158" font-size="14" fill="#3F485D">介面語言</text>
+              <text x="810" y="186" font-size="14" fill="#3F485D">按鍵說明</text>
+              <text x="810" y="230" font-size="13" fill="#98A2B3">設一次就</text>
+              <text x="810" y="250" font-size="13" fill="#98A2B3">很久不用動</text>
+              <text x="810" y="330" font-size="13.5" fill="#667085">詳見第四部</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 1.1.2</b>　五塊功能。第①②塊是每天都會碰到的，第③塊在處理舊檔案時最有感，第④塊平常用不到但需要時很難用別的工具替代，第⑤塊設一次就好。</figcaption>
+        </figure>
+
+        <p>要注意：<strong>這五塊沒有選單可以點</strong>。爾雅沒有下拉式功能表，所有功能都靠快捷鍵叫出來。找不到某個功能時，按 <kbd>F1</kbd> 開啟完整按鍵說明，那份清單就是功能總表（見 1.3.8）。</p>
+      </section>
+
+      <!-- ══════════ 1.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.1.5</span>
+        <h2>一份文件的一生</h2>
+        <p class="dek">從開啟到寫回磁碟，會經過這五站。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 300" role="img" aria-label="一份文件從開啟到儲存的流程圖">
+              <rect x="0" y="0" width="960" height="300" fill="#FAFBFD"/>
+              <defs><marker id="arrow11" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="24" y="60" width="168" height="86" rx="10" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="108" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#7A382F">① 開啟</text>
+              <text x="108" y="116" text-anchor="middle" font-size="13" fill="#3F485D">命令列帶檔名</text>
+              <text x="108" y="136" text-anchor="middle" font-size="13" fill="#3F485D">或 Ctrl+O</text>
+
+              <rect x="216" y="60" width="168" height="86" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="300" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#7A5312">② 判斷型態</text>
+              <text x="300" y="116" text-anchor="middle" font-size="13" fill="#3F485D">文字／大檔／二進位</text>
+              <text x="300" y="136" text-anchor="middle" font-size="13" fill="#3F485D">順便偵測編碼</text>
+
+              <rect x="408" y="60" width="168" height="86" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="492" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#12314F">③ 編輯</text>
+              <text x="492" y="116" text-anchor="middle" font-size="13" fill="#3F485D">打字、搜尋、取代</text>
+              <text x="492" y="136" text-anchor="middle" font-size="13" fill="#3F485D">最多 100 步可復原</text>
+
+              <rect x="600" y="60" width="168" height="86" rx="10" fill="#EFECF6" stroke="#D6CFE6" stroke-width="2"/>
+              <text x="684" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#4C3F72">④ 轉格式</text>
+              <text x="684" y="116" text-anchor="middle" font-size="13" fill="#3F485D">F7 編碼、F8 換行</text>
+              <text x="684" y="136" text-anchor="middle" font-size="13" fill="#3F485D">（要不要都可以）</text>
+
+              <rect x="792" y="60" width="144" height="86" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="864" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#1E5C39">⑤ 儲存</text>
+              <text x="864" y="116" text-anchor="middle" font-size="13" fill="#3F485D">Ctrl+S</text>
+              <text x="864" y="136" text-anchor="middle" font-size="13" fill="#3F485D">先寫暫存再換掉</text>
+
+              <path d="M192 103 L214 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M384 103 L406 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M576 103 L598 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M768 103 L790 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+
+              <path d="M492 146 L492 186" stroke="#98A2B3" stroke-width="2" stroke-dasharray="5 4"/>
+              <rect x="228" y="186" width="528" height="60" rx="10" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <text x="492" y="212" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3F485D">編輯的整段期間，爾雅都在盯著磁碟上的原檔有沒有被別人改掉</text>
+              <text x="492" y="234" text-anchor="middle" font-size="13" fill="#667085">乾淨的文件自動重新載入；已經改過的文件會先問你（見 2.1.7）</text>
+
+              <text x="480" y="278" text-anchor="middle" font-size="13.5" fill="#98A2B3">②判斷型態的結果會決定接下來能做什麼：二進位檔進不了文字編輯，大型檔案不能改內容</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 1.1.3</b>　一份文件的一生。第②站是分岔點：一般文字檔走完整流程，超過 64 MiB 的走唯讀模式（3.2），不是文字的走十六進位（3.3）。</figcaption>
+        </figure>
+
+        <ol class="rule-list">
+          <li><b>開啟。</b>啟動時在命令列後面接檔名，或在編輯器裡按 <kbd>Ctrl+O</kbd> 叫出檔案對話盒。同一個路徑如果已經開在某個頁籤，爾雅會直接切過去，不會重複開兩份（2.1.1）。</li>
+          <li><b>判斷型態。</b>爾雅會先看檔案多大、前 8 KiB 有沒有 NUL 位元組，再決定用哪一種模式打開，同時把編碼猜出來（3.1.1）。</li>
+          <li><b>編輯。</b>一般文字檔在這裡度過大部分時間。每個頁籤各自保有自己的游標位置、搜尋條件與最多 100 步的復原紀錄（2.4.1）。</li>
+          <li><b>轉格式（可略過）。</b>要把 Big5 舊檔轉成 UTF-8、或把 CRLF 換成 LF，就在存檔前按 <kbd>F7</kbd>／<kbd>F8</kbd>。轉換不會立刻寫檔，是在下一次儲存時才生效（3.1.2）。</li>
+          <li><b>儲存。</b><kbd>Ctrl+S</kbd> 會先寫到同目錄的暫存檔、再原子換掉原檔，Unix 上還會保留原本的檔案權限（2.1.6）。</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 1.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.1.6</span>
+        <h2>三種人、三條路線</h2>
+        <p class="dek">先確認你是哪一種，再決定要讀哪幾章。</p>
+
+        <div class="role-grid">
+          <div class="role-card">
+            <h4>寫中文文件的人</h4>
+            <p class="who">用爾雅寫稿、整理筆記、處理舊文件</p>
+            <ul>
+              <li>開檔、頁籤、儲存</li>
+              <li>搜尋取代、復原</li>
+              <li>編碼與換行轉換</li>
+              <li>段落重排、常用語</li>
+            </ul>
+            <p class="go">路線：1.2 → 1.3 → 2.1～2.4 → 3.1</p>
+          </div>
+          <div class="role-card mgr">
+            <h4>在伺服器上改設定檔的人</h4>
+            <p class="who">SSH 進去改 conf、看 log、比對兩份設定</p>
+            <ul>
+              <li>命令列選項與環境變數</li>
+              <li>語法高亮與 TOML/YAML/JSON 格式化</li>
+              <li>大型檔案與 log 跟隨</li>
+              <li>雙欄比對兩份設定檔</li>
+            </ul>
+            <p class="go">路線：1.2 → 1.3 → 2.1 → 3.1 → 3.2 → 3.4</p>
+          </div>
+          <div class="role-card hr">
+            <h4>想把它調成順手的人</h4>
+            <p class="who">要改快捷鍵、換語言、或給團隊統一設定</p>
+            <ul>
+              <li>十二套內建按鍵配置</li>
+              <li>按鍵配置編輯器與另存</li>
+              <li>設定檔放哪裡會被讀到</li>
+              <li>介面語言與自訂翻譯</li>
+            </ul>
+            <p class="go">路線：1.3 → 4.1 → 4.2 → 4.4</p>
+          </div>
+        </div>
+
+        <p>一個人身兼多角是常態。如果三種都是你，建議照第一部、第二部的順序走一遍，第三部與第四部等需要時再翻。</p>
+      </section>
+
+      <!-- ══════════ 1.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.1.7</span>
+        <h2>先記住這六件事</h2>
+        <p class="dek">看完全書會再遇到，但先在這裡放著。</p>
+
+        <ol class="rule-list">
+          <li><b>沒有自動存檔。</b>爾雅不會幫你偷偷存檔，也沒有崩潰還原。<kbd>Ctrl+S</kbd> 是唯一寫入磁碟的動作（2.1.5）。</li>
+          <li><b>離開是 <kbd>Ctrl+X</kbd>，不是 <kbd>Ctrl+C</kbd>。</b><kbd>Ctrl+C</kbd> 在預設配置裡是「複製」，不是中斷程式。真正的離開鍵是 <kbd>Ctrl+X</kbd>，關頁籤是 <kbd>F11</kbd>（2.1.3）。</li>
+          <li><b>快捷鍵可以整套換掉，所以手冊寫的不一定等於你按的。</b>畫面第二列與 <kbd>F1</kbd> 顯示的永遠是你當下真正在用的鍵（4.1）。</li>
+          <li><b>編碼與換行是「下一次儲存」才生效。</b>按 <kbd>F7</kbd>／<kbd>F8</kbd> 只是換掉狀態列上的標示，檔案要等你存檔才真的變（3.1.2）。</li>
+          <li><b>有三種模式不能編輯內容。</b>大型檔案唯讀模式、十六進位檢視（對文字檔而言）、串流二進位檔案。狀態列會直接寫出來你在哪一種（3.2、3.3）。</li>
+          <li><b>矩形選取和自動換行不能同時用。</b>兩者的座標系統會打架，所以爾雅讓它們互斥；開著一個時想開另一個，會被訊息列擋下來（2.2.5）。</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 1.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.1.8</span>
+        <h2>名詞去哪一章看</h2>
+        <p class="dek">本章出現過的詞，詳細說明在這些地方。完整清單見 4.4.8。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:170px">名詞</th><th>一句話解釋</th><th style="width:100px">詳見</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>頁籤</td><td>同時開著的多個檔案，每個各自記得游標與復原紀錄。</td><td>2.1.3</td></tr>
+            <tr><td>提示列</td><td>畫面第二列，永遠列著目前這個畫面能按的鍵。</td><td>1.3.3</td></tr>
+            <tr><td>狀態列</td><td>倒數第二列，顯示檔名、行欄、模式、編碼與換行格式。</td><td>1.3.5</td></tr>
+            <tr><td>訊息列</td><td>最後一列，操作結果與確認問題都出現在這裡。</td><td>1.3.6</td></tr>
+            <tr><td>按鍵配置</td><td>一份把「動作」對應到「按鍵」的 TOML，可以整套換。</td><td>4.1</td></tr>
+            <tr><td>字素叢集</td><td>螢幕上看起來是一個字的單位，可能由好幾個碼位組成。</td><td>2.2.3</td></tr>
+            <tr><td>矩形選取</td><td>選一個長方形範圍，可以填字，也可以整塊搬動。</td><td>2.2.5</td></tr>
+            <tr><td>大型檔案模式</td><td>64 MiB 以上自動進入的唯讀閱讀模式。</td><td>3.2</td></tr>
+            <tr><td>十六進位檢視</td><td>把文件攤成位元組看，一般文字檔是唯讀的。</td><td>3.3</td></tr>
+            <tr><td>二進位檔案</td><td>含 NUL 或無法解碼的檔案，開啟時直接進位元組檢視。</td><td>3.3.5</td></tr>
+            <tr><td>暫存副本</td><td>雙欄比對時的工作檔；沒套用之前原始檔不會變。</td><td>3.4.1</td></tr>
+            <tr><td>常用語</td><td>收錄起來重複插入的字串，存成 JSON。</td><td>2.4.3</td></tr>
+            <tr><td>巨集</td><td>錄下來重播的一串按鍵，存成 JSON。</td><td>2.4.6</td></tr>
+            <tr><td>原子儲存</td><td>先寫暫存檔再換掉原檔，中途斷電也不會半截。</td><td>2.1.6</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <nav class="pager">
+        <a href="#top">
+          <span>目前章節</span>
+          <b>1.1 這個編輯器在做什麼</b>
+        </a>
+        <a class="next" href="Erya使用手冊・1.2・安裝與啟動.html">
+          <span>下一章</span>
+          <b>1.2 安裝與啟動 →</b>
+        </a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var layout = document.getElementById('layout');
+  var toggle = document.getElementById('sideToggle');
+  var main = document.getElementById('main');
+  var q = document.getElementById('q');
+  var stat = document.getElementById('stat');
+  var jump = document.getElementById('jump');
+  var jumpList = document.getElementById('jumpList');
+
+  /* ── 側欄收合 ─────────────────────── */
+  toggle.addEventListener('click', function () {
+    if (window.innerWidth <= 900) layout.classList.toggle('nav-open');
+    else layout.classList.toggle('nav-collapsed');
+  });
+
+  /* ── 捲動時標示目前小節 ───────────── */
+  var subLinks = Array.prototype.slice.call(document.querySelectorAll('#subToc a'));
+  var sections = subLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function spy() {
+    var y = window.scrollY + 140, cur = 0;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i] && sections[i].offsetTop <= y) cur = i;
+    }
+    subLinks.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  spy();
+
+  /* ── 字級縮放 ─────────────────────── */
+  var ZOOMS = [0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.25, 1.4, 1.6, 1.8, 2];
+  var zoomVal = 1;
+  try { var stored = parseFloat(localStorage.getItem('eryaManualZoom')); if (stored) zoomVal = stored; } catch (e) {}
+  var fcVal = document.querySelector('.fontctl .fc-val');
+
+  function applyZoom(v) {
+    zoomVal = v;
+    document.documentElement.style.setProperty('--zoom', String(v));
+    if (fcVal) fcVal.textContent = Math.round(v * 100) + '%';
+    try { localStorage.setItem('eryaManualZoom', String(v)); } catch (e) {}
+  }
+
+  function stepZoom(dir) {
+    var i = 1;
+    for (var k = 0; k < ZOOMS.length; k++) { if (Math.abs(ZOOMS[k] - zoomVal) < 0.001) i = k; }
+    applyZoom(ZOOMS[Math.min(ZOOMS.length - 1, Math.max(0, i + dir))]);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.fontctl button'), function (b) {
+    b.addEventListener('click', function () {
+      var d = b.getAttribute('data-fs');
+      if (d === '0') applyZoom(1); else stepZoom(d === '+' ? 1 : -1);
+    });
+  });
+  applyZoom(zoomVal);
+
+  /* 用 file:// 直接開檔時，部分瀏覽器不給用 localStorage
+     → 把字級掛在網址參數上，翻到下一章時帶過去 */
+  try {
+    var qz = parseFloat(new URLSearchParams(location.search).get('z'));
+    if (qz) applyZoom(qz);
+  } catch (e) {}
+
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (/^https?:/i.test(href) || !/\.html(\?|#|$)/i.test(href)) return;
+    var hash = href.indexOf('#') === -1 ? '' : href.slice(href.indexOf('#'));
+    var file = href.split('#')[0].split('?')[0];
+    a.setAttribute('href', file + '?z=' + zoomVal + hash);
+  }, true);
+
+  /* ── 搜尋 ─────────────────────────── */
+  var marks = [], cur = -1;
+  var chapters = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+
+  function clearHits() {
+    document.querySelectorAll('mark.hit').forEach(function (m) {
+      var t = document.createTextNode(m.textContent);
+      var p = m.parentNode;
+      p.replaceChild(t, m);
+      p.normalize();
+    });
+    document.querySelectorAll('.svg-hit').forEach(function (e) { e.classList.remove('svg-hit'); });
+    chapters.forEach(function (a) { a.classList.remove('hit-kw'); });
+    marks = []; cur = -1;
+  }
+
+  function inSvg(node) {
+    var p = node.parentNode;
+    while (p) { if (p.nodeName.toLowerCase() === 'svg') return true; p = p.parentNode; }
+    return false;
+  }
+
+  function highlight(term) {
+    var walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || n.nodeValue.indexOf(term) === -1) return NodeFilter.FILTER_REJECT;
+        var pn = n.parentNode.nodeName.toLowerCase();
+        if (pn === 'script' || pn === 'style' || pn === 'mark') return NodeFilter.FILTER_REJECT;
+        if (inSvg(n)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var targets = [], n;
+    while ((n = walker.nextNode())) targets.push(n);
+
+    targets.forEach(function (node) {
+      var parts = node.nodeValue.split(term);
+      var frag = document.createDocumentFragment();
+      parts.forEach(function (piece, i) {
+        if (i > 0) {
+          var m = document.createElement('mark');
+          m.className = 'hit';
+          m.textContent = term;
+          frag.appendChild(m);
+          marks.push(m);
+        }
+        if (piece) frag.appendChild(document.createTextNode(piece));
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+
+    /* SVG 內的文字不能包 mark，改標顏色 */
+    var svgHits = 0;
+    main.querySelectorAll('svg text').forEach(function (t) {
+      if (t.textContent.indexOf(term) !== -1) { t.classList.add('svg-hit'); svgHits++; }
+    });
+    return svgHits;
+  }
+
+  function matchChapters(term) {
+    var hits = [];
+    chapters.forEach(function (a) {
+      var ch = a.getAttribute('data-ch') || '';
+      var kw = (a.getAttribute('data-kw') || '') + ' ' + a.textContent + ' ' + ch;
+      if (kw.indexOf(term) === -1) return;
+      a.classList.add('hit-kw');
+      if (!a.classList.contains('current')) hits.push(a);
+    });
+    return hits;
+  }
+
+  function render(term) {
+    clearHits();
+    if (!term) {
+      stat.textContent = '本章可全文搜尋，圖上的字也找得到。';
+      jump.classList.add('hidden');
+      return;
+    }
+    var svgHits = highlight(term);
+    var chs = matchChapters(term);
+
+    var msg = '本章 <b>' + marks.length + '</b> 處';
+    if (svgHits) msg += '，圖上 <b>' + svgHits + '</b> 處';
+    if (marks.length) {
+      msg += '<span class="search-nav"><button type="button" data-nav="prev">↑</button><button type="button" data-nav="next">↓</button></span>';
+    }
+    if (!marks.length && !svgHits && !chs.length) msg = '沒找到「' + term + '」';
+    stat.innerHTML = msg;
+
+    var navBtns = stat.querySelectorAll('[data-nav]');
+    Array.prototype.forEach.call(navBtns, function (b) {
+      b.addEventListener('click', function () { step(b.getAttribute('data-nav') === 'next' ? 1 : -1); });
+    });
+
+    jumpList.innerHTML = '';
+    if (chs.length) {
+      chs.forEach(function (a) {
+        var link = document.createElement('a');
+        link.href = a.getAttribute('href');
+        link.innerHTML = '<i>' + (a.getAttribute('data-ch') || '') + '</i>' +
+                         a.textContent.replace(a.querySelector('i') ? a.querySelector('i').textContent : '', '');
+        jumpList.appendChild(link);
+      });
+      jump.classList.remove('hidden');
+    } else {
+      jump.classList.add('hidden');
+    }
+
+    if (marks.length) step(1);
+  }
+
+  function step(dir) {
+    if (!marks.length) return;
+    if (cur >= 0 && marks[cur]) marks[cur].classList.remove('cur');
+    cur = (cur + dir + marks.length) % marks.length;
+    var m = marks[cur];
+    m.classList.add('cur');
+    m.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
+  var timer = null;
+  q.addEventListener('input', function () {
+    clearTimeout(timer);
+    var v = q.value.trim();
+    timer = setTimeout(function () { render(v); }, 180);
+  });
+  q.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); step(e.shiftKey ? -1 : 1); }
+    if (e.key === 'Escape') { q.value = ''; render(''); q.blur(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (window.innerWidth <= 900) layout.classList.add('nav-open');
+      layout.classList.remove('nav-collapsed');
+      q.focus(); q.select();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

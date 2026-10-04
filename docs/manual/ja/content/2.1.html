@@ -1,0 +1,309 @@
+      <!-- ══════════ 2.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.1.1</span>
+        <h2>ファイルを開く 4 つの方法</h2>
+        <p class="dek">コマンドラインから渡すか、エディターの中から呼び出すか。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">方法</th><th>動作</th></tr></thead>
+          <tbody>
+            <tr><td>起動時にファイル名</td><td><span class="path">erya a.txt b.txt</span>。1 ファイル 1 タブで、最初のタブから始まります（1.2.5 参照）。</td></tr>
+            <tr><td><kbd>Ctrl+O</kbd> ファイルダイアログ</td><td>矢印キーで辿れる一覧が出て、選んだファイルは<strong>新しいタブ</strong>で開きます。</td></tr>
+            <tr><td><kbd>Ctrl+N</kbd> 新規タブ</td><td>無題の空文書を開きます。名前は最初の保存で決めます。</td></tr>
+            <tr><td><kbd>F12</kbd> 名前を付けて保存</td><td>いまの内容を別名で保存します。<strong>以降このタブは新しいファイルを扱います。</strong>元のファイルはディスクに残り、このタブからは触りません。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">同じファイルは二重に開きません</span>
+          <p>開こうとしたパスがすでにタブにある場合、Erya は<strong>そのタブへ切り替え</strong>、「報告.txt はすでにタブで開いています」と表示します。2 つのタブで別々に編集して互いに上書きする、という事故を防ぐためです。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.1.2</span>
+        <h2>ファイルダイアログの操作</h2>
+        <p class="dek">5 つのキーで足ります：上、下、入る、親へ、キャンセル。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ ファイルを開く │ /home/user/docs</div>
+            <div class="s-bar">↑/↓ 選択　Enter/→ 開く　←/Backspace 親へ　Esc/Q キャンセル</div>
+            <div class="s-body">    ┌────────────────────────────────────────────┐
+    │   📂 ..                                    │
+    │   📂 archive                               │
+    │<u>▶  📂 drafts                                </u>│
+    │      報告.txt                              │
+    │      付録.md                               │
+    │      nginx.conf                            │
+    └────────────────────────────────────────────┘</div>
+            <div class="s-status"> /home/user/docs │ 3/6 </div>
+            <div class="s-msg">↑/↓ 選択　Enter/→ 開く　←/Backspace 親へ　Esc/Q キャンセル</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">キー</th><th>動作</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>項目を選びます。枠より長い一覧は自動でスクロールします。</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>1 ページずつ移動します。</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>一覧の先頭／末尾へ。</td></tr>
+            <tr><td><kbd>Enter</kbd> または <kbd>→</kbd></td><td>ディレクトリなら入り、ファイルなら開きます。</td></tr>
+            <tr><td><kbd>←</kbd> または <kbd>Backspace</kbd></td><td>親フォルダーへ。<strong>戻ると、いま出てきたフォルダーが選択されています。</strong></td></tr>
+            <tr><td><kbd>Esc</kbd> または <kbd>Q</kbd></td><td>キャンセルして編集に戻ります。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>ディレクトリには <span class="path">📂</span>、ファイルには空白が付くので、見た目でまとまります。</li>
+          <li>並び順は<strong>ディレクトリが先、ファイルが後</strong>で、それぞれ名前順（大文字小文字を区別しません）。</li>
+          <li>先頭の <span class="path">..</span> は親フォルダーで、<kbd>←</kbd> と同じです。</li>
+          <li>選択行は<strong>灰地に黒＋▶</strong>です。</li>
+          <li>ステータス行に現在のディレクトリと「何番目／全何件」が出ます。</li>
+          <li>ダイアログは<strong>現在の文書があるディレクトリ</strong>から始まります。無題の文書なら作業ディレクトリです。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>Esc</kbd> はキャンセルで、親へは戻りません</span>
+          <p>多くのファイラーと違う点です。<strong>親へは <kbd>←</kbd> か <kbd>Backspace</kbd>。<kbd>Esc</kbd> はダイアログ自体を閉じます。</strong>Erya の <kbd>Esc</kbd> はどの画面でも「この画面から出る」で、ここも例外ではありません（1.3.7 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.1.3</span>
+        <h2>タブ：新規・切り替え・閉じる</h2>
+        <p class="dek">4 つのキー。結果は 1 行目で確認できます。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">キー</th><th style="width:26%">操作</th><th>補足</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+N</kbd></td><td>空のタブを追加</td><td>無題の文書を作り、そこへ切り替えます。</td></tr>
+            <tr><td><kbd>F10</kbd></td><td>次のタブ</td><td>最後まで行くと先頭へ戻ります。</td></tr>
+            <tr><td><kbd>F9</kbd></td><td>前のタブ</td><td>逆方向にも回ります。</td></tr>
+            <tr><td><kbd>F11</kbd></td><td>このタブを閉じる</td><td>未保存なら先に確認します（2.1.8 参照）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">最後のタブを閉じても終了しません</span>
+          <p>Erya は必ず 1 つはタブを残します。最後の 1 つを閉じると<strong>新しい無題の文書</strong>が残ります。終了するには <kbd>Ctrl+X</kbd> を押してください。</p>
+        </div>
+
+        <p>終了時、Erya は<strong>背景のタブも 1 つずつ確認</strong>します。未保存があればそのタブへ切り替えて尋ね（S 保存／Y 破棄／N 戻る）、すべて片付いてから終了します。「保存したつもりが 3 つ目のタブだけ保存していなかった」ということは起きません。</p>
+      </section>
+
+      <!-- ══════════ 2.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.1.4</span>
+        <h2>タブごとに保持されるもの</h2>
+        <p class="dek">ほとんどはタブ単位。共有されるのは 2 つだけです。</p>
+
+        <div class="duo">
+          <div>
+            <h4>タブごと</h4>
+            <ul>
+              <li>カーソル位置とスクロール位置</li>
+              <li>選択範囲と選択の種類</li>
+              <li>元に戻す／やり直す履歴（各 100 手）</li>
+              <li>直近の検索文字列と置換文字列</li>
+              <li>挿入／上書きモード</li>
+              <li>折り返し表示の有無</li>
+              <li>文字コードと改行コード</li>
+              <li>段落幅</li>
+            </ul>
+          </div>
+          <div>
+            <h4>すべてのタブで共有</h4>
+            <ul>
+              <li><strong>クリップボード</strong>——タブ A でコピーしてタブ B に貼れます</li>
+              <li><strong>キープロファイルと表示言語</strong>——システム設定で変えると全タブに同時適用（4.2.2 参照）</li>
+            </ul>
+            <p style="margin-top:10px">定型文とマクロは<strong>ファイルに保存</strong>され、読み込むと現在のタブで有効になります（2.4.5 参照）。</p>
+          </div>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">ファイル間の移動はこうします</span>
+          <p>ファイル A で選択して <kbd>Ctrl+C</kbd>、<kbd>F10</kbd> でファイル B へ、<kbd>Ctrl+V</kbd>。ただし Erya のクリップボードは内部のもので、<strong>システムのクリップボードとは別</strong>です。他のアプリとやり取りするにはターミナル自身のコピー＆ペーストを使います（2.2.7 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.1.5</span>
+        <h2>保存と名前を付けて保存</h2>
+        <p class="dek"><kbd>Ctrl+S</kbd> は元のファイルへ、<kbd>F12</kbd> は別のファイルへ。</p>
+
+        <ol class="rule-list">
+          <li><b>名前のある文書</b>：<kbd>Ctrl+S</kbd> でそのまま書き込み、メッセージ行に「… を保存しました」、1 行目のアスタリスクが消えます。</li>
+          <li><b>無題の文書</b>：<kbd>Ctrl+S</kbd> を押すと<strong>自動的に「名前を付けて保存：」の入力行が出ます</strong>。名前を入力して <kbd>Enter</kbd>。<kbd>F12</kbd> に押し替える必要はありません。</li>
+          <li><b>名前を付けて保存</b>：<kbd>F12</kbd> は現在のパスを初期値として出します。書き換えて <kbd>Enter</kbd>。<strong>以降このタブは新しいファイルのものになります。</strong></li>
+        </ol>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確定  Esc 取消  ←/→ カーソル移動  Backspace/Delete 削除</div>
+            <div class="s-msg ask">名前を付けて保存：/home/user/docs/報告-控え.txt<em> </em></div>
+          </div>
+        </div>
+
+        <ul>
+          <li>入力行では <kbd>←</kbd> <kbd>→</kbd>、<kbd>Backspace</kbd>、<kbd>Delete</kbd> が使え、長いパスは自動でスクロールします。</li>
+          <li>空のまま <kbd>Enter</kbd> を押すと「ファイル名を入力してください」と出て、もう一度尋ねます。</li>
+          <li>既存のディレクトリを指定すると「文書をディレクトリとして保存できません」で失敗します。</li>
+          <li>パス途中のディレクトリは存在している必要があります。<strong>Erya は作成しません。</strong></li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 2.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.1.6</span>
+        <h2>保存時に実際に起きること</h2>
+        <p class="dek">元のファイルに直接書くのではなく、一時ファイルを作って差し替えます。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 220" role="img" aria-label="アトミック保存の手順">
+              <rect x="0" y="0" width="960" height="220" fill="#FAFBFD"/>
+              <defs><marker id="arrow21" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="30" y="52" width="190" height="80" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="125" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#12314F">① 一時ファイル</text>
+              <text x="125" y="106" text-anchor="middle" font-size="13" fill="#3F485D">同じディレクトリに書く</text>
+
+              <rect x="260" y="52" width="190" height="80" rx="10" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="355" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#7A382F">② 書き出し確定</text>
+              <text x="355" y="106" text-anchor="middle" font-size="13" fill="#3F485D">本当にディスクへ</text>
+
+              <rect x="490" y="52" width="190" height="80" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="585" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#7A5312">③ 名前の差し替え</text>
+              <text x="585" y="106" text-anchor="middle" font-size="13" fill="#3F485D">1 手で入れ替える</text>
+
+              <rect x="720" y="52" width="210" height="80" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="825" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1E5C39">④ 権限を戻す</text>
+              <text x="825" y="106" text-anchor="middle" font-size="13" fill="#3F485D">Unix では元のモード</text>
+
+              <path d="M220 92 L256 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+              <path d="M450 92 L486 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+              <path d="M680 92 L716 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+
+              <text x="480" y="176" text-anchor="middle" font-size="14.5" fill="#3F485D">どの段階で失敗しても、元のファイルは保存前のままです。半端なファイルは残りません</text>
+              <text x="480" y="200" text-anchor="middle" font-size="13.5" fill="#98A2B3">同じディレクトリに置くのは、そうしないと差し替えが原子的にならないからです</text>
+            </svg>
+          </div>
+          <figcaption><b>図 2.1.1</b>　アトミック保存。停電、ディスク不足、プロセス強制終了——どれでも直前の版がそのまま残ります。</figcaption>
+        </figure>
+
+        <ul>
+          <li><strong>一時ファイルは必ず元と同じディレクトリ</strong>に作られます。したがってディレクトリ自体に書き込み権限が必要で、ファイルだけ書けても保存できません。</li>
+          <li><strong>Unix では元の権限が保たれます。</strong>設定した <span class="path">chmod</span> は戻されず、スクリプトの実行ビットも残ります。</li>
+          <li>UTF-8 での保存は分割ストリーム書き込みなので、大きな文書でも保存のために全文をメモリーへ複製しません。</li>
+          <li>保存時に<strong>文字コードと改行コードの変換</strong>も一緒に行われます（3.1.2 参照）。</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 2.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.1.7</span>
+        <h2>他のプログラムに書き換えられたら</h2>
+        <p class="dek">Erya は 250 ミリ秒ごとに見ており、あなたが編集したかどうかで対応が変わります。</p>
+
+        <div class="duo">
+          <div>
+            <h4>編集していない場合</h4>
+            <p><strong>自動的に再読み込み</strong>し、「外部更新を検出し、ファイルを安全に再読み込みしました」と表示します。画面は常に最新の内容です。</p>
+            <p>よくある場面：別ウィンドウで保存した、<span class="path">git pull</span> で置き換わった。</p>
+          </div>
+          <div>
+            <h4>編集している場合</h4>
+            <p><strong>あなたの内容は上書きされません。</strong>まず「ファイルが外部で変更されました。保存前に確認が必要です」と警告し、<kbd>Ctrl+S</kbd> を押した時点で赤い確認行が出ます。</p>
+            <p>よくある場面：自分が編集中に、同僚も保存した。</p>
+          </div>
+        </div>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn"> 外部ファイルが更新されています：[O]上書き、[R]再読込、[N/Esc]取消</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">キー</th><th style="width:22%">操作</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>O</kbd></td><td>上書き</td><td>手元の版で上書きします。<strong>ディスク側の変更は失われます。</strong></td></tr>
+            <tr><td><kbd>R</kbd></td><td>再読込</td><td>編集を捨てて読み直します。<strong>入力した内容は失われます。</strong></td></tr>
+            <tr><td><kbd>N</kbd> / <kbd>Esc</kbd></td><td>取消</td><td>何もしません。両方の内容が残るので、別名保存してから落ち着いて処理できます。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">迷ったら <kbd>N</kbd>、そして <kbd>F12</kbd></span>
+          <p><kbd>O</kbd> も <kbd>R</kbd> もどちらかを捨て、<strong>元に戻せません</strong>。安全なのは <kbd>N</kbd> で取り消し、<kbd>F12</kbd> で別名保存し、<kbd>F4</kbd> の比較機能で統合する流れです（3.4 参照）。</p>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">自動再読み込みで履歴が消えます</span>
+          <p>未編集の文書が再読み込みされると、<strong>元に戻す／やり直す履歴も一緒に消えます</strong>。古い手順は新しい内容に当てられず、当てれば壊すからです。意図した動作ですが、最初は必ず驚きます。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">2.1.8</span>
+        <h2>未保存のまま終了しようとしたら</h2>
+        <p class="dek">止められる場面は 2 つ。どちらも S／Y／N で答えます。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn"> 文書は未保存です：S 保存して終了／Y 破棄／N 編集に戻る</div>
+            <div class="s-msg warn"> タブは未保存です：S 保存して閉じる／Y 破棄／N 編集に戻る</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">キー</th><th>動作</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>S</kbd></td><td>保存してから終了／閉じます。名前が無ければ先に尋ねます。</td></tr>
+            <tr><td><kbd>Y</kbd></td><td><strong>変更を破棄</strong>して進みます。これ以降は取り戻せません。</td></tr>
+            <tr><td><kbd>N</kbd> / <kbd>Esc</kbd></td><td>取り消して編集に戻ります。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Y は「はい」ではなく「破棄」です</span>
+          <p>問いを見て反射的に <kbd>Y</kbd> を押すのが、いちばん内容を失いやすい操作です。<strong>Erya の <kbd>Y</kbd> は常に「変更を破棄」</strong>で、保存は <kbd>S</kbd> です。3 つの確認行はどれも各文字の意味を同じ行に書いてあります。押す前に読んでください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">2.1.9</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">開く・保存まわりで多い 6 つです。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>「保存に失敗しました：Permission denied」</td><td>ファイル<strong>またはディレクトリ</strong>に書き込み権限がありません。アトミック保存は同じディレクトリに一時ファイルを作ります（2.1.6）。</td></tr>
+            <tr><td>「保存に失敗しました：No such file or directory」</td><td>パス途中のディレクトリがありません。先に <span class="path">mkdir -p</span> を（2.1.9）。</td></tr>
+            <tr><td>「文書をディレクトリとして保存できません」</td><td>保存先に既存のディレクトリを指定しています。ファイル名を足してください（2.1.5）。</td></tr>
+            <tr><td>「ファイル名を入力してください」</td><td>空のまま <kbd>Enter</kbd> を押しました。もう一度尋ねられます。</td></tr>
+            <tr><td>古い版を編集していた</td><td>開いたあとに外部で変更され、警告を見落としています。<kbd>N</kbd> で取り消し別名保存を（2.1.7）。</td></tr>
+            <tr><td>元に戻すが効かなくなった</td><td>直前に自動再読み込みが起き、履歴が消えました（2.1.7）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

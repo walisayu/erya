@@ -1,0 +1,12 @@
+# Vim-inspired terminal shortcuts. Erya remains a non-modal editor.
+name = "vim"
+
+[bindings]
+quit = "Ctrl+Q"
+search = "Ctrl+F"
+redo = "Ctrl+Shift+Z"
+paste = "Shift+Insert"
+cut = "Ctrl+X"
+copy = "Ctrl+C"
+cursor_position = []
+open_settings = "F2"

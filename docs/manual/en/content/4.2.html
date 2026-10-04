@@ -1,0 +1,215 @@
+      <!-- ══════════ 4.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.2.1</span>
+        <h2>The system settings page</h2>
+        <p class="dek">Erya's entire configuration screen, and it has two entries.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ System settings</div>
+            <div class="s-bar"> ↑/↓ Field  ←/→ Choose  E Edit keys  Enter Apply  Esc Cancel</div>
+            <div class="s-body">   Key bindings:  ◀ Erya Terminal Safe ▶
+
+<u> ▶ Interface language:  ◀ English (en) ▶          </u></div>
+            <div class="s-status"> Erya Terminal Safe │ English </div>
+            <div class="s-msg"> Choose with the arrow keys; Enter applies to every tab</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>F2</kbd></td><td>Opens system settings</td></tr>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Moves between “Key bindings” and “Interface language”. The selected row is highlighted and marked ▶.</td></tr>
+            <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Changes the value, wrapping at the ends.</td></tr>
+            <tr><td><kbd>E</kbd></td><td>Opens the keymap editor (see 4.1.4)</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>Applies and returns to editing</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Cancels; nothing changes</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>The status bar shows <strong>the combination currently selected</strong> (profile │ language), so you can check before pressing <kbd>Enter</kbd>.</p>
+      </section>
+
+      <!-- ══════════ 4.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.2.2</span>
+        <h2>What it applies to, and when</h2>
+        <p class="dek">The moment you press <kbd>Enter</kbd>, every tab changes.</p>
+
+        <ul>
+          <li>The message row confirms: “Applied settings: Erya Classic / English”.</li>
+          <li><strong>Every open tab is affected at once</strong>; nothing has to be reopened.</li>
+          <li>The hint bar, status bar, and <kbd>F1</kbd> help switch to the new language and the new keys immediately.</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">These settings are not remembered</span>
+          <p>System settings apply <strong>to this run only</strong>; Erya writes nothing to any configuration file. The next start is back to the defaults. To make a choice permanent:</p>
+          <ul>
+            <li><strong>Key bindings</strong> → the platform default path, or <span class="path">ERYA_KEYMAP</span> (see 4.1.7).</li>
+            <li><strong>Interface language</strong> → the <span class="path">ERYA_LANG</span> environment variable (see 4.2.4).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.2.3</span>
+        <h2>How the interface language is chosen</h2>
+        <p class="dek">Four environment variables are consulted in order; the first with a value wins.</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 200" role="img" aria-label="The order in which the interface language is decided">
+              <rect x="0" y="0" width="960" height="200" fill="#FAFBFD"/>
+              <defs><marker id="arrow42" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="24" y="52" width="184" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="116" y="76" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">ERYA_LANG</text>
+              <text x="116" y="96" text-anchor="middle" font-size="12.5" fill="#667085">Erya's own, first</text>
+
+              <rect x="242" y="52" width="150" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="317" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LC_ALL</text>
+
+              <rect x="426" y="52" width="176" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="514" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LC_MESSAGES</text>
+
+              <rect x="636" y="52" width="130" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="701" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LANG</text>
+
+              <rect x="800" y="52" width="136" height="52" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="868" y="76" text-anchor="middle" font-size="14.5" font-weight="700" fill="#7A382F">正體中文</text>
+              <text x="868" y="96" text-anchor="middle" font-size="12.5" fill="#667085">the fallback</text>
+
+              <path d="M208 78 L238 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M392 78 L422 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M602 78 L632 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M766 78 L796 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+
+              <text x="480" y="150" text-anchor="middle" font-size="14" fill="#3F485D">Codes are normalised before matching: en_GB.UTF-8, en-GB, and en all reach English</text>
+              <text x="480" y="176" text-anchor="middle" font-size="13.5" fill="#98A2B3">With no match at all, the interface falls back to Traditional Chinese</text>
+            </svg>
+          </div>
+          <figcaption><b>Figure 4.2.1</b>　Most people need to set nothing: Erya follows whatever <span class="path">LANG</span> already says.</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 4.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.2.4</span>
+        <h2>Setting ERYA_LANG</h2>
+        <p class="dek">For changing Erya alone, without touching your system locale.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:42%">Command</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">ERYA_LANG=en erya report.txt</span></td><td>English, this once</td></tr>
+            <tr><td><span class="path">ERYA_LANG=ja erya</span></td><td>Japanese</td></tr>
+            <tr><td><span class="path">ERYA_LANG=zh-TW erya</span></td><td>Traditional Chinese</td></tr>
+            <tr><td><span class="path">ERYA_LANG=zh-CN erya</span></td><td>Simplified Chinese</td></tr>
+            <tr><td><span class="path">erya --languages</span></td><td>Lists the languages actually present, one per line as “code<span class="path">Tab</span>name”</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>To make it permanent, add <span class="path">export ERYA_LANG=en</span> to <span class="path">~/.zshrc</span> or <span class="path">~/.bashrc</span>; on Windows, add it to your user environment variables.</p>
+
+        <div class="callout tip">
+          <span class="co-title">Run <span class="path">--languages</span> if you are unsure of a code</span>
+          <p>Its first column is exactly what goes into <span class="path">ERYA_LANG</span>, and languages you added yourself appear there too (see 4.2.6).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.2.5</span>
+        <h2>Where the translations live</h2>
+        <p class="dek">Four languages are compiled in; the <span class="path">locales/</span> directory overrides and extends them.</p>
+
+        <div class="duo">
+          <div>
+            <h4>Built in (inside the executable)</h4>
+            <p>Traditional Chinese, Simplified Chinese, English, Japanese. <strong>Delete <span class="path">locales/</span> entirely and these four still work.</strong></p>
+          </div>
+          <div>
+            <h4>On disk (override and extend)</h4>
+            <p>Read from <span class="path">locales/</span> by default; point <span class="path">ERYA_LOCALES_DIR</span> elsewhere if you prefer.</p>
+            <p>A translation on disk with the same code <strong>takes precedence over the built-in one</strong>, so you can also use it to reword a few strings.</p>
+          </div>
+        </div>
+
+        <p>The file structure is straightforward:</p>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">Section</th><th>Contents</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">[language]</span></td><td><span class="path">code</span> (what <span class="path">ERYA_LANG</span> uses) and <span class="path">name</span> (shown by <span class="path">--languages</span> and in system settings)</td></tr>
+            <tr><td><span class="path">[messages]</span></td><td>Every message on screen. Some contain placeholders such as <span class="path">{name}</span> or <span class="path">{count}</span>, which must be kept.</td></tr>
+            <tr><td><span class="path">[key_help]</span></td><td>The one-line description of each action in <kbd>F1</kbd> help.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.2.6</span>
+        <h2>Adding your own language</h2>
+        <p class="dek">Copy a file, change two fields, translate. <strong>No Rust involved.</strong></p>
+
+        <ol class="rule-list">
+          <li><b>Copy an existing translation</b>, for example <span class="path">cp locales/en.toml locales/fr.toml</span>.</li>
+          <li><b>Edit <span class="path">[language]</span></b>: <span class="path">code = "fr"</span>, <span class="path">name = "Français"</span>.</li>
+          <li><b>Translate <span class="path">[messages]</span> and <span class="path">[key_help]</span></b>, <strong>keeping every <span class="path">{}</span> placeholder</strong>.</li>
+          <li><b>Check it</b>: <span class="path">erya --languages</span> should list <span class="path">fr　Français</span>.</li>
+          <li><b>Use it</b>: <span class="path">ERYA_LANG=fr erya</span>, or pick it from the <kbd>F2</kbd> list.</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">You do not have to finish it in one sitting</span>
+          <p>A partial translation works: anything missing falls back to Traditional Chinese (see 4.2.7). Translate the few dozen strings you see most often and fill in the rest later.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.2.7</span>
+        <h2>The fallback for missing strings</h2>
+        <p class="dek">Always Traditional Chinese; never a blank.</p>
+
+        <ul>
+          <li>A key missing from your translation → the Traditional Chinese string.</li>
+          <li>A key missing from Traditional Chinese as well (which should not happen) → the key name itself, e.g. <span class="path">clipboard_empty</span>.</li>
+          <li>A language code that does not exist → the whole interface in Traditional Chinese.</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">Why Chinese</span>
+          <p>Erya is an editor written for CJK documents; Traditional Chinese is its native language and everything else is translated from it. <strong>So a line of Chinese appearing in an otherwise English interface almost always means an untranslated string.</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.2.8</span>
+        <h2>Common problems</h2>
+        <p class="dek">Six situations around settings and languages.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>The setting reverted after a restart</td><td>System settings apply to one run. Use an environment variable or config file (4.2.2).</td></tr>
+            <tr><td>The interface is in the wrong language</td><td>Check the order: <span class="path">ERYA_LANG</span>, <span class="path">LC_ALL</span>, <span class="path">LC_MESSAGES</span>, <span class="path">LANG</span> (4.2.3).</td></tr>
+            <tr><td><span class="path">ERYA_LANG</span> seems ignored</td><td>The code is misspelled, and an unknown code falls back. Check with <span class="path">--languages</span> (4.2.4).</td></tr>
+            <tr><td>Your translation is not in the list</td><td>The file is not in the directory Erya reads. Set <span class="path">ERYA_LOCALES_DIR</span> (4.2.5).</td></tr>
+            <tr><td>Chinese appears among English messages</td><td>Those strings are untranslated and fell back (4.2.7).</td></tr>
+            <tr><td>A message contains a literal <span class="path">{name}</span></td><td>A placeholder was renamed or removed during translation. Restore the original <span class="path">{}</span> name (4.2.5).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

@@ -1,0 +1,260 @@
+      <!-- ══════════ 1.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.2.1</span>
+        <h2>Two ways to install</h2>
+        <p class="dek">Download a ready-made binary, or build it with Rust.</p>
+
+        <div class="duo">
+          <div>
+            <h4>① Download a release (recommended)</h4>
+            <p>Take the archive for your platform from GitHub Releases. Unpack it and you have a single executable — nothing else to install.</p>
+            <ul>
+              <li>Seven platforms are prebuilt</li>
+              <li>SHA-256 checksums included</li>
+              <li>You place it on <span class="path">PATH</span> yourself</li>
+            </ul>
+          </div>
+          <div>
+            <h4>② Build from source</h4>
+            <p>With a Rust toolchain, <span class="path">cargo install</span> is one line, and updating later is easy.</p>
+            <ul>
+              <li>Needs Rust <strong>1.85</strong> or newer</li>
+              <li>Installs into Cargo's bin directory, usually already on <span class="path">PATH</span></li>
+              <li>The first build takes a few minutes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Erya is one executable</span>
+          <p>There is no installer, no service, no registry entry, and no configuration scattered around the system. The only file it reads on its own is a <strong>key profile</strong> (see 4.1.7), and it runs perfectly well without one; the only files it writes are documents you save and the phrase and macro JSON you ask it to write (see 2.4.5). To uninstall, delete the executable.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.2.2</span>
+        <h2>Download the right archive</h2>
+        <p class="dek">Check which CPU you actually have, then match the filename.</p>
+
+        <p>Go to <span class="path">github.com/walisayu/erya/releases/latest</span> and pick a <span class="path">.tar.gz</span>:</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:30%">System</th><th style="width:26%">Architecture</th><th>Release target (in the filename)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Linux</td><td>Intel / AMD 64-bit</td><td><span class="path">x86_64-unknown-linux-gnu</span></td></tr>
+            <tr><td>Linux / Raspberry Pi OS 64-bit</td><td>ARM64</td><td><span class="path">aarch64-unknown-linux-gnu</span></td></tr>
+            <tr><td>Raspberry Pi OS 32-bit</td><td>ARMv7 hard-float</td><td><span class="path">armv7-unknown-linux-gnueabihf</span></td></tr>
+            <tr><td>macOS</td><td>Intel</td><td><span class="path">x86_64-apple-darwin</span></td></tr>
+            <tr><td>macOS</td><td>Apple silicon</td><td><span class="path">aarch64-apple-darwin</span></td></tr>
+            <tr><td>Windows</td><td>Intel / AMD 64-bit</td><td><span class="path">x86_64-pc-windows-msvc</span></td></tr>
+            <tr><td>Windows</td><td>ARM64</td><td><span class="path">aarch64-pc-windows-msvc</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>If you are not sure which you have</h3>
+        <ul>
+          <li><strong>macOS</strong>: run <span class="path">uname -m</span>. <span class="path">arm64</span> is Apple silicon, <span class="path">x86_64</span> is Intel.</li>
+          <li><strong>Linux / Raspberry Pi</strong>: also <span class="path">uname -m</span>. <span class="path">aarch64</span> → ARM64, <span class="path">armv7l</span> → ARMv7, <span class="path">x86_64</span> → Intel/AMD.</li>
+          <li><strong>Windows</strong>: Settings → System → About → System type.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">On a Raspberry Pi, the OS decides — not the chip</span>
+          <p>The Pi 4 and 5 have 64-bit CPUs, but Raspberry Pi OS also ships a 32-bit build. <strong>A 32-bit system needs the ARMv7 archive</strong>; the ARM64 one will not run. <span class="path">uname -m</span> reports what the system actually is, which is the number that matters.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.2.3</span>
+        <h2>Verify it and put it on PATH</h2>
+        <p class="dek">Unpacking gives you one file: <span class="path">erya</span> (<span class="path">erya.exe</span> on Windows).</p>
+
+        <p>Every archive ships a matching <span class="path">.sha256</span>, and the release page has a combined <span class="path">SHA256SUMS</span>. To check that the download is intact:</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">System</th><th>Command</th></tr></thead>
+          <tbody>
+            <tr><td>macOS</td><td><span class="path">shasum -a 256 erya-*.tar.gz</span></td></tr>
+            <tr><td>Linux</td><td><span class="path">sha256sum -c erya-*.tar.gz.sha256</span></td></tr>
+            <tr><td>Windows</td><td><span class="path">certutil -hashfile erya-*.tar.gz SHA256</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>The value must match the one in the <span class="path">.sha256</span> file. Then put the executable in any directory on your <span class="path">PATH</span>:</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">System</th><th>Usual location</th></tr></thead>
+          <tbody>
+            <tr><td>macOS / Linux (just you)</td><td><span class="path">~/.local/bin</span> or <span class="path">~/bin</span></td></tr>
+            <tr><td>macOS / Linux (everyone)</td><td><span class="path">/usr/local/bin</span> (needs <span class="path">sudo</span>)</td></tr>
+            <tr><td>Windows</td><td>Create <span class="path">C:\Tools</span> and add it to Environment Variables → Path</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">macOS blocks it the first time</span>
+          <p>Executables downloaded from the internet carry a quarantine attribute, and macOS refuses to open them (“cannot be verified”). Clear it:</p>
+          <p><span class="path">xattr -d com.apple.quarantine ~/.local/bin/erya</span></p>
+          <p>Or open System Settings → Privacy &amp; Security and click “Open Anyway” once. This applies to every unsigned program, not to Erya specifically.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.2.4</span>
+        <h2>Installing from source</h2>
+        <p class="dek">Needs Rust 1.85 or newer.</p>
+
+        <p>Check your toolchain with <span class="path">rustc --version</span> and install it with <span class="path">rustup</span> if needed. Then, in the project directory:</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44%">Command</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">cargo run --release -- [file]</span></td><td>Builds and runs once without installing. Only what follows <span class="path">--</span> reaches Erya.</td></tr>
+            <tr><td><span class="path">cargo install --path .</span></td><td>Builds and installs <span class="path">erya</span> into Cargo's bin directory (usually <span class="path">~/.cargo/bin</span>).</td></tr>
+            <tr><td><span class="path">erya [file]</span></td><td>How you run it afterwards.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Do not forget the <span class="path">--</span></span>
+          <p><span class="path">cargo run --release report.txt</span> fails, because Cargo takes the filename as its own argument. <strong>Write <span class="path">cargo run --release -- report.txt</span></strong> — the two dashes tell Cargo that the rest belongs to the program.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.2.5</span>
+        <h2>Starting with or without a filename</h2>
+        <p class="dek">Zero, one, or many files.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:40%">Command</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">erya</span></td><td>Opens one blank, untitled document. The first save asks for a name.</td></tr>
+            <tr><td><span class="path">erya report.txt</span></td><td>Opens that file. <strong>A file that does not exist is not an error</strong>: you get a blank document, and the file is created on the first save.</td></tr>
+            <tr><td><span class="path">erya a.txt b.txt c.txt</span></td><td>Three tabs, starting on the first.</td></tr>
+            <tr><td><span class="path">erya -- -odd-name.txt</span></td><td>Everything after <span class="path">--</span> is a filename, never an option.</td></tr>
+            <tr><td><span class="path">erya some-directory</span></td><td><strong>Fails</strong> with “some-directory is a directory, not a text file”. To browse, start Erya and press <kbd>Ctrl+O</kbd> (see 2.1.2).</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">Symbolic links</span>
+          <p>Erya resolves a symlink to its target before opening, and saves <strong>back to the target</strong> rather than replacing the link with a regular file. Paths like <span class="path">~/.zshrc</span>, which are often links, behave the way you would expect.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.2.6</span>
+        <h2>Command-line options</h2>
+        <p class="dek">Five of them. Each either prints something and exits, or swaps in a different config.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:32%">Option</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">-h</span>, <span class="path">--help</span></td><td>Prints help and exits: usage, options, environment variables, common keys — <strong>in your interface language</strong>.</td></tr>
+            <tr><td><span class="path">-V</span>, <span class="path">--version</span></td><td>Prints the version and exits, e.g. <span class="path">erya 1.0.0</span>.</td></tr>
+            <tr><td><span class="path">--languages</span></td><td>Lists the languages actually found in the translation directory, one per line as “code<span class="path">Tab</span>name”.</td></tr>
+            <tr><td><span class="path">--keymap &lt;file&gt;</span></td><td>Uses that key profile for this run (see 4.1.5). Without a path it fails outright.</td></tr>
+            <tr><td><span class="path">--print-default-keymap</span></td><td>Prints the complete default profile to standard output — usually redirected into your own file.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>Common uses:</p>
+        <ul>
+          <li><span class="path">erya --print-default-keymap &gt; keymap.toml</span> — a starting file with every action name in it.</li>
+          <li><span class="path">erya --keymap keymap.toml report.txt</span> — open a file with your edited profile.</li>
+          <li><span class="path">erya --languages</span> — check what to put in <span class="path">ERYA_LANG</span>.</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">An unknown option stops the program</span>
+          <p>Any argument that starts with <span class="path">-</span> and is not in the table above produces “erya: Unsupported option: -x” and a failure exit — <strong>it is not ignored</strong>. If a filename legitimately starts with a dash, put <span class="path">--</span> in front of it.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.2.7</span>
+        <h2>Four environment variables</h2>
+        <p class="dek">All optional; Erya runs with none of them set.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Variable</th><th>What it controls</th><th style="width:12%">See</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">ERYA_LANG</span></td><td>Interface language code, e.g. <span class="path">en</span>, <span class="path">ja</span>, <span class="path">zh-TW</span>, <span class="path">zh-CN</span>. When unset, <span class="path">LC_ALL</span>, <span class="path">LC_MESSAGES</span>, and <span class="path">LANG</span> are consulted in that order.</td><td>4.2.4</td></tr>
+            <tr><td><span class="path">ERYA_LOCALES_DIR</span></td><td>Translation directory; defaults to <span class="path">locales/</span>. Point it at your own translations.</td><td>4.2.5</td></tr>
+            <tr><td><span class="path">ERYA_KEYMAP</span></td><td>Key profile path — the same as passing <span class="path">--keymap</span> every time.</td><td>4.1.7</td></tr>
+            <tr><td><span class="path">ERYA_KEYMAPS_DIR</span></td><td>Which directory system settings (<kbd>F2</kbd>) lists profiles from; defaults to <span class="path">keymap/</span>.</td><td>4.1.3</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>For a single run, put it in front of the command:</p>
+        <ul>
+          <li><span class="path">ERYA_LANG=ja erya report.txt</span> — Japanese interface this once.</li>
+          <li><span class="path">ERYA_KEYMAP=~/my.toml erya</span> — your own profile this once.</li>
+        </ul>
+        <p>To make it permanent, add it to <span class="path">~/.zshrc</span> or <span class="path">~/.bashrc</span> (on Windows, to your user environment variables).</p>
+      </section>
+
+      <!-- ══════════ 1.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.2.8</span>
+        <h2>What the terminal must provide</h2>
+        <p class="dek">Two hard requirements: a real terminal, and enough room.</p>
+
+        <ol class="rule-list">
+          <li><b>An interactive terminal.</b> Both standard input and standard output must be TTYs. <strong>Piping or redirecting Erya fails immediately</strong> with “Erya must run in an interactive terminal”. <span class="path">cat a.txt | erya</span> and <span class="path">erya &gt; out.txt</span> are both refused — it is an editor, not a filter.</li>
+          <li><b>At least 24 columns by 6 rows.</b> Below that the screen becomes a single yellow line, “Terminal is too small; enlarge it to continue”, and restores itself when you resize — nothing you were editing is lost. In practice give it 80×24 or more; 32 bytes per row in the hexadecimal view needs 144 columns (see 3.3.3).</li>
+          <li><b>Bracketed paste, ideally.</b> Almost every current terminal supports it. With it, pasting a block of text arrives as one paste rather than a storm of keystrokes. Erya enables it on start and disables it on exit.</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">Your screen comes back afterwards</span>
+          <p>Erya uses the terminal's alternate screen, so on exit your previous screen, cursor, and modes are restored and <strong>no editing session is left in your scrollback</strong>. The restore also runs when the program ends abnormally.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">1.2.9</span>
+        <h2>When it will not start</h2>
+        <p class="dek">Match the message; the full troubleshooting chapter is 4.3.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:38%">Message</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">command not found: erya</span></td><td>Not on <span class="path">PATH</span>. Try the full path, e.g. <span class="path">~/.local/bin/erya</span>; if that works, it is a PATH problem (1.2.3).</td></tr>
+            <tr><td><span class="path">Permission denied</span></td><td>Not executable: <span class="path">chmod +x erya</span>.</td></tr>
+            <tr><td>macOS: cannot verify the developer</td><td>Quarantine attribute: <span class="path">xattr -d com.apple.quarantine erya</span> (1.2.3).</td></tr>
+            <tr><td><span class="path">cannot execute binary file</span></td><td>Wrong architecture. Check with <span class="path">uname -m</span> (1.2.2).</td></tr>
+            <tr><td>Must run in an interactive terminal</td><td>A pipe or redirection. Run it directly in the terminal (1.2.8).</td></tr>
+            <tr><td>Terminal is too small</td><td>Below 24×6. Enlarge the window (1.2.8).</td></tr>
+            <tr><td>Unsupported option: …</td><td>A typo, or a filename starting with a dash. Use <span class="path">--</span> (1.2.6).</td></tr>
+            <tr><td>… is a directory, not a text file</td><td>You passed a directory. Pass a file, or press <kbd>Ctrl+O</kbd> after starting (1.2.5).</td></tr>
+            <tr><td>Could not load key bindings; using defaults: …</td><td><strong>Not an error — the program runs.</strong> The profile has a syntax problem or a conflict, so Erya fell back to the complete defaults and says why (4.1.8).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

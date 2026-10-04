@@ -1,0 +1,260 @@
+      <!-- ══════════ 1.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.2.1</span>
+        <h2>2 つの導入方法</h2>
+        <p class="dek">できあいの実行ファイルを落とすか、Rust でビルドするか。</p>
+
+        <div class="duo">
+          <div>
+            <h4>① リリースをダウンロード（推奨）</h4>
+            <p>GitHub Releases から自分のプラットフォーム用アーカイブを取得します。展開すると実行ファイルが 1 つ。他に入れるものはありません。</p>
+            <ul>
+              <li>7 プラットフォーム分がビルド済み</li>
+              <li>SHA-256 付き</li>
+              <li><span class="path">PATH</span> には自分で置きます</li>
+            </ul>
+          </div>
+          <div>
+            <h4>② ソースからビルド</h4>
+            <p>Rust があれば <span class="path">cargo install</span> 一行で済み、更新も楽です。</p>
+            <ul>
+              <li>Rust <strong>1.85</strong> 以降が必要</li>
+              <li>Cargo の bin ディレクトリに入り、たいてい <span class="path">PATH</span> 済み</li>
+              <li>初回ビルドに数分かかります</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Erya は実行ファイル 1 つです</span>
+          <p>インストーラーもサービスもレジストリ登録もなく、設定があちこちに散ることもありません。自分から読むのは<strong>キープロファイル</strong>だけ（4.1.7 参照）で、それが無くても問題なく動きます。自分から書くのは、あなたが保存した文書と、あなたが指示した定型文・マクロの JSON だけです（2.4.5 参照）。削除は実行ファイルを消すだけです。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.2.2</span>
+        <h2>プラットフォーム別のアーカイブ</h2>
+        <p class="dek">まず自分の CPU を確かめ、それからファイル名を選びます。</p>
+
+        <p><span class="path">github.com/walisayu/erya/releases/latest</span> から <span class="path">.tar.gz</span> を 1 つ選んでください。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:30%">システム</th><th style="width:26%">アーキテクチャ</th><th>Release target（ファイル名の中の文字列）</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Linux</td><td>Intel／AMD 64 ビット</td><td><span class="path">x86_64-unknown-linux-gnu</span></td></tr>
+            <tr><td>Linux／Raspberry Pi OS 64 ビット</td><td>ARM64</td><td><span class="path">aarch64-unknown-linux-gnu</span></td></tr>
+            <tr><td>Raspberry Pi OS 32 ビット</td><td>ARMv7 hard-float</td><td><span class="path">armv7-unknown-linux-gnueabihf</span></td></tr>
+            <tr><td>macOS</td><td>Intel</td><td><span class="path">x86_64-apple-darwin</span></td></tr>
+            <tr><td>macOS</td><td>Apple シリコン</td><td><span class="path">aarch64-apple-darwin</span></td></tr>
+            <tr><td>Windows</td><td>Intel／AMD 64 ビット</td><td><span class="path">x86_64-pc-windows-msvc</span></td></tr>
+            <tr><td>Windows</td><td>ARM64</td><td><span class="path">aarch64-pc-windows-msvc</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>どれか分からないとき</h3>
+        <ul>
+          <li><strong>macOS</strong>：<span class="path">uname -m</span> を実行。<span class="path">arm64</span> なら Apple シリコン、<span class="path">x86_64</span> なら Intel。</li>
+          <li><strong>Linux／Raspberry Pi</strong>：同じく <span class="path">uname -m</span>。<span class="path">aarch64</span> → ARM64、<span class="path">armv7l</span> → ARMv7、<span class="path">x86_64</span> → Intel/AMD。</li>
+          <li><strong>Windows</strong>：設定 → システム → バージョン情報 → システムの種類。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">Raspberry Pi は CPU ではなく OS で選びます</span>
+          <p>Pi 4・5 の CPU は 64 ビットですが、Raspberry Pi OS には 32 ビット版もあります。<strong>システムが 32 ビットなら ARMv7</strong> を選んでください。ARM64 は動きません。<span class="path">uname -m</span> が示すのはシステム側の値なので、これがいちばん確実です。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.2.3</span>
+        <h2>検証して PATH に置く</h2>
+        <p class="dek">展開すると出てくるのは 1 ファイル：<span class="path">erya</span>（Windows は <span class="path">erya.exe</span>）。</p>
+
+        <p>各アーカイブには同名の <span class="path">.sha256</span> が付き、リリースページには <span class="path">SHA256SUMS</span> もあります。壊れていないか確かめるには：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">システム</th><th>コマンド</th></tr></thead>
+          <tbody>
+            <tr><td>macOS</td><td><span class="path">shasum -a 256 erya-*.tar.gz</span></td></tr>
+            <tr><td>Linux</td><td><span class="path">sha256sum -c erya-*.tar.gz.sha256</span></td></tr>
+            <tr><td>Windows</td><td><span class="path">certutil -hashfile erya-*.tar.gz SHA256</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>表示された値が <span class="path">.sha256</span> の中身と一致すれば大丈夫です。あとは <span class="path">PATH</span> の通ったディレクトリに置きます。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">システム</th><th>よく使う場所</th></tr></thead>
+          <tbody>
+            <tr><td>macOS／Linux（自分だけ）</td><td><span class="path">~/.local/bin</span> または <span class="path">~/bin</span></td></tr>
+            <tr><td>macOS／Linux（全員）</td><td><span class="path">/usr/local/bin</span>（<span class="path">sudo</span> が必要）</td></tr>
+            <tr><td>Windows</td><td><span class="path">C:\Tools</span> を作り、環境変数の Path に追加</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">macOS は初回に止められます</span>
+          <p>ネットから落とした実行ファイルには隔離属性が付き、「開発元を検証できないため開けません」と表示されます。属性を外してください：</p>
+          <p><span class="path">xattr -d com.apple.quarantine ~/.local/bin/erya</span></p>
+          <p>または「システム設定 →『プライバシーとセキュリティ』」で一度「このまま開く」を押します。署名のないプログラム全般に対する挙動で、Erya に固有のものではありません。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.2.4</span>
+        <h2>ソースからの導入</h2>
+        <p class="dek">Rust 1.85 以降が必要です。</p>
+
+        <p><span class="path">rustc --version</span> で確認し、無ければ <span class="path">rustup</span> で入れてください。あとはプロジェクトのディレクトリで：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44%">コマンド</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">cargo run --release -- [ファイル]</span></td><td>ビルドして 1 回実行。インストールはしません。<span class="path">--</span> の後ろだけが Erya に渡ります。</td></tr>
+            <tr><td><span class="path">cargo install --path .</span></td><td>ビルドして <span class="path">erya</span> を Cargo の bin（通常 <span class="path">~/.cargo/bin</span>）へ入れます。</td></tr>
+            <tr><td><span class="path">erya [ファイル]</span></td><td>導入後はこれで起動します。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title"><span class="path">--</span> を忘れずに</span>
+          <p><span class="path">cargo run --release 報告.txt</span> は失敗します。Cargo が自分の引数だと解釈するためです。<strong><span class="path">cargo run --release -- 報告.txt</span></strong> と書いてください。2 つのハイフンが「ここから先はプログラム用」という意味になります。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.2.5</span>
+        <h2>起動：ファイル名あり・なし</h2>
+        <p class="dek">0 個でも 1 個でも複数でも構いません。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:40%">コマンド</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">erya</span></td><td>無題の空文書を 1 つ開きます。最初の保存時にファイル名を尋ねます。</td></tr>
+            <tr><td><span class="path">erya 報告.txt</span></td><td>そのファイルを開きます。<strong>存在しなくてもエラーになりません。</strong>空の文書が開き、最初の保存で作成されます。</td></tr>
+            <tr><td><span class="path">erya a.txt b.txt c.txt</span></td><td>3 つのタブを開き、最初のタブから始まります。</td></tr>
+            <tr><td><span class="path">erya -- -変な名前.txt</span></td><td><span class="path">--</span> 以降はすべてファイル名として扱われ、オプションになりません。</td></tr>
+            <tr><td><span class="path">erya あるディレクトリ</span></td><td><strong>失敗します</strong>：「… はディレクトリであり、テキストファイルではありません」。中を見たいときは起動後に <kbd>Ctrl+O</kbd> を（2.1.2 参照）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">シンボリックリンクの場合</span>
+          <p>Erya はリンクを実体のパスに解決してから開き、保存も<strong>実体へ書き戻します</strong>。リンクを通常ファイルで置き換えることはありません。<span class="path">~/.zshrc</span> のようにリンクであることが多いパスでも、期待どおりに動きます。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.2.6</span>
+        <h2>コマンドラインオプション</h2>
+        <p class="dek">5 つ。どれも「何かを表示して終了」か「設定を差し替える」ものです。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:32%">オプション</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">-h</span>, <span class="path">--help</span></td><td>ヘルプを表示して終了。使い方・オプション・環境変数・よく使うキーが載り、<strong>表示言語に従います</strong>。</td></tr>
+            <tr><td><span class="path">-V</span>, <span class="path">--version</span></td><td>バージョンを表示して終了（例：<span class="path">erya 1.0.0</span>）。</td></tr>
+            <tr><td><span class="path">--languages</span></td><td>翻訳ディレクトリで実際に見つかった言語を 1 行ずつ「コード<span class="path">Tab</span>名称」で表示。</td></tr>
+            <tr><td><span class="path">--keymap &lt;ファイル&gt;</span></td><td>この実行だけ指定のキープロファイルを使います（4.1.5 参照）。パスが無いと失敗します。</td></tr>
+            <tr><td><span class="path">--print-default-keymap</span></td><td>既定プロファイル全体を標準出力へ。自分の設定ファイルの出発点にします。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>よくある使い方：</p>
+        <ul>
+          <li><span class="path">erya --print-default-keymap &gt; keymap.toml</span> — 全操作名が入った雛形を作る。</li>
+          <li><span class="path">erya --keymap keymap.toml 報告.txt</span> — 編集した設定で開く。</li>
+          <li><span class="path">erya --languages</span> — <span class="path">ERYA_LANG</span> に書くコードを確認する。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">知らないオプションはその場で終了します</span>
+          <p><span class="path">-</span> で始まり上表に無い引数は「erya: 未対応のオプション：-x」と表示して異常終了します。<strong>無視して続行はしません。</strong>ファイル名がハイフンで始まる場合は先に <span class="path">--</span> を置いてください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.2.7</span>
+        <h2>4 つの環境変数</h2>
+        <p class="dek">どれも任意です。1 つも設定しなくても動きます。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">変数</th><th>役割</th><th style="width:12%">参照</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">ERYA_LANG</span></td><td>表示言語のコード（<span class="path">ja</span>、<span class="path">en</span>、<span class="path">zh-TW</span>、<span class="path">zh-CN</span> など）。未設定なら <span class="path">LC_ALL</span>、<span class="path">LC_MESSAGES</span>、<span class="path">LANG</span> の順に見ます。</td><td>4.2.4</td></tr>
+            <tr><td><span class="path">ERYA_LOCALES_DIR</span></td><td>翻訳ファイルのディレクトリ（既定は <span class="path">locales/</span>）。自作翻訳を置く場所を指定します。</td><td>4.2.5</td></tr>
+            <tr><td><span class="path">ERYA_KEYMAP</span></td><td>キープロファイルのパス。毎回 <span class="path">--keymap</span> を付けるのと同じです。</td><td>4.1.7</td></tr>
+            <tr><td><span class="path">ERYA_KEYMAPS_DIR</span></td><td>システム設定（<kbd>F2</kbd>）が一覧に出すプロファイルの置き場（既定は <span class="path">keymap/</span>）。</td><td>4.1.3</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>1 回だけならコマンドの前に書きます：</p>
+        <ul>
+          <li><span class="path">ERYA_LANG=en erya 報告.txt</span> — 今回だけ英語表示。</li>
+          <li><span class="path">ERYA_KEYMAP=~/my.toml erya</span> — 今回だけ自分のキー設定。</li>
+        </ul>
+        <p>恒久的にするなら <span class="path">~/.zshrc</span> や <span class="path">~/.bashrc</span> へ（Windows はユーザー環境変数へ）。</p>
+      </section>
+
+      <!-- ══════════ 1.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.2.8</span>
+        <h2>ターミナル側の条件</h2>
+        <p class="dek">必須は 2 つ：本物のターミナルであること、そして狭すぎないこと。</p>
+
+        <ol class="rule-list">
+          <li><b>対話型ターミナルであること。</b>標準入力と標準出力の両方が TTY である必要があります。<strong>パイプやリダイレクトにつなぐと即座に失敗し</strong>、「Erya は対話型ターミナルで実行してください」と出ます。<span class="path">cat a.txt | erya</span> や <span class="path">erya &gt; out.txt</span> はどちらも不可です。フィルターではなくエディターだからです。</li>
+          <li><b>最低 24 桁 × 6 行。</b>それより小さいと画面が黄色い 1 行「ターミナルが小さすぎます；ウィンドウを広げてください」に変わり、広げれば自動で戻ります。編集中の内容は失われません。実用上は 80×24 以上を。16 進数表示で 1 行 32 バイトにするにはさらに 144 桁必要です（3.3.3 参照）。</li>
+          <li><b>できれば bracketed paste 対応を。</b>最近のターミナルはほぼ対応しています。対応していれば、まとまった文字列の貼り付けが 1 回の貼り付けとして扱われます。Erya は起動時に有効化し、終了時に無効化します。</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">終了すると画面が元に戻ります</span>
+          <p>Erya はターミナルの代替画面を使うので、終了時に元の画面・カーソル・各種モードが復元され、<strong>スクロールバックに編集画面が残りません</strong>。異常終了時も復元処理は走ります。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">1.2.9</span>
+        <h2>起動できないとき</h2>
+        <p class="dek">メッセージから探してください。詳細は 4.3 にまとめてあります。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:38%">表示</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">command not found: erya</span></td><td><span class="path">PATH</span> に無い。フルパスで試し、動くなら PATH の問題です（1.2.3）。</td></tr>
+            <tr><td><span class="path">Permission denied</span></td><td>実行権限がない：<span class="path">chmod +x erya</span>。</td></tr>
+            <tr><td>macOS：開発元を検証できない</td><td>隔離属性：<span class="path">xattr -d com.apple.quarantine erya</span>（1.2.3）。</td></tr>
+            <tr><td><span class="path">cannot execute binary file</span></td><td>アーキテクチャ違い。<span class="path">uname -m</span> で確認（1.2.2）。</td></tr>
+            <tr><td>対話型ターミナルで実行してください</td><td>パイプやリダイレクト。直接実行してください（1.2.8）。</td></tr>
+            <tr><td>ターミナルが小さすぎます</td><td>24×6 未満。ウィンドウを広げます（1.2.8）。</td></tr>
+            <tr><td>未対応のオプション：…</td><td>綴り違い、またはハイフン始まりのファイル名。<span class="path">--</span> を付けます（1.2.6）。</td></tr>
+            <tr><td>… はディレクトリであり…</td><td>引数がディレクトリ。ファイルを渡すか、起動後 <kbd>Ctrl+O</kbd>（1.2.5）。</td></tr>
+            <tr><td>キーバインドを読み込めないため既定値を使用します：…</td><td><strong>エラーではなく、そのまま動きます。</strong>設定ファイルに構文問題か競合があり、完全な既定値に戻したという報告です（4.1.8）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

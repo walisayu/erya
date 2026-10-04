@@ -1,0 +1,12 @@
+# Nano-style shortcuts for Erya.
+name = "nano"
+
+[bindings]
+quit = "Ctrl+X"
+search = "Ctrl+W"
+replace = "Ctrl+\\"
+cut_line = "Ctrl+K"
+paste = ["Ctrl+U", "Shift+Insert"]
+undo = "Alt+U"
+redo = "Alt+E"
+open_settings = "F2"

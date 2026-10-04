@@ -1,0 +1,18 @@
+name = "eclipse"
+
+[bindings]
+open_file = "Ctrl+O"
+save_as = "Ctrl+Shift+S"
+close_tab = "Ctrl+W"
+next_tab = "Ctrl+F6"
+previous_tab = "Ctrl+Shift+F6"
+quit = "Alt+F4"
+search = "Ctrl+F"
+go_to_position = "Ctrl+L"
+toggle_line_wrap = []
+cut = "Ctrl+X"
+copy = "Ctrl+C"
+cursor_position = "Alt+C"
+redo = "Ctrl+Y"
+delete_line = "Ctrl+D"
+open_settings = "Ctrl+,"

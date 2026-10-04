@@ -1,0 +1,215 @@
+      <!-- ══════════ 3.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.2.1</span>
+        <h2>When large-file mode kicks in</h2>
+        <p class="dek">There is one number: <strong>64 MiB</strong>.</p>
+
+        <p>If a file is 64 MiB or larger, Erya does not read it into memory. It switches to a <strong>read-only reading mode</strong> instead, says “Opened access.log in large-file read-only mode (512 MB)”, and the mode cell of the status bar reads <span class="path">Large file read-only</span>.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [access.log]</div>
+            <div class="s-bar"> F1 Help  Ctrl+S Save  Ctrl+W Search  Ctrl+R Replace  Ctrl+B Block  Ctrl+K Cut line  Ctrl+X Exit</div>
+            <div class="s-body">198.51.100.24 - - [26/Aug/2026:09:14:02 +0800] "GET /api/v1/orders HTTP/1.1" 200
+198.51.100.31 - - [26/Aug/2026:09:14:02 +0800] "POST /api/v1/login HTTP/1.1" 302
+203.0.113.10 - - [26/Aug/2026:09:14:03 +0800] "GET /static/app.js HTTP/1.1" 304</div>
+            <div class="s-status"> access.log │ 1284391:1 │ Large file read-only │ UTF-8 │ LF </div>
+            <div class="s-msg"> Opened access.log in large-file read-only mode (512 MB)</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Three kinds of big file take three different routes</span>
+          <ul>
+            <li><strong>A large UTF-8 text file</strong> → large-file read-only mode (this chapter).</li>
+            <li><strong>A large binary file</strong> → a streamed hexadecimal view, also read-only (see 3.3.8).</li>
+            <li><strong>A large non-UTF-8 text file</strong> (say a 200 MB Big5 export) → Erya cannot decode it as a stream, so it <strong>opens as a binary file in the hexadecimal view</strong>. Convert it to UTF-8 outside Erya if you need to edit it.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.2.2</span>
+        <h2>What you can do in this mode</h2>
+        <p class="dek">Read it, search it, copy from it — but not change it.</p>
+
+        <div class="duo">
+          <div>
+            <h4>Available</h4>
+            <ul>
+              <li>Scrolling, paging, <kbd>Ctrl+Home</kbd> / <kbd>Ctrl+End</kbd></li>
+              <li><kbd>Ctrl+G</kbd> to a line number</li>
+              <li><kbd>Ctrl+W</kbd> search and <kbd>F3</kbd></li>
+              <li>Selecting and <kbd>Ctrl+C</kbd></li>
+              <li><kbd>Ctrl+L</kbd> line wrap</li>
+              <li><kbd>Ctrl+P</kbd> hexadecimal view</li>
+              <li>New tabs, switching tabs, exiting</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Refused with “Large files use read-only mode and cannot be edited”</h4>
+            <ul>
+              <li>Typing, deleting, pasting, cutting, deleting lines</li>
+              <li>Save and Save As</li>
+              <li>Replace (<kbd>Ctrl+R</kbd> / <kbd>F5</kbd> / <kbd>F6</kbd>)</li>
+              <li>Undo and redo</li>
+              <li>Encoding and line-ending conversion (<kbd>F7</kbd> / <kbd>F8</kbd>)</li>
+              <li>Formatting, paragraph reflow, block fill and shift</li>
+              <li>Inserting phrases, running macros</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Two things simply do not happen here</span>
+          <ul>
+            <li><strong>No syntax highlighting.</strong> Highlighting needs to parse the whole file, so it is switched off on purpose.</li>
+            <li><strong>No side-by-side comparison.</strong> Choosing a large file with <kbd>F4</kbd> is refused: “Side-by-side comparison is unavailable in large-file mode to avoid loading the complete file into memory” (see 3.4.9).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.2.3</span>
+        <h2>How the memory is saved</h2>
+        <p class="dek">It keeps signposts, and reads a line from disk when the screen asks for it.</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 260" role="img" aria-label="The sparse line index">
+              <rect x="0" y="0" width="960" height="260" fill="#FAFBFD"/>
+
+              <rect x="40" y="40" width="880" height="52" rx="8" fill="#EFECF6" stroke="#D6CFE6" stroke-width="2"/>
+              <text x="60" y="72" font-size="14.5" font-weight="700" fill="#4C3F72">A 512 MB file on disk</text>
+              <text x="880" y="72" text-anchor="end" font-size="13" fill="#667085">scanned once, as a stream</text>
+
+              <g fill="#1F4E79">
+                <rect x="60" y="120" width="10" height="26" rx="2"/>
+                <rect x="230" y="120" width="10" height="26" rx="2"/>
+                <rect x="400" y="120" width="10" height="26" rx="2"/>
+                <rect x="570" y="120" width="10" height="26" rx="2"/>
+                <rect x="740" y="120" width="10" height="26" rx="2"/>
+                <rect x="898" y="120" width="10" height="26" rx="2"/>
+              </g>
+              <text x="60" y="166" font-size="12.5" fill="#12314F">line 1</text>
+              <text x="216" y="166" font-size="12.5" fill="#12314F">line 4097</text>
+              <text x="386" y="166" font-size="12.5" fill="#12314F">line 8193</text>
+              <text x="556" y="166" font-size="12.5" fill="#12314F">line 12289</text>
+              <text x="726" y="166" font-size="12.5" fill="#12314F">line 16385</text>
+              <text x="884" y="166" text-anchor="end" font-size="12.5" fill="#12314F">…</text>
+
+              <text x="480" y="200" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1F4E79">Memory holds only these checkpoints: one file offset every 4096 lines</text>
+              <text x="480" y="228" text-anchor="middle" font-size="13.5" fill="#3F485D">To show line 9000, start at the checkpoint for line 8193 and read 807 lines forward</text>
+              <text x="480" y="250" text-anchor="middle" font-size="13" fill="#98A2B3">No memory mapping is used, and a single very long line is previewed to at most 1 MiB</text>
+            </svg>
+          </div>
+          <figcaption><b>Figure 3.2.1</b>　The sparse line index. One scan on open builds the checkpoints; after that, lines are read as the screen needs them, so a 512 MB file does not exhaust memory. The mode has been tested with a 500 MiB file.</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 3.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.2.4</span>
+        <h2>Following a growing log</h2>
+        <p class="dek">Erya checks the file every 250 milliseconds, and new content simply appears.</p>
+
+        <p>This is where large-file mode earns its place: <strong>it is <span class="path">tail -f</span> that you can also search and scroll back through</strong>.</p>
+
+        <ol class="rule-list">
+          <li><b>Appends are cheap.</b> Erya rebuilds only the last incomplete line plus whatever is new; it does not rescan the file, so size does not slow it down.</li>
+          <li><b>The cursor at the end means follow.</b> Sitting at the end of the last line, new content pushes the view along. That is follow mode.</li>
+          <li><b>Move away and it holds still.</b> Scroll back to read something and the view stays where you are, undisturbed by new arrivals. Press <kbd>Ctrl+End</kbd> to resume following.</li>
+          <li><b>Updates are announced</b> with “External file update detected; content refreshed”.</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">The standard way to watch a log</span>
+          <p><span class="path">erya /var/log/nginx/access.log</span> → <kbd>Ctrl+End</kbd> to start following → <kbd>Ctrl+W</kbd> and <kbd>F3</kbd> when you need to find something → <kbd>Ctrl+End</kbd> again to resume. You never leave the editor.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.2.5</span>
+        <h2>Truncation and rotation</h2>
+        <p class="dek">When the file does not grow but is replaced.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">What happened on disk</th><th style="width:26%">What Erya does</th><th>Typical cause</th></tr></thead>
+          <tbody>
+            <tr><td>Content appended</td><td>Adds just the new part; fast</td><td>A service writing its log</td></tr>
+            <tr><td>File emptied (truncated)</td><td><strong>Reopens and rebuilds the index</strong></td><td><span class="path">&gt; access.log</span>, logrotate with copytruncate</td></tr>
+            <tr><td>File rewritten in place</td><td>Reopens and rebuilds the index</td><td>A report regenerated from scratch</td></tr>
+            <tr><td>File replaced (rotation)</td><td>Reopens and rebuilds the index</td><td>logrotate moving the old file aside</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">After a rotation you are looking at the new file</span>
+          <p>Erya follows <strong>the path</strong>. Once <span class="path">access.log</span> has been rotated, what you see is the new file (usually empty or very short); the old content is in <span class="path">access.log.1</span>. Open that in another tab if you need it.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.2.6</span>
+        <h2>External changes to ordinary files</h2>
+        <p class="dek">Small files are watched too; only the response differs.</p>
+
+        <p>The same 250 ms check runs for ordinary files. The difference is that ordinary files <strong>can be edited</strong>, so Erya has to know whether you have (the full account is in 2.1.7):</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">File type</th><th style="width:26%">You have not edited</th><th>You have edited</th></tr></thead>
+          <tbody>
+            <tr><td>Ordinary text file</td><td>Reloads automatically; <strong>undo history cleared</strong></td><td>Warns only, then asks with the red row (O/R/N) when you save</td></tr>
+            <tr><td>Large file</td><td>Refreshes automatically</td><td>Cannot happen — the mode does not allow edits</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.2.7</span>
+        <h2>The three external-change outcomes</h2>
+        <p class="dek">One table to consult when it happens.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Message row</th><th style="width:14%">Colour</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td>External update detected; file safely reloaded</td><td>Yellow</td><td>Nothing. You have the current content — but <strong>the undo history is gone</strong>.</td></tr>
+            <tr><td>External file update detected; content refreshed</td><td>Yellow</td><td>Nothing; the automatic refresh in large-file mode.</td></tr>
+            <tr><td>The file changed externally; confirmation is required before saving</td><td>Yellow</td><td>A warning only, nothing blocked yet. <strong>The question comes at save time.</strong></td></tr>
+            <tr><td>File changed externally: [O]verwrite, [R]eload, [N/Esc] cancel</td><td><b style="color:#8C2B2B">Red</b></td><td>A decision. When unsure press <kbd>N</kbd>, then <kbd>F12</kbd> to save a copy (2.1.7).</td></tr>
+            <tr><td>Failed to refresh external file: …</td><td>Yellow</td><td>The file was deleted, permissions changed, or the disk misbehaved. Check that it still exists.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.2.8</span>
+        <h2>Common problems</h2>
+        <p class="dek">Six questions about large-file mode.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>Typing does nothing; it says read-only</td><td>The file is past 64 MiB (3.2.2). To edit it, split it outside Erya or extract the part you need.</td></tr>
+            <tr><td>No syntax highlighting</td><td>Deliberately disabled in this mode (3.2.2).</td></tr>
+            <tr><td>The view keeps jumping to the end</td><td>The cursor is at the end, so it is following. Scroll back to stop it (3.2.4).</td></tr>
+            <tr><td>The view stopped updating</td><td>The cursor is no longer at the end. Press <kbd>Ctrl+End</kbd> (3.2.4).</td></tr>
+            <tr><td>The log suddenly went empty</td><td>Truncation or rotation; you are on the new file (3.2.5).</td></tr>
+            <tr><td>A large CJK file opened as hexadecimal</td><td>A large non-UTF-8 file cannot be decoded as a stream (3.2.1). Convert it to UTF-8 first.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

@@ -1,0 +1,162 @@
+      <!-- ══════════ 2.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.3.1</span>
+        <h2>搜尋：<kbd>Ctrl+W</kbd></h2>
+        <p class="dek"><kbd>Ctrl+F</kbd> 也可以，兩個鍵預設都綁到搜尋。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確認  Esc 取消  ←/→ 移動游標  Backspace/Delete 刪除字元</div>
+            <div class="s-msg ask">搜尋文字：專案<em> </em></div>
+          </div>
+        </div>
+
+        <ul>
+          <li>輸入列會帶出<strong>上一次搜尋的字串</strong>，直接按 <kbd>Enter</kbd> 就是再找一次。</li>
+          <li>從<strong>游標目前的位置</strong>往後找，找不到就繞回文件開頭再找一輪。</li>
+          <li>找到的話游標會跳過去，該處以黃底標出。</li>
+          <li>搜尋字串留空按 <kbd>Enter</kbd> 會被擋下來：「搜尋文字不可為空」。</li>
+          <li><kbd>Esc</kbd> 取消，游標留在原地。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">爾雅的搜尋是「一模一樣」的比對</span>
+          <p><strong>區分大小寫、不支援正規表示式、不支援萬用字元</strong>，你打什麼就找什麼。找 <span class="path">Error</span> 不會找到 <span class="path">error</span>。全形與半形也是不同的字，找「，」不會找到「,」——處理中文文件時這一點反而常常正好是你要的。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.3.2</span>
+        <h2>尋找下一個與繞回開頭</h2>
+        <p class="dek"><kbd>F3</kbd> 一直按下去就對了。</p>
+
+        <ul>
+          <li><kbd>F3</kbd> 用<strong>上一次的條件</strong>往後找下一個，不必再打一次字。</li>
+          <li>還沒搜尋過就按 <kbd>F3</kbd>，爾雅會直接幫你打開搜尋輸入列。</li>
+          <li>找到文件結尾時<strong>自動繞回開頭</strong>繼續找，訊息列會說「已從文件開頭繼續搜尋；F3 尋找下一個」——看到這句就代表你已經繞完一圈了。</li>
+          <li>整份文件都沒有時顯示「找不到相符文字」，游標不動。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">怎麼知道自己繞了幾圈</span>
+          <p>爾雅不顯示「第 3 筆／共 12 筆」。判斷方法是看訊息列：一直是「找到相符文字」就還在往下走，<strong>出現「已從文件開頭繼續搜尋」就是繞回去了</strong>。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.3.3</span>
+        <h2>取代：<kbd>Ctrl+R</kbd></h2>
+        <p class="dek">問兩次：先問找什麼，再問換成什麼。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確認  Esc 取消  ←/→ 移動游標  Backspace/Delete 刪除字元</div>
+            <div class="s-msg ask">取代：搜尋文字：二〇二五<em> </em></div>
+          </div>
+        </div>
+        <div class="screen-scroll" style="margin-top:10px">
+          <div class="screen">
+            <div class="s-bar"> Enter/F5 取代下一個  F6 全部取代  Esc 取消</div>
+            <div class="s-msg ask">取代為：二〇二六<em> </em></div>
+          </div>
+        </div>
+
+        <p>注意第二個輸入列的<strong>提示列換了</strong>：這時候你有三個選擇。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Enter</kbd> 或 <kbd>F5</kbd></td><td>取代下一個相符處，然後回到編輯。</td></tr>
+            <tr><td><kbd>F6</kbd></td><td><strong>整份文件全部取代</strong>，訊息列回報取代了幾處。</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>取消，什麼都不改。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">搜尋與取代打成同一個字會被擋下來</span>
+          <p>兩邊一樣時爾雅不會做白工，直接說「搜尋與取代文字相同；文件未變更」。這通常代表你打錯了其中一邊。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.3.4</span>
+        <h2><kbd>F5</kbd> 取代下一個、<kbd>F6</kbd> 全部取代</h2>
+        <p class="dek">條件記在頁籤裡，之後可以一直按。</p>
+
+        <ul>
+          <li>取代過一次之後，<kbd>F5</kbd> 就會用<strong>同一組條件</strong>繼續取代下一處，不必重新輸入。</li>
+          <li><kbd>F6</kbd> 一次把剩下的全部換掉。</li>
+          <li>還沒設定過條件就按 <kbd>F5</kbd> 或 <kbd>F6</kbd>，爾雅會幫你打開取代輸入列。</li>
+          <li>取代到文件結尾時同樣會繞回開頭，訊息列顯示「已從文件開頭取代 1 處」。</li>
+          <li>沒有東西可取代時顯示「找不到可取代的文字」。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">逐一確認的取代這樣做</span>
+          <p>爾雅沒有「取代並詢問」模式，但 <kbd>F3</kbd> 與 <kbd>F5</kbd> 搭起來就是：<strong><kbd>F3</kbd> 跳到下一個看一眼，要換就按 <kbd>F5</kbd>，不換就再按 <kbd>F3</kbd></strong>。兩個鍵共用同一組搜尋條件。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.3.5</span>
+        <h2>訊息列會說的六句話</h2>
+        <p class="dek">搜尋與取代幾乎所有回饋都在最後一列。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44%">訊息</th><th>意思</th></tr></thead>
+          <tbody>
+            <tr><td>找到相符文字；F3 尋找下一個</td><td>找到了，游標已經跳過去。</td></tr>
+            <tr><td>已從文件開頭繼續搜尋；F3 尋找下一個</td><td>找到了，<strong>但已經繞回文件開頭</strong>。</td></tr>
+            <tr><td>找不到相符文字</td><td>整份文件都沒有。檢查大小寫與全半形。</td></tr>
+            <tr><td>搜尋文字不可為空</td><td>輸入列空白就按了 <kbd>Enter</kbd>。</td></tr>
+            <tr><td>搜尋與取代文字相同；文件未變更</td><td>兩邊打成一樣了。</td></tr>
+            <tr><td>已取代 1 處；F5 取代下一個，F6 全部取代<br>已全部取代 N 處</td><td>取代成功，順便告訴你接下來能按什麼。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.3.6</span>
+        <h2>取代之後要復原</h2>
+        <p class="dek"><kbd>Ctrl+Z</kbd> 就好，但要知道一步是多大一步。</p>
+
+        <ul>
+          <li><strong>單次取代（<kbd>F5</kbd>）</strong>：一次 <kbd>Ctrl+Z</kbd> 回到取代前。</li>
+          <li><strong>全部取代（<kbd>F6</kbd>）</strong>：<strong>整批算一步</strong>，一次 <kbd>Ctrl+Z</kbd> 就全部復原，不用按 N 次。</li>
+          <li>復原後可以用 <kbd>Ctrl+Y</kbd> 重做。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">全部取代之前先想一下</span>
+          <p><kbd>F6</kbd> 不會問你、也不會列出要改哪些地方，按下去就換完了。<strong>不確定時先用 <kbd>F3</kbd> 走一遍看看會命中哪些位置</strong>，尤其當搜尋字串很短（例如只有一個「的」）的時候。真的改壞了，<kbd>Ctrl+Z</kbd> 還在——但前提是你還沒存檔又離開。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.3.7</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">搜尋取代最常見的五個誤會。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>明明有這個字卻找不到</td><td>大小寫不同，或是全形／半形不同。爾雅是完全比對（2.3.1）。</td></tr>
+            <tr><td>想用 <span class="path">.*</span> 這類樣式</td><td>不支援正規表示式，那些符號會被當成一般字元去找。</td></tr>
+            <tr><td>一直找到同一個地方</td><td>已經繞回開頭了。看訊息列有沒有出現「已從文件開頭繼續搜尋」（2.3.2）。</td></tr>
+            <tr><td>只想取代某一段裡的文字</td><td>目前沒有「只在選取範圍內取代」。用 <kbd>F3</kbd> ＋ <kbd>F5</kbd> 逐一處理（2.3.4）。</td></tr>
+            <tr><td>取代完發現改錯了</td><td><kbd>Ctrl+Z</kbd>。全部取代整批算一步（2.3.6）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

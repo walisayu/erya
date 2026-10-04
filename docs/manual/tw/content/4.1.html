@@ -1,0 +1,292 @@
+      <!-- ══════════ 4.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.1.1</span>
+        <h2>預設配置為什麼是「終端安全」</h2>
+        <p class="dek">因為終端機不是每一個組合鍵都收得到。</p>
+
+        <p>爾雅內建的預設配置叫 <span class="term">Erya Terminal Safe</span>。它刻意避開三類在很多環境裡按不動的組合：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">避開什麼</th><th>為什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl</kbd>＋功能鍵</td><td>macOS 把這些留給系統（切換桌面、Mission Control），程式收不到。</td></tr>
+            <tr><td>依賴 <kbd>Alt</kbd>／Option 的組合</td><td>Option 在 macOS 上是輸入特殊字元用的；很多終端機要另外設定才會把它當成 Meta 送出去。</td></tr>
+            <tr><td>修飾方向鍵（<kbd>Alt+Shift+←</kbd> 這類）</td><td>不少終端機根本不會回報這種組合。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>代價是<strong>十六個進階動作預設沒有綁鍵</strong>：八個常用語／巨集（見 2.4.8）、四個矩形搬動與一個矩形填滿（見 2.2.6）、兩個段落重排相關（見 3.1.8），以及「顯示游標位置」（狀態列已經有了）。功能都在，只是要自己指定按鍵，完整清單見 4.4.6。</p>
+
+        <div class="callout ok">
+          <span class="co-title">舊的那一套沒有消失</span>
+          <p>1.0 版原本的完整綁定改名為 <span class="term">Erya Classic</span> 保留下來，<strong>按 <kbd>F2</kbd> 選一下就換回去</strong>。如果你的終端機（Linux 上的 GNOME Terminal、Windows Terminal 等）本來就能回報修飾方向鍵與 <kbd>Alt</kbd> 組合，Classic 用起來會順手很多。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.1.2</span>
+        <h2>內附的十二套配置</h2>
+        <p class="dek">在 <span class="path">keymap/</span> 目錄裡，全部都是可以直接選用的 TOML。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">檔案</th><th>適合誰</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">erya-terminal-safe.toml</span></td><td><strong>預設值。</strong>什麼終端機都能用，跨平台最保險。</td></tr>
+            <tr><td><span class="path">erya-classic.toml</span></td><td>要完整綁定（含常用語、巨集、矩形搬動）的人。</td></tr>
+            <tr><td><span class="path">nano.toml</span></td><td>習慣 nano 的人。</td></tr>
+            <tr><td><span class="path">vim.toml</span></td><td>習慣 vim 按鍵的人（<strong>不是模式編輯</strong>，只是按鍵配置）。</td></tr>
+            <tr><td><span class="path">emacs.toml</span></td><td>習慣 emacs 的人。</td></tr>
+            <tr><td><span class="path">macos.toml</span></td><td>想用 macOS 應用程式慣例的人。</td></tr>
+            <tr><td><span class="path">vscode.toml</span>／<span class="path">vscode-macos.toml</span></td><td>從 VS Code 過來的人。</td></tr>
+            <tr><td><span class="path">visual-studio.toml</span>／<span class="path">visual-studio-macos.toml</span></td><td>從 Visual Studio 過來的人。</td></tr>
+            <tr><td><span class="path">intellij-idea-classic.toml</span></td><td>從 IntelliJ IDEA 過來的人。</td></tr>
+            <tr><td><span class="path">eclipse.toml</span></td><td>從 Eclipse 過來的人。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>預設與 Classic 差最多的幾個鍵</h3>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">動作</th><th style="width:24%">Terminal Safe</th><th>Erya Classic</th></tr></thead>
+          <tbody>
+            <tr><td>開啟檔案</td><td><kbd>Ctrl+O</kbd></td><td><kbd>Alt+O</kbd></td></tr>
+            <tr><td>另存新檔</td><td><kbd>F12</kbd></td><td><kbd>Ctrl+O</kbd></td></tr>
+            <tr><td>取代</td><td><kbd>Ctrl+R</kbd></td><td><kbd>Ctrl+H</kbd></td></tr>
+            <tr><td><strong>重做</strong></td><td><kbd>Ctrl+Y</kbd></td><td><kbd>Ctrl+R</kbd></td></tr>
+            <tr><td><strong>刪除目前行</strong></td><td><kbd>Ctrl+D</kbd></td><td><kbd>Ctrl+Y</kbd></td></tr>
+            <tr><td>複製</td><td><kbd>Ctrl+C</kbd></td><td><kbd>Ctrl+Insert</kbd></td></tr>
+            <tr><td>關閉頁籤</td><td><kbd>F11</kbd></td><td><kbd>Ctrl+F4</kbd></td></tr>
+            <tr><td>上／下一個頁籤</td><td><kbd>F9</kbd> / <kbd>F10</kbd></td><td><kbd>Ctrl+Shift+Tab</kbd> / <kbd>Ctrl+Tab</kbd></td></tr>
+            <tr><td>十六進位檢視</td><td><kbd>Ctrl+P</kbd></td><td><kbd>Alt+H</kbd></td></tr>
+            <tr><td>矩形選取</td><td><kbd>Ctrl+B</kbd></td><td><kbd>Alt+B</kbd></td></tr>
+            <tr><td>格式化文件</td><td><kbd>Ctrl+T</kbd></td><td><kbd>Ctrl+Shift+F</kbd></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>Ctrl+Y</kbd> 與 <kbd>Ctrl+R</kbd> 在兩套裡意思相反</span>
+          <p>預設配置的 <kbd>Ctrl+Y</kbd> 是<strong>重做</strong>，Classic 的 <kbd>Ctrl+Y</kbd> 是<strong>刪除整行</strong>；<kbd>Ctrl+R</kbd> 也剛好倒過來。換配置之後這一組最容易誤按，換完先看一眼提示列（見 1.3.3）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.1.3</span>
+        <h2>在系統設定裡換一套</h2>
+        <p class="dek">最簡單的做法，不必碰任何檔案。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ 系統設定</div>
+            <div class="s-bar"> ↑/↓ 切換項目  ←/→ 選擇  E 編輯按鍵  Enter 套用  Esc 取消</div>
+            <div class="s-body"><u> ▶ 按鍵配置:  ◀ Erya Terminal Safe ▶            </u>
+
+   介面語言:  ◀ 正體中文 (zh-TW) ▶</div>
+            <div class="s-status"> Erya Terminal Safe │ 正體中文 </div>
+            <div class="s-msg"> 使用方向鍵選擇；Enter 會立即套用至所有頁籤</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b>按 <kbd>F2</kbd></b> 開啟系統設定。</li>
+          <li><b><kbd>↑</kbd> <kbd>↓</kbd> 切到「按鍵配置」那一列</b>（選中的那一列會反白，前面有 ▶）。</li>
+          <li><b><kbd>←</kbd> <kbd>→</kbd> 換配置。</b>清單是從 <span class="path">keymap/</span> 目錄讀出來的。</li>
+          <li><b><kbd>Enter</kbd> 套用。</b>訊息列說「已套用設定：Erya Classic／正體中文」，而且<strong>立刻對所有頁籤生效</strong>。</li>
+          <li><b><kbd>Esc</kbd> 取消</b>，什麼都不改。</li>
+        </ol>
+
+        <div class="callout">
+          <span class="co-title">清單是空的？</span>
+          <p>代表爾雅找不到 <span class="path">keymap/</span> 目錄。用 <span class="path">ERYA_KEYMAPS_DIR</span> 指到實際位置就好（見 1.2.7）——從 Release 壓縮檔解出來只放執行檔時最常遇到。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.1.4</span>
+        <h2>按鍵配置編輯器</h2>
+        <p class="dek">在爾雅裡面改按鍵，改完另存成自己的 TOML。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ 按鍵配置編輯器 │ Erya Terminal Safe</div>
+            <div class="s-bar"> ↑/↓ 選取  Enter 編輯  Delete 停用  S 另存新檔  Esc 返回</div>
+            <div class="s-body"> 儲存文件                        Ctrl+S
+ 另存新檔                        F12
+ 離開爾雅                        Ctrl+X
+<u> 收錄選取文字或目前行為常用語                                    </u>
+ 插入下一筆常用語
+ 以指定字元填滿矩形選取</div>
+            <div class="s-status"> Erya Terminal Safe │ 32/62 </div>
+            <div class="s-msg"> 選取動作後按 Enter 編輯；修改完成後按 S 另存新檔</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>選動作。左欄是動作說明，右欄是目前綁的按鍵（<strong>空白代表沒綁</strong>）。</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>編輯這個動作的按鍵。輸入列會帶出目前的值，<strong>多組按鍵用逗號分隔</strong>。</td></tr>
+            <tr><td><kbd>Delete</kbd></td><td>停用這個動作（等同留空）。訊息列說「已停用選取動作的快捷鍵」。</td></tr>
+            <tr><td><kbd>S</kbd></td><td>把整份配置另存成新的 TOML。</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>回到系統設定。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>輸入的按鍵無法解析、或跟別的動作衝突時，訊息列會說「無法更新按鍵配置：…」，<strong>並且維持原狀</strong>。</li>
+          <li>另存時會問檔名，成功後說「已另存按鍵配置：…」。</li>
+          <li><strong>另存新檔不會覆寫既有檔案。</strong>檔名已存在時會失敗，不會默默蓋掉別人的配置。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">怎麼讓自己存的配置變成預設</span>
+          <p>兩條路：把它存進 <span class="path">keymap/</span> 目錄，之後 <kbd>F2</kbd> 就選得到；或把它放到平台的預設路徑（見 4.1.7），爾雅每次啟動都會自動讀。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.1.5</span>
+        <h2>設定檔長什麼樣</h2>
+        <p class="dek">一個 <span class="path">name</span> 加一個 <span class="path">[bindings]</span> 區段。</p>
+
+        <p>先產生一份含全部動作名稱的起點：</p>
+        <p><span class="path">erya --print-default-keymap &gt; keymap.toml</span></p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>範例</th></tr></thead>
+          <tbody>
+            <tr><td>
+              <span class="path">name = "我的配置"</span><br><br>
+              <span class="path">[bindings]</span><br>
+              <span class="path">save = "Alt+S"</span><br>
+              <span class="path">quit = "Ctrl+X"</span><br>
+              <span class="path">search = ["Ctrl+W", "Ctrl+F"]</span><br>
+              <span class="path">toggle_rectangular_selection = "Alt+M"</span><br>
+              <span class="path">redo = []</span>
+            </td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li><strong>一個動作可以綁多個按鍵</strong>：寫成陣列。</li>
+          <li><strong>空陣列 <span class="path">[]</span> 代表停用</strong>這個動作。</li>
+          <li><strong>沒列出來的動作沿用預設值。</strong>所以只想改兩個鍵的話，檔案裡就只要寫那兩行。</li>
+          <li><span class="path">name</span> 是顯示在系統設定與第一列標題上的名稱。</li>
+          <li>動作名稱的完整清單見 4.4，或直接看 <span class="path">--print-default-keymap</span> 的輸出。</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 4.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.1.6</span>
+        <h2>按鍵名稱怎麼寫</h2>
+        <p class="dek">修飾鍵用 <span class="path">+</span> 串起來，大小寫都可以。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">類別</th><th>可以寫的名稱</th></tr></thead>
+          <tbody>
+            <tr><td>修飾鍵</td><td><span class="path">Ctrl</span>、<span class="path">Alt</span>、<span class="path">Shift</span>、<span class="path">Super</span>、<span class="path">Hyper</span>、<span class="path">Meta</span></td></tr>
+            <tr><td>一般字元</td><td><span class="path">A</span>–<span class="path">Z</span>、<span class="path">0</span>–<span class="path">9</span>、符號</td></tr>
+            <tr><td>功能鍵</td><td><span class="path">F1</span> 到 <span class="path">F24</span></td></tr>
+            <tr><td>方向與編輯鍵</td><td><span class="path">Left</span>、<span class="path">Right</span>、<span class="path">Up</span>、<span class="path">Down</span>、<span class="path">Home</span>、<span class="path">End</span>、<span class="path">PageUp</span>、<span class="path">PageDown</span>、<span class="path">Insert</span>、<span class="path">Delete</span>、<span class="path">Backspace</span>、<span class="path">Tab</span>、<span class="path">Enter</span>、<span class="path">Esc</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>寫法例：<span class="path">"Ctrl+S"</span>、<span class="path">"Alt+Shift+Right"</span>、<span class="path">"F12"</span>、<span class="path">"ctrl+shift+f"</span>（大小寫不分）。</p>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>F1</kbd> 綁不上去</span>
+          <p>單獨的 <kbd>F1</kbd> 保留給按鍵說明，寫進設定檔會被判定為錯誤（見 1.3.8）。這是刻意留的逃生門——不管配置被改成什麼樣子，永遠有一個鍵叫得出完整清單。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.1.7</span>
+        <h2>設定檔放哪裡才會被讀到</h2>
+        <p class="dek">三種指定方式，由高到低。</p>
+
+        <ol class="rule-list">
+          <li><b><span class="path">--keymap &lt;檔案&gt;</span></b>——這一次執行用這一份，優先度最高。</li>
+          <li><b><span class="path">ERYA_KEYMAP</span> 環境變數</b>——沒給 <span class="path">--keymap</span> 時用它。</li>
+          <li><b>平台的預設路徑</b>——上面兩個都沒有時，自動去這裡找：</li>
+        </ol>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">平台</th><th>路徑</th></tr></thead>
+          <tbody>
+            <tr><td>macOS</td><td><span class="path">~/Library/Application Support/Erya/keymap.toml</span></td></tr>
+            <tr><td>Linux</td><td><span class="path">$XDG_CONFIG_HOME/erya/keymap.toml</span>，沒設 XDG 時用 <span class="path">~/.config/erya/keymap.toml</span></td></tr>
+            <tr><td>Windows</td><td><span class="path">%APPDATA%\Erya\keymap.toml</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">預設路徑沒有檔案是正常的</span>
+          <p>爾雅不會自己建這個檔。找不到就用內建的預設配置，<strong>不會有任何警告</strong>。反過來說，明確指定的 <span class="path">--keymap</span> 或 <span class="path">ERYA_KEYMAP</span> 讀不到時<strong>會</strong>在訊息列講話——因為那是你明講要用的東西。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.1.8</span>
+        <h2>衝突與回退</h2>
+        <p class="dek">設定檔有問題時，爾雅照跑，但用預設值。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg"> 無法載入按鍵設定，已使用預設值：save 與 search 都綁到 F9</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b>兩個動作綁到同一個按鍵</b>——直接判定為衝突。因為爾雅無法決定該執行哪一個。</li>
+          <li><b>按鍵名稱拼錯、TOML 語法有問題</b>——解析失敗。</li>
+          <li><b>把單獨的 <kbd>F1</kbd> 綁給某個動作</b>——保留鍵，不接受。</li>
+        </ol>
+
+        <p>以上任何一種情況，爾雅都會<strong>回退到完整的預設配置</strong>（不是「只忽略有問題的那一行」），並在啟動時的訊息列說明原因。程式不會因此開不起來。</p>
+
+        <div class="callout tip">
+          <span class="co-title">怎麼確認自己現在用的是哪一套</span>
+          <p>看畫面第二列的提示列（顯示的是實際按鍵），或按 <kbd>F1</kbd> 看完整清單，或按 <kbd>F2</kbd> 看系統設定上寫的配置名稱。三個地方都會告訴你真相。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">4.1.9</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">改按鍵最常見的七個狀況。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>改了設定檔卻沒生效</td><td>檔案不在會被讀到的位置（4.1.7），或設定檔有問題被回退了（4.1.8）。看啟動時的訊息列。</td></tr>
+            <tr><td>啟動時說「無法載入按鍵設定」</td><td>衝突或語法錯誤。訊息列後面會寫原因（4.1.8）。</td></tr>
+            <tr><td><kbd>F2</kbd> 的配置清單是空的</td><td>找不到 <span class="path">keymap/</span> 目錄。設 <span class="path">ERYA_KEYMAPS_DIR</span>（4.1.3）。</td></tr>
+            <tr><td>綁了 <kbd>Alt+</kbd> 組合按不動</td><td>終端機沒把 Option／Alt 當成 Meta 送出。改綁別的鍵，或在終端機設定裡開啟（4.1.1）。</td></tr>
+            <tr><td>綁 <kbd>F1</kbd> 被拒絕</td><td><kbd>F1</kbd> 是保留鍵（4.1.6）。</td></tr>
+            <tr><td>另存配置失敗</td><td>檔名已經存在。爾雅不覆寫既有檔案，換個名字（4.1.4）。</td></tr>
+            <tr><td>換配置之後復原變成刪行</td><td><kbd>Ctrl+Y</kbd> 在兩套配置裡意思不同（4.1.2）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

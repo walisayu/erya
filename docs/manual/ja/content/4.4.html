@@ -1,0 +1,212 @@
+      <!-- ══════════ 4.4.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.4.1</span>
+        <h2>変更できない固定キー</h2>
+        <p class="dek">どのプロファイルでも同じです。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">キー</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>F1</kbd></td><td>キー操作ヘルプの表示／非表示</td></tr>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd></td><td>カーソルを移動</td></tr>
+            <tr><td><kbd>Shift</kbd>＋移動キー</td><td>選択範囲を広げる／狭める</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>1 ページ上下へ</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>現在行の先頭／末尾へ</td></tr>
+            <tr><td><kbd>Ctrl+Home</kbd> <kbd>Ctrl+End</kbd></td><td>文書の先頭／末尾へ</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>改行を挿入</td></tr>
+            <tr><td><kbd>Backspace</kbd> <kbd>Delete</kbd></td><td>文字または選択範囲を削除</td></tr>
+            <tr><td><kbd>Tab</kbd></td><td>タブを挿入</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>操作や選択を取り消す</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>4.4.2 から 4.4.6 の表は 3 列です：<strong>既定キー</strong>（Erya Terminal Safe）、<strong>操作</strong>、<strong>操作名</strong>。3 列目が設定ファイルに書く名前です（4.1.5 参照）。</p>
+      </section>
+
+      <!-- ══════════ 4.4.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.4.2</span>
+        <h2>ファイルとタブ</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">既定キー</th><th style="width:40%">操作</th><th>操作名</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+N</kbd></td><td>空のタブを作成</td><td><span class="path">new_tab</span></td></tr>
+            <tr><td><kbd>Ctrl+O</kbd></td><td>新しいタブでファイルを開く</td><td><span class="path">open_file</span></td></tr>
+            <tr><td><kbd>F4</kbd></td><td>左右のファイルを選んで比較</td><td><span class="path">compare_file</span></td></tr>
+            <tr><td><kbd>F9</kbd></td><td>前のタブへ</td><td><span class="path">previous_tab</span></td></tr>
+            <tr><td><kbd>F10</kbd></td><td>次のタブへ</td><td><span class="path">next_tab</span></td></tr>
+            <tr><td><kbd>F11</kbd></td><td>現在のタブを閉じる</td><td><span class="path">close_tab</span></td></tr>
+            <tr><td><kbd>Ctrl+S</kbd></td><td>文書を保存</td><td><span class="path">save</span></td></tr>
+            <tr><td><kbd>F12</kbd></td><td>別名で保存</td><td><span class="path">save_as</span></td></tr>
+            <tr><td><kbd>Ctrl+X</kbd></td><td>Erya を終了</td><td><span class="path">quit</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.4.3</span>
+        <h2>編集とクリップボード</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">既定キー</th><th style="width:40%">操作</th><th>操作名</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+Z</kbd></td><td>直前の操作を元に戻す</td><td><span class="path">undo</span></td></tr>
+            <tr><td><kbd>Ctrl+Y</kbd></td><td>直前の操作をやり直す</td><td><span class="path">redo</span></td></tr>
+            <tr><td><kbd>Ctrl+C</kbd></td><td>選択範囲、無ければ現在行をコピー</td><td><span class="path">copy</span></td></tr>
+            <tr><td><kbd>Shift+Delete</kbd></td><td>選択範囲、無ければ現在行を切り取り</td><td><span class="path">cut</span></td></tr>
+            <tr><td><kbd>Ctrl+V</kbd> / <kbd>Shift+Insert</kbd></td><td>貼り付け（選択があれば置換）</td><td><span class="path">paste</span></td></tr>
+            <tr><td><kbd>Ctrl+K</kbd></td><td>現在の行を切り取り</td><td><span class="path">cut_line</span></td></tr>
+            <tr><td><kbd>Ctrl+D</kbd></td><td>現在の行を削除</td><td><span class="path">delete_line</span></td></tr>
+            <tr><td><kbd>Ctrl+A</kbd></td><td>行頭へ（<kbd>Shift</kbd> で選択）</td><td><span class="path">line_start</span></td></tr>
+            <tr><td><kbd>Ctrl+E</kbd></td><td>行末へ（<kbd>Shift</kbd> で選択）</td><td><span class="path">line_end</span></td></tr>
+            <tr><td><kbd>Insert</kbd></td><td>挿入と上書きを切り替え</td><td><span class="path">toggle_insert</span></td></tr>
+            <tr><td><kbd>Ctrl+B</kbd></td><td>矩形選択の開始／解除</td><td><span class="path">toggle_rectangular_selection</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.4.4</span>
+        <h2>検索と置換</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">既定キー</th><th style="width:40%">操作</th><th>操作名</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+W</kbd> / <kbd>Ctrl+F</kbd></td><td>文字列を検索</td><td><span class="path">search</span></td></tr>
+            <tr><td><kbd>F3</kbd></td><td>次の一致を検索</td><td><span class="path">find_next</span></td></tr>
+            <tr><td><kbd>Ctrl+R</kbd></td><td>検索文字列と置換文字列を入力</td><td><span class="path">replace</span></td></tr>
+            <tr><td><kbd>F5</kbd></td><td>次の一致を置換</td><td><span class="path">replace_next</span></td></tr>
+            <tr><td><kbd>F6</kbd></td><td>すべての一致を置換</td><td><span class="path">replace_all</span></td></tr>
+            <tr><td><kbd>Ctrl+G</kbd></td><td>行、または行と列へ移動（42:8）</td><td><span class="path">go_to_position</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.4.5</span>
+        <h2>表示と変換</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">既定キー</th><th style="width:40%">操作</th><th>操作名</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+L</kbd></td><td>折り返し表示の切り替え</td><td><span class="path">toggle_line_wrap</span></td></tr>
+            <tr><td><kbd>Ctrl+P</kbd></td><td>16 進数表示の切り替え</td><td><span class="path">toggle_hex_view</span></td></tr>
+            <tr><td><kbd>Ctrl+T</kbd></td><td>TOML／YAML／JSON を整形</td><td><span class="path">format_document</span></td></tr>
+            <tr><td><kbd>F7</kbd></td><td>保存時の文字コードを切り替え</td><td><span class="path">convert_encoding</span></td></tr>
+            <tr><td><kbd>F8</kbd></td><td>LF／CRLF を切り替え</td><td><span class="path">toggle_line_ending</span></td></tr>
+            <tr><td><kbd>F2</kbd></td><td>システム設定を開く</td><td><span class="path">open_settings</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.4.6</span>
+        <h2>応用：既定でキーがない操作</h2>
+        <p class="dek">16 個あります。自分で割り当てるか、Erya Classic に切り替えてください（4.1 参照）。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Classic のキー</th><th style="width:40%">操作</th><th>操作名</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Alt+M</kbd></td><td>段落の再整形幅を設定</td><td><span class="path">set_paragraph_width</span></td></tr>
+            <tr><td><kbd>Alt+Q</kbd></td><td>現在の段落を再整形</td><td><span class="path">reflow_paragraph</span></td></tr>
+            <tr><td><kbd>Alt+F</kbd></td><td>矩形選択を指定した文字で埋める</td><td><span class="path">fill_rectangle</span></td></tr>
+            <tr><td><kbd>Alt+Shift+←</kbd></td><td>矩形選択を左へ移動</td><td><span class="path">move_rectangle_left</span></td></tr>
+            <tr><td><kbd>Alt+Shift+→</kbd></td><td>矩形選択を右へ移動</td><td><span class="path">move_rectangle_right</span></td></tr>
+            <tr><td><kbd>Alt+Shift+↑</kbd></td><td>矩形選択を上へ移動</td><td><span class="path">move_rectangle_up</span></td></tr>
+            <tr><td><kbd>Alt+Shift+↓</kbd></td><td>矩形選択を下へ移動</td><td><span class="path">move_rectangle_down</span></td></tr>
+            <tr><td><kbd>F9</kbd></td><td>選択範囲または現在行を定型文として登録</td><td><span class="path">capture_phrase</span></td></tr>
+            <tr><td><kbd>F10</kbd></td><td>次の定型文を挿入</td><td><span class="path">insert_phrase</span></td></tr>
+            <tr><td><kbd>Shift+F9</kbd></td><td><span class="path">.erya-phrases.json</span> から定型文を読み込み</td><td><span class="path">load_phrases</span></td></tr>
+            <tr><td><kbd>Shift+F10</kbd></td><td><span class="path">.erya-phrases.json</span> へ定型文を保存</td><td><span class="path">save_phrases</span></td></tr>
+            <tr><td><kbd>Ctrl+F2</kbd></td><td>マクロ記録の開始／停止</td><td><span class="path">toggle_macro_recording</span></td></tr>
+            <tr><td><kbd>Ctrl+F3</kbd></td><td>記録したマクロを実行</td><td><span class="path">run_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+Shift+F2</kbd></td><td><span class="path">.erya-macro.json</span> からマクロを読み込み</td><td><span class="path">load_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+Shift+F3</kbd></td><td><span class="path">.erya-macro.json</span> へマクロを保存</td><td><span class="path">save_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+C</kbd></td><td>現在のカーソル位置を表示</td><td><span class="path">cursor_position</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.4.7</span>
+        <h2>画面ごとの専用キー</h2>
+        <p class="dek">その画面でのみ有効で、割り当ての変更もできません。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">画面</th><th>キー</th></tr></thead>
+          <tbody>
+            <tr><td>ファイルダイアログ</td><td><kbd>↑</kbd><kbd>↓</kbd> 選択／<kbd>Enter</kbd> <kbd>→</kbd> 開く・入る／<kbd>←</kbd> <kbd>Backspace</kbd> 親へ／<kbd>Home</kbd><kbd>End</kbd> 先頭・末尾／<kbd>Esc</kbd> <kbd>Q</kbd> キャンセル</td></tr>
+            <tr><td>16 進数表示</td><td><kbd>W</kbd> 1 行 16/32／<kbd>O</kbd> オフセットの基数／<kbd>G</kbd> オフセットへ移動／<kbd>Esc</kbd> 戻る</td></tr>
+            <tr><td>バイト編集（バイナリ）</td><td><kbd>0</kbd>〜<kbd>9</kbd> <kbd>A</kbd>〜<kbd>F</kbd> バイト入力／<kbd>I</kbd> 上書き・挿入／<kbd>Backspace</kbd> <kbd>Delete</kbd> 削除</td></tr>
+            <tr><td>比較</td><td><kbd>N</kbd> 次の差分／<kbd>P</kbd> 前の差分／<kbd>Shift+→</kbd> 左から右へ／<kbd>Shift+←</kbd> 右から左へ／<kbd>Ctrl+←</kbd><kbd>Ctrl+→</kbd> 8 桁スクロール／<kbd>Esc</kbd> 戻る</td></tr>
+            <tr><td>キー操作ヘルプ</td><td><kbd>↑</kbd><kbd>↓</kbd> スクロール／<kbd>PageUp</kbd><kbd>PageDown</kbd> ページ／<kbd>Home</kbd><kbd>End</kbd> 先頭・末尾／<kbd>F1</kbd> <kbd>Esc</kbd> 戻る</td></tr>
+            <tr><td>システム設定</td><td><kbd>↑</kbd><kbd>↓</kbd> 項目／<kbd>←</kbd><kbd>→</kbd> 値／<kbd>E</kbd> キー編集／<kbd>Enter</kbd> 適用／<kbd>Esc</kbd> キャンセル</td></tr>
+            <tr><td>キーマップエディター</td><td><kbd>↑</kbd><kbd>↓</kbd> 選択／<kbd>Enter</kbd> 編集／<kbd>Delete</kbd> 無効化／<kbd>S</kbd> 名前を付けて保存／<kbd>Esc</kbd> 戻る</td></tr>
+            <tr><td>確認行（未保存）</td><td><kbd>S</kbd> 保存して進む／<kbd>Y</kbd> 破棄／<kbd>N</kbd> <kbd>Esc</kbd> 戻る</td></tr>
+            <tr><td>確認行（外部変更）</td><td><kbd>O</kbd> 上書き／<kbd>R</kbd> 再読込／<kbd>N</kbd> <kbd>Esc</kbd> 取消</td></tr>
+            <tr><td>確認行（比較の適用）</td><td><kbd>Y</kbd> 上書き／<kbd>N</kbd> キャンセル（終了時は <kbd>Esc</kbd> で戻る）</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.4.8</span>
+        <h2>用語一覧</h2>
+        <p class="dek">本書に出てくる用語と、説明のある章です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">用語</th><th>ひとことで言うと</th><th style="width:10%">参照</th></tr></thead>
+          <tbody>
+            <tr><td>タブ</td><td>同時に開いた複数のファイル。カーソル・検索条件・履歴を個別に持ちます。</td><td>2.1.3</td></tr>
+            <tr><td>ヒント行</td><td>2 行目。その画面で使えるキーが並びます。</td><td>1.3.3</td></tr>
+            <tr><td>ステータス行</td><td>下から 2 行目。ファイル名、位置、モード、シンタックス、文字コード、改行。</td><td>1.3.5</td></tr>
+            <tr><td>メッセージ行</td><td>最終行。黄は報告、白は入力待ち、赤は判断待ち。</td><td>1.3.6</td></tr>
+            <tr><td>挿入／上書き</td><td>入力で後ろを押し出すか、カーソル位置の文字を置き換えるか。</td><td>2.2.8</td></tr>
+            <tr><td>書記素クラスター</td><td>画面上で 1 文字に見える単位。Erya の移動・削除の単位です。</td><td>2.2.3</td></tr>
+            <tr><td>矩形選択</td><td>長方形の選択。文字で埋めたり、まとめて動かせます。</td><td>2.2.5</td></tr>
+            <tr><td>折り返し表示</td><td>表示だけを折り返す機能。ファイルは変わりません。矩形選択とは排他。</td><td>2.2.5</td></tr>
+            <tr><td>段落の再整形</td><td>指定幅に合わせて実際に改行を入れ直します。</td><td>3.1.8</td></tr>
+            <tr><td>定型文</td><td>登録して順に挿入する文字列。JSON に保存します。</td><td>2.4.3</td></tr>
+            <tr><td>マクロ</td><td>記録して再生するキー列。JSON に保存します。</td><td>2.4.6</td></tr>
+            <tr><td>アトミック保存</td><td>隣に一時ファイルを書いて差し替える方式。失敗しても半端なファイルが残りません。</td><td>2.1.6</td></tr>
+            <tr><td>外部変更</td><td>他のプログラムによる変更。未編集なら再読み込み、編集済みなら先に確認します。</td><td>2.1.7</td></tr>
+            <tr><td>文字コード</td><td>文字をバイトにする方式。UTF-8、UTF-8 BOM、Big5、GBK、Shift_JIS に対応。</td><td>3.1.1</td></tr>
+            <tr><td>改行コード</td><td>LF か CRLF。ステータス行の最後のマスです。</td><td>3.1.4</td></tr>
+            <tr><td>大容量ファイルモード</td><td>64 MiB 以上で使う読み取り専用モード。ログの追従もできます。</td><td>3.2</td></tr>
+            <tr><td>疎な行インデックス</td><td>4096 行ごとに 1 つの位置を記録し、全体を読み込まずに済ませる仕組み。</td><td>3.2.3</td></tr>
+            <tr><td>16 進数表示</td><td>文書をバイト単位で見る画面。テキストファイルでは読み取り専用。</td><td>3.3.1</td></tr>
+            <tr><td>バイナリファイル</td><td>NUL を含む、または復号できないファイル。開くと直接バイト表示になります。</td><td>3.3.5</td></tr>
+            <tr><td>半バイト</td><td>1 バイトの半分。バイトの書き換えには 16 進数 2 桁が要ります。</td><td>3.3.6</td></tr>
+            <tr><td>差分ブロック</td><td>比較で連続して異なる行のかたまり。1 単位として扱われます。</td><td>3.4.3</td></tr>
+            <tr><td>一時コピー</td><td>比較中の作業ファイル。適用するまで元のファイルは変わりません。</td><td>3.4.1</td></tr>
+            <tr><td>キープロファイル</td><td>操作とキーの対応を書いた TOML。まるごと差し替えられます。</td><td>4.1</td></tr>
+            <tr><td>操作名</td><td>設定ファイルで機能を指す固定の名前（例：<span class="path">save</span>）。</td><td>4.4.2</td></tr>
+            <tr><td>Erya Terminal Safe</td><td>既定プロファイル。ターミナルが届けない組み合わせを避けています。</td><td>4.1.1</td></tr>
+            <tr><td>Erya Classic</td><td>1.0 当時の完全な組み合わせ。応用操作もすべて含みます。</td><td>4.1.2</td></tr>
+            <tr><td>翻訳ファイル</td><td><span class="path">locales/*.toml</span>。表示言語を決め、自分で追加もできます。</td><td>4.2.5</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

@@ -1,0 +1,206 @@
+      <!-- ══════════ 4.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.3.1</span>
+        <h2>How to use this chapter</h2>
+        <p class="dek">Look up the symptom, not the feature.</p>
+
+        <p>Nearly all of Erya's feedback appears in <strong>the last row</strong>, so the first thing to do when something goes wrong is <strong>read that row to the end</strong>. It usually names the cause, and often the key that fixes it.</p>
+
+        <ol class="rule-list">
+          <li><b>Read the last row.</b> Yellow reports, white waits for input, red waits for a decision (see 1.3.6).</li>
+          <li><b>Read row 2.</b> It lists the keys that work right now; if they are not the ones you expect, you are either on another screen or using another profile.</li>
+          <li><b>Press <kbd>Esc</kbd>.</b> When you have no idea where you are, it always goes one level back and never breaks anything.</li>
+          <li><b>Press <kbd>F1</kbd>.</b> To find the key for a feature, that list is the index.</li>
+        </ol>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Section</th></tr></thead>
+          <tbody>
+            <tr><td>The program will not start</td><td>4.3.2</td></tr>
+            <tr><td>A file will not open, or opens oddly</td><td>4.3.3</td></tr>
+            <tr><td>It will not save</td><td>4.3.4</td></tr>
+            <tr><td>A key does nothing</td><td>4.3.5</td></tr>
+            <tr><td>The screen is broken, misaligned, or oddly coloured</td><td>4.3.6</td></tr>
+            <tr><td>Text appears as garbage or question marks</td><td>4.3.7</td></tr>
+            <tr><td>A whole feature seems to be missing</td><td>4.3.8</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.3.2</span>
+        <h2>It will not start</h2>
+        <p class="dek">Problems that happen before you ever see Erya's screen.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">What you see</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">command not found: erya</span></td><td>Not on <span class="path">PATH</span>. Try the full path first; if that runs, it is a PATH problem (1.2.3).</td></tr>
+            <tr><td><span class="path">Permission denied</span></td><td><span class="path">chmod +x erya</span>.</td></tr>
+            <tr><td>macOS cannot verify the developer</td><td>Quarantine attribute: <span class="path">xattr -d com.apple.quarantine erya</span> (1.2.3).</td></tr>
+            <tr><td><span class="path">cannot execute binary file</span></td><td>Wrong architecture. Check <span class="path">uname -m</span> (1.2.2).</td></tr>
+            <tr><td>Must run in an interactive terminal</td><td>No pipes or redirection. Run it in the terminal (1.2.8).</td></tr>
+            <tr><td>Terminal is too small</td><td>At least 24×6; in practice 80×24 (1.2.8).</td></tr>
+            <tr><td>Unsupported option: …</td><td>A typo, or a filename starting with a dash — put <span class="path">--</span> first (1.2.6).</td></tr>
+            <tr><td>… is a directory, not a text file</td><td>Pass a file, or browse with <kbd>Ctrl+O</kbd> once started (1.2.5).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.3.3</span>
+        <h2>The file will not open</h2>
+        <p class="dek">Or it opens as something other than you expected.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>“Open failed: Permission denied”</td><td>No read permission. Check with <span class="path">ls -l</span>, and use <span class="path">sudo</span> if appropriate.</td></tr>
+            <tr><td>It opens empty</td><td>The file <strong>does not exist</strong>. Erya treats an unknown path as a new file and creates it on the first save (1.2.5). Check for a typo.</td></tr>
+            <tr><td>It opens as hexadecimal</td><td>The file contains NUL bytes and is treated as binary (3.3.5), or it is a large non-UTF-8 file (3.2.1).</td></tr>
+            <tr><td>“detected unsupported text encoding: UTF-16LE”</td><td>UTF-16 and UTF-32 are unsupported. Convert to UTF-8 elsewhere first (3.1.1).</td></tr>
+            <tr><td>The status bar says “Large file read-only”</td><td>The file is 64 MiB or larger: readable, not editable (3.2).</td></tr>
+            <tr><td>“report.txt is already open in a tab”</td><td>Not an error. Erya switched to the existing tab rather than opening a second copy (2.1.1).</td></tr>
+            <tr><td>Only the first few lines are visible</td><td>Scroll. Large files are read on demand (3.2.3).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.3.4</span>
+        <h2>It will not save</h2>
+        <p class="dek">Saving is where mistakes cost most, so Erya is strict about it.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>“Save failed: Permission denied”</td><td>The file <strong>or its directory</strong> is not writable; the atomic save needs to write a temporary file there (2.1.6).</td></tr>
+            <tr><td>“Save failed: No such file or directory”</td><td>A directory in the path does not exist; Erya does not create it (2.1.9).</td></tr>
+            <tr><td>“Cannot save a document as a directory”</td><td>Save As was given a directory. Add a filename (2.1.5).</td></tr>
+            <tr><td>“Large files use read-only mode and cannot be edited”</td><td>This mode has no save (3.2.2).</td></tr>
+            <tr><td>“This binary file is read-only and cannot be changed”</td><td>A binary file of 64 MiB or more is streamed and read-only (3.3.8).</td></tr>
+            <tr><td>A red row asks about an external change</td><td>Another program changed the file. If unsure press <kbd>N</kbd>, then <kbd>F12</kbd> for a copy (2.1.7).</td></tr>
+            <tr><td>“Cannot switch to Big5: …”</td><td>The target encoding cannot represent something in the text; Erya refuses rather than damage it (3.1.3).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.3.5</span>
+        <h2>A key does nothing</h2>
+        <p class="dek">Four possibilities, most likely first.</p>
+
+        <ol class="rule-list">
+          <li><b>The action has no default key.</b> Phrases, macros, block fill and shift, paragraph reflow, and “show cursor position” are all unbound in the default profile (2.4.8, 2.2.6). Press <kbd>F1</kbd> and look for a blank key column.</li>
+          <li><b>You are not on the editing screen.</b> Each screen has its own keys; check row 2 (1.3.3).</li>
+          <li><b>The mode forbids it.</b> Large-file read-only blocks editing actions (3.2.2); the hexadecimal view of a text file is read-only (3.3.1). The message row says which.</li>
+          <li><b>The terminal is not sending it.</b> Most often with <kbd>Alt</kbd> combinations and modified arrows (4.1.1). Bind something you can actually press (4.1.4).</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">Testing what your terminal really sends</span>
+          <p>Bind the key you are unsure about to something visible — <span class="path">cursor_position</span> prints the cursor location in the message row. If pressing it produces the message, the terminal is delivering the combination.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.3.6</span>
+        <h2>The screen looks wrong</h2>
+        <p class="dek">Usually the terminal rather than Erya.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>CJK text does not line up; the cursor drifts</td><td>The font is not monospaced, or full-width handling is inconsistent. Use a CJK monospace font (Sarasa, Noto Sans Mono CJK, and similar).</td></tr>
+            <tr><td>Box-drawing characters look wrong</td><td>The terminal or font lacks them. Change font, or use a terminal with better coverage.</td></tr>
+            <tr><td>The colours are unpleasant or unreadable</td><td>Erya uses the terminal's sixteen colours; the actual shades come from your theme. Adjust the theme.</td></tr>
+            <tr><td>Only one yellow line is visible</td><td>The window is below 24×6; enlarge it and everything returns (1.2.8).</td></tr>
+            <tr><td>Leftover artefacts on screen</td><td>An unstable SSH connection or a redraw problem. Resizing the window forces a full repaint.</td></tr>
+            <tr><td>Long lines are cut off</td><td>Turn on wrapping with <kbd>Ctrl+L</kbd>, or scroll with <kbd>End</kbd> (2.2.9).</td></tr>
+            <tr><td>The terminal misbehaves after exiting</td><td>Erya restores the terminal state normally; if something did go wrong, run <span class="path">reset</span>.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.3.7</span>
+        <h2>The text is garbled</h2>
+        <p class="dek">First decide whether it is the wrong encoding or a missing glyph.</p>
+
+        <div class="duo">
+          <div>
+            <h4>The whole file is unreadable</h4>
+            <p><strong>The encoding was guessed wrong.</strong> Press <kbd>F7</kbd> until it reads correctly, then save (3.1.2). The second-to-last status cell shows what is currently assumed.</p>
+          </div>
+          <div>
+            <h4>Only some characters are boxes or question marks</h4>
+            <p><strong>The terminal font has no glyph for them.</strong> The file itself is fine — change font and they appear. Emoji and rare characters are the usual victims.</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Do not save while it is garbled</span>
+          <p>If the garbling comes from a wrong encoding, <strong>saving writes it into the file permanently</strong>. Find the right encoding with <kbd>F7</kbd> and check the text before saving. If you cannot, close the tab without saving — the file on disk is still intact.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.3.8</span>
+        <h2>A whole feature seems missing</h2>
+        <p class="dek">With no menus, “I cannot find it” usually means “unbound” or “not supported here”.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">What you are looking for</th><th>The actual situation</th></tr></thead>
+          <tbody>
+            <tr><td>Select all</td><td><strong>Does not exist.</strong> Use <kbd>Ctrl+Home</kbd> then <kbd>Ctrl+Shift+End</kbd> (2.2.4).</td></tr>
+            <tr><td>Replace with confirmation</td><td>No such mode; use <kbd>F3</kbd> and <kbd>F5</kbd> instead (2.3.4).</td></tr>
+            <tr><td>Replace within a selection</td><td>Not supported (2.3.7).</td></tr>
+            <tr><td>Regular-expression search</td><td>Not supported; matching is literal (2.3.1).</td></tr>
+            <tr><td>Split view</td><td>None. To compare two files, use the comparison view (3.4).</td></tr>
+            <tr><td>Autosave or crash recovery</td><td>Neither exists. Only <kbd>Ctrl+S</kbd> (1.1.7).</td></tr>
+            <tr><td>Phrases, macros, block fill</td><td>They exist, but have no default key (2.4.8).</td></tr>
+            <tr><td>System clipboard integration</td><td>Erya's clipboard is internal; use the terminal's copy and paste (2.2.7).</td></tr>
+            <tr><td>Git integration, plug-ins</td><td>Neither exists, and neither is planned as part of the scope (1.1.2).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">4.3.9</span>
+        <h2>Still stuck</h2>
+        <p class="dek">Include these when you report the problem and it will be resolved much faster.</p>
+
+        <ol class="rule-list">
+          <li><b>The version</b>: the output of <span class="path">erya --version</span>.</li>
+          <li><b>The platform</b>: operating system and version, the architecture from <span class="path">uname -m</span>, and which terminal program you use.</li>
+          <li><b>The key profile</b>: the name shown by <kbd>F2</kbd>, or your own <span class="path">keymap.toml</span>.</li>
+          <li><b>The exact message row</b>: copy the whole sentence — it is the single most useful clue.</li>
+          <li><b>The steps</b>: from <span class="path">erya filename</span> onwards, key by key.</li>
+          <li><b>The file</b>: size, encoding, and line endings, all of which the status bar shows.</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">Try the default profile first</span>
+          <p>Before reporting, run with <span class="path">ERYA_KEYMAP= erya</span> or switch back to <span class="term">Erya Terminal Safe</span> with <kbd>F2</kbd> and try again. If the problem disappears, it is about key bindings — which narrows things down enormously.</p>
+        </div>
+      </section>

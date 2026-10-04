@@ -1,0 +1,374 @@
+      <!-- ══════════ 1.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.1.1</span>
+        <h2>這本手冊怎麼讀</h2>
+        <p class="dek">四個部分、十四章，不必從頭讀到尾。</p>
+
+        <p>手冊分成四部：<strong>第一部講觀念與安裝</strong>（爾雅是什麼、怎麼裝、畫面怎麼看）、<strong>第二部講基本編輯</strong>（開檔、打字、搜尋、復原）、<strong>第三部講進階功能</strong>（編碼、大型檔案、十六進位、雙欄比對）、<strong>第四部是設定與附錄</strong>（改快捷鍵、換語言、查表）。</p>
+
+        <p>編號規則是「<strong>部-章</strong>」，例如 <span class="path">3.4</span> 是第三部第四章；章裡面的小節再加一碼，例如本節是 <span class="path">1.1.1</span>。內文寫「見 4.1」就是叫你翻到第四部第一章，左邊選單點得到。</p>
+
+        <h3>三種讀法</h3>
+        <ul>
+          <li><strong>第一次用爾雅</strong>：把第一部 1.1 到 1.3 讀完，再讀 2.1（開檔與儲存）。四章讀完就能正常工作了。</li>
+          <li><strong>已經會用其他編輯器</strong>：直接看 1.3（畫面）與 4.4（快捷鍵一覽），需要什麼再回頭翻。習慣 nano 或 vim 的人記得先看 4.1，換一套按鍵配置比重新學快得多。</li>
+          <li><strong>只是臨時要開一個檔來看</strong>：1.2.5 講怎麼啟動，1.3 講畫面，<kbd>Ctrl+X</kbd> 離開。三分鐘。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">搜尋怎麼用</span>
+          <p>左上角的搜尋框（或按 <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd>）會做兩件事：一是把<strong>本章內文</strong>的關鍵字標成黃色，按 <kbd>Enter</kbd> 逐一跳過去；二是列出<strong>其他章節</strong>裡談這個主題的篇章，直接點就跳過去。畫面示意圖上的字也在搜尋範圍內。</p>
+        </div>
+
+        <p>手冊裡出現 <kbd>Ctrl+S</kbd> 這種標示代表按鍵，<span class="path">~/.config/erya/keymap.toml</span> 這種灰色標示代表檔案路徑或指令。要注意的是<strong>爾雅的快捷鍵可以整套換掉</strong>（見 4.1），手冊一律以內建的 <span class="term">Erya Terminal Safe</span> 預設配置為準；如果你換過配置，實際按鍵請以畫面第二列的提示列與 <kbd>F1</kbd> 說明為準——那兩個地方顯示的永遠是你當下真正在用的鍵。</p>
+
+        <div class="callout">
+          <span class="co-title">這份手冊描述「現況」</span>
+          <p>內容依照目前的程式碼撰寫，<strong>不寫規劃中的功能，也不寫「應該要怎樣」</strong>。看到某個功能在手冊裡被標成「預設沒有綁按鍵」或「這個模式下不支援」，那就是現在的實際狀況。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.1.2</span>
+        <h2>爾雅在做什麼、不做什麼</h2>
+        <p class="dek">一句話：它是一套跑在終端機裡、為中文文件而寫的文字編輯器。</p>
+
+        <p>爾雅 Erya 的名字取自「<span class="term">爾，近也；雅，正也</span>」，是三十年前 DOS 上《漢書》中文文書系統的 Rust 重生。它以規格驅動、文件先行的方式從零重寫，<strong>不含原《漢書》的任何原始程式碼或資產</strong>，與原開發團隊也沒有隸屬關係。</p>
+
+        <p>它跑在終端機裡（Terminal、iTerm2、Windows Terminal、SSH 連線都算），啟動之後佔滿整個視窗，離開之後把視窗還原成原本的樣子。畫面長這樣：</p>
+
+        <figure>
+          <div class="screen-scroll">
+            <div class="screen">
+              <div class="s-title"> 爾雅 Erya │ [報告.txt] 附錄.md</div>
+              <div class="s-bar"> F1 說明  Ctrl+S 儲存  Ctrl+W 搜尋  Ctrl+R 取代  Ctrl+B 矩形選取  Ctrl+K 剪行  Ctrl+X 離開</div>
+              <div class="s-body">第一章　專案背景
+
+　　本專案自二〇二六年三月啟動，目標是把既有的
+　　文件系統整批轉成純文字格式，並保留原有的
+　　編碼與換行慣例。<em>目</em>前已完成第一階段。
+<i>~</i>
+<i>~</i></div>
+              <div class="s-status"> 報告.txt │ 5:24 │ 插入 │ UTF-8 │ LF </div>
+              <div class="s-msg"> 已儲存 報告.txt</div>
+            </div>
+          </div>
+          <figcaption><b>圖 1.1.1</b>　爾雅的主畫面。上面兩列、下面兩列是固定的框架，中間才是你的文件；示意圖上反白的那一格是游標的位置。每一列各代表什麼，1.3 會逐列拆開講。</figcaption>
+        </figure>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:50%">爾雅做這些</th><th>爾雅不做這些</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>開啟、編輯、儲存純文字檔</td>
+              <td>排版、字型、粗體斜體（它不是 Word）</td>
+            </tr>
+            <tr>
+              <td>UTF-8／UTF-8 BOM／Big5／GBK／Shift_JIS 的偵測與轉換</td>
+              <td>UTF-16、UTF-32 等寬字元編碼（開啟時會直接回報不支援）</td>
+            </tr>
+            <tr>
+              <td>多頁籤、搜尋取代、復原重做</td>
+              <td>分割視窗、同時看同一個檔的兩個地方</td>
+            </tr>
+            <tr>
+              <td>依副檔名自動語法高亮</td>
+              <td>語法檢查、自動完成、跳到定義（它不是 IDE）</td>
+            </tr>
+            <tr>
+              <td>TOML／YAML／JSON 的格式化</td>
+              <td>其他語言的格式化（不會呼叫外部工具）</td>
+            </tr>
+            <tr>
+              <td>十六進位檢視與二進位檔案的位元組編輯</td>
+              <td>反組譯、結構解析（它不是 010 Editor）</td>
+            </tr>
+            <tr>
+              <td>雙欄檔案比對與差異互抄</td>
+              <td>三方合併、版本控制整合（沒有 Git 功能）</td>
+            </tr>
+            <tr>
+              <td>64 MiB 以上大檔的唯讀閱讀與 log 跟隨</td>
+              <td>在大型檔案模式下編輯內容</td>
+            </tr>
+            <tr>
+              <td>常用語與按鍵巨集</td>
+              <td>外掛、腳本語言、套件管理</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">最常見的誤會</span>
+          <p><strong>爾雅沒有「自動存檔」，也沒有離開時的暫存還原。</strong>沒有按過 <kbd>Ctrl+S</kbd> 的內容只活在記憶體裡。它會在你關頁籤或離開時攔下來問你要不要存（見 2.1.8），但如果整個終端機被關掉、SSH 斷線、機器當掉，未存的內容就是沒了。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.1.3</span>
+        <h2>和 vim、nano 有什麼不一樣</h2>
+        <p class="dek">最短的答案：不用背模式，而且中文是第一等公民。</p>
+
+        <p>終端機編輯器不缺，爾雅想解決的是很具體的一組問題：<strong>中文文件</strong>在終端機裡常常對不齊、編碼常常轉壞、舊檔案常常是 Big5。所以它在幾件事上跟其他編輯器不一樣。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:22%"></th><th style="width:26%">爾雅</th><th style="width:26%">vim</th><th>nano</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>要不要切模式</td><td>不用。打開就能打字</td><td>要。指令模式／插入模式</td><td>不用</td></tr>
+            <tr><td>怎麼知道能按什麼</td><td>第二列永遠列著常用鍵，<kbd>F1</kbd> 有完整清單</td><td>要先學</td><td>底下兩列列著常用鍵</td></tr>
+            <tr><td>中文編碼</td><td>自動偵測，狀態列常駐顯示，<kbd>F7</kbd> 直接轉</td><td>要下指令設 fileencoding</td><td>不處理</td></tr>
+            <tr><td>全形對齊</td><td>依終端欄寬計算，全形字算兩欄</td><td>大致可以</td><td>大致可以</td></tr>
+            <tr><td>Emoji 與組合字</td><td>依 Unicode 字素叢集移動與刪除</td><td>視版本而定</td><td>常會拆開</td></tr>
+            <tr><td>矩形選取</td><td>內建，可填字、可整塊搬</td><td>有（Ctrl+V 區塊模式）</td><td>沒有</td></tr>
+            <tr><td>雙欄比對</td><td>內建 <kbd>F4</kbd></td><td>要開 vimdiff</td><td>沒有</td></tr>
+            <tr><td>十六進位</td><td>內建 <kbd>Ctrl+P</kbd></td><td>要接 xxd</td><td>沒有</td></tr>
+            <tr><td>改快捷鍵</td><td>一份 TOML，附十二套現成配置</td><td>vimrc（很強但要學）</td><td>nanorc（有限）</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">如果你原本就在用 nano 或 vim</span>
+          <p><span class="path">keymap/</span> 目錄裡附了 <strong>nano、vim、emacs</strong> 三套配置，還有 VSCode、Visual Studio、IntelliJ、Eclipse 與 macOS 版本。按 <kbd>F2</kbd> 選一套按 <kbd>Enter</kbd> 就換過去了，不必改設定檔（見 4.1.3）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.1.4</span>
+        <h2>系統全景：五塊功能</h2>
+        <p class="dek">爾雅的每一個畫面都可以歸到這五塊其中之一。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 400" role="img" aria-label="爾雅五塊功能全景圖">
+              <rect x="0" y="0" width="960" height="400" fill="#FAFBFD"/>
+
+              <rect x="24" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#C7D8EA" stroke-width="2"/>
+              <rect x="24" y="24" width="176" height="46" rx="12" fill="#E8EFF7"/>
+              <text x="112" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#12314F">① 編輯</text>
+              <text x="42" y="102" font-size="14" fill="#3F485D">打字、選取、剪貼</text>
+              <text x="42" y="130" font-size="14" fill="#3F485D">搜尋與取代</text>
+              <text x="42" y="158" font-size="14" fill="#3F485D">復原與重做</text>
+              <text x="42" y="186" font-size="14" fill="#3F485D">矩形選取</text>
+              <text x="42" y="214" font-size="14" fill="#3F485D">常用語與巨集</text>
+              <text x="42" y="258" font-size="13" fill="#98A2B3">每天在用的就是</text>
+              <text x="42" y="278" font-size="13" fill="#98A2B3">這一塊</text>
+              <text x="42" y="330" font-size="13.5" fill="#1F4E79">詳見第二部</text>
+
+              <rect x="216" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#E6CCC7" stroke-width="2"/>
+              <rect x="216" y="24" width="176" height="46" rx="12" fill="#F6EBE9"/>
+              <text x="304" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#7A382F">② 檔案</text>
+              <text x="234" y="102" font-size="14" fill="#3F485D">檔案對話盒</text>
+              <text x="234" y="130" font-size="14" fill="#3F485D">多頁籤</text>
+              <text x="234" y="158" font-size="14" fill="#3F485D">儲存與另存</text>
+              <text x="234" y="186" font-size="14" fill="#3F485D">外部變更偵測</text>
+              <text x="234" y="214" font-size="14" fill="#3F485D">大型檔案唯讀</text>
+              <text x="234" y="258" font-size="13" fill="#98A2B3">開進來與寫回去</text>
+              <text x="234" y="278" font-size="13" fill="#98A2B3">的每一件事</text>
+              <text x="234" y="330" font-size="13.5" fill="#9B4B3F">詳見 2.1、3.2</text>
+
+              <rect x="408" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#EDD9AE" stroke-width="2"/>
+              <rect x="408" y="24" width="176" height="46" rx="12" fill="#FBF3E3"/>
+              <text x="496" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#7A5312">③ 文字格式</text>
+              <text x="426" y="102" font-size="14" fill="#3F485D">編碼偵測與轉換</text>
+              <text x="426" y="130" font-size="14" fill="#3F485D">LF／CRLF 換行</text>
+              <text x="426" y="158" font-size="14" fill="#3F485D">語法高亮</text>
+              <text x="426" y="186" font-size="14" fill="#3F485D">TOML/YAML/JSON</text>
+              <text x="426" y="214" font-size="14" fill="#3F485D">段落重新編排</text>
+              <text x="426" y="258" font-size="13" fill="#98A2B3">中文文件最常</text>
+              <text x="426" y="278" font-size="13" fill="#98A2B3">卡住的那些事</text>
+              <text x="426" y="330" font-size="13.5" fill="#7A5312">詳見 3.1</text>
+
+              <rect x="600" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#D6CFE6" stroke-width="2"/>
+              <rect x="600" y="24" width="176" height="46" rx="12" fill="#EFECF6"/>
+              <text x="688" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#4C3F72">④ 檢視工具</text>
+              <text x="618" y="102" font-size="14" fill="#3F485D">十六進位檢視</text>
+              <text x="618" y="130" font-size="14" fill="#3F485D">二進位位元組編輯</text>
+              <text x="618" y="158" font-size="14" fill="#3F485D">雙欄檔案比對</text>
+              <text x="618" y="186" font-size="14" fill="#3F485D">差異左右互抄</text>
+              <text x="618" y="214" font-size="14" fill="#3F485D">即時日誌跟隨</text>
+              <text x="618" y="258" font-size="13" fill="#98A2B3">平常用不到，</text>
+              <text x="618" y="278" font-size="13" fill="#98A2B3">要用時很省事</text>
+              <text x="618" y="330" font-size="13.5" fill="#4C3F72">詳見 3.3、3.4</text>
+
+              <rect x="792" y="24" width="144" height="352" rx="12" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <rect x="792" y="24" width="144" height="46" rx="12" fill="#F4F6FA"/>
+              <text x="864" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#3F485D">⑤ 設定</text>
+              <text x="810" y="102" font-size="14" fill="#3F485D">按鍵配置</text>
+              <text x="810" y="130" font-size="14" fill="#3F485D">配置編輯器</text>
+              <text x="810" y="158" font-size="14" fill="#3F485D">介面語言</text>
+              <text x="810" y="186" font-size="14" fill="#3F485D">按鍵說明</text>
+              <text x="810" y="230" font-size="13" fill="#98A2B3">設一次就</text>
+              <text x="810" y="250" font-size="13" fill="#98A2B3">很久不用動</text>
+              <text x="810" y="330" font-size="13.5" fill="#667085">詳見第四部</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 1.1.2</b>　五塊功能。第①②塊是每天都會碰到的，第③塊在處理舊檔案時最有感，第④塊平常用不到但需要時很難用別的工具替代，第⑤塊設一次就好。</figcaption>
+        </figure>
+
+        <p>要注意：<strong>這五塊沒有選單可以點</strong>。爾雅沒有下拉式功能表，所有功能都靠快捷鍵叫出來。找不到某個功能時，按 <kbd>F1</kbd> 開啟完整按鍵說明，那份清單就是功能總表（見 1.3.8）。</p>
+      </section>
+
+      <!-- ══════════ 1.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.1.5</span>
+        <h2>一份文件的一生</h2>
+        <p class="dek">從開啟到寫回磁碟，會經過這五站。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 300" role="img" aria-label="一份文件從開啟到儲存的流程圖">
+              <rect x="0" y="0" width="960" height="300" fill="#FAFBFD"/>
+              <defs><marker id="arrow11" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="24" y="60" width="168" height="86" rx="10" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="108" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#7A382F">① 開啟</text>
+              <text x="108" y="116" text-anchor="middle" font-size="13" fill="#3F485D">命令列帶檔名</text>
+              <text x="108" y="136" text-anchor="middle" font-size="13" fill="#3F485D">或 Ctrl+O</text>
+
+              <rect x="216" y="60" width="168" height="86" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="300" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#7A5312">② 判斷型態</text>
+              <text x="300" y="116" text-anchor="middle" font-size="13" fill="#3F485D">文字／大檔／二進位</text>
+              <text x="300" y="136" text-anchor="middle" font-size="13" fill="#3F485D">順便偵測編碼</text>
+
+              <rect x="408" y="60" width="168" height="86" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="492" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#12314F">③ 編輯</text>
+              <text x="492" y="116" text-anchor="middle" font-size="13" fill="#3F485D">打字、搜尋、取代</text>
+              <text x="492" y="136" text-anchor="middle" font-size="13" fill="#3F485D">最多 100 步可復原</text>
+
+              <rect x="600" y="60" width="168" height="86" rx="10" fill="#EFECF6" stroke="#D6CFE6" stroke-width="2"/>
+              <text x="684" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#4C3F72">④ 轉格式</text>
+              <text x="684" y="116" text-anchor="middle" font-size="13" fill="#3F485D">F7 編碼、F8 換行</text>
+              <text x="684" y="136" text-anchor="middle" font-size="13" fill="#3F485D">（要不要都可以）</text>
+
+              <rect x="792" y="60" width="144" height="86" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="864" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#1E5C39">⑤ 儲存</text>
+              <text x="864" y="116" text-anchor="middle" font-size="13" fill="#3F485D">Ctrl+S</text>
+              <text x="864" y="136" text-anchor="middle" font-size="13" fill="#3F485D">先寫暫存再換掉</text>
+
+              <path d="M192 103 L214 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M384 103 L406 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M576 103 L598 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M768 103 L790 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+
+              <path d="M492 146 L492 186" stroke="#98A2B3" stroke-width="2" stroke-dasharray="5 4"/>
+              <rect x="228" y="186" width="528" height="60" rx="10" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <text x="492" y="212" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3F485D">編輯的整段期間，爾雅都在盯著磁碟上的原檔有沒有被別人改掉</text>
+              <text x="492" y="234" text-anchor="middle" font-size="13" fill="#667085">乾淨的文件自動重新載入；已經改過的文件會先問你（見 2.1.7）</text>
+
+              <text x="480" y="278" text-anchor="middle" font-size="13.5" fill="#98A2B3">②判斷型態的結果會決定接下來能做什麼：二進位檔進不了文字編輯，大型檔案不能改內容</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 1.1.3</b>　一份文件的一生。第②站是分岔點：一般文字檔走完整流程，超過 64 MiB 的走唯讀模式（3.2），不是文字的走十六進位（3.3）。</figcaption>
+        </figure>
+
+        <ol class="rule-list">
+          <li><b>開啟。</b>啟動時在命令列後面接檔名，或在編輯器裡按 <kbd>Ctrl+O</kbd> 叫出檔案對話盒。同一個路徑如果已經開在某個頁籤，爾雅會直接切過去，不會重複開兩份（2.1.1）。</li>
+          <li><b>判斷型態。</b>爾雅會先看檔案多大、前 8 KiB 有沒有 NUL 位元組，再決定用哪一種模式打開，同時把編碼猜出來（3.1.1）。</li>
+          <li><b>編輯。</b>一般文字檔在這裡度過大部分時間。每個頁籤各自保有自己的游標位置、搜尋條件與最多 100 步的復原紀錄（2.4.1）。</li>
+          <li><b>轉格式（可略過）。</b>要把 Big5 舊檔轉成 UTF-8、或把 CRLF 換成 LF，就在存檔前按 <kbd>F7</kbd>／<kbd>F8</kbd>。轉換不會立刻寫檔，是在下一次儲存時才生效（3.1.2）。</li>
+          <li><b>儲存。</b><kbd>Ctrl+S</kbd> 會先寫到同目錄的暫存檔、再原子換掉原檔，Unix 上還會保留原本的檔案權限（2.1.6）。</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 1.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.1.6</span>
+        <h2>三種人、三條路線</h2>
+        <p class="dek">先確認你是哪一種，再決定要讀哪幾章。</p>
+
+        <div class="role-grid">
+          <div class="role-card">
+            <h4>寫中文文件的人</h4>
+            <p class="who">用爾雅寫稿、整理筆記、處理舊文件</p>
+            <ul>
+              <li>開檔、頁籤、儲存</li>
+              <li>搜尋取代、復原</li>
+              <li>編碼與換行轉換</li>
+              <li>段落重排、常用語</li>
+            </ul>
+            <p class="go">路線：1.2 → 1.3 → 2.1～2.4 → 3.1</p>
+          </div>
+          <div class="role-card mgr">
+            <h4>在伺服器上改設定檔的人</h4>
+            <p class="who">SSH 進去改 conf、看 log、比對兩份設定</p>
+            <ul>
+              <li>命令列選項與環境變數</li>
+              <li>語法高亮與 TOML/YAML/JSON 格式化</li>
+              <li>大型檔案與 log 跟隨</li>
+              <li>雙欄比對兩份設定檔</li>
+            </ul>
+            <p class="go">路線：1.2 → 1.3 → 2.1 → 3.1 → 3.2 → 3.4</p>
+          </div>
+          <div class="role-card hr">
+            <h4>想把它調成順手的人</h4>
+            <p class="who">要改快捷鍵、換語言、或給團隊統一設定</p>
+            <ul>
+              <li>十二套內建按鍵配置</li>
+              <li>按鍵配置編輯器與另存</li>
+              <li>設定檔放哪裡會被讀到</li>
+              <li>介面語言與自訂翻譯</li>
+            </ul>
+            <p class="go">路線：1.3 → 4.1 → 4.2 → 4.4</p>
+          </div>
+        </div>
+
+        <p>一個人身兼多角是常態。如果三種都是你，建議照第一部、第二部的順序走一遍，第三部與第四部等需要時再翻。</p>
+      </section>
+
+      <!-- ══════════ 1.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.1.7</span>
+        <h2>先記住這六件事</h2>
+        <p class="dek">看完全書會再遇到，但先在這裡放著。</p>
+
+        <ol class="rule-list">
+          <li><b>沒有自動存檔。</b>爾雅不會幫你偷偷存檔，也沒有崩潰還原。<kbd>Ctrl+S</kbd> 是唯一寫入磁碟的動作（2.1.5）。</li>
+          <li><b>離開是 <kbd>Ctrl+X</kbd>，不是 <kbd>Ctrl+C</kbd>。</b><kbd>Ctrl+C</kbd> 在預設配置裡是「複製」，不是中斷程式。真正的離開鍵是 <kbd>Ctrl+X</kbd>，關頁籤是 <kbd>F11</kbd>（2.1.3）。</li>
+          <li><b>快捷鍵可以整套換掉，所以手冊寫的不一定等於你按的。</b>畫面第二列與 <kbd>F1</kbd> 顯示的永遠是你當下真正在用的鍵（4.1）。</li>
+          <li><b>編碼與換行是「下一次儲存」才生效。</b>按 <kbd>F7</kbd>／<kbd>F8</kbd> 只是換掉狀態列上的標示，檔案要等你存檔才真的變（3.1.2）。</li>
+          <li><b>有三種模式不能編輯內容。</b>大型檔案唯讀模式、十六進位檢視（對文字檔而言）、串流二進位檔案。狀態列會直接寫出來你在哪一種（3.2、3.3）。</li>
+          <li><b>矩形選取和自動換行不能同時用。</b>兩者的座標系統會打架，所以爾雅讓它們互斥；開著一個時想開另一個，會被訊息列擋下來（2.2.5）。</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 1.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.1.8</span>
+        <h2>名詞去哪一章看</h2>
+        <p class="dek">本章出現過的詞，詳細說明在這些地方。完整清單見 4.4.8。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:170px">名詞</th><th>一句話解釋</th><th style="width:100px">詳見</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>頁籤</td><td>同時開著的多個檔案，每個各自記得游標與復原紀錄。</td><td>2.1.3</td></tr>
+            <tr><td>提示列</td><td>畫面第二列，永遠列著目前這個畫面能按的鍵。</td><td>1.3.3</td></tr>
+            <tr><td>狀態列</td><td>倒數第二列，顯示檔名、行欄、模式、編碼與換行格式。</td><td>1.3.5</td></tr>
+            <tr><td>訊息列</td><td>最後一列，操作結果與確認問題都出現在這裡。</td><td>1.3.6</td></tr>
+            <tr><td>按鍵配置</td><td>一份把「動作」對應到「按鍵」的 TOML，可以整套換。</td><td>4.1</td></tr>
+            <tr><td>字素叢集</td><td>螢幕上看起來是一個字的單位，可能由好幾個碼位組成。</td><td>2.2.3</td></tr>
+            <tr><td>矩形選取</td><td>選一個長方形範圍，可以填字，也可以整塊搬動。</td><td>2.2.5</td></tr>
+            <tr><td>大型檔案模式</td><td>64 MiB 以上自動進入的唯讀閱讀模式。</td><td>3.2</td></tr>
+            <tr><td>十六進位檢視</td><td>把文件攤成位元組看，一般文字檔是唯讀的。</td><td>3.3</td></tr>
+            <tr><td>二進位檔案</td><td>含 NUL 或無法解碼的檔案，開啟時直接進位元組檢視。</td><td>3.3.5</td></tr>
+            <tr><td>暫存副本</td><td>雙欄比對時的工作檔；沒套用之前原始檔不會變。</td><td>3.4.1</td></tr>
+            <tr><td>常用語</td><td>收錄起來重複插入的字串，存成 JSON。</td><td>2.4.3</td></tr>
+            <tr><td>巨集</td><td>錄下來重播的一串按鍵，存成 JSON。</td><td>2.4.6</td></tr>
+            <tr><td>原子儲存</td><td>先寫暫存檔再換掉原檔，中途斷電也不會半截。</td><td>2.1.6</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

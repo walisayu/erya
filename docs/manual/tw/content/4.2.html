@@ -1,0 +1,215 @@
+      <!-- ══════════ 4.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.2.1</span>
+        <h2>系統設定這一頁</h2>
+        <p class="dek">整個爾雅的設定就這兩項。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ 系統設定</div>
+            <div class="s-bar"> ↑/↓ 切換項目  ←/→ 選擇  E 編輯按鍵  Enter 套用  Esc 取消</div>
+            <div class="s-body">   按鍵配置:  ◀ Erya Terminal Safe ▶
+
+<u> ▶ 介面語言:  ◀ 正體中文 (zh-TW) ▶                </u></div>
+            <div class="s-status"> Erya Terminal Safe │ 正體中文 </div>
+            <div class="s-msg"> 使用方向鍵選擇；Enter 會立即套用至所有頁籤</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>F2</kbd></td><td>開啟系統設定</td></tr>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>在「按鍵配置」與「介面語言」之間切換。目前選中的那一列反白並標 ▶。</td></tr>
+            <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>換選項。到頭了會繞回去。</td></tr>
+            <tr><td><kbd>E</kbd></td><td>進入按鍵配置編輯器（見 4.1.4）</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>套用並回到編輯</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>取消，什麼都不改</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>底下的狀態列一直顯示<strong>目前選到的組合</strong>（配置名稱 │ 語言名稱），按 <kbd>Enter</kbd> 之前可以先在這裡確認。</p>
+      </section>
+
+      <!-- ══════════ 4.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.2.2</span>
+        <h2>套用範圍與時機</h2>
+        <p class="dek">按 <kbd>Enter</kbd> 的那一刻，所有頁籤一起換。</p>
+
+        <ul>
+          <li>套用之後訊息列說「已套用設定：Erya Classic／English」。</li>
+          <li><strong>所有已開啟的頁籤同時生效</strong>，不需要重開檔案。</li>
+          <li>畫面上的提示列、狀態列、<kbd>F1</kbd> 說明會立刻換成新的語言與新的按鍵。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">這裡的設定不會被記住</span>
+          <p>系統設定<strong>只影響這一次執行</strong>，爾雅不會把它寫進任何設定檔。下次啟動又是預設值。要長期固定的話：</p>
+          <ul>
+            <li><strong>按鍵配置</strong> → 放到平台預設路徑，或用 <span class="path">ERYA_KEYMAP</span>（見 4.1.7）。</li>
+            <li><strong>介面語言</strong> → 設 <span class="path">ERYA_LANG</span> 環境變數（見 4.2.4）。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.2.3</span>
+        <h2>介面語言是怎麼選出來的</h2>
+        <p class="dek">啟動時依序看四個環境變數，第一個有值的就算數。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 200" role="img" aria-label="介面語言的決定順序">
+              <rect x="0" y="0" width="960" height="200" fill="#FAFBFD"/>
+              <defs><marker id="arrow42" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="24" y="52" width="184" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="116" y="76" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">ERYA_LANG</text>
+              <text x="116" y="96" text-anchor="middle" font-size="12.5" fill="#667085">爾雅專用，最優先</text>
+
+              <rect x="242" y="52" width="150" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="317" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LC_ALL</text>
+
+              <rect x="426" y="52" width="176" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="514" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LC_MESSAGES</text>
+
+              <rect x="636" y="52" width="130" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="701" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LANG</text>
+
+              <rect x="800" y="52" width="136" height="52" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="868" y="76" text-anchor="middle" font-size="14.5" font-weight="700" fill="#7A382F">正體中文</text>
+              <text x="868" y="96" text-anchor="middle" font-size="12.5" fill="#667085">都沒有時的回退</text>
+
+              <path d="M208 78 L238 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M392 78 L422 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M602 78 L632 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M766 78 L796 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+
+              <text x="480" y="150" text-anchor="middle" font-size="14" fill="#3F485D">代碼會先正規化再比對：zh_TW.UTF-8、zh-Hant-TW、zh_Hant 都對應到 zh-TW</text>
+              <text x="480" y="176" text-anchor="middle" font-size="13.5" fill="#98A2B3">找不到完全相符的語言時，退回正體中文</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 4.2.1</b>　語言決定順序。大多數人什麼都不用設——系統的 <span class="path">LANG</span> 是什麼，爾雅就跟著用什麼。</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 4.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.2.4</span>
+        <h2>用 <span class="path">ERYA_LANG</span> 指定</h2>
+        <p class="dek">只想改爾雅、不想動整個系統語系時用它。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:42%">指令</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">ERYA_LANG=en erya 報告.txt</span></td><td>這一次用英文介面</td></tr>
+            <tr><td><span class="path">ERYA_LANG=zh-TW erya</span></td><td>正體中文</td></tr>
+            <tr><td><span class="path">ERYA_LANG=zh-CN erya</span></td><td>簡體中文</td></tr>
+            <tr><td><span class="path">ERYA_LANG=ja erya</span></td><td>日文</td></tr>
+            <tr><td><span class="path">erya --languages</span></td><td>列出翻譯目錄裡實際找得到的語言，一行一個「代碼<span class="path">Tab</span>名稱」</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>要長期生效就寫進 <span class="path">~/.zshrc</span>、<span class="path">~/.bashrc</span>：<span class="path">export ERYA_LANG=en</span>。Windows 則加到使用者環境變數。</p>
+
+        <div class="callout tip">
+          <span class="co-title">不確定代碼怎麼寫就先跑 <span class="path">--languages</span></span>
+          <p>它印出來的第一欄就是可以填進 <span class="path">ERYA_LANG</span> 的代碼。自己加的語言也會出現在裡面（見 4.2.6）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.2.5</span>
+        <h2>翻譯檔在哪裡</h2>
+        <p class="dek">四種語言是編進執行檔的，<span class="path">locales/</span> 目錄是拿來覆寫與擴充的。</p>
+
+        <div class="duo">
+          <div>
+            <h4>內建（編進執行檔）</h4>
+            <p>正體中文、簡體中文、英文、日文。<strong>就算把 <span class="path">locales/</span> 整個刪掉，這四種還是能用。</strong></p>
+          </div>
+          <div>
+            <h4>目錄（可覆寫、可擴充）</h4>
+            <p>預設讀 <span class="path">locales/</span>，可用 <span class="path">ERYA_LOCALES_DIR</span> 指到別的地方。</p>
+            <p>目錄裡的同代碼翻譯<strong>會蓋過內建版本</strong>，所以想改幾句用詞也可以直接改這裡。</p>
+          </div>
+        </div>
+
+        <p>翻譯檔的結構很單純：</p>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">區段</th><th>內容</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">[language]</span></td><td><span class="path">code</span>（<span class="path">ERYA_LANG</span> 用的代碼）與 <span class="path">name</span>（<span class="path">--languages</span> 與系統設定顯示的名稱）</td></tr>
+            <tr><td><span class="path">[messages]</span></td><td>所有畫面訊息。有些句子裡有 <span class="path">{name}</span>、<span class="path">{count}</span> 這種佔位符，翻譯時要保留。</td></tr>
+            <tr><td><span class="path">[key_help]</span></td><td><kbd>F1</kbd> 按鍵說明裡每個動作的一句話說明。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.2.6</span>
+        <h2>自己加一種語言</h2>
+        <p class="dek">複製一個檔、改兩個欄位、翻內容。<strong>不用改任何一行 Rust。</strong></p>
+
+        <ol class="rule-list">
+          <li><b>複製一份現成的翻譯檔</b>，例如 <span class="path">cp locales/en.toml locales/fr.toml</span>。</li>
+          <li><b>改 <span class="path">[language]</span></b>：<span class="path">code = "fr"</span>、<span class="path">name = "Français"</span>。</li>
+          <li><b>翻 <span class="path">[messages]</span> 與 <span class="path">[key_help]</span></b>，<strong>保留 <span class="path">{}</span> 佔位符</strong>。</li>
+          <li><b>驗證</b>：<span class="path">erya --languages</span> 應該看得到 <span class="path">fr　Français</span>。</li>
+          <li><b>使用</b>：<span class="path">ERYA_LANG=fr erya</span>，或按 <kbd>F2</kbd> 從清單選。</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">不必一次翻完</span>
+          <p>翻一半也能用——沒翻到的 key 會自動退回正體中文（見 4.2.7）。可以先翻最常看到的那幾十句，其他慢慢補。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.2.7</span>
+        <h2>缺翻譯時的回退</h2>
+        <p class="dek">一律退回正體中文，不會顯示空白。</p>
+
+        <ul>
+          <li>某個 key 在你的翻譯檔裡沒有 → 用正體中文那一句。</li>
+          <li>連正體中文都沒有那個 key（理論上不會發生）→ 直接顯示 key 的名稱本身，例如 <span class="path">clipboard_empty</span>。</li>
+          <li>指定的語言代碼找不到 → 整個介面用正體中文。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">為什麼是正體中文</span>
+          <p>因為爾雅是為中文文件寫的編輯器，正體中文是它的原生語言，其他語言都是從它翻過去的。<strong>所以看到畫面上突然冒出一句中文，通常代表那一句還沒翻。</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.2.8</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">設定與語言的六個常見狀況。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>重開之後設定又變回去了</td><td>系統設定只影響這一次執行。用環境變數或設定檔固定（4.2.2）。</td></tr>
+            <tr><td>介面不是我要的語言</td><td>看 <span class="path">ERYA_LANG</span>／<span class="path">LC_ALL</span>／<span class="path">LC_MESSAGES</span>／<span class="path">LANG</span> 的順序（4.2.3）。</td></tr>
+            <tr><td><span class="path">ERYA_LANG</span> 設了沒用</td><td>代碼拼錯，找不到就會退回正體中文。先跑 <span class="path">--languages</span> 對照（4.2.4）。</td></tr>
+            <tr><td>自己翻的語言沒出現在清單</td><td>檔案不在爾雅讀的目錄裡。設 <span class="path">ERYA_LOCALES_DIR</span>（4.2.5）。</td></tr>
+            <tr><td>介面裡混著中文</td><td>那幾句還沒翻，自動退回正體中文了（4.2.7）。</td></tr>
+            <tr><td>訊息裡出現 <span class="path">{name}</span> 這種字樣</td><td>翻譯時把佔位符改掉或刪掉了。改回原本的 <span class="path">{}</span> 名稱（4.2.5）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

@@ -1,0 +1,263 @@
+      <!-- ══════════ 2.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.2.1</span>
+        <h2>游標移動的每一個鍵</h2>
+        <p class="dek">方向鍵那一組是固定的，不會被按鍵配置改掉。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">按鍵</th><th style="width:22%">動作</th><th>備註</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd></td><td>移動游標</td><td>固定鍵。左右是一次一個「字」，不是一個位元組（見 2.2.3）。</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>上下翻一頁</td><td>固定鍵。一頁＝內容區的高度。</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>行首／行尾</td><td>固定鍵。</td></tr>
+            <tr><td><kbd>Ctrl+A</kbd> <kbd>Ctrl+E</kbd></td><td>行首／行尾</td><td>可自訂。給不方便按 <kbd>Home</kbd>／<kbd>End</kbd> 的鍵盤用。</td></tr>
+            <tr><td><kbd>Ctrl+Home</kbd> <kbd>Ctrl+End</kbd></td><td>文件開頭／結尾</td><td>固定鍵。</td></tr>
+            <tr><td><kbd>Ctrl+G</kbd></td><td>跳到指定行／欄</td><td>見 2.2.2。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li><strong>行尾再按 <kbd>→</kbd> 會跳到下一行的開頭</strong>，行首按 <kbd>←</kbd> 會跳到上一行結尾。</li>
+          <li>上下移動時，爾雅會<strong>記住你原本在第幾欄</strong>：經過一段短行再回到長行，游標會回到原本的欄位，不會被短行「吃掉」。</li>
+          <li>行比畫面寬時，游標往右移會自動水平捲動；關掉自動換行時尤其常見（見 2.2.9）。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">想知道自己在第幾行？看狀態列</span>
+          <p>倒數第二列一直顯示 <span class="path">行:欄</span>，不用特別去查。爾雅另外有一個「顯示目前游標位置」的動作會把它印在訊息列，但<strong>預設沒有綁按鍵</strong>——因為狀態列已經有了（見 4.4.6）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.2.2</span>
+        <h2>跳到指定行與欄</h2>
+        <p class="dek"><kbd>Ctrl+G</kbd>，可以只給行號，也可以給「行:欄」。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確認  Esc 取消  ←/→ 移動游標  Backspace/Delete 刪除字元</div>
+            <div class="s-msg ask">跳至行／欄（例如 42 或 42:8）：120:16<em> </em></div>
+          </div>
+        </div>
+
+        <ul>
+          <li>只打 <span class="path">42</span> 就跳到第 42 行的行首。</li>
+          <li>打 <span class="path">42:8</span> 跳到第 42 行第 8 欄。</li>
+          <li>行號超過文件長度時會停在最後一行；欄超過該行長度時會停在行尾。</li>
+          <li>格式打錯（負數、有英文字母）會顯示「位置格式錯誤；請輸入正整數行號，或使用 行:欄」，然後再問一次。</li>
+          <li>跳到之後訊息列會回報「已跳至第 120 行，第 16 欄」。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">編譯器報的錯行號可以直接貼進來</span>
+          <p><span class="path">error[E0308]: src/main.rs:120:16</span> 這種訊息，把 <span class="path">120:16</span> 抄進 <kbd>Ctrl+G</kbd> 就到位了。這也是十六進位檢視裡跳位移用的同一個鍵（見 3.3.4）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.2.3</span>
+        <h2>一次移動一個「字」</h2>
+        <p class="dek">爾雅移動與刪除的單位是 Unicode 字素叢集，不是位元組，也不是碼位。</p>
+
+        <p>這件事平常沒感覺，但在下面幾種內容上差很多：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">內容</th><th style="width:20%">按一次 <kbd>←</kbd></th><th>其他編輯器常見的狀況</th></tr></thead>
+          <tbody>
+            <tr><td>中文「漢」</td><td>整個字過去</td><td>大致相同</td></tr>
+            <tr><td>Emoji 👨‍👩‍👧‍👦</td><td><strong>整組過去</strong></td><td>可能一次只跳一個組件，畫面上看起來卡住或裂開</td></tr>
+            <tr><td>注音組合字 ㄅ+ˋ</td><td>整個字過去</td><td>可能把聲調跟本體拆開</td></tr>
+            <tr><td>膚色修飾符 👍🏽</td><td>整組過去</td><td>可能剩下一個沒有膚色的👍</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>刪除、覆寫、選取用的也是同一個單位，所以<strong>按一次 <kbd>Backspace</kbd> 刪掉的就是你看到的那一個字</strong>，不會留下半截的殘骸。</p>
+
+        <div class="callout">
+          <span class="co-title">「欄」跟「畫面上的欄」不是同一件事</span>
+          <p>狀態列的 <span class="path">行:欄</span> 是<strong>第幾個字</strong>；畫面上的水平位置則是<strong>第幾欄</strong>，全形字佔兩欄、Tab 依寬度展開。所以一行純中文的第 5 個字，在畫面上會落在第 9 欄。<kbd>Ctrl+G</kbd> 的欄位輸入用的是前者（字），跟狀態列一致。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.2.4</span>
+        <h2>一般選取</h2>
+        <p class="dek">按住 <kbd>Shift</kbd> 移動游標就是選取。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-body">第一章　專案背景
+
+　　本專案自<u>二〇二六年三月</u>啟動，目標是把既有的
+　　文件系統整批轉成純文字格式。</div>
+            <div class="s-status"> 報告.txt │ 3:16 │ 選取 │ UTF-8 │ LF </div>
+            <div class="s-msg"> 已選取 7 個字元</div>
+          </div>
+        </div>
+
+        <ul>
+          <li><kbd>Shift</kbd> 加任何一個移動鍵都能延伸選取：方向鍵、<kbd>Home</kbd>／<kbd>End</kbd>、<kbd>PageUp</kbd>／<kbd>PageDown</kbd>、<kbd>Ctrl+A</kbd>／<kbd>Ctrl+E</kbd>。</li>
+          <li><strong>反方向移動會縮回來</strong>，不是重新開始選。</li>
+          <li>選取範圍是灰底黑字，跨行也沒問題。</li>
+          <li>狀態列的模式那一格會變成 <span class="path">選取</span>，訊息列回報選了幾個字元。</li>
+          <li><kbd>Esc</kbd> 取消選取；不小心打了字則會<strong>取代掉整個選取範圍</strong>。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">沒有「全選」這個動作</span>
+          <p>爾雅目前沒有一鍵全選。要選整份文件請按 <kbd>Ctrl+Home</kbd> 到開頭，再按 <kbd>Ctrl+Shift+End</kbd>——如果你的終端機傳得出這個組合的話。傳不出來時就用 <kbd>Shift+PageDown</kbd> 連按幾次。（<kbd>Ctrl+A</kbd> 在爾雅是「行首」，不是全選。）</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.2.5</span>
+        <h2>矩形選取</h2>
+        <p class="dek">選一個長方形範圍，適合處理對齊的表格與程式碼。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-body">項次  品名          數量  單價
+<u>001 </u> 螢幕支架        2   1280
+<u>002 </u> 機械鍵盤        1   3200
+<u>003 </u> 滑鼠墊          5    180</div>
+            <div class="s-status"> 訂單.txt │ 4:5 │ 矩形選取 │ UTF-8 │ LF </div>
+            <div class="s-msg"> 已矩形選取 12 個字元</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b>按 <kbd>Ctrl+B</kbd> 設定起點。</b>訊息列會說「矩形選取起點已設定；使用方向鍵延伸」。</li>
+          <li><b>用方向鍵拉出長方形。</b>上下決定涵蓋幾行，左右決定每行取到第幾欄。</li>
+          <li><b>再按一次 <kbd>Ctrl+B</kbd>（或 <kbd>Esc</kbd>）取消。</b></li>
+        </ol>
+
+        <p>矩形選取範圍一樣可以剪下、複製、貼上、刪除，還多了兩個專屬動作（填滿與整塊搬動，見 2.2.6）。</p>
+
+        <div class="callout warn">
+          <span class="co-title">矩形選取和自動換行不能同時開</span>
+          <p>自動換行會把一行拆成好幾列顯示，矩形的「第幾欄」就失去意義了，所以爾雅讓兩者互斥：</p>
+          <ul>
+            <li>矩形選取期間按 <kbd>Ctrl+L</kbd>：「矩形選取期間無法開啟自動換行；請先取消矩形選取」</li>
+            <li>自動換行開著時按 <kbd>Ctrl+B</kbd>：「自動換行期間無法使用矩形選取；請先關閉自動換行」</li>
+          </ul>
+          <p>先按 <kbd>Ctrl+L</kbd> 關掉自動換行，再開矩形選取就好。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.2.6</span>
+        <h2>填滿與搬動矩形</h2>
+        <p class="dek">兩個很好用、但預設沒有綁按鍵的動作。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">動作名稱</th><th style="width:22%">Erya Classic 的鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">fill_rectangle</span></td><td><kbd>Alt+F</kbd></td><td>問你一個字元，把整個矩形範圍填滿它。常拿來畫分隔線或補空白對齊。</td></tr>
+            <tr><td><span class="path">move_rectangle_left</span></td><td><kbd>Alt+Shift+←</kbd></td><td rowspan="4">把矩形範圍內的內容<strong>整塊搬到隔壁</strong>，四個方向各一個動作。碰到邊界時會擋下來並說「矩形選取範圍無法再往該方向移動」。</td></tr>
+            <tr><td><span class="path">move_rectangle_right</span></td><td><kbd>Alt+Shift+→</kbd></td></tr>
+            <tr><td><span class="path">move_rectangle_up</span></td><td><kbd>Alt+Shift+↑</kbd></td></tr>
+            <tr><td><span class="path">move_rectangle_down</span></td><td><kbd>Alt+Shift+↓</kbd></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">預設配置裡這五個動作是空的</span>
+          <p>因為 <kbd>Alt</kbd> 組合與修飾方向鍵在很多終端機裡傳不進來（見 1.3.9）。要用的話有兩條路：<strong>換成 Erya Classic 配置</strong>（<kbd>F2</kbd> 選一下就好），或<strong>在按鍵配置編輯器裡自己指定</strong>幾個按得動的鍵（見 4.1.4）。沒綁鍵之前，這些功能在 <kbd>F1</kbd> 說明裡會顯示成空白。</p>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">先選矩形，再做動作</span>
+          <p>沒有矩形選取範圍就按填滿或搬動，訊息列會說「請先建立矩形選取範圍」。順序是 <kbd>Ctrl+B</kbd> → 方向鍵拉範圍 → 再按動作鍵。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.2.7</span>
+        <h2>剪下、複製、貼上</h2>
+        <p class="dek">沒有選取範圍時，剪下與複製的對象是「目前這一行」。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">按鍵</th><th style="width:20%">有選取時</th><th>沒有選取時</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+C</kbd></td><td>複製選取範圍</td><td><strong>複製整行</strong></td></tr>
+            <tr><td><kbd>Shift+Delete</kbd></td><td>剪下選取範圍</td><td><strong>剪下整行</strong></td></tr>
+            <tr><td><kbd>Ctrl+K</kbd></td><td colspan="2">剪下目前行（不管有沒有選取）</td></tr>
+            <tr><td><kbd>Ctrl+V</kbd> / <kbd>Shift+Insert</kbd></td><td colspan="2">貼上；有選取範圍時會取代掉它</td></tr>
+            <tr><td><kbd>Ctrl+D</kbd></td><td colspan="2">刪除目前行（<strong>不進剪貼區</strong>）</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">爾雅的剪貼區跟系統剪貼簿是兩回事</span>
+          <p><kbd>Ctrl+C</kbd> 複製的東西<strong>只存在爾雅裡面</strong>，可以跨頁籤貼上，但貼不到瀏覽器或 Word。反過來也一樣：從別的程式複製的東西，要用<strong>終端機自己的貼上</strong>（macOS 是 <kbd>⌘V</kbd>、Windows Terminal 是 <kbd>Ctrl+Shift+V</kbd>、Linux 多半是 <kbd>Ctrl+Shift+V</kbd> 或滑鼠中鍵）送進來。爾雅支援 bracketed paste，所以這樣貼進來的整段文字會被當成一次貼上處理，訊息列會回報「已貼上 N 個字元」。</p>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">要把爾雅裡的東西複製到別的程式</span>
+          <p>用終端機的滑鼠選取＋複製。這是終端機層級的功能，跟爾雅無關——所以會連著行號以外的畫面元素一起選到，選的時候避開狀態列就好。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">2.2.8</span>
+        <h2>剪行、刪行與插入／覆寫</h2>
+        <p class="dek">三個每天都會按到的小動作。</p>
+
+        <h3>剪行與刪行</h3>
+        <ul>
+          <li><kbd>Ctrl+K</kbd> <strong>剪下目前行</strong>：整行進剪貼區，可以貼回別的地方。連按幾次就是搬走好幾行。</li>
+          <li><kbd>Ctrl+D</kbd> <strong>刪除目前行</strong>：整行消失，<strong>不進剪貼區</strong>，剪貼區裡原本的東西也不會被蓋掉。</li>
+          <li>兩個都可以用 <kbd>Ctrl+Z</kbd> 復原。</li>
+        </ul>
+
+        <h3>插入與覆寫</h3>
+        <ul>
+          <li><kbd>Insert</kbd> 切換。狀態列的模式那一格會在 <span class="path">插入</span> 與 <span class="path">覆寫</span> 之間換，訊息列也會說「已切換為覆寫模式」。</li>
+          <li><strong>插入</strong>：打字把後面的字往右推。預設值。</li>
+          <li><strong>覆寫</strong>：打字蓋掉游標所在的字。要就地改表格數字時很方便。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">Mac 鍵盤沒有 <kbd>Insert</kbd> 鍵</span>
+          <p>MacBook 的鍵盤上沒有這個鍵。兩個解法：在按鍵配置編輯器裡把 <span class="path">toggle_insert</span> 綁到別的鍵，或換成 Erya Classic 配置——它同時綁了 <kbd>Insert</kbd> 與 <kbd>Alt+I</kbd>（見 4.1.2）。十六進位的位元組編輯另外提供了 <kbd>I</kbd> 鍵，那是那個畫面專屬的（見 3.3.7）。</p>
+        </div>
+
+        <h3>自動延續縮排</h3>
+        <p>按 <kbd>Enter</kbd> 建立新行時，爾雅會<strong>自動延續目前行開頭的空白與 Tab</strong>。寫 YAML、程式碼或條列式筆記時不用每次重打縮排；不需要的時候按 <kbd>Backspace</kbd> 退掉即可。</p>
+      </section>
+
+      <!-- ══════════ 2.2.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">2.2.9</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">移動與選取最容易卡住的六個狀況。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>按 <kbd>Ctrl+A</kbd> 沒有全選</td><td>爾雅的 <kbd>Ctrl+A</kbd> 是「移到行首」。沒有全選動作（2.2.4）。</td></tr>
+            <tr><td>按 <kbd>Ctrl+C</kbd> 沒有中斷程式</td><td>它是「複製」。離開請按 <kbd>Ctrl+X</kbd>（1.1.7）。</td></tr>
+            <tr><td>看不到行的後半段</td><td>行比視窗寬。按 <kbd>Ctrl+L</kbd> 開自動換行，或按 <kbd>End</kbd> 讓它水平捲過去。</td></tr>
+            <tr><td>按 <kbd>Ctrl+B</kbd> 沒反應，訊息說自動換行</td><td>兩者互斥。先 <kbd>Ctrl+L</kbd> 關掉自動換行（2.2.5）。</td></tr>
+            <tr><td>矩形填滿／搬動按了沒事</td><td>預設沒有綁按鍵。換 Erya Classic 或自己綁（2.2.6）。</td></tr>
+            <tr><td>從瀏覽器複製的字貼不進來</td><td>要用終端機的貼上（<kbd>⌘V</kbd> / <kbd>Ctrl+Shift+V</kbd>），不是爾雅的 <kbd>Ctrl+V</kbd>（2.2.7）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

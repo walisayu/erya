@@ -1,0 +1,212 @@
+      <!-- ══════════ 4.4.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.4.1</span>
+        <h2>固定不可改的按鍵</h2>
+        <p class="dek">這些不受按鍵配置影響，任何配置底下都一樣。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">按鍵</th><th>動作</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>F1</kbd></td><td>開啟或關閉按鍵說明</td></tr>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd></td><td>移動游標</td></tr>
+            <tr><td><kbd>Shift</kbd>＋移動鍵</td><td>延伸或反向縮減選取範圍</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>向上或向下翻頁</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>移到目前行的開頭或結尾</td></tr>
+            <tr><td><kbd>Ctrl+Home</kbd> <kbd>Ctrl+End</kbd></td><td>移到文件開頭或結尾</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>插入換行</td></tr>
+            <tr><td><kbd>Backspace</kbd> <kbd>Delete</kbd></td><td>刪除字元或選取內容</td></tr>
+            <tr><td><kbd>Tab</kbd></td><td>插入 Tab</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>取消目前操作或選取</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>底下 4.4.2 到 4.4.6 的表格有三欄：<strong>預設按鍵</strong>（Erya Terminal Safe）、<strong>動作</strong>、<strong>動作名稱</strong>。第三欄是寫設定檔時要用的名稱（見 4.1.5）。</p>
+      </section>
+
+      <!-- ══════════ 4.4.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.4.2</span>
+        <h2>檔案與頁籤</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">預設按鍵</th><th style="width:38%">動作</th><th>動作名稱</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+N</kbd></td><td>新增空白頁籤</td><td><span class="path">new_tab</span></td></tr>
+            <tr><td><kbd>Ctrl+O</kbd></td><td>在新頁籤開啟檔案</td><td><span class="path">open_file</span></td></tr>
+            <tr><td><kbd>F4</kbd></td><td>選擇左、右檔案並排比對</td><td><span class="path">compare_file</span></td></tr>
+            <tr><td><kbd>F9</kbd></td><td>切換到上一個頁籤</td><td><span class="path">previous_tab</span></td></tr>
+            <tr><td><kbd>F10</kbd></td><td>切換到下一個頁籤</td><td><span class="path">next_tab</span></td></tr>
+            <tr><td><kbd>F11</kbd></td><td>關閉目前頁籤</td><td><span class="path">close_tab</span></td></tr>
+            <tr><td><kbd>Ctrl+S</kbd></td><td>儲存文件</td><td><span class="path">save</span></td></tr>
+            <tr><td><kbd>F12</kbd></td><td>另存新檔</td><td><span class="path">save_as</span></td></tr>
+            <tr><td><kbd>Ctrl+X</kbd></td><td>離開爾雅</td><td><span class="path">quit</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.4.3</span>
+        <h2>編輯與剪貼</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">預設按鍵</th><th style="width:38%">動作</th><th>動作名稱</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+Z</kbd></td><td>復原上次動作</td><td><span class="path">undo</span></td></tr>
+            <tr><td><kbd>Ctrl+Y</kbd></td><td>重做上次動作</td><td><span class="path">redo</span></td></tr>
+            <tr><td><kbd>Ctrl+C</kbd></td><td>複製選取文字；未選取時複製目前行</td><td><span class="path">copy</span></td></tr>
+            <tr><td><kbd>Shift+Delete</kbd></td><td>剪下選取文字；未選取時剪下目前行</td><td><span class="path">cut</span></td></tr>
+            <tr><td><kbd>Ctrl+V</kbd> / <kbd>Shift+Insert</kbd></td><td>貼上並取代選取文字</td><td><span class="path">paste</span></td></tr>
+            <tr><td><kbd>Ctrl+K</kbd></td><td>剪下目前行</td><td><span class="path">cut_line</span></td></tr>
+            <tr><td><kbd>Ctrl+D</kbd></td><td>刪除目前行</td><td><span class="path">delete_line</span></td></tr>
+            <tr><td><kbd>Ctrl+A</kbd></td><td>移到行首；搭配 <kbd>Shift</kbd> 延伸選取</td><td><span class="path">line_start</span></td></tr>
+            <tr><td><kbd>Ctrl+E</kbd></td><td>移到行尾；搭配 <kbd>Shift</kbd> 延伸選取</td><td><span class="path">line_end</span></td></tr>
+            <tr><td><kbd>Insert</kbd></td><td>切換插入與覆寫模式</td><td><span class="path">toggle_insert</span></td></tr>
+            <tr><td><kbd>Ctrl+B</kbd></td><td>開始或取消矩形選取</td><td><span class="path">toggle_rectangular_selection</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.4.4</span>
+        <h2>搜尋與取代</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">預設按鍵</th><th style="width:38%">動作</th><th>動作名稱</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+W</kbd> / <kbd>Ctrl+F</kbd></td><td>搜尋文字</td><td><span class="path">search</span></td></tr>
+            <tr><td><kbd>F3</kbd></td><td>尋找下一個相符文字</td><td><span class="path">find_next</span></td></tr>
+            <tr><td><kbd>Ctrl+R</kbd></td><td>輸入搜尋與取代文字</td><td><span class="path">replace</span></td></tr>
+            <tr><td><kbd>F5</kbd></td><td>取代下一個相符文字</td><td><span class="path">replace_next</span></td></tr>
+            <tr><td><kbd>F6</kbd></td><td>取代全部相符文字</td><td><span class="path">replace_all</span></td></tr>
+            <tr><td><kbd>Ctrl+G</kbd></td><td>跳至指定行，或指定行與欄（例如 42:8）</td><td><span class="path">go_to_position</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.4.5</span>
+        <h2>檢視與轉換</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">預設按鍵</th><th style="width:38%">動作</th><th>動作名稱</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+L</kbd></td><td>切換自動換行顯示</td><td><span class="path">toggle_line_wrap</span></td></tr>
+            <tr><td><kbd>Ctrl+P</kbd></td><td>切換十六進位檢視</td><td><span class="path">toggle_hex_view</span></td></tr>
+            <tr><td><kbd>Ctrl+T</kbd></td><td>格式化 TOML、YAML 或 JSON 文件</td><td><span class="path">format_document</span></td></tr>
+            <tr><td><kbd>F7</kbd></td><td>切換儲存編碼</td><td><span class="path">convert_encoding</span></td></tr>
+            <tr><td><kbd>F8</kbd></td><td>切換 LF／CRLF 換行格式</td><td><span class="path">toggle_line_ending</span></td></tr>
+            <tr><td><kbd>F2</kbd></td><td>開啟系統設定</td><td><span class="path">open_settings</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.4.6</span>
+        <h2>進階：預設沒有綁鍵的動作</h2>
+        <p class="dek">十六個。功能都在，要用請自己綁或換 Erya Classic（見 4.1）。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Classic 的鍵</th><th style="width:38%">動作</th><th>動作名稱</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Alt+M</kbd></td><td>設定段落重新編排寬度</td><td><span class="path">set_paragraph_width</span></td></tr>
+            <tr><td><kbd>Alt+Q</kbd></td><td>依設定寬度重新編排目前段落</td><td><span class="path">reflow_paragraph</span></td></tr>
+            <tr><td><kbd>Alt+F</kbd></td><td>以指定字元填滿矩形選取</td><td><span class="path">fill_rectangle</span></td></tr>
+            <tr><td><kbd>Alt+Shift+←</kbd></td><td>向左移動矩形選取</td><td><span class="path">move_rectangle_left</span></td></tr>
+            <tr><td><kbd>Alt+Shift+→</kbd></td><td>向右移動矩形選取</td><td><span class="path">move_rectangle_right</span></td></tr>
+            <tr><td><kbd>Alt+Shift+↑</kbd></td><td>向上移動矩形選取</td><td><span class="path">move_rectangle_up</span></td></tr>
+            <tr><td><kbd>Alt+Shift+↓</kbd></td><td>向下移動矩形選取</td><td><span class="path">move_rectangle_down</span></td></tr>
+            <tr><td><kbd>F9</kbd></td><td>收錄選取文字或目前行為常用語</td><td><span class="path">capture_phrase</span></td></tr>
+            <tr><td><kbd>F10</kbd></td><td>插入下一筆常用語</td><td><span class="path">insert_phrase</span></td></tr>
+            <tr><td><kbd>Shift+F9</kbd></td><td>從 <span class="path">.erya-phrases.json</span> 載入常用語</td><td><span class="path">load_phrases</span></td></tr>
+            <tr><td><kbd>Shift+F10</kbd></td><td>將常用語儲存至 <span class="path">.erya-phrases.json</span></td><td><span class="path">save_phrases</span></td></tr>
+            <tr><td><kbd>Ctrl+F2</kbd></td><td>開始或停止錄製巨集</td><td><span class="path">toggle_macro_recording</span></td></tr>
+            <tr><td><kbd>Ctrl+F3</kbd></td><td>執行已錄製的巨集</td><td><span class="path">run_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+Shift+F2</kbd></td><td>從 <span class="path">.erya-macro.json</span> 載入巨集</td><td><span class="path">load_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+Shift+F3</kbd></td><td>將巨集儲存至 <span class="path">.erya-macro.json</span></td><td><span class="path">save_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+C</kbd></td><td>顯示目前游標位置</td><td><span class="path">cursor_position</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.4.7</span>
+        <h2>各畫面專用按鍵</h2>
+        <p class="dek">這些鍵只在該畫面有效，也不能重新綁定。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">畫面</th><th>按鍵</th></tr></thead>
+          <tbody>
+            <tr><td>檔案對話盒</td><td><kbd>↑</kbd><kbd>↓</kbd> 選取／<kbd>Enter</kbd> <kbd>→</kbd> 開啟或進入／<kbd>←</kbd> <kbd>Backspace</kbd> 上一層／<kbd>Home</kbd><kbd>End</kbd> 首尾／<kbd>Esc</kbd> <kbd>Q</kbd> 取消</td></tr>
+            <tr><td>十六進位檢視</td><td><kbd>W</kbd> 每列 16／32／<kbd>O</kbd> 位移進位／<kbd>G</kbd> 跳位移／<kbd>Esc</kbd> 返回</td></tr>
+            <tr><td>位元組編輯（二進位）</td><td><kbd>0</kbd>–<kbd>9</kbd> <kbd>A</kbd>–<kbd>F</kbd> 輸入位元組／<kbd>I</kbd> 覆寫或插入／<kbd>Backspace</kbd> <kbd>Delete</kbd> 刪除</td></tr>
+            <tr><td>雙欄比對</td><td><kbd>N</kbd> 下一個差異／<kbd>P</kbd> 上一個／<kbd>Shift+→</kbd> 左抄到右／<kbd>Shift+←</kbd> 右抄到左／<kbd>Ctrl+←</kbd><kbd>Ctrl+→</kbd> 水平捲 8 欄／<kbd>Esc</kbd> 返回</td></tr>
+            <tr><td>按鍵說明</td><td><kbd>↑</kbd><kbd>↓</kbd> 捲動／<kbd>PageUp</kbd><kbd>PageDown</kbd> 翻頁／<kbd>Home</kbd><kbd>End</kbd> 首尾／<kbd>F1</kbd> <kbd>Esc</kbd> 返回</td></tr>
+            <tr><td>系統設定</td><td><kbd>↑</kbd><kbd>↓</kbd> 換項目／<kbd>←</kbd><kbd>→</kbd> 換選項／<kbd>E</kbd> 編輯按鍵／<kbd>Enter</kbd> 套用／<kbd>Esc</kbd> 取消</td></tr>
+            <tr><td>按鍵配置編輯器</td><td><kbd>↑</kbd><kbd>↓</kbd> 選取／<kbd>Enter</kbd> 編輯／<kbd>Delete</kbd> 停用／<kbd>S</kbd> 另存新檔／<kbd>Esc</kbd> 返回</td></tr>
+            <tr><td>確認列（未儲存）</td><td><kbd>S</kbd> 儲存後離開／<kbd>Y</kbd> 放棄變更／<kbd>N</kbd> <kbd>Esc</kbd> 返回</td></tr>
+            <tr><td>確認列（外部更新）</td><td><kbd>O</kbd> 覆寫／<kbd>R</kbd> 重新載入／<kbd>N</kbd> <kbd>Esc</kbd> 取消</td></tr>
+            <tr><td>確認列（比對套用）</td><td><kbd>Y</kbd> 覆蓋／<kbd>N</kbd> 取消（離開時多一個 <kbd>Esc</kbd> 返回）</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.4.8</span>
+        <h2>名詞對照表</h2>
+        <p class="dek">全書出現過的名詞，一句話解釋加上詳見章節。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">名詞</th><th>一句話解釋</th><th style="width:12%">詳見</th></tr></thead>
+          <tbody>
+            <tr><td>頁籤</td><td>同時開著的多個檔案，各自保有游標、搜尋條件與復原紀錄。</td><td>2.1.3</td></tr>
+            <tr><td>提示列</td><td>畫面第二列，列出目前這個畫面能按的鍵。</td><td>1.3.3</td></tr>
+            <tr><td>狀態列</td><td>倒數第二列，顯示檔名、行欄、模式、語法、編碼與換行格式。</td><td>1.3.5</td></tr>
+            <tr><td>訊息列</td><td>最後一列。黃色回報、白色等輸入、紅色等決定。</td><td>1.3.6</td></tr>
+            <tr><td>插入／覆寫</td><td>打字是把後面推開，還是蓋掉游標所在的字。</td><td>2.2.8</td></tr>
+            <tr><td>字素叢集</td><td>螢幕上看起來是一個字的單位，爾雅的移動與刪除都以它為準。</td><td>2.2.3</td></tr>
+            <tr><td>矩形選取</td><td>長方形的選取範圍，可以填字、可以整塊搬動。</td><td>2.2.5</td></tr>
+            <tr><td>自動換行</td><td>只改顯示、不改內容的軟斷行。與矩形選取互斥。</td><td>2.2.5</td></tr>
+            <tr><td>段落重排</td><td>真的在文件裡插入換行，把段落排成指定寬度。</td><td>3.1.8</td></tr>
+            <tr><td>常用語</td><td>收錄起來循環插入的字串，存成 JSON。</td><td>2.4.3</td></tr>
+            <tr><td>巨集</td><td>錄下來重播的一串按鍵，存成 JSON。</td><td>2.4.6</td></tr>
+            <tr><td>原子儲存</td><td>先寫同目錄暫存檔再換掉原檔，中途失敗不會產生半截檔案。</td><td>2.1.6</td></tr>
+            <tr><td>外部變更</td><td>檔案被別的程式改掉。乾淨的自動重載，改過的先問你。</td><td>2.1.7</td></tr>
+            <tr><td>編碼</td><td>文字怎麼變成位元組。爾雅支援 UTF-8／UTF-8 BOM／Big5／GBK／Shift_JIS。</td><td>3.1.1</td></tr>
+            <tr><td>換行格式</td><td>LF 或 CRLF。狀態列最後一格。</td><td>3.1.4</td></tr>
+            <tr><td>大型檔案模式</td><td>64 MiB 以上自動進入的唯讀閱讀模式，可跟隨 log。</td><td>3.2</td></tr>
+            <tr><td>稀疏行索引</td><td>每 4096 行留一個位移檢查點，讓大檔不用整份載入。</td><td>3.2.3</td></tr>
+            <tr><td>十六進位檢視</td><td>把文件攤成位元組看。對文字檔是唯讀的。</td><td>3.3.1</td></tr>
+            <tr><td>二進位檔案</td><td>含 NUL 或無法解碼的檔案，開啟時直接進位元組檢視。</td><td>3.3.5</td></tr>
+            <tr><td>半位元組</td><td>一個位元組的一半。改位元組要輸入兩個十六進位數字。</td><td>3.3.6</td></tr>
+            <tr><td>差異區塊</td><td>雙欄比對裡連續的差異行算一個區塊，抄的時候整塊一起抄。</td><td>3.4.3</td></tr>
+            <tr><td>暫存副本</td><td>比對期間的工作檔。沒套用之前原始檔不會變。</td><td>3.4.1</td></tr>
+            <tr><td>按鍵配置</td><td>把動作對應到按鍵的一份 TOML，可以整套換。</td><td>4.1</td></tr>
+            <tr><td>動作名稱</td><td>設定檔裡代表某個功能的固定名稱，例如 <span class="path">save</span>。</td><td>4.4.2</td></tr>
+            <tr><td>Erya Terminal Safe</td><td>預設配置，避開終端機收不到的組合鍵。</td><td>4.1.1</td></tr>
+            <tr><td>Erya Classic</td><td>1.0 版原本的完整綁定，含所有進階動作。</td><td>4.1.2</td></tr>
+            <tr><td>翻譯檔</td><td><span class="path">locales/*.toml</span>，決定介面語言，可自行擴充。</td><td>4.2.5</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

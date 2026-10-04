@@ -1,0 +1,17 @@
+name = "IntelliJ IDEA Classic"
+
+[bindings]
+new_tab = "Ctrl+Alt+N"
+open_file = "Ctrl+O"
+save_as = "Ctrl+Shift+S"
+next_tab = "Alt+Right"
+previous_tab = "Alt+Left"
+quit = "Alt+F4"
+search = "Ctrl+F"
+replace = "Ctrl+R"
+redo = "Ctrl+Shift+Z"
+format_document = "Ctrl+Alt+L"
+cut = "Ctrl+X"
+copy = "Ctrl+C"
+cursor_position = "Alt+C"
+open_settings = "Ctrl+Alt+S"

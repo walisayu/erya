@@ -1,0 +1,215 @@
+      <!-- ══════════ 4.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.2.1</span>
+        <h2>システム設定のページ</h2>
+        <p class="dek">Erya の設定画面はこれだけで、項目は 2 つです。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ システム設定</div>
+            <div class="s-bar"> ↑/↓ 項目  ←/→ 選択  E キー編集  Enter 適用  Esc キャンセル</div>
+            <div class="s-body">   キーバインド:  ◀ Erya Terminal Safe ▶
+
+<u> ▶ 表示言語:  ◀ 日本語 (ja) ▶                    </u></div>
+            <div class="s-status"> Erya Terminal Safe │ 日本語 </div>
+            <div class="s-msg"> 矢印キーで選択し、Enter ですべてのタブに適用します</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">キー</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>F2</kbd></td><td>システム設定を開きます</td></tr>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>「キーバインド」と「表示言語」を行き来します。選択中の行は反転し ▶ が付きます。</td></tr>
+            <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>値を変えます。端まで行くと反対側へ回ります。</td></tr>
+            <tr><td><kbd>E</kbd></td><td>キーマップエディターを開きます（4.1.4 参照）</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>適用して編集に戻ります</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>取り消します。何も変わりません</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>ステータス行には<strong>いま選んでいる組み合わせ</strong>（プロファイル │ 言語）が出るので、<kbd>Enter</kbd> の前に確認できます。</p>
+      </section>
+
+      <!-- ══════════ 4.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.2.2</span>
+        <h2>適用範囲とタイミング</h2>
+        <p class="dek"><kbd>Enter</kbd> を押した瞬間、すべてのタブが変わります。</p>
+
+        <ul>
+          <li>メッセージ行に「設定を適用しました：Erya Classic／日本語」と出ます。</li>
+          <li><strong>開いているすべてのタブに同時に反映</strong>され、開き直す必要はありません。</li>
+          <li>ヒント行・ステータス行・<kbd>F1</kbd> ヘルプも、その場で新しい言語とキーに変わります。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">この設定は記憶されません</span>
+          <p>システム設定は<strong>この実行中だけ</strong>有効で、Erya は設定ファイルに何も書きません。次回起動時は既定値に戻ります。固定したい場合は：</p>
+          <ul>
+            <li><strong>キーバインド</strong>→プラットフォームの既定パス、または <span class="path">ERYA_KEYMAP</span>（4.1.7 参照）。</li>
+            <li><strong>表示言語</strong>→環境変数 <span class="path">ERYA_LANG</span>（4.2.4 参照）。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.2.3</span>
+        <h2>表示言語の決まり方</h2>
+        <p class="dek">4 つの環境変数を順に見て、最初に値のあるものを採用します。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 200" role="img" aria-label="表示言語が決まる順序">
+              <rect x="0" y="0" width="960" height="200" fill="#FAFBFD"/>
+              <defs><marker id="arrow42" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="24" y="52" width="184" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="116" y="76" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">ERYA_LANG</text>
+              <text x="116" y="96" text-anchor="middle" font-size="12.5" fill="#667085">Erya 専用。最優先</text>
+
+              <rect x="242" y="52" width="150" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="317" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LC_ALL</text>
+
+              <rect x="426" y="52" width="176" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="514" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LC_MESSAGES</text>
+
+              <rect x="636" y="52" width="130" height="52" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="701" y="84" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">LANG</text>
+
+              <rect x="800" y="52" width="136" height="52" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="868" y="76" text-anchor="middle" font-size="14.5" font-weight="700" fill="#7A382F">正體中文</text>
+              <text x="868" y="96" text-anchor="middle" font-size="12.5" fill="#667085">最終的な既定</text>
+
+              <path d="M208 78 L238 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M392 78 L422 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M602 78 L632 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+              <path d="M766 78 L796 78" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow42)"/>
+
+              <text x="480" y="150" text-anchor="middle" font-size="14" fill="#3F485D">コードは正規化してから照合します：ja_JP.UTF-8、ja-JP、ja はすべて日本語になります</text>
+              <text x="480" y="176" text-anchor="middle" font-size="13.5" fill="#98A2B3">一致するものが無ければ正體中文に戻ります</text>
+            </svg>
+          </div>
+          <figcaption><b>図 4.2.1</b>　たいていの場合、何も設定する必要はありません。システムの <span class="path">LANG</span> にそのまま従います。</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 4.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.2.4</span>
+        <h2>ERYA_LANG で指定する</h2>
+        <p class="dek">システムのロケールを変えずに、Erya だけ切り替えたいときに。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:42%">コマンド</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">ERYA_LANG=ja erya 報告.txt</span></td><td>今回だけ日本語</td></tr>
+            <tr><td><span class="path">ERYA_LANG=en erya</span></td><td>英語</td></tr>
+            <tr><td><span class="path">ERYA_LANG=zh-TW erya</span></td><td>正體中文</td></tr>
+            <tr><td><span class="path">ERYA_LANG=zh-CN erya</span></td><td>简体中文</td></tr>
+            <tr><td><span class="path">erya --languages</span></td><td>実際に見つかった言語を「コード<span class="path">Tab</span>名称」で 1 行ずつ表示</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>恒久的にするなら <span class="path">~/.zshrc</span> や <span class="path">~/.bashrc</span> に <span class="path">export ERYA_LANG=ja</span> を。Windows ではユーザー環境変数に追加します。</p>
+
+        <div class="callout tip">
+          <span class="co-title">コードが分からなければ <span class="path">--languages</span></span>
+          <p>1 列目がそのまま <span class="path">ERYA_LANG</span> に書ける値です。自分で追加した言語もここに出ます（4.2.6 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.2.5</span>
+        <h2>翻訳ファイルの場所</h2>
+        <p class="dek">4 言語は実行ファイルに内蔵。<span class="path">locales/</span> はそれを上書き・拡張するためのものです。</p>
+
+        <div class="duo">
+          <div>
+            <h4>内蔵（実行ファイルの中）</h4>
+            <p>正體中文、简体中文、英語、日本語。<strong><span class="path">locales/</span> を丸ごと消してもこの 4 つは使えます。</strong></p>
+          </div>
+          <div>
+            <h4>ディレクトリ（上書きと追加）</h4>
+            <p>既定では <span class="path">locales/</span> を読み、<span class="path">ERYA_LOCALES_DIR</span> で別の場所も指定できます。</p>
+            <p>同じコードの翻訳がディレクトリにあると<strong>内蔵より優先されます</strong>。文言を数か所直すだけの用途にも使えます。</p>
+          </div>
+        </div>
+
+        <p>ファイルの構造は単純です：</p>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">セクション</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">[language]</span></td><td><span class="path">code</span>（<span class="path">ERYA_LANG</span> で使う値）と <span class="path">name</span>（<span class="path">--languages</span> とシステム設定に出る名称）</td></tr>
+            <tr><td><span class="path">[messages]</span></td><td>画面に出るすべてのメッセージ。<span class="path">{name}</span> や <span class="path">{count}</span> のような置換記号は残す必要があります。</td></tr>
+            <tr><td><span class="path">[key_help]</span></td><td><kbd>F1</kbd> ヘルプに出る、各操作の 1 行説明。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.2.6</span>
+        <h2>自分で言語を追加する</h2>
+        <p class="dek">ファイルをコピーし、2 か所を書き換え、翻訳する。<strong>Rust は 1 行も書きません。</strong></p>
+
+        <ol class="rule-list">
+          <li><b>既存の翻訳をコピーします。</b>たとえば <span class="path">cp locales/en.toml locales/fr.toml</span>。</li>
+          <li><b><span class="path">[language]</span> を書き換えます</b>：<span class="path">code = "fr"</span>、<span class="path">name = "Français"</span>。</li>
+          <li><b><span class="path">[messages]</span> と <span class="path">[key_help]</span> を翻訳します。</b><strong><span class="path">{}</span> の置換記号はそのまま残してください。</strong></li>
+          <li><b>確認します</b>：<span class="path">erya --languages</span> に <span class="path">fr　Français</span> が出るはずです。</li>
+          <li><b>使います</b>：<span class="path">ERYA_LANG=fr erya</span>、または <kbd>F2</kbd> の一覧から選びます。</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">一度に全部訳す必要はありません</span>
+          <p>途中でも動きます。足りない項目は正體中文に戻るだけです（4.2.7 参照）。よく見る数十項目から訳し、残りは後から足してください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.2.7</span>
+        <h2>翻訳が足りないときの動作</h2>
+        <p class="dek">常に正體中文へ戻ります。空白にはなりません。</p>
+
+        <ul>
+          <li>自分の翻訳に項目が無い → 正體中文の文言を使います。</li>
+          <li>正體中文にも無い（通常はあり得ません）→ 項目名そのもの（例：<span class="path">clipboard_empty</span>）を表示します。</li>
+          <li>指定した言語コードが存在しない → 画面全体が正體中文になります。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">なぜ中国語なのか</span>
+          <p>Erya は CJK 文書のために書かれたエディターで、正體中文が原語です。他の言語はそこからの翻訳です。<strong>日本語の画面に中国語が混じったら、たいていその項目が未翻訳だということです。</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.2.8</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">設定と言語まわりの 6 つ。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>再起動したら設定が戻っている</td><td>システム設定はその実行中だけです。環境変数か設定ファイルを使います（4.2.2）。</td></tr>
+            <tr><td>表示言語が思ったものと違う</td><td><span class="path">ERYA_LANG</span>、<span class="path">LC_ALL</span>、<span class="path">LC_MESSAGES</span>、<span class="path">LANG</span> の順を確認してください（4.2.3）。</td></tr>
+            <tr><td><span class="path">ERYA_LANG</span> が効かない</td><td>コードの綴り違いです。未知のコードは既定に戻ります。<span class="path">--languages</span> で確認を（4.2.4）。</td></tr>
+            <tr><td>自作の言語が一覧に出ない</td><td>Erya が読むディレクトリに無いためです。<span class="path">ERYA_LOCALES_DIR</span> を設定します（4.2.5）。</td></tr>
+            <tr><td>日本語の中に中国語が混じる</td><td>その項目が未翻訳で、既定に戻っています（4.2.7）。</td></tr>
+            <tr><td>メッセージに <span class="path">{name}</span> がそのまま出る</td><td>翻訳時に置換記号を書き換えたか消しています。元の <span class="path">{}</span> 名に戻してください（4.2.5）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

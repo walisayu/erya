@@ -1,0 +1,212 @@
+      <!-- ══════════ 4.4.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.4.1</span>
+        <h2>Keys that cannot be changed</h2>
+        <p class="dek">These are the same under every profile.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Key</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>F1</kbd></td><td>Open or close keyboard help</td></tr>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd></td><td>Move the cursor</td></tr>
+            <tr><td><kbd>Shift</kbd> + a movement key</td><td>Extend or reverse the selection</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>Move one page up or down</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>Move to the start or end of the current line</td></tr>
+            <tr><td><kbd>Ctrl+Home</kbd> <kbd>Ctrl+End</kbd></td><td>Move to the start or end of the document</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>Insert a new line</td></tr>
+            <tr><td><kbd>Backspace</kbd> <kbd>Delete</kbd></td><td>Delete a character or the selection</td></tr>
+            <tr><td><kbd>Tab</kbd></td><td>Insert a tab</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Cancel the current operation or selection</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>The tables in 4.4.2 to 4.4.6 have three columns: <strong>default key</strong> (Erya Terminal Safe), <strong>action</strong>, and <strong>action name</strong>. The third is what you write in a config file (see 4.1.5).</p>
+      </section>
+
+      <!-- ══════════ 4.4.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.4.2</span>
+        <h2>Files and tabs</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Default key</th><th style="width:40%">Action</th><th>Action name</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+N</kbd></td><td>Create a blank tab</td><td><span class="path">new_tab</span></td></tr>
+            <tr><td><kbd>Ctrl+O</kbd></td><td>Open a file in a new tab</td><td><span class="path">open_file</span></td></tr>
+            <tr><td><kbd>F4</kbd></td><td>Choose left and right files for comparison</td><td><span class="path">compare_file</span></td></tr>
+            <tr><td><kbd>F9</kbd></td><td>Switch to the previous tab</td><td><span class="path">previous_tab</span></td></tr>
+            <tr><td><kbd>F10</kbd></td><td>Switch to the next tab</td><td><span class="path">next_tab</span></td></tr>
+            <tr><td><kbd>F11</kbd></td><td>Close the current tab</td><td><span class="path">close_tab</span></td></tr>
+            <tr><td><kbd>Ctrl+S</kbd></td><td>Save the document</td><td><span class="path">save</span></td></tr>
+            <tr><td><kbd>F12</kbd></td><td>Save under another name</td><td><span class="path">save_as</span></td></tr>
+            <tr><td><kbd>Ctrl+X</kbd></td><td>Exit Erya</td><td><span class="path">quit</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.4.3</span>
+        <h2>Editing and the clipboard</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Default key</th><th style="width:40%">Action</th><th>Action name</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+Z</kbd></td><td>Undo the last edit</td><td><span class="path">undo</span></td></tr>
+            <tr><td><kbd>Ctrl+Y</kbd></td><td>Redo the last undone edit</td><td><span class="path">redo</span></td></tr>
+            <tr><td><kbd>Ctrl+C</kbd></td><td>Copy the selection, or the current line</td><td><span class="path">copy</span></td></tr>
+            <tr><td><kbd>Shift+Delete</kbd></td><td>Cut the selection, or the current line</td><td><span class="path">cut</span></td></tr>
+            <tr><td><kbd>Ctrl+V</kbd> / <kbd>Shift+Insert</kbd></td><td>Paste and replace the selection</td><td><span class="path">paste</span></td></tr>
+            <tr><td><kbd>Ctrl+K</kbd></td><td>Cut the current line</td><td><span class="path">cut_line</span></td></tr>
+            <tr><td><kbd>Ctrl+D</kbd></td><td>Delete the current line</td><td><span class="path">delete_line</span></td></tr>
+            <tr><td><kbd>Ctrl+A</kbd></td><td>Move to line start; <kbd>Shift</kbd> extends</td><td><span class="path">line_start</span></td></tr>
+            <tr><td><kbd>Ctrl+E</kbd></td><td>Move to line end; <kbd>Shift</kbd> extends</td><td><span class="path">line_end</span></td></tr>
+            <tr><td><kbd>Insert</kbd></td><td>Toggle insert and overwrite mode</td><td><span class="path">toggle_insert</span></td></tr>
+            <tr><td><kbd>Ctrl+B</kbd></td><td>Start or cancel block selection</td><td><span class="path">toggle_rectangular_selection</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.4.4</span>
+        <h2>Search and replace</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Default key</th><th style="width:40%">Action</th><th>Action name</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+W</kbd> / <kbd>Ctrl+F</kbd></td><td>Search for text</td><td><span class="path">search</span></td></tr>
+            <tr><td><kbd>F3</kbd></td><td>Find the next match</td><td><span class="path">find_next</span></td></tr>
+            <tr><td><kbd>Ctrl+R</kbd></td><td>Enter search and replacement text</td><td><span class="path">replace</span></td></tr>
+            <tr><td><kbd>F5</kbd></td><td>Replace the next match</td><td><span class="path">replace_next</span></td></tr>
+            <tr><td><kbd>F6</kbd></td><td>Replace all matches</td><td><span class="path">replace_all</span></td></tr>
+            <tr><td><kbd>Ctrl+G</kbd></td><td>Go to a line, or line and column (42:8)</td><td><span class="path">go_to_position</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.4.5</span>
+        <h2>Views and conversions</h2>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Default key</th><th style="width:40%">Action</th><th>Action name</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+L</kbd></td><td>Toggle line wrapping</td><td><span class="path">toggle_line_wrap</span></td></tr>
+            <tr><td><kbd>Ctrl+P</kbd></td><td>Toggle the hexadecimal view</td><td><span class="path">toggle_hex_view</span></td></tr>
+            <tr><td><kbd>Ctrl+T</kbd></td><td>Format a TOML, YAML, or JSON document</td><td><span class="path">format_document</span></td></tr>
+            <tr><td><kbd>F7</kbd></td><td>Cycle the save encoding</td><td><span class="path">convert_encoding</span></td></tr>
+            <tr><td><kbd>F8</kbd></td><td>Toggle LF / CRLF line endings</td><td><span class="path">toggle_line_ending</span></td></tr>
+            <tr><td><kbd>F2</kbd></td><td>Open system settings</td><td><span class="path">open_settings</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.4.6</span>
+        <h2>Advanced: actions with no default key</h2>
+        <p class="dek">Sixteen of them. Bind them yourself, or switch to Erya Classic (see 4.1).</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Key in Classic</th><th style="width:40%">Action</th><th>Action name</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Alt+M</kbd></td><td>Set the paragraph reflow width</td><td><span class="path">set_paragraph_width</span></td></tr>
+            <tr><td><kbd>Alt+Q</kbd></td><td>Reflow the current paragraph</td><td><span class="path">reflow_paragraph</span></td></tr>
+            <tr><td><kbd>Alt+F</kbd></td><td>Fill the block selection with a character</td><td><span class="path">fill_rectangle</span></td></tr>
+            <tr><td><kbd>Alt+Shift+←</kbd></td><td>Move the block selection left</td><td><span class="path">move_rectangle_left</span></td></tr>
+            <tr><td><kbd>Alt+Shift+→</kbd></td><td>Move the block selection right</td><td><span class="path">move_rectangle_right</span></td></tr>
+            <tr><td><kbd>Alt+Shift+↑</kbd></td><td>Move the block selection up</td><td><span class="path">move_rectangle_up</span></td></tr>
+            <tr><td><kbd>Alt+Shift+↓</kbd></td><td>Move the block selection down</td><td><span class="path">move_rectangle_down</span></td></tr>
+            <tr><td><kbd>F9</kbd></td><td>Capture the selection or line as a phrase</td><td><span class="path">capture_phrase</span></td></tr>
+            <tr><td><kbd>F10</kbd></td><td>Insert the next saved phrase</td><td><span class="path">insert_phrase</span></td></tr>
+            <tr><td><kbd>Shift+F9</kbd></td><td>Load phrases from <span class="path">.erya-phrases.json</span></td><td><span class="path">load_phrases</span></td></tr>
+            <tr><td><kbd>Shift+F10</kbd></td><td>Save phrases to <span class="path">.erya-phrases.json</span></td><td><span class="path">save_phrases</span></td></tr>
+            <tr><td><kbd>Ctrl+F2</kbd></td><td>Start or stop macro recording</td><td><span class="path">toggle_macro_recording</span></td></tr>
+            <tr><td><kbd>Ctrl+F3</kbd></td><td>Run the recorded macro</td><td><span class="path">run_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+Shift+F2</kbd></td><td>Load a macro from <span class="path">.erya-macro.json</span></td><td><span class="path">load_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+Shift+F3</kbd></td><td>Save the macro to <span class="path">.erya-macro.json</span></td><td><span class="path">save_macro</span></td></tr>
+            <tr><td><kbd>Ctrl+C</kbd></td><td>Show the current cursor position</td><td><span class="path">cursor_position</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.4.7</span>
+        <h2>Keys specific to each screen</h2>
+        <p class="dek">These work only on that screen, and cannot be rebound.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">Screen</th><th>Keys</th></tr></thead>
+          <tbody>
+            <tr><td>File dialog</td><td><kbd>↑</kbd><kbd>↓</kbd> select / <kbd>Enter</kbd> <kbd>→</kbd> open or enter / <kbd>←</kbd> <kbd>Backspace</kbd> parent / <kbd>Home</kbd><kbd>End</kbd> first and last / <kbd>Esc</kbd> <kbd>Q</kbd> cancel</td></tr>
+            <tr><td>Hexadecimal view</td><td><kbd>W</kbd> 16/32 bytes / <kbd>O</kbd> offset base / <kbd>G</kbd> go to offset / <kbd>Esc</kbd> back</td></tr>
+            <tr><td>Byte editing (binary)</td><td><kbd>0</kbd>–<kbd>9</kbd> <kbd>A</kbd>–<kbd>F</kbd> write a byte / <kbd>I</kbd> overwrite or insert / <kbd>Backspace</kbd> <kbd>Delete</kbd> delete</td></tr>
+            <tr><td>Comparison</td><td><kbd>N</kbd> next difference / <kbd>P</kbd> previous / <kbd>Shift+→</kbd> copy left to right / <kbd>Shift+←</kbd> right to left / <kbd>Ctrl+←</kbd><kbd>Ctrl+→</kbd> scroll eight columns / <kbd>Esc</kbd> back</td></tr>
+            <tr><td>Keyboard help</td><td><kbd>↑</kbd><kbd>↓</kbd> scroll / <kbd>PageUp</kbd><kbd>PageDown</kbd> page / <kbd>Home</kbd><kbd>End</kbd> first and last / <kbd>F1</kbd> <kbd>Esc</kbd> back</td></tr>
+            <tr><td>System settings</td><td><kbd>↑</kbd><kbd>↓</kbd> field / <kbd>←</kbd><kbd>→</kbd> value / <kbd>E</kbd> edit keys / <kbd>Enter</kbd> apply / <kbd>Esc</kbd> cancel</td></tr>
+            <tr><td>Keymap editor</td><td><kbd>↑</kbd><kbd>↓</kbd> select / <kbd>Enter</kbd> edit / <kbd>Delete</kbd> disable / <kbd>S</kbd> save as / <kbd>Esc</kbd> back</td></tr>
+            <tr><td>Confirmation (unsaved)</td><td><kbd>S</kbd> save and go / <kbd>Y</kbd> discard / <kbd>N</kbd> <kbd>Esc</kbd> return</td></tr>
+            <tr><td>Confirmation (external change)</td><td><kbd>O</kbd> overwrite / <kbd>R</kbd> reload / <kbd>N</kbd> <kbd>Esc</kbd> cancel</td></tr>
+            <tr><td>Confirmation (apply comparison)</td><td><kbd>Y</kbd> overwrite / <kbd>N</kbd> cancel (on exit, <kbd>Esc</kbd> also returns)</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.4.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.4.8</span>
+        <h2>Glossary</h2>
+        <p class="dek">Every term used in this manual, with the chapter that explains it.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Term</th><th>In one sentence</th><th style="width:10%">See</th></tr></thead>
+          <tbody>
+            <tr><td>Tab</td><td>One of several open files, each with its own cursor, search terms, and undo history.</td><td>2.1.3</td></tr>
+            <tr><td>Hint bar</td><td>Row 2, listing the keys that work on the current screen.</td><td>1.3.3</td></tr>
+            <tr><td>Status bar</td><td>Second from the bottom: filename, position, mode, syntax, encoding, line endings.</td><td>1.3.5</td></tr>
+            <tr><td>Message row</td><td>The last row. Yellow reports, white waits for input, red waits for a decision.</td><td>1.3.6</td></tr>
+            <tr><td>Insert / overwrite</td><td>Whether typing pushes text along or replaces the character under the cursor.</td><td>2.2.8</td></tr>
+            <tr><td>Grapheme cluster</td><td>What looks like a single character on screen; Erya's unit of movement and deletion.</td><td>2.2.3</td></tr>
+            <tr><td>Block selection</td><td>A rectangular selection that can be filled with a character or shifted as a unit.</td><td>2.2.5</td></tr>
+            <tr><td>Line wrap</td><td>Soft wrapping that changes the display only, never the file. Exclusive with block selection.</td><td>2.2.5</td></tr>
+            <tr><td>Paragraph reflow</td><td>Real line breaks inserted into the file to fit a given width.</td><td>3.1.8</td></tr>
+            <tr><td>Phrase</td><td>A captured string inserted in rotation, stored as JSON.</td><td>2.4.3</td></tr>
+            <tr><td>Macro</td><td>A recorded key sequence replayed on demand, stored as JSON.</td><td>2.4.6</td></tr>
+            <tr><td>Atomic save</td><td>Write a temporary file beside the original and swap it in; a failure never leaves a partial file.</td><td>2.1.6</td></tr>
+            <tr><td>External change</td><td>Another program modified the file. Clean documents reload; modified ones ask first.</td><td>2.1.7</td></tr>
+            <tr><td>Encoding</td><td>How text becomes bytes. Erya supports UTF-8, UTF-8 BOM, Big5, GBK, and Shift_JIS.</td><td>3.1.1</td></tr>
+            <tr><td>Line endings</td><td>LF or CRLF; the last cell of the status bar.</td><td>3.1.4</td></tr>
+            <tr><td>Large-file mode</td><td>The read-only reading mode used from 64 MiB up, which can follow a growing log.</td><td>3.2</td></tr>
+            <tr><td>Sparse line index</td><td>One file offset every 4096 lines, so a large file need not be loaded whole.</td><td>3.2.3</td></tr>
+            <tr><td>Hexadecimal view</td><td>The document laid out as bytes; read-only for text files.</td><td>3.3.1</td></tr>
+            <tr><td>Binary file</td><td>A file with NUL bytes or undecodable content; opens straight into the byte view.</td><td>3.3.5</td></tr>
+            <tr><td>Nibble</td><td>Half a byte. Changing a byte takes two hexadecimal digits.</td><td>3.3.6</td></tr>
+            <tr><td>Difference block</td><td>Consecutive differing lines in a comparison, treated as one unit.</td><td>3.4.3</td></tr>
+            <tr><td>Temporary copy</td><td>The working file used during a comparison; originals are untouched until you apply.</td><td>3.4.1</td></tr>
+            <tr><td>Key profile</td><td>A TOML file mapping actions to keys, swappable as a set.</td><td>4.1</td></tr>
+            <tr><td>Action name</td><td>The fixed identifier for a feature in a config file, such as <span class="path">save</span>.</td><td>4.4.2</td></tr>
+            <tr><td>Erya Terminal Safe</td><td>The default profile, avoiding combinations terminals do not deliver.</td><td>4.1.1</td></tr>
+            <tr><td>Erya Classic</td><td>The original 1.0 bindings, including every advanced action.</td><td>4.1.2</td></tr>
+            <tr><td>Translation file</td><td><span class="path">locales/*.toml</span>, which decides the interface language and can be extended.</td><td>4.2.5</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

@@ -1,0 +1,15 @@
+mod automation;
+mod binary;
+mod comparison;
+pub mod document;
+pub mod editor;
+mod file_browser;
+mod formatter;
+mod hex;
+pub mod i18n;
+pub mod keymap;
+mod large_file;
+mod layout;
+mod syntax;
+pub mod terminal;
+pub mod workspace;

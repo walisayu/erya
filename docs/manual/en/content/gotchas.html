@@ -1,0 +1,90 @@
+      <!-- ══════════ 💾 Loses your work ══════════ -->
+      <section id="s1">
+        <span class="sec-no">7 items</span>
+        <h2>💾 Loses your work</h2>
+        <p class="dek">Get these wrong and the text really is gone.</p>
+        <ol class="rule-list">
+          <li><b>There is no autosave and no crash recovery. </b>Anything you have not saved lives only in memory. Close the terminal, drop the SSH connection or crash the machine and it is gone. Erya asks before closing a tab or exiting, and that is the only safety net there is. (see <a href="Erya Manual・1.1・What This Editor Does.html#s7">1.1.7</a>)</li>
+          <li><b>Y on a confirmation row always means “discard”. </b>Reflexively pressing Y at a question is the easiest way to lose work. Press S to save. All three confirmation rows spell out what each letter does — read the row before you answer. (see <a href="Erya Manual・2.1・Opening Tabs and Saving.html#s8">2.1.8</a>)</li>
+          <li><b>On an external conflict, both O and R throw something away. </b>O overwrites the version on disk, R discards the version in front of you, and neither can be undone. If in doubt press N, save a copy under a new name, and merge the two with the comparison view. (see <a href="Erya Manual・2.1・Opening Tabs and Saving.html#s7">2.1.7</a>)</li>
+          <li><b>Captured phrases and macros vanish unless you save them. </b>Capturing only puts them in memory; Erya never writes the JSON on its own. Run “save phrases” or “save macro” before you exit — and note that neither action has a key in the default profile. (see <a href="Erya Manual・2.4・Undo Phrases and Macros.html#s5">2.4.5</a>)</li>
+          <li><b>Never save while the text is garbled. </b>If the garbling comes from a wrong encoding guess, saving writes the damage into the file. Press F7 until the text reads correctly, then save; if unsure, close the tab without saving — the file on disk is still fine. (see <a href="Erya Manual・4.3・Troubleshooting.html#s7">4.3.7</a>)</li>
+          <li><b>Pressing N when leaving a comparison discards every copied block. </b>“N discard and exit” throws away all the merging you just did. The temporary copies are deleted on the way out and cannot be recovered. (see <a href="Erya Manual・3.4・Side-by-Side Comparison.html#s8">3.4.8</a>)</li>
+          <li><b>Back up a binary file before you edit it. </b>Binary formats rarely tolerate mistakes: one byte of length difference, or a checksum you forgot to update, and the whole file is broken. Save a copy first. (see <a href="Erya Manual・3.3・Hexadecimal and Binary Editing.html#s7">3.3.7</a>)</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 🔒 Irreversible, or nearly ══════════ -->
+      <section id="s2">
+        <span class="sec-no">5 items</span>
+        <h2>🔒 Irreversible, or nearly</h2>
+        <p class="dek">No undo key for these; you start over.</p>
+        <ol class="rule-list">
+          <li><b>Undo holds 100 steps, and one character is one step. </b>It is a poor way to roll back a long passage you just typed. Only replace-all, formatting, paragraph reflow, inserting a phrase and running a macro count as a single step each. (see <a href="Erya Manual・2.4・Undo Phrases and Macros.html#s2">2.4.2</a>)</li>
+          <li><b>An automatic reload clears the undo history. </b>When an unmodified document changes on disk, Erya reloads it and drops the undo and redo history with it, because the old steps no longer fit the new content. It surprises everyone the first time. (see <a href="Erya Manual・2.1・Opening Tabs and Saving.html#s7">2.1.7</a>)</li>
+          <li><b>Close a tab and its undo history is gone. </b>The history belongs to the tab; reopening the file does not bring it back. (see <a href="Erya Manual・2.4・Undo Phrases and Macros.html#s1">2.4.1</a>)</li>
+          <li><b>Replace all never shows you what it is about to change. </b>F6 simply does it — no preview, no confirmation. That is risky with a short search string; walk through the matches with F3 first. (see <a href="Erya Manual・2.3・Search and Replace.html#s6">2.3.6</a>)</li>
+          <li><b>Applying a comparison overwrites the originals directly. </b>Once you confirm, the originals are written. Erya only checks whether they changed externally in the meantime; it keeps no backup. (see <a href="Erya Manual・3.4・Side-by-Side Comparison.html#s7">3.4.7</a>)</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 🤫 Silent — no warning at all ══════════ -->
+      <section id="s3">
+        <span class="sec-no">6 items</span>
+        <h2>🤫 Silent — no warning at all</h2>
+        <p class="dek">Nothing stops you, but the result is not what you expected.</p>
+        <ol class="rule-list">
+          <li><b>F7 and F8 only change the status bar; the file converts on save. </b>Neither key rewrites anything immediately — the conversion happens the next time you save. Which also means a wrong press costs nothing: undo it, or press again until you are back. (see <a href="Erya Manual・3.1・Encodings Line Endings and Syntax.html#s2">3.1.2</a>)</li>
+          <li><b>F7 silently skips encodings that cannot represent your text. </b>If the next encoding cannot hold every character, Erya moves straight to the one after it without comment, so a single press can jump from UTF-8 to GBK. (see <a href="Erya Manual・3.1・Encodings Line Endings and Syntax.html#s3">3.1.3</a>)</li>
+          <li><b>Sixteen actions have no key in the default profile. </b>Phrases, macros, block fill and shift, paragraph reflow and “show cursor position” — pressing anything for them does nothing, and that is expected. Their key column in F1 help is blank. (see <a href="Erya Manual・4.4・Key and Term Reference.html#s6">4.4.6</a>)</li>
+          <li><b>System settings are not remembered. </b>The profile and language you pick with F2 apply to this run only; the next start is back to the defaults. Use an environment variable or a config file to make them stick. (see <a href="Erya Manual・4.2・System Settings and Language.html#s2">4.2.2</a>)</li>
+          <li><b>Missing translations fall back to Traditional Chinese in silence. </b>If your own translation is incomplete, those strings simply appear in Chinese with no warning. Chinese text in an otherwise English interface usually means an untranslated key. (see <a href="Erya Manual・4.2・System Settings and Language.html#s7">4.2.7</a>)</li>
+          <li><b>A missing keymap at the default path is not reported. </b>If there is no keymap.toml where the platform expects one, Erya quietly uses the built-in defaults. A --keymap or ERYA_KEYMAP path that cannot be read, on the other hand, does get a message. (see <a href="Erya Manual・4.1・Key Bindings.html#s7">4.1.7</a>)</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 🔢 Order matters ══════════ -->
+      <section id="s4">
+        <span class="sec-no">5 items</span>
+        <h2>🔢 Order matters</h2>
+        <p class="dek">Do the steps out of order and the key “does nothing”.</p>
+        <ol class="rule-list">
+          <li><b>Press N to reach a difference before you copy it. </b>With the cursor on a row that is identical on both sides, Shift+→ does nothing except say there is no difference block to copy. The cursor and the “current difference” are two separate things. (see <a href="Erya Manual・3.4・Side-by-Side Comparison.html#s4">3.4.4</a>)</li>
+          <li><b>Create the block selection before filling or shifting it. </b>Without a selection you only get “create a block selection first”. The order is Ctrl+B, arrow keys, then the action key. (see <a href="Erya Manual・2.2・Moving Selecting and the Clipboard.html#s6">2.2.6</a>)</li>
+          <li><b>Turn off line wrap before starting a block selection. </b>The two are mutually exclusive, because wrapping makes “which column” meaningless. It works the other way round too: you cannot enable wrapping during a block selection. (see <a href="Erya Manual・2.2・Moving Selecting and the Clipboard.html#s5">2.2.5</a>)</li>
+          <li><b>Stop recording before running a macro. </b>Running one while recording only produces “stop recording before running the macro”. (see <a href="Erya Manual・2.4・Undo Phrases and Macros.html#s6">2.4.6</a>)</li>
+          <li><b>Copying differences is not the same as applying them. </b>Every copy goes to a temporary file. The originals change only after you press the save key and confirm with Y. (see <a href="Erya Manual・3.4・Side-by-Side Comparison.html#s7">3.4.7</a>)</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 📌 Most often forgotten ══════════ -->
+      <section id="s5">
+        <span class="sec-no">6 items</span>
+        <h2>📌 Most often forgotten</h2>
+        <p class="dek">Not hard, just easy to forget.</p>
+        <ol class="rule-list">
+          <li><b>Saving needs a writable directory, not just a writable file. </b>The atomic save creates its temporary file next to the original, so a read-only directory blocks the save even when the file itself is writable. (see <a href="Erya Manual・2.1・Opening Tabs and Saving.html#s6">2.1.6</a>)</li>
+          <li><b>Directories in the path are not created for you. </b>Saving into a directory that does not exist yet simply fails. Create it outside Erya first. (see <a href="Erya Manual・2.1・Opening Tabs and Saving.html#s5">2.1.5</a>)</li>
+          <li><b>Phrase and macro JSON follows the document's directory. </b>They live next to the file you are editing, not in your home directory. Switch projects and the previous set is out of reach — copy the JSON across if you want to share it. (see <a href="Erya Manual・2.4・Undo Phrases and Macros.html#s5">2.4.5</a>)</li>
+          <li><b>32 bytes per row needs a 144-column terminal. </b>In a narrower window W keeps 16 bytes per row and says why in the message row. (see <a href="Erya Manual・3.3・Hexadecimal and Binary Editing.html#s3">3.3.3</a>)</li>
+          <li><b>Large files can be neither compared nor highlighted. </b>Files of 64 MiB or more are refused by the comparison view, and syntax highlighting is switched off on purpose. (see <a href="Erya Manual・3.2・Large Files and Live Logs.html#s2">3.2.2</a>)</li>
+          <li><b>A macro records keys, not actions. </b>Change the key profile and an old macro can replay into something entirely different. Share macro files only with people using the same profile. (see <a href="Erya Manual・2.4・Undo Phrases and Macros.html#s7">2.4.7</a>)</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 🧭 Interface and naming traps ══════════ -->
+      <section id="s6">
+        <span class="sec-no">8 items</span>
+        <h2>🧭 Interface and naming traps</h2>
+        <p class="dek">Where Erya differs from other editors.</p>
+        <ol class="rule-list">
+          <li><b>Ctrl+C copies — it does not interrupt. Exit is Ctrl+X. </b>Ctrl+C will not end the program. F11 closes a tab; Ctrl+X leaves Erya. (see <a href="Erya Manual・1.1・What This Editor Does.html#s7">1.1.7</a>)</li>
+          <li><b>Ctrl+A moves to the start of the line; there is no select-all. </b>To cover the whole document use Ctrl+Home followed by Ctrl+Shift+End. (see <a href="Erya Manual・2.2・Moving Selecting and the Clipboard.html#s4">2.2.4</a>)</li>
+          <li><b>Ctrl+Y and Ctrl+R swap meanings between the two Erya profiles. </b>In Terminal Safe, Ctrl+Y is redo and Ctrl+R is replace; in Erya Classic, Ctrl+Y deletes a line and Ctrl+R is redo. The easiest pair to press by mistake after switching. (see <a href="Erya Manual・4.1・Key Bindings.html#s2">4.1.2</a>)</li>
+          <li><b>Esc in the file dialog cancels; it does not go up a level. </b>The parent directory is ← or Backspace. Erya's Esc always means “leave this screen”. (see <a href="Erya Manual・2.1・Opening Tabs and Saving.html#s2">2.1.2</a>)</li>
+          <li><b>The status bar column is a character count, not a screen column. </b>A full-width character occupies two screen columns but counts as one character. Ctrl+G uses the same counting as the status bar. (see <a href="Erya Manual・2.2・Moving Selecting and the Clipboard.html#s3">2.2.3</a>)</li>
+          <li><b>The difference count counts blocks, not lines. </b>Five consecutive changed lines are one block: N skips the whole block, and copying takes it as a unit. (see <a href="Erya Manual・3.4・Side-by-Side Comparison.html#s3">3.4.3</a>)</li>
+          <li><b>Esc does not leave the hexadecimal view of a binary file. </b>There is no text editing to return to. Esc just repeats the way out: F11 closes the tab, Ctrl+X exits. (see <a href="Erya Manual・3.3・Hexadecimal and Binary Editing.html#s5">3.3.5</a>)</li>
+          <li><b>Erya's clipboard is not the system clipboard. </b>What Ctrl+C copies stays inside Erya. To exchange text with other programs, use the terminal's own copy and paste. (see <a href="Erya Manual・2.2・Moving Selecting and the Clipboard.html#s7">2.2.7</a>)</li>
+        </ol>
+      </section>

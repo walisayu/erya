@@ -1,0 +1,53 @@
+# Erya terminal-safe shortcuts; omitted advanced actions are explicitly disabled.
+# F1 is the fixed help key and cannot be reassigned.
+name = "Erya Terminal Safe"
+
+[bindings]
+new_tab = "Ctrl+N"
+open_file = "Ctrl+O"
+compare_file = "F4"
+close_tab = "F11"
+next_tab = "F10"
+previous_tab = "F9"
+save = "Ctrl+S"
+save_as = "F12"
+quit = "Ctrl+X"
+search = ["Ctrl+W", "Ctrl+F"]
+go_to_position = "Ctrl+G"
+replace = "Ctrl+R"
+toggle_rectangular_selection = "Ctrl+B"
+toggle_line_wrap = "Ctrl+L"
+toggle_hex_view = "Ctrl+P"
+set_paragraph_width = []
+reflow_paragraph = []
+fill_rectangle = []
+move_rectangle_left = []
+move_rectangle_right = []
+move_rectangle_up = []
+move_rectangle_down = []
+capture_phrase = []
+insert_phrase = []
+load_phrases = []
+save_phrases = []
+toggle_macro_recording = []
+run_macro = []
+load_macro = []
+save_macro = []
+cut_line = "Ctrl+K"
+undo = "Ctrl+Z"
+redo = "Ctrl+Y"
+format_document = "Ctrl+T"
+paste = ["Ctrl+V", "Shift+Insert"]
+delete_line = "Ctrl+D"
+line_start = "Ctrl+A"
+line_end = "Ctrl+E"
+cursor_position = []
+cut = "Shift+Delete"
+copy = "Ctrl+C"
+toggle_insert = "Insert"
+find_next = "F3"
+replace_next = "F5"
+replace_all = "F6"
+convert_encoding = "F7"
+toggle_line_ending = "F8"
+open_settings = "F2"

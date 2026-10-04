@@ -1,0 +1,251 @@
+      <!-- ══════════ 3.4.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.4.1</span>
+        <h2>Starting a comparison</h2>
+        <p class="dek"><kbd>F4</kbd>, then the same file dialog twice.</p>
+
+        <ol class="rule-list">
+          <li><b>Press <kbd>F4</kbd>.</b> Row 1 says “Select left file”; the dialog works exactly as it does for opening (see 2.1.2).</li>
+          <li><b>Choose the left-hand file.</b> The message row says “Left selected: /etc/nginx/nginx.conf; choose the right file” and row 1 becomes “Select right file”.</li>
+          <li><b>Choose the right-hand file.</b> The comparison appears, with “Comparison complete: 7 difference blocks”.</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">The originals are not touched yet</span>
+          <p>On entry Erya <strong>copies both files into a temporary directory</strong>, and every block you copy across is written to those copies. The originals change only when you confirm (see 3.4.7). Merge as freely as you like; <kbd>Esc</kbd> abandons everything if you change your mind.</p>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Two kinds of file cannot be compared</span>
+          <ul>
+            <li><strong>Large files</strong> (64 MiB and up): “Side-by-side comparison is unavailable in large-file mode to avoid loading the complete file into memory”.</li>
+            <li><strong>Binary files</strong>: “Binary files cannot be compared side by side”.</li>
+          </ul>
+          <p>Both are refused while you are still choosing, so you never reach the comparison screen.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.4.2</span>
+        <h2>Reading the screen</h2>
+        <p class="dek">Half each, a rule between them, and a line-number column on both sides.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ File comparison</div>
+            <div class="s-bar"> Left │ nginx.conf             │ Right │ nginx.conf.new</div>
+            <div class="s-body">   1   worker_processes 4;      │   1   worker_processes 4;
+   2                            │   2
+<s>   3≠  keepalive_timeout 65;   </s>│<s>   3≠  keepalive_timeout 75;   </s>
+   4   gzip on;                 │   4   gzip on;
+<b>   5 ▶ client_max_body_size 8m;</b>│<b>   5 ▶ client_max_body_size 8m;</b>
+   6-  access_log off;          │
+   7   server {                 │   6   server {
+       │                        │   7+    listen 8443 ssl;</div>
+            <div class="s-status"> Cursor row 5/9  Current difference 2/7  Column 1 │ Legend: highlight/▶ cursor  ≠ modified  - left only  + right only </div>
+            <div class="s-msg">N next difference  P previous difference  Shift+→ cursor left→right  Shift+← cursor right→left  Ctrl+S apply  Esc back</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">Element</th><th>What it is</th></tr></thead>
+          <tbody>
+            <tr><td>Row 2 (hint bar)</td><td>Becomes <strong>the two filenames</strong>, half the width each, with the divider aligned to the one below.</td></tr>
+            <tr><td>Line numbers</td><td>Four digits per side, followed by two marker cells: <strong>the kind of difference</strong> and <strong>the cursor</strong>.</td></tr>
+            <tr><td>Blank rows</td><td>Where one side has no counterpart. This is the alignment at work — identical lines stay opposite each other.</td></tr>
+            <tr><td>Status bar</td><td>Which row of how many, which difference of how many, the horizontal column, then the legend.</td></tr>
+            <tr><td>Message row</td><td>Permanently shows the comparison keys, replaced by the result of whatever you just did.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.4.3</span>
+        <h2>The three difference markers</h2>
+        <p class="dek">You never have to rely on colour alone — each kind has a symbol.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">Symbol</th><th style="width:24%">Meaning</th><th>On screen</th></tr></thead>
+          <tbody>
+            <tr><td><b style="font-size:1.1em">≠</b></td><td>Present on both sides, different content</td><td>Marked on both sides, and <strong>the differing characters within the line are highlighted more strongly</strong></td></tr>
+            <tr><td><b style="font-size:1.1em">-</b></td><td>Left side only</td><td>Marked on the left; the right side is blank</td></tr>
+            <tr><td><b style="font-size:1.1em">+</b></td><td>Right side only</td><td>Marked on the right; the left side is blank</td></tr>
+            <tr><td>(blank)</td><td>Identical</td><td>No marker</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>Two more markers are about position rather than difference:</p>
+        <ul>
+          <li><strong>▶ is the cursor</strong>, shown on both sides at once — the two cursors are tied together.</li>
+          <li><strong>A brightened row</strong> is the row the cursor is on.</li>
+          <li><strong>Yellow line numbers</strong> mark the “current difference block”, which is where <kbd>N</kbd> and <kbd>P</kbd> stop.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">Consecutive differing lines form one block</span>
+          <p>When the status bar says “Current difference 2/7”, the 7 counts <strong>blocks</strong>, not lines. Five consecutive changed lines are one block: <kbd>N</kbd> skips the whole thing, and copying takes it as a unit.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.4.4</span>
+        <h2>The cursor and the current difference</h2>
+        <p class="dek">The single most confusing thing about this screen.</p>
+
+        <div class="duo">
+          <div>
+            <h4>The cursor (▶)</h4>
+            <p>Moved with <kbd>↑</kbd> <kbd>↓</kbd>, <kbd>PageUp</kbd> <kbd>PageDown</kbd>, <kbd>Home</kbd> <kbd>End</kbd>, <strong>one row at a time</strong>, stopping on identical rows as well.</p>
+            <p><strong>Copying a difference looks at the row the cursor is on.</strong></p>
+          </div>
+          <div>
+            <h4>The current difference (yellow numbers)</h4>
+            <p>Moved with <kbd>N</kbd> and <kbd>P</kbd>, <strong>one block at a time</strong>, stopping only where there is a difference.</p>
+            <p>Jumping there moves the cursor too, so you can copy immediately afterwards.</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">On an identical row, nothing copies</span>
+          <p>If <kbd>Shift+→</kbd> appears to do nothing and the message row says “There is no difference block to copy at the cursor”, this is why. <strong>Press <kbd>N</kbd> to land on a difference first.</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.4.5</span>
+        <h2>Moving and scrolling</h2>
+        <p class="dek">The two sides always move together.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Cursor one row, with the view following</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>A page at a time</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>To the very start or end of the comparison</td></tr>
+            <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td><strong>Scrolls both sides horizontally</strong>, for long lines</td></tr>
+            <tr><td><kbd>Ctrl+←</kbd> <kbd>Ctrl+→</kbd></td><td>Horizontally, eight columns at a time</td></tr>
+            <tr><td><kbd>N</kbd></td><td>Next difference block</td></tr>
+            <tr><td><kbd>P</kbd></td><td>Previous difference block</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p><kbd>N</kbd> and <kbd>P</kbd> <strong>wrap around</strong> past the last block, so you can keep pressing to circle the whole file.</p>
+      </section>
+
+      <!-- ══════════ 3.4.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.4.6</span>
+        <h2>Copying a difference across</h2>
+        <p class="dek">Two keys, and the arrow points the way it goes.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Shift+→</kbd></td><td>Copies the block at the cursor <strong>from left to right</strong> (into the right temporary file)</td></tr>
+            <tr><td><kbd>Shift+←</kbd></td><td>Copies the block at the cursor <strong>from right to left</strong></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>Afterwards: “Current difference copied from left to the right temporary file; 6 blocks remain” — <strong>it tells you how many are left</strong>.</li>
+          <li><strong>The cursor and the view stay where they are</strong>, so you can check the result. Press <kbd>N</kbd> when you want the next one.</li>
+          <li>The whole block is copied, not one line of it.</li>
+          <li>If writing the temporary file fails (a full disk, permissions) you get “Could not update the temporary file: …”.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">The standard merge loop</span>
+          <p><kbd>N</kbd> to a difference → look at it → <kbd>Shift+→</kbd> or <kbd>Shift+←</kbd> to take it, or <kbd>N</kbd> again to leave it → carry on until it wraps → <kbd>Ctrl+S</kbd> to apply. Four keys, start to finish.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.4.7</span>
+        <h2>Applying to the originals</h2>
+        <p class="dek">Press the save key of your profile (<kbd>Ctrl+S</kbd> by default), then answer Y or N.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn">Overwrite the original files with the temporary comparison results? Y overwrite / N cancel</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b>Press <kbd>Ctrl+S</kbd>.</b> With nothing copied yet you simply get “There are no temporary changes to apply”, and no question.</li>
+          <li><b>Press <kbd>Y</kbd> to confirm.</b> Erya <strong>first checks whether the originals changed externally</strong>, and only then writes.</li>
+          <li><b>Success.</b> “Confirmed and overwritten 2 original files” — only the side you actually changed is written.</li>
+          <li><b>Failure.</b> “Original files were not overwritten: …”, and <strong>neither side is touched</strong>. Usually this means someone else moved an original while you were merging.</li>
+          <li><b>Press <kbd>N</kbd> to cancel.</b> “Overwrite cancelled; temporary changes are still available” — your merging survives, so you can continue or apply later.</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">The external check is not optional</span>
+          <p>It is the same protection as an ordinary save (see 2.1.7). Comparisons take a while, and having an original replaced by <span class="path">git checkout</span> halfway through is entirely normal — Erya will not quietly write over that.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.4.8</span>
+        <h2>Three choices on the way out</h2>
+        <p class="dek">With unapplied changes, <kbd>Esc</kbd> asks first.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn">Temporary changes are not applied: Y overwrite and exit / N discard and exit / Esc return</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:16%">Key</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Y</kbd></td><td>Overwrite the originals and leave (with the same external check).</td></tr>
+            <tr><td><kbd>N</kbd></td><td><strong>Discard the temporary changes</strong> and leave. Nothing you copied counts; the originals are untouched.</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Back to the comparison, nothing done.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>With no temporary changes at all, <kbd>Esc</kbd> just leaves without asking.</p>
+
+        <div class="callout">
+          <span class="co-title">The temporary copies are deleted on the way out</span>
+          <p>The temporary directory exists only for the duration of the comparison. <strong>After you leave with <kbd>N</kbd>, the merging cannot be recovered</strong> — but the originals are still there, so starting again costs nothing but time.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.4.9</span>
+        <h2>Common problems</h2>
+        <p class="dek">Seven situations in the comparison view.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Shift+→</kbd> does nothing</td><td>The cursor is on an identical row. Press <kbd>N</kbd> first (3.4.4).</td></tr>
+            <tr><td>Refused while choosing files</td><td>A large or binary file was selected (3.4.1).</td></tr>
+            <tr><td>Merged, but the originals are unchanged</td><td>You edited the temporary copies. Press <kbd>Ctrl+S</kbd> and confirm with <kbd>Y</kbd> (3.4.7).</td></tr>
+            <tr><td>“Original files were not overwritten”</td><td>An original changed externally during the comparison. Leave and start again (3.4.7).</td></tr>
+            <tr><td>The merging disappeared after exiting</td><td><kbd>N</kbd> was pressed on the way out — discard and exit (3.4.8).</td></tr>
+            <tr><td>The end of a long line is off screen</td><td>Scroll with <kbd>←</kbd> <kbd>→</kbd>; both sides move together (3.4.5).</td></tr>
+            <tr><td>The difference count looks wrong</td><td>It counts <strong>blocks</strong>, not lines; consecutive changes are one block (3.4.3).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

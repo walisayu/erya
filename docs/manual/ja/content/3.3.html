@@ -1,0 +1,259 @@
+      <!-- ══════════ 3.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.3.1</span>
+        <h2>2 つの入り方</h2>
+        <p class="dek">自分で <kbd>Ctrl+P</kbd> を押すか、Erya が「これはテキストではない」と判断するか。</p>
+
+        <div class="duo">
+          <div>
+            <h4>① テキストファイルで <kbd>Ctrl+P</kbd></h4>
+            <p><strong>読み取り専用</strong>です。表示されるのは「保存したらディスクに書かれるバイト列」そのもので、BOM、現在の文字コード、LF／CRLF を含みます。</p>
+            <p>もう一度 <kbd>Ctrl+P</kbd>、または <kbd>Esc</kbd> でテキスト編集に戻り、カーソルは同じバイトの位置にとどまります。</p>
+          </div>
+          <div>
+            <h4>② バイナリファイルは自動でこの表示</h4>
+            <p>テキストとして復号できない、または NUL バイトを含むファイルは、開いた時点でこの表示になり、<strong>戻ることはできません</strong>。戻る先のテキストが存在しないからです。</p>
+            <p>64 MiB 未満なら<strong>バイトを編集できます</strong>。それ以上はストリーム読みの読み取り専用です（3.3.8 参照）。</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">テキストファイルで読み取り専用な理由</span>
+          <p>テキスト文書の実体はテキストバッファーであり、バイト列は「保存したらこうなる」という表示にすぎません。バイトを直接いじるには、そのファイルがもともとバイナリである必要があります。テキストファイル内のバイトを変えたいときは、文字を編集するか、<kbd>F7</kbd> で文字コードを変えてください（3.1.2 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.3.2</span>
+        <h2>画面に表示されるもの</h2>
+        <p class="dek">3 つの欄：オフセット、バイト、印字可能文字。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [報告.txt]</div>
+            <div class="s-bar">W 1 行 16/32  O オフセット 10/16  Ctrl+G/G 移動  Ctrl+P/Esc 編集に戻る</div>
+            <div class="s-body">00000000  48 65 6C 6C 6F 2C 20 E4  B8 96 E7 95 8C 0A 41 42  |Hello, .......AB|
+00000010  43 44 45 46 47 48 49 4A  4B 4C 4D 4E 4F 50 51 52  |CDEFGHIJKLMNOPQR|
+00000020  53 54 55 56 57 58 59 5A  0A 0A E5 B7 A5 E4 BD 9C  |STUVWXYZ........|
+00000030  0A                                                |.               |</div>
+            <div class="s-status"> オフセット 0x1F / 0x31｜1 行 16 バイト │ 16 進数 │ UTF-8 │ 報告.txt </div>
+            <div class="s-msg"> 16 進数表示（読み取り専用）に切り替えました</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">欄</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td>オフセット</td><td>その行の先頭バイトの位置。<strong>最低 8 桁</strong>でゼロ詰めなので、短いファイルでも古典的なダンプの見た目になります。</td></tr>
+            <tr><td>バイト</td><td>1 バイトを 16 進数 2 桁で。<strong>8 個ごとに区切り</strong>、間に空白を 1 つ余分に入れて数えやすくしています。末尾で足りない分は空白です。</td></tr>
+            <tr><td>文字</td><td><span class="path">|</span> で囲まれます。印字可能な ASCII はそのまま、それ以外はすべて <span class="path">.</span> です。日本語はバイト数ぶんの点が並びます。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>ステータス行も専用の形になります：<strong>オフセット 現在／全体｜1 行のバイト数 │ 表示の種類 │ 文字コードまたはモード │ ファイル名</strong>。カーソル位置のバイトは 2 つの欄で同時に反転します。</p>
+      </section>
+
+      <!-- ══════════ 3.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.3.3</span>
+        <h2>読み取り専用表示の 4 キー</h2>
+        <p class="dek">移動キーは通常どおり。この画面専用が 4 つあります。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">キー</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>W</kbd></td><td>1 行 16 バイトと 32 バイトを切り替えます。<strong>32 バイトには 144 桁の幅が必要</strong>で、足りなければ 16 のままで「画面幅が足りません。1 行 32 バイトには 144 桁が必要です」と出ます。</td></tr>
+            <tr><td><kbd>O</kbd></td><td>オフセットを 10 進数／16 進数で表示します。「オフセットを 10 進数で表示します」。</td></tr>
+            <tr><td><kbd>G</kbd> または <kbd>Ctrl+G</kbd></td><td>オフセットへ移動します（3.3.4 参照）。</td></tr>
+            <tr><td><kbd>Ctrl+P</kbd> または <kbd>Esc</kbd></td><td>テキスト編集に戻ります。</td></tr>
+            <tr><td>矢印 / <kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>バイト・行・ページ単位で移動します。</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>その行の最初／最後のバイトへ。</td></tr>
+            <tr><td><kbd>Ctrl+Home</kbd> <kbd>Ctrl+End</kbd></td><td>ファイルの先頭／末尾へ。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">読むのは画面に映る範囲だけです</span>
+          <p>16 進数表示は<strong>ファイル全体をメモリーに読み込みません</strong>。見ている部分だけを読みます。数百 MB のファイルでも一瞬で開きます。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.3.4</span>
+        <h2>オフセットを指定して移動</h2>
+        <p class="dek">10 進数と 16 進数を取り違えやすいので、4 通りの書き方に対応しています。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確定  Esc 取消  ←/→ カーソル移動  Backspace/Delete 削除</div>
+            <div class="s-msg ask">オフセットへ移動（16 進数、0x 接頭辞可）：1F40<em> </em></div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">入力</th><th>解釈</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">1F40</span></td><td><strong>オフセット欄の現在の基数で解釈</strong>します。どちらかは入力欄の案内に出ています。</td></tr>
+            <tr><td><span class="path">0x1F</span></td><td>常に 16 進数</td></tr>
+            <tr><td><span class="path">$1F</span></td><td>常に 16 進数</td></tr>
+            <tr><td><span class="path">1Fh</span></td><td>常に 16 進数</td></tr>
+            <tr><td><span class="path">0d31</span></td><td>常に 10 進数</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>成功すると「オフセット 0x1F に移動しました」。</li>
+          <li>形式が不正なら「オフセットの形式が正しくありません。数値、または 0x 接頭辞で 16 進数を入力してください」と出て、もう一度尋ねます。</li>
+          <li>ファイルサイズを超える値は末尾で止まります。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">迷ったら接頭辞を付ける</span>
+          <p>他のツール（<span class="path">xxd</span>、デバッガー、フォーマット仕様書）から写したオフセットはたいてい 16 進数なので、<span class="path">0x</span> を付けておくのが安全です。オフセット欄の基数を確認する手間も省けます。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.3.5</span>
+        <h2>バイナリファイルは自動でこの表示</h2>
+        <p class="dek">判定は単純です。先頭 8 KiB に NUL バイトがあるかどうか。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [logo.png]</div>
+            <div class="s-bar">0-9A-F 編集  I 上書き/挿入  BS/Del 削除  W 16/32  O 10/16  G 移動  F11 閉じる</div>
+            <div class="s-body">00000000  89 50 4E 47 0D 0A 1A 0A  00 00 00 0D 49 48 44 52  |.PNG........IHDR|
+00000010  00 00 01 90 00 00 01 90  08 06 00 00 00 80 BF 36  |...............6|
+00000020  CC 00 00 00 09 70 48 59  73 00 00 0E C4 00 00 0E  |.....pHYs.......|</div>
+            <div class="s-status"> オフセット 0x0 / 0x4A21｜1 行 16 バイト │ バイナリ │ 上書き │ logo.png </div>
+            <div class="s-msg"> バイナリファイル logo.png（19 KB）を編集可能な 16 進数表示で開きました</div>
+          </div>
+        </div>
+
+        <ul>
+          <li>ヒント行が<strong>バイト編集用</strong>に変わり、末尾に出口も書かれます。</li>
+          <li>ステータス行の 2 番目は <span class="path">バイナリ</span>（「16 進数」ではありません）、3 番目は <span class="path">上書き</span>／<span class="path">挿入</span>／<span class="path">読み取り専用</span>。</li>
+          <li><kbd>Esc</kbd> ではテキスト編集に戻りません。戻る先が無いからです。押すと出口をもう一度伝えます：「バイナリファイルは 16 進数表示でのみ開けます。F11 でタブを閉じる、Ctrl+X で終了」。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">UTF-16 はバイナリ扱いにしません</span>
+          <p>UTF-16 のテキストは NUL だらけで、見た目はバイナリそっくりです。Erya はその形を見分け、非対応の文字コードとして報告します。<strong>編集可能なバイト列として見せることはしません。</strong>問題のないテキストファイルを壊しかねないからです（3.1.1 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.3.6</span>
+        <h2>1 バイトを書き換える</h2>
+        <p class="dek">16 進数を 2 桁入力します。上位半バイト、次に下位半バイト。</p>
+
+        <ol class="rule-list">
+          <li><b>対象のバイトにカーソルを置きます。</b>2 つの欄で反転します。</li>
+          <li><b>1 桁目を入力します。</b><span class="path">4A</span> にするなら <kbd>4</kbd>。上位半バイトが決まります。</li>
+          <li><b>2 桁目を入力します。</b><kbd>A</kbd> を押すとそのバイトが <span class="path">4A</span> になり、カーソルが次へ進みます。</li>
+          <li><b>この 2 回で 1 手です。</b><kbd>Ctrl+Z</kbd> 1 回で元の値に戻り、半分だけ戻ることはありません。</li>
+        </ol>
+
+        <div class="callout warn">
+          <span class="co-title">16 進数以外のキーを押すと</span>
+          <p>「バイトを変更するには 16 進数（0-9、A-F）を入力してください」と出ます。<strong>書き込めるのは <kbd>0</kbd>〜<kbd>9</kbd> と <kbd>A</kbd>〜<kbd>F</kbd> だけ</strong>です（大文字小文字どちらでも可）。</p>
+        </div>
+
+        <p>保存・元に戻す・やり直す・名前を付けて保存は<strong>通常どおりのキー</strong>（<kbd>Ctrl+S</kbd>、<kbd>Ctrl+Z</kbd>、<kbd>Ctrl+Y</kbd>、<kbd>F12</kbd>）です。バイナリ文書にはテキストバッファーが無いため、<strong>文字コード変換・改行コード変換・比較は使えません</strong>。押すと「16 進数表示はこの操作に対応していません」と出ます。</p>
+      </section>
+
+      <!-- ══════════ 3.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.3.7</span>
+        <h2>バイトの挿入と削除</h2>
+        <p class="dek">Mac のキーボードに <kbd>Insert</kbd> が無いため、この画面には専用の <kbd>I</kbd> があります。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">キー</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>I</kbd>（または <kbd>Insert</kbd>）</td><td>上書きと挿入を切り替えます。ステータス行の 3 番目が変わります。</td></tr>
+            <tr><td><kbd>Backspace</kbd></td><td>カーソルの<strong>前</strong>のバイトを削除</td></tr>
+            <tr><td><kbd>Delete</kbd></td><td>カーソル<strong>位置</strong>のバイトを削除</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="duo">
+          <div>
+            <h4>上書き（既定）</h4>
+            <p>入力したバイトが元のバイトを<strong>置き換え</strong>、ファイルの長さは変わりません。</p>
+            <p>PNG・ZIP・ファームウェアなど、長さを保つ必要がある形式ではこちらを。</p>
+          </div>
+          <div>
+            <h4>挿入</h4>
+            <p>入力したバイトが<strong>差し込まれ</strong>、後ろが押し出されてファイルが伸びます。</p>
+            <p>挿入モードではカーソルを<strong>最後のバイトより後ろ</strong>に置けるので、末尾への追加ができます。</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">バイナリを編集する前にバックアップを</span>
+          <p>Erya には 100 手の履歴がありますが、ファイル形式のほうに余裕がありません。長さが 1 バイトずれる、チェックサムを更新し忘れる、それだけで壊れます。<strong>先に <kbd>F12</kbd> で控えを作る</strong>か、外部で原本を複製してください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.3.8</span>
+        <h2>大きなファイルは読み取り専用のまま</h2>
+        <p class="dek">境界は大容量テキストと同じ 64 MiB です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">ファイル</th><th style="width:24%">開き方</th><th>編集できるか</th></tr></thead>
+          <tbody>
+            <tr><td>64 MiB 未満のバイナリ</td><td>バイトをメモリーに保持</td><td><strong>できます</strong>：変更・挿入・削除・元に戻す・保存</td></tr>
+            <tr><td>64 MiB 以上のバイナリ</td><td>ストリーム読み</td><td><strong>できません</strong>。3 番目のマスが <span class="path">読み取り専用</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>大きなバイナリを開くと「バイナリファイル disk.img（4.2 GB）を読み取り専用の 16 進数表示で開きました」と出ます。</li>
+          <li>変更しようとすると「このバイナリファイルは読み取り専用のため変更できません」。</li>
+          <li>ヒント行も読み取り専用版になり、末尾に「読み取り専用」と付きます。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">この境界はメモリーの上限のためです</span>
+          <p>編集できるということは、全バイトをメモリーに置くということです。8 GB のイメージを開いたときにマシンを止めてしまうくらいなら、読み取り専用のほうがましだという判断で、大容量テキストと同じ考え方です（3.2.3 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.3.9</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">16 進数表示での 7 つの場面。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>テキストファイルのバイトを変えられない</td><td>テキストファイルでは読み取り専用です（3.3.1）。</td></tr>
+            <tr><td><kbd>Esc</kbd> で戻れない</td><td>バイナリファイルで、戻る先のテキスト編集がありません。<kbd>F11</kbd> か <kbd>Ctrl+X</kbd>（3.3.5）。</td></tr>
+            <tr><td><kbd>W</kbd> で 32 バイトにならない</td><td>ターミナルが 144 桁未満です。広げてから押してください（3.3.3）。</td></tr>
+            <tr><td>移動先が想定と違う</td><td>入力が別の基数で解釈されました。<span class="path">0x</span> を付けます（3.3.4）。</td></tr>
+            <tr><td>英字キーで「16 進数を入力してください」</td><td>変更できるのは <kbd>0</kbd>〜<kbd>9</kbd> と <kbd>A</kbd>〜<kbd>F</kbd> だけです（3.3.6）。</td></tr>
+            <tr><td>日本語が点の羅列に見える</td><td>文字欄は印字可能な ASCII だけを表示し、多バイト文字は点になります（3.3.2）。</td></tr>
+            <tr><td>編集して保存したら開けなくなった</td><td>バイナリ形式は長さやチェックサムに厳格です。バックアップから戻してください（3.3.7）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

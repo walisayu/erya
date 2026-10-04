@@ -1,0 +1,259 @@
+      <!-- ══════════ 3.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.3.1</span>
+        <h2>Two ways in</h2>
+        <p class="dek">You press <kbd>Ctrl+P</kbd>, or Erya works out that the file was never text.</p>
+
+        <div class="duo">
+          <div>
+            <h4>① <kbd>Ctrl+P</kbd> on a text file</h4>
+            <p><strong>Read-only.</strong> What you see is exactly what a save would write: the BOM, the current encoding, and LF or CRLF endings.</p>
+            <p><kbd>Ctrl+P</kbd> again, or <kbd>Esc</kbd>, returns to text editing with the cursor on the same byte.</p>
+          </div>
+          <div>
+            <h4>② A binary file opens here</h4>
+            <p>Files that cannot be decoded as text, or that contain NUL bytes, start in this view — and <strong>cannot leave it</strong>, because there is no text to edit.</p>
+            <p>Below 64 MiB <strong>the bytes are editable</strong>; above it the file stays streamed and read-only (see 3.3.8).</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Why the view is read-only for text files</span>
+          <p>A text document lives in a text buffer; the bytes are only a rendering of what it would become on disk. To edit bytes directly, the file has to be a binary file in the first place. To change a byte in a text file, edit the character, or change the encoding with <kbd>F7</kbd> (see 3.1.2).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.3.2</span>
+        <h2>What is on the screen</h2>
+        <p class="dek">Three columns: offset, bytes, printable characters.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [report.txt]</div>
+            <div class="s-bar">W 16/32 bytes  O dec/hex offsets  Ctrl+G/G go to offset  Ctrl+P/Esc back</div>
+            <div class="s-body">00000000  48 65 6C 6C 6F 2C 20 E4  B8 96 E7 95 8C 0A 41 42  |Hello, .......AB|
+00000010  43 44 45 46 47 48 49 4A  4B 4C 4D 4E 4F 50 51 52  |CDEFGHIJKLMNOPQR|
+00000020  53 54 55 56 57 58 59 5A  0A 0A E5 B7 A5 E4 BD 9C  |STUVWXYZ........|
+00000030  0A                                                |.               |</div>
+            <div class="s-status"> Offset 0x1F / 0x31 │ 16 bytes per row │ Hex │ UTF-8 │ report.txt </div>
+            <div class="s-msg"> Switched to the hexadecimal view (read-only)</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">Column</th><th>What it shows</th></tr></thead>
+          <tbody>
+            <tr><td>Offset</td><td>The position of the first byte on this row. <strong>At least eight digits</strong>, zero-padded, so short files still look like a classic dump.</td></tr>
+            <tr><td>Bytes</td><td>Two hexadecimal digits each, <strong>in groups of eight</strong> with an extra space between groups for counting. Missing bytes at the end of the file are blank.</td></tr>
+            <tr><td>Characters</td><td>Framed by <span class="path">|</span>. Printable ASCII appears as itself; everything else is a <span class="path">.</span> — so CJK text shows as runs of dots, one per byte.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>The status bar takes a form of its own: <strong>offset current/total │ bytes per row │ view kind │ encoding or mode │ filename</strong>. The byte under the cursor is highlighted in both columns at once.</p>
+      </section>
+
+      <!-- ══════════ 3.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.3.3</span>
+        <h2>Four keys in the read-only view</h2>
+        <p class="dek">Movement works as usual; four keys belong to this screen.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>W</kbd></td><td>Switches between 16 and 32 bytes per row. <strong>32 needs a 144-column terminal</strong>; in a narrower window it stays at 16 and says “The terminal is too narrow; 32 bytes per row need 144 columns”.</td></tr>
+            <tr><td><kbd>O</kbd></td><td>Shows offsets in decimal or hexadecimal. “Offsets now shown in decimal”.</td></tr>
+            <tr><td><kbd>G</kbd> or <kbd>Ctrl+G</kbd></td><td>Jumps to an offset (see 3.3.4).</td></tr>
+            <tr><td><kbd>Ctrl+P</kbd> or <kbd>Esc</kbd></td><td>Back to text editing.</td></tr>
+            <tr><td>Arrows / <kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>Move by byte, row, and page.</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>First or last byte of the row.</td></tr>
+            <tr><td><kbd>Ctrl+Home</kbd> <kbd>Ctrl+End</kbd></td><td>Start or end of the file.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">Only the visible part is read</span>
+          <p>The hexadecimal view <strong>never loads the whole file into memory</strong>; it reads the section you are looking at. Opening a several-hundred-megabyte file this way is instant.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.3.4</span>
+        <h2>Jumping to an offset</h2>
+        <p class="dek">Four notations, because decimal and hexadecimal are so easy to confuse.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter confirm  Esc cancel  ←/→ move caret  Backspace/Delete edit</div>
+            <div class="s-msg ask">Go to offset (hexadecimal, 0x prefix allowed): 1F40<em> </em></div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">You type</th><th>How it is read</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">1F40</span></td><td><strong>In whatever base the offset column is using.</strong> The prompt says which that is.</td></tr>
+            <tr><td><span class="path">0x1F</span></td><td>Always hexadecimal</td></tr>
+            <tr><td><span class="path">$1F</span></td><td>Always hexadecimal</td></tr>
+            <tr><td><span class="path">1Fh</span></td><td>Always hexadecimal</td></tr>
+            <tr><td><span class="path">0d31</span></td><td>Always decimal</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>On success: “Jumped to offset 0x1F”.</li>
+          <li>Malformed input gives “Invalid offset; enter a number, or prefix it with 0x for hexadecimal” and asks again.</li>
+          <li>An offset past the end stops at the end.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">When in doubt, use a prefix</span>
+          <p>Offsets copied from other tools (<span class="path">xxd</span>, a debugger, a format specification) are usually hexadecimal, so adding <span class="path">0x</span> is the safe habit — no need to check which base the column is in.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.3.5</span>
+        <h2>Binary files open here automatically</h2>
+        <p class="dek">The test is simple: is there a NUL byte in the first 8 KiB?</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [logo.png]</div>
+            <div class="s-bar">0-9A-F edit  I ovr/ins  BS/Del delete  W 16/32  O dec/hex  G offset  F11 close</div>
+            <div class="s-body">00000000  89 50 4E 47 0D 0A 1A 0A  00 00 00 0D 49 48 44 52  |.PNG........IHDR|
+00000010  00 00 01 90 00 00 01 90  08 06 00 00 00 80 BF 36  |...............6|
+00000020  CC 00 00 00 09 70 48 59  73 00 00 0E C4 00 00 0E  |.....pHYs.......|</div>
+            <div class="s-status"> Offset 0x0 / 0x4A21 │ 16 bytes per row │ Binary │ Overwrite │ logo.png </div>
+            <div class="s-msg"> Opened binary file logo.png (19 KB) in the editable hexadecimal view</div>
+          </div>
+        </div>
+
+        <ul>
+          <li>The hint bar switches to the <strong>byte-editing</strong> set, and names the way out at the end of it.</li>
+          <li>The second status cell reads <span class="path">Binary</span> (not “Hex”), and the third is <span class="path">Overwrite</span>, <span class="path">Insert</span>, or <span class="path">Read-only</span>.</li>
+          <li><kbd>Esc</kbd> does not return to text editing, because there is none. It simply repeats the exits: “A binary file can only be read in the hexadecimal view; F11 closes the tab, Ctrl+X quits”.</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">UTF-16 files are not treated as binary</span>
+          <p>UTF-16 text is full of NUL bytes and looks very much like a binary file. Erya recognises the pattern and reports an unsupported text encoding instead — <strong>rather than presenting it as editable bytes</strong>, which would invite you to damage a perfectly good text file (see 3.1.1).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.3.6</span>
+        <h2>Changing one byte</h2>
+        <p class="dek">Type two hexadecimal digits: the high nibble, then the low one.</p>
+
+        <ol class="rule-list">
+          <li><b>Put the cursor on the byte.</b> It is highlighted in both columns.</li>
+          <li><b>Type the first digit.</b> For <span class="path">4A</span>, press <kbd>4</kbd> — the high nibble is set.</li>
+          <li><b>Type the second.</b> Press <kbd>A</kbd>; the byte becomes <span class="path">4A</span> and the cursor advances.</li>
+          <li><b>The two presses are one undo step.</b> A single <kbd>Ctrl+Z</kbd> restores the original value, never half of it.</li>
+        </ol>
+
+        <div class="callout warn">
+          <span class="co-title">Pressing a key that is not a hexadecimal digit</span>
+          <p>You get “Type a hexadecimal digit (0-9, A-F) to change a byte”. <strong>Only <kbd>0</kbd>–<kbd>9</kbd> and <kbd>A</kbd>–<kbd>F</kbd> write anything</strong> (either case).</p>
+        </div>
+
+        <p>Save, undo, redo, and Save As all use <strong>their usual keys</strong> (<kbd>Ctrl+S</kbd>, <kbd>Ctrl+Z</kbd>, <kbd>Ctrl+Y</kbd>, <kbd>F12</kbd>). A binary document has no text buffer, so <strong>encoding conversion, line-ending conversion, and comparison do not apply</strong>; pressing those keys gives “The hexadecimal view does not support this action”.</p>
+      </section>
+
+      <!-- ══════════ 3.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.3.7</span>
+        <h2>Inserting and deleting bytes</h2>
+        <p class="dek">This screen has its own <kbd>I</kbd> key, because Mac keyboards have no <kbd>Insert</kbd>.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Key</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>I</kbd> (or <kbd>Insert</kbd>)</td><td>Switches between overwrite and insert. The third status cell follows.</td></tr>
+            <tr><td><kbd>Backspace</kbd></td><td>Deletes the byte <strong>before</strong> the cursor</td></tr>
+            <tr><td><kbd>Delete</kbd></td><td>Deletes the byte <strong>under</strong> the cursor</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="duo">
+          <div>
+            <h4>Overwrite (the default)</h4>
+            <p>Typed bytes <strong>replace</strong> what was there; the file length does not change.</p>
+            <p>Use this for structured formats — PNG, ZIP, firmware — where the length has to stay put.</p>
+          </div>
+          <div>
+            <h4>Insert</h4>
+            <p>Typed bytes are <strong>inserted</strong>, pushing the rest along; the file grows.</p>
+            <p>In insert mode the cursor <strong>may sit past the last byte</strong>, which is how you append.</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Back the file up before you edit it</span>
+          <p>Erya has 100 undo steps, but the file format usually has no tolerance at all: one byte of length difference, a checksum left stale, and the file is broken. <strong>Press <kbd>F12</kbd> for a copy first</strong>, or duplicate the original outside Erya.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.3.8</span>
+        <h2>Big files stay streamed and read-only</h2>
+        <p class="dek">The same 64 MiB line as for large text files.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">File</th><th style="width:24%">Opens as</th><th>Editable?</th></tr></thead>
+          <tbody>
+            <tr><td>Binary below 64 MiB</td><td>Bytes held in memory</td><td><strong>Yes</strong>: change, insert, delete, undo, save</td></tr>
+            <tr><td>Binary at 64 MiB or more</td><td>Streamed from disk</td><td><strong>No</strong>, read-only. The third status cell says <span class="path">Read-only</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>Opening a large binary reports “Opened binary file disk.img (4.2 GB) in the read-only hexadecimal view”.</li>
+          <li>Attempting to change something gives “This binary file is read-only and cannot be changed”.</li>
+          <li>The hint bar switches to its read-only variant, ending in the word “read-only”.</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">The line exists to bound memory</span>
+          <p>Editable means the whole byte sequence has to be in memory. Erya would rather keep a large file read-only than exhaust your machine when you open an 8 GB image — the same trade-off as for large text files (see 3.2.3).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.3.9</span>
+        <h2>Common problems</h2>
+        <p class="dek">Seven situations in the hexadecimal view.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>You cannot edit a text file's bytes</td><td>The view is read-only for text files (3.3.1).</td></tr>
+            <tr><td><kbd>Esc</kbd> does not take you back</td><td>It is a binary file; there is no text editing to return to. <kbd>F11</kbd> or <kbd>Ctrl+X</kbd> (3.3.5).</td></tr>
+            <tr><td><kbd>W</kbd> will not give 32 bytes</td><td>The terminal is under 144 columns. Enlarge it and press again (3.3.3).</td></tr>
+            <tr><td>A jump lands somewhere unexpected</td><td>The input was read in the other base. Use the <span class="path">0x</span> prefix (3.3.4).</td></tr>
+            <tr><td>A letter key says “type a hexadecimal digit”</td><td>Only <kbd>0</kbd>–<kbd>9</kbd> and <kbd>A</kbd>–<kbd>F</kbd> change bytes (3.3.6).</td></tr>
+            <tr><td>CJK text is a row of dots</td><td>The character column shows printable ASCII only; multi-byte characters become dots (3.3.2).</td></tr>
+            <tr><td>The file no longer opens after editing</td><td>Binary formats care about length and checksums. Restore your backup (3.3.7).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

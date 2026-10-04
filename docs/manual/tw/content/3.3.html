@@ -1,0 +1,259 @@
+      <!-- ══════════ 3.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.3.1</span>
+        <h2>兩種進入方式</h2>
+        <p class="dek">你自己按 <kbd>Ctrl+P</kbd>，或是爾雅發現這根本不是文字檔。</p>
+
+        <div class="duo">
+          <div>
+            <h4>① 文字檔按 <kbd>Ctrl+P</kbd></h4>
+            <p><strong>唯讀</strong>。看到的就是「存檔時會寫進磁碟的那些位元組」，包含 BOM、目前編碼與 LF／CRLF 換行。</p>
+            <p>再按一次 <kbd>Ctrl+P</kbd> 或 <kbd>Esc</kbd> 回到文字編輯，游標會停在同一個位元組上。</p>
+          </div>
+          <div>
+            <h4>② 二進位檔開啟時自動進入</h4>
+            <p>無法以文字解碼、或含有 NUL 位元組的檔案，一開啟就是這個檢視，而且<strong>回不去文字編輯</strong>（本來就沒有文字可以編）。</p>
+            <p>小於 64 MiB 時<strong>可以改位元組</strong>；超過就維持串流唯讀（見 3.3.8）。</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">為什麼文字檔的十六進位是唯讀的</span>
+          <p>因為文字文件的內容存在文字緩衝區裡，位元組只是「它存出去會長怎樣」的呈現。要直接改位元組，那個檔案得本來就是二進位檔。想在文字檔裡改某個位元組，實務上的做法是回到文字編輯改字元，或用 <kbd>F7</kbd> 換編碼（見 3.1.2）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.3.2</span>
+        <h2>畫面上有什麼</h2>
+        <p class="dek">三欄：位移、位元組、可列印字元。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [報告.txt]</div>
+            <div class="s-bar">W 每列 16/32  O 位移 10/16  Ctrl+G/G 跳至位移  Ctrl+P/Esc 返回編輯</div>
+            <div class="s-body">00000000  48 65 6C 6C 6F 2C 20 E4  B8 96 E7 95 8C 0A 41 42  |Hello, .......AB|
+00000010  43 44 45 46 47 48 49 4A  4B 4C 4D 4E 4F 50 51 52  |CDEFGHIJKLMNOPQR|
+00000020  53 54 55 56 57 58 59 5A  0A 0A E5 B7 A5 E4 BD 9C  |STUVWXYZ........|
+00000030  0A                                                |.               |</div>
+            <div class="s-status"> 位移 0x1F / 0x31｜每列 16 位元組 │ 十六進位 │ UTF-8 │ 報告.txt </div>
+            <div class="s-msg"> 已切換為十六進位檢視（唯讀）</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">欄位</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td>位移欄</td><td>這一列第一個位元組的位置。<strong>至少八位數</strong>，短檔案前面補零，看起來就像經典的 hex dump。</td></tr>
+            <tr><td>位元組欄</td><td>每個位元組兩位十六進位。<strong>每八個一組</strong>，中間多一個空白好數。檔案結尾不足的位置留空白。</td></tr>
+            <tr><td>字元欄</td><td>用 <span class="path">|</span> 框起來。可列印的 ASCII 直接顯示，其他一律顯示成 <span class="path">.</span>——所以中文會是一串點，因為一個中文字是三個位元組。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>狀態列變成專屬格式：<strong>位移 目前/總計｜每列幾位元組 │ 檢視種類 │ 編碼或模式 │ 檔名</strong>。游標所在的位元組在兩欄裡會同時反白。</p>
+      </section>
+
+      <!-- ══════════ 3.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.3.3</span>
+        <h2>唯讀檢視的四個按鍵</h2>
+        <p class="dek">移動鍵照舊，另外四個是這個畫面專屬的。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>W</kbd></td><td>每列 16 或 32 位元組之間切換。<strong>32 位元組需要 144 欄的終端寬度</strong>，不夠寬會維持 16 並顯示「畫面寬度不足，每列 32 位元組需要 144 欄」。</td></tr>
+            <tr><td><kbd>O</kbd></td><td>位移欄改用十進位或十六進位顯示。訊息列說「位移欄改用 10 進位」。</td></tr>
+            <tr><td><kbd>G</kbd> 或 <kbd>Ctrl+G</kbd></td><td>跳到指定位移（見 3.3.4）。</td></tr>
+            <tr><td><kbd>Ctrl+P</kbd> 或 <kbd>Esc</kbd></td><td>回到文字編輯。</td></tr>
+            <tr><td>方向鍵 / <kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>依位元組、列、頁移動。</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>移到這一列的第一個／最後一個位元組。</td></tr>
+            <tr><td><kbd>Ctrl+Home</kbd> <kbd>Ctrl+End</kbd></td><td>移到檔案開頭／結尾。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">大檔案只讀畫面上看得到的部分</span>
+          <p>十六進位檢視<strong>不會把整個檔案載進記憶體</strong>，只讀你正在看的那一段。所以拿它去看幾百 MB 的檔案也是瞬間的事。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.3.4</span>
+        <h2>跳到指定位移</h2>
+        <p class="dek">支援四種寫法，因為十進位跟十六進位很容易搞混。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確認  Esc 取消  ←/→ 移動游標  Backspace/Delete 刪除字元</div>
+            <div class="s-msg ask">跳至位移（16 進位，可加 0x 前綴）：1F40<em> </em></div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">你輸入</th><th>會被當成</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">1F40</span></td><td><strong>照目前位移欄的進位解讀</strong>。位移欄是十六進位就當十六進位，是十進位就當十進位——輸入列的提示會寫現在是哪一種。</td></tr>
+            <tr><td><span class="path">0x1F</span></td><td>一律十六進位</td></tr>
+            <tr><td><span class="path">$1F</span></td><td>一律十六進位</td></tr>
+            <tr><td><span class="path">1Fh</span></td><td>一律十六進位</td></tr>
+            <tr><td><span class="path">0d31</span></td><td>一律十進位</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>成功時訊息列說「已跳至位移 0x1F」。</li>
+          <li>格式不對會說「位移格式錯誤；請輸入數字，或以 0x 前綴表示十六進位」，然後再問一次。</li>
+          <li>超過檔案大小會停在結尾。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">不確定進位時就寫前綴</span>
+          <p>從別的工具（<span class="path">xxd</span>、除錯器、檔案格式規格書）抄來的位移多半是十六進位，直接補上 <span class="path">0x</span> 最保險，不必先確認位移欄現在是哪一種。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.3.5</span>
+        <h2>二進位檔案自動進入</h2>
+        <p class="dek">判斷方式很單純：前 8 KiB 裡有沒有 NUL 位元組。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [logo.png]</div>
+            <div class="s-bar">0-9A-F 位元組  I 覆寫/插入  BS/Del 刪除  W 16/32  O 10/16  G 位移  F11 關閉</div>
+            <div class="s-body">00000000  89 50 4E 47 0D 0A 1A 0A  00 00 00 0D 49 48 44 52  |.PNG........IHDR|
+00000010  00 00 01 90 00 00 01 90  08 06 00 00 00 80 BF 36  |...............6|
+00000020  CC 00 00 00 09 70 48 59  73 00 00 0E C4 00 00 0E  |.....pHYs.......|</div>
+            <div class="s-status"> 位移 0x0 / 0x4A21｜每列 16 位元組 │ 二進位 │ 覆寫 │ logo.png </div>
+            <div class="s-msg"> 已開啟二進位檔案 logo.png（19 KB），以十六進位檢視編輯</div>
+          </div>
+        </div>
+
+        <ul>
+          <li>提示列換成<strong>位元組編輯專用</strong>的那一組，最後直接寫出離開方式。</li>
+          <li>狀態列的第二格是 <span class="path">二進位</span>（不是「十六進位」），第三格是 <span class="path">覆寫</span>／<span class="path">插入</span>／<span class="path">唯讀</span>。</li>
+          <li>按 <kbd>Esc</kbd> 不會回到文字編輯——因為沒有文字編輯可以回去。它只會在訊息列再說一次離開方式：「二進位檔案只能以十六進位檢視；F11 關閉分頁、Ctrl+X 離開」。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">UTF-16 檔案不會被當成二進位</span>
+          <p>UTF-16 文字檔滿滿都是 NUL，看起來很像二進位檔。爾雅會認出這個型態，直接回報「不支援的文字編碼」，<strong>而不是把它攤成可編輯的位元組</strong>——免得你以為那是二進位檔而改壞一份文字檔（見 3.1.1）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.3.6</span>
+        <h2>改一個位元組</h2>
+        <p class="dek">輸入兩個十六進位數字：先高半位元組，再低半位元組。</p>
+
+        <ol class="rule-list">
+          <li><b>把游標移到要改的位元組上。</b>兩欄會同時反白。</li>
+          <li><b>輸入第一個數字。</b>例如要改成 <span class="path">4A</span>，先按 <kbd>4</kbd>——高半位元組就位。</li>
+          <li><b>輸入第二個數字。</b>按 <kbd>A</kbd>，這個位元組變成 <span class="path">4A</span>，游標自動跳到下一個位元組。</li>
+          <li><b>兩次輸入算同一步復原。</b>按一次 <kbd>Ctrl+Z</kbd> 就回到原本的值，不會只退一半。</li>
+        </ol>
+
+        <div class="callout warn">
+          <span class="co-title">按到不是十六進位的鍵</span>
+          <p>訊息列會說「請輸入十六進位數字（0-9、A-F）才能修改位元組」。<strong>可以輸入的只有 <kbd>0</kbd>–<kbd>9</kbd> 與 <kbd>A</kbd>–<kbd>F</kbd></strong>（大小寫都行）。</p>
+        </div>
+
+        <p>儲存、復原、重做、另存新檔都<strong>沿用原本的快捷鍵</strong>（<kbd>Ctrl+S</kbd>、<kbd>Ctrl+Z</kbd>、<kbd>Ctrl+Y</kbd>、<kbd>F12</kbd>）。二進位文件沒有文字緩衝區，所以<strong>編碼轉換、換行轉換與雙欄比對都不適用</strong>，按了會說「十六進位檢視不支援這個動作」。</p>
+      </section>
+
+      <!-- ══════════ 3.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.3.7</span>
+        <h2>插入與刪除位元組</h2>
+        <p class="dek">這個畫面有自己的 <kbd>I</kbd> 鍵，因為 Mac 鍵盤沒有 <kbd>Insert</kbd>。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>I</kbd>（或 <kbd>Insert</kbd>）</td><td>在覆寫與插入之間切換。狀態列第三格會跟著變。</td></tr>
+            <tr><td><kbd>Backspace</kbd></td><td>刪除游標<strong>前面</strong>那個位元組</td></tr>
+            <tr><td><kbd>Delete</kbd></td><td>刪除游標<strong>所在</strong>的位元組</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="duo">
+          <div>
+            <h4>覆寫模式（預設）</h4>
+            <p>輸入的位元組<strong>蓋掉</strong>原本的，檔案長度不變。</p>
+            <p>改結構化格式（PNG、ZIP、韌體）時通常要維持長度，用這個。</p>
+          </div>
+          <div>
+            <h4>插入模式</h4>
+            <p>輸入的位元組<strong>插進去</strong>，後面整個往後推，檔案變長。</p>
+            <p>插入模式下游標<strong>可以停在最後一個位元組之後</strong>，方便在檔尾附加內容。</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">改二進位檔之前先備份</span>
+          <p>爾雅有 100 步復原，但檔案格式本身通常沒有容錯：長度錯一個位元組、校驗值沒跟著改，整個檔就壞了。<strong>改之前先 <kbd>F12</kbd> 另存一份</strong>，或在外面複製一份原檔。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.3.8</span>
+        <h2>大檔案維持串流唯讀</h2>
+        <p class="dek">64 MiB 是同一條線，跟大型文字檔一致。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">檔案</th><th style="width:24%">開起來是</th><th>能不能改</th></tr></thead>
+          <tbody>
+            <tr><td>小於 64 MiB 的二進位檔</td><td>位元組載入記憶體</td><td><strong>可以</strong>：改、插入、刪除、復原、儲存</td></tr>
+            <tr><td>64 MiB 以上的二進位檔</td><td>串流讀取</td><td><strong>不行</strong>，唯讀。狀態列第三格顯示 <span class="path">唯讀</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>開啟大型二進位檔時，訊息列說「已開啟二進位檔案 disk.img（4.2 GB），唯讀十六進位檢視」。</li>
+          <li>試著修改會說「此二進位檔案為唯讀，無法修改」。</li>
+          <li>提示列也會換成唯讀版本，最後標著「唯讀」兩個字。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">這條線是為了記憶體上限</span>
+          <p>可編輯代表整份位元組要放在記憶體裡。爾雅寧可讓大檔維持唯讀，也不願意在你開一個 8 GB 映像檔時把機器拖垮——跟大型文字檔的取捨是同一套（見 3.2.3）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.3.9</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">十六進位檢視最常見的七個狀況。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>在文字檔的十六進位裡改不了東西</td><td>對文字檔而言這個檢視是唯讀的（3.3.1）。</td></tr>
+            <tr><td>按 <kbd>Esc</kbd> 回不去</td><td>這是二進位檔，沒有文字編輯可回。<kbd>F11</kbd> 關頁籤或 <kbd>Ctrl+X</kbd> 離開（3.3.5）。</td></tr>
+            <tr><td>按 <kbd>W</kbd> 沒有變成 32 位元組</td><td>終端寬度不足 144 欄。放大視窗再按（3.3.3）。</td></tr>
+            <tr><td>跳位移跳到奇怪的地方</td><td>輸入被當成另一種進位。加 <span class="path">0x</span> 前綴（3.3.4）。</td></tr>
+            <tr><td>按了字母鍵說要輸入十六進位數字</td><td>只有 <kbd>0</kbd>–<kbd>9</kbd>、<kbd>A</kbd>–<kbd>F</kbd> 能改位元組（3.3.6）。</td></tr>
+            <tr><td>中文在字元欄看起來是一堆點</td><td>字元欄只顯示可列印的 ASCII，多位元組字元一律顯示成點（3.3.2）。</td></tr>
+            <tr><td>改完存檔，檔案打不開了</td><td>二進位格式通常有長度與校驗要求。用備份還原（3.3.7）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

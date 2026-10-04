@@ -1,0 +1,162 @@
+      <!-- ══════════ 2.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.3.1</span>
+        <h2>検索：<kbd>Ctrl+W</kbd></h2>
+        <p class="dek"><kbd>Ctrl+F</kbd> でも構いません。既定ではどちらも検索です。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確定  Esc 取消  ←/→ カーソル移動  Backspace/Delete 削除</div>
+            <div class="s-msg ask">検索：プロジェクト<em> </em></div>
+          </div>
+        </div>
+
+        <ul>
+          <li>入力欄には<strong>前回の検索文字列</strong>が入っているので、そのまま <kbd>Enter</kbd> で再検索できます。</li>
+          <li><strong>カーソル位置から</strong>後方へ探し、末尾まで行くと先頭へ戻って続けます。</li>
+          <li>見つかるとカーソルが移動し、その箇所が黄色で示されます。</li>
+          <li>空のまま確定すると「検索文字列を入力してください」で止まります。</li>
+          <li><kbd>Esc</kbd> で取り消すと、カーソルは元の位置のままです。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">Erya の検索は「入力どおり」です</span>
+          <p><strong>大文字小文字を区別し、正規表現もワイルドカードも使えません。</strong><span class="path">Error</span> を探しても <span class="path">error</span> は見つかりません。全角と半角も別の文字です。CJK 文書を扱う場面では、たいていこれが望ましい挙動です。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.3.2</span>
+        <h2>次を検索と先頭への折り返し</h2>
+        <p class="dek"><kbd>F3</kbd> を押し続けるだけです。</p>
+
+        <ul>
+          <li><kbd>F3</kbd> は<strong>前回の条件</strong>で次を探します。入力し直す必要はありません。</li>
+          <li>まだ検索していない状態で <kbd>F3</kbd> を押すと、検索入力欄が開きます。</li>
+          <li>末尾まで行くと<strong>自動的に先頭へ戻り</strong>、「文書の先頭から検索を続けました；F3 で次を検索」と出ます。この文が出たら一周したということです。</li>
+          <li>どこにも無ければ「一致する文字列が見つかりません」と出て、カーソルは動きません。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">どこまで来たかを知る方法</span>
+          <p>Erya は「3 件目／全 12 件」のような表示をしません。メッセージ行で判断します。「一致する文字列が見つかりました」なら前進中、<strong>「文書の先頭から検索を続けました」なら折り返し済み</strong>です。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.3.3</span>
+        <h2>置換：<kbd>Ctrl+R</kbd></h2>
+        <p class="dek">2 回尋ねます。何を探すか、そして何に変えるか。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確定  Esc 取消  ←/→ カーソル移動  Backspace/Delete 削除</div>
+            <div class="s-msg ask">置換：検索文字列：二〇二五<em> </em></div>
+          </div>
+        </div>
+        <div class="screen-scroll" style="margin-top:10px">
+          <div class="screen">
+            <div class="s-bar"> Enter/F5 次を置換  F6 すべて置換  Esc 取消</div>
+            <div class="s-msg ask">置換後の文字列：二〇二六<em> </em></div>
+          </div>
+        </div>
+
+        <p>2 回目の入力では<strong>ヒント行が変わる</strong>ことに注目してください。ここでは選択肢が 3 つあります。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">キー</th><th>動作</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Enter</kbd> または <kbd>F5</kbd></td><td>次の 1 件を置換して編集に戻ります。</td></tr>
+            <tr><td><kbd>F6</kbd></td><td><strong>文書全体をすべて置換</strong>し、件数を報告します。</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>取り消します。何も変わりません。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">検索と置換が同じ文字列だと止められます</span>
+          <p>無駄な処理をしないため、「検索文字列と置換文字列が同じため、文書は変更されませんでした」と表示します。たいていはどちらかの打ち間違いです。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.3.4</span>
+        <h2><kbd>F5</kbd> で次を置換、<kbd>F6</kbd> ですべて置換</h2>
+        <p class="dek">条件はタブごとに覚えられ、続けて実行できます。</p>
+
+        <ul>
+          <li>一度置換したあとは、<kbd>F5</kbd> が<strong>同じ条件</strong>で次を置換します。入力し直し不要です。</li>
+          <li><kbd>F6</kbd> は残りを一気に置換します。</li>
+          <li>条件が未設定のまま <kbd>F5</kbd> や <kbd>F6</kbd> を押すと、置換の入力欄が開きます。</li>
+          <li>置換も末尾で折り返し、「文書の先頭から 1 件置換しました」と出ます。</li>
+          <li>置換できるものが無ければ「置換できる文字列が見つかりません」と出ます。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">1 件ずつ確認しながら置換するには</span>
+          <p>「確認しながら置換」というモードはありませんが、<kbd>F3</kbd> と <kbd>F5</kbd> の組み合わせがそれにあたります。<strong><kbd>F3</kbd> で次の一致を確認し、置換するなら <kbd>F5</kbd>、しないならもう一度 <kbd>F3</kbd></strong>。両者は同じ検索条件を共有します。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.3.5</span>
+        <h2>メッセージ行が言う 6 つのこと</h2>
+        <p class="dek">検索と置換の結果はほぼすべて最終行に出ます。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:46%">メッセージ</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td>一致する文字列が見つかりました；F3 で次を検索</td><td>見つかり、カーソルが移動しました。</td></tr>
+            <tr><td>文書の先頭から検索を続けました；F3 で次を検索</td><td>見つかりましたが、<strong>すでに先頭へ折り返しています</strong>。</td></tr>
+            <tr><td>一致する文字列が見つかりません</td><td>文書のどこにもありません。大文字小文字と全角半角を確認してください。</td></tr>
+            <tr><td>検索文字列を入力してください</td><td>空のまま <kbd>Enter</kbd> を押しました。</td></tr>
+            <tr><td>検索文字列と置換文字列が同じため、文書は変更されませんでした</td><td>両方に同じ文字列を入れています。</td></tr>
+            <tr><td>1 件置換しました；F5 で次を置換、F6 ですべて置換<br>N 件をすべて置換しました</td><td>成功。次に押せるキーも案内します。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.3.6</span>
+        <h2>置換を元に戻す</h2>
+        <p class="dek"><kbd>Ctrl+Z</kbd> ですが、1 手の大きさを知っておいてください。</p>
+
+        <ul>
+          <li><strong>1 件の置換（<kbd>F5</kbd>）</strong>：<kbd>Ctrl+Z</kbd> 1 回で戻ります。</li>
+          <li><strong>すべて置換（<kbd>F6</kbd>）</strong>：<strong>まとめて 1 手</strong>なので、<kbd>Ctrl+Z</kbd> 1 回で全部戻ります。</li>
+          <li>戻したあとは <kbd>Ctrl+Y</kbd> でやり直せます。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">すべて置換の前に一度考えてください</span>
+          <p><kbd>F6</kbd> は確認もプレビューもなく実行します。<strong>不安なときは先に <kbd>F3</kbd> でどこに当たるか見てください</strong>。とくに検索文字列が短いときは要注意です。失敗しても <kbd>Ctrl+Z</kbd> が使えますが、保存して終了する前に限ります。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.3.7</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">検索と置換でよくある誤解 5 つ。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>あるはずの語が見つからない</td><td>大文字小文字、または全角半角の違いです。完全一致で探します（2.3.1）。</td></tr>
+            <tr><td><span class="path">.*</span> のような書き方を使いたい</td><td>正規表現は使えません。その記号もそのまま検索されます。</td></tr>
+            <tr><td>同じ場所ばかり見つかる</td><td>先頭へ折り返しています。「文書の先頭から検索を続けました」が出ていないか確認を（2.3.2）。</td></tr>
+            <tr><td>選択範囲の中だけ置換したい</td><td>対応していません。<kbd>F3</kbd> と <kbd>F5</kbd> で 1 件ずつ処理します（2.3.4）。</td></tr>
+            <tr><td>置換を間違えた</td><td><kbd>Ctrl+Z</kbd>。すべて置換はまとめて 1 手です（2.3.6）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

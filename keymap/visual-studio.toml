@@ -1,0 +1,14 @@
+name = "Visual Studio"
+
+[bindings]
+open_file = "Ctrl+O"
+save_as = "Ctrl+Shift+S"
+close_tab = "Ctrl+F4"
+quit = "Alt+F4"
+search = "Ctrl+F"
+cut = "Ctrl+X"
+copy = "Ctrl+C"
+cursor_position = "Alt+C"
+redo = "Ctrl+Y"
+delete_line = "Ctrl+Shift+L"
+open_settings = "Ctrl+,"

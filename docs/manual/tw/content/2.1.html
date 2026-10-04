@@ -1,0 +1,309 @@
+      <!-- ══════════ 2.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.1.1</span>
+        <h2>四種把檔案打開的方法</h2>
+        <p class="dek">從命令列帶進來，或在編輯器裡面叫出來。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">方法</th><th>做法與結果</th></tr></thead>
+          <tbody>
+            <tr><td>啟動時帶檔名</td><td><span class="path">erya a.txt b.txt</span>，一個檔案一個頁籤，停在第一個（見 1.2.5）。</td></tr>
+            <tr><td><kbd>Ctrl+O</kbd> 檔案對話盒</td><td>叫出一個可以用方向鍵瀏覽的目錄清單，選中的檔案<strong>在新頁籤打開</strong>。</td></tr>
+            <tr><td><kbd>Ctrl+N</kbd> 新頁籤</td><td>開一個空白的未命名文件，第一次儲存時再決定檔名。</td></tr>
+            <tr><td><kbd>F12</kbd> 另存新檔</td><td>把目前的內容存成另一個檔名。<strong>存完之後這個頁籤就改成編輯新檔案</strong>，原檔留在磁碟上不再被這個頁籤碰。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">同一個檔不會被開兩次</span>
+          <p>要開的路徑如果已經在某個頁籤裡，爾雅會<strong>直接切過去</strong>，並在訊息列說「<span class="path">報告.txt 已在頁籤中開啟</span>」。這樣就不會出現兩個頁籤各改一半、互相覆蓋的慘劇。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.1.2</span>
+        <h2>檔案對話盒怎麼操作</h2>
+        <p class="dek">五個鍵就夠：上、下、進去、上一層、取消。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ 開啟檔案 │ /home/user/docs</div>
+            <div class="s-bar">↑/↓ 選取　Enter/→ 開啟　←/Backspace 上層　Esc/Q 取消</div>
+            <div class="s-body">    ┌────────────────────────────────────────────┐
+    │   📂 ..                                    │
+    │   📂 archive                               │
+    │<u>▶  📂 drafts                                </u>│
+    │      報告.txt                              │
+    │      附錄.md                               │
+    │      nginx.conf                            │
+    └────────────────────────────────────────────┘</div>
+            <div class="s-status"> /home/user/docs │ 3/6 </div>
+            <div class="s-msg">↑/↓ 選取　Enter/→ 開啟　←/Backspace 上層　Esc/Q 取消</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>上下選一個項目。清單比框高時會自動捲動。</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>整頁跳。</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>跳到清單最上面／最下面。</td></tr>
+            <tr><td><kbd>Enter</kbd> 或 <kbd>→</kbd></td><td>目錄就進去，檔案就開啟。</td></tr>
+            <tr><td><kbd>←</kbd> 或 <kbd>Backspace</kbd></td><td>回上一層目錄。<strong>回去之後游標會停在你剛剛離開的那個目錄上。</strong></td></tr>
+            <tr><td><kbd>Esc</kbd> 或 <kbd>Q</kbd></td><td>整個取消，回到編輯畫面。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>目錄前面標 <span class="path">📂</span>，檔案前面留空白，所以視覺上目錄會排在一起。</li>
+          <li>排序規則是<strong>目錄在前、檔案在後</strong>，各自再依名稱排（不分大小寫）。</li>
+          <li>第一列的 <span class="path">..</span> 是上一層，跟按 <kbd>←</kbd> 一樣。</li>
+          <li>選中的那一列是<strong>灰底黑字加 ▶</strong>。</li>
+          <li>狀態列顯示目前目錄與「第幾個／共幾個」。</li>
+          <li>對話盒一開始停在<strong>目前文件所在的目錄</strong>；未命名文件則是目前工作目錄。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>Esc</kbd> 是取消，不是回上一層</span>
+          <p>這一點跟很多檔案總管不一樣。<strong>回上一層是 <kbd>←</kbd> 或 <kbd>Backspace</kbd>；<kbd>Esc</kbd> 會直接關掉整個對話盒。</strong>爾雅的 <kbd>Esc</kbd> 在每一個畫面都是「離開這個畫面」，這裡也不例外（見 1.3.7）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.1.3</span>
+        <h2>頁籤：新增、切換、關閉</h2>
+        <p class="dek">四個鍵，全部在第一列看得到結果。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">按鍵</th><th style="width:24%">動作</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+N</kbd></td><td>新增空白頁籤</td><td>開一個未命名文件並切過去。</td></tr>
+            <tr><td><kbd>F10</kbd></td><td>下一個頁籤</td><td>到最後一個再按會繞回第一個。</td></tr>
+            <tr><td><kbd>F9</kbd></td><td>上一個頁籤</td><td>同樣會繞回去。</td></tr>
+            <tr><td><kbd>F11</kbd></td><td>關閉目前頁籤</td><td>有未儲存內容時會先問（見 2.1.8）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">關掉最後一個頁籤不會離開程式</span>
+          <p>爾雅永遠至少留一個頁籤。把最後一個關掉之後，它會留下一個<strong>新的空白未命名文件</strong>。真的要離開請按 <kbd>Ctrl+X</kbd>。</p>
+        </div>
+
+        <p>離開程式時，爾雅會<strong>逐一檢查每一個背景頁籤</strong>有沒有未儲存的內容，有的話就切過去問你（S 存／Y 放棄／N 返回），全部處理完才真的結束。不會出現「以為存好了，結果第三個頁籤沒存到」的狀況。</p>
+      </section>
+
+      <!-- ══════════ 2.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.1.4</span>
+        <h2>每個頁籤各自記得什麼</h2>
+        <p class="dek">大部分東西是各自獨立的，只有兩樣是共用的。</p>
+
+        <div class="duo">
+          <div>
+            <h4>各頁籤獨立</h4>
+            <ul>
+              <li>游標位置與捲動位置</li>
+              <li>選取範圍與選取種類</li>
+              <li>復原／重做紀錄（各自最多 100 步）</li>
+              <li>最近一次的搜尋與取代條件</li>
+              <li>插入／覆寫模式</li>
+              <li>自動換行開關</li>
+              <li>編碼與換行格式</li>
+              <li>段落寬度</li>
+            </ul>
+          </div>
+          <div>
+            <h4>全部頁籤共用</h4>
+            <ul>
+              <li><strong>剪貼區</strong>——在 A 頁籤複製，可以到 B 頁籤貼上</li>
+              <li><strong>按鍵配置與介面語言</strong>——在系統設定改了會同時套用到所有頁籤（見 4.2.2）</li>
+            </ul>
+            <p style="margin-top:10px">常用語與巨集則是<strong>存在檔案裡</strong>，載入之後對目前頁籤生效（見 2.4.5）。</p>
+          </div>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">跨檔案搬東西就是這樣做</span>
+          <p>在 A 檔案選一段按 <kbd>Ctrl+C</kbd>，<kbd>F10</kbd> 切到 B 檔案，<kbd>Ctrl+V</kbd> 貼上。爾雅的剪貼區是程式內部的，<strong>跟系統剪貼簿是兩回事</strong>——要跟其他應用程式互傳，得用終端機自己的選取複製功能（見 2.2.7）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.1.5</span>
+        <h2>儲存與另存新檔</h2>
+        <p class="dek"><kbd>Ctrl+S</kbd> 存回原檔，<kbd>F12</kbd> 存成新檔。</p>
+
+        <ol class="rule-list">
+          <li><b>已經有檔名的文件</b>：<kbd>Ctrl+S</kbd> 直接寫回去，訊息列出現「已儲存 …」，第一列的星號消失。</li>
+          <li><b>未命名的新文件</b>：<kbd>Ctrl+S</kbd> 會<strong>自動跳出「另存新檔：」輸入列</strong>要你打檔名，打完按 <kbd>Enter</kbd>。不必自己記得改按 <kbd>F12</kbd>。</li>
+          <li><b>另存新檔</b>：<kbd>F12</kbd> 會把目前路徑當預設值放進輸入列，改掉檔名再按 <kbd>Enter</kbd>。<strong>存完之後這個頁籤就跟著新檔案走了。</strong></li>
+        </ol>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確認  Esc 取消  ←/→ 移動游標  Backspace/Delete 刪除字元</div>
+            <div class="s-msg ask">另存新檔：/home/user/docs/報告-備份.txt<em> </em></div>
+          </div>
+        </div>
+
+        <ul>
+          <li>輸入列可以用 <kbd>←</kbd> <kbd>→</kbd> 移動游標、<kbd>Backspace</kbd> <kbd>Delete</kbd> 刪字，路徑太長時會自動捲動。</li>
+          <li>檔名留空按 <kbd>Enter</kbd> 會被擋下來（「檔名不可為空」），並重新問一次。</li>
+          <li>目標是一個目錄時會失敗並顯示「無法將文件儲存成目錄」。</li>
+          <li>路徑中的目錄必須先存在，爾雅<strong>不會自動幫你建目錄</strong>。</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 2.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.1.6</span>
+        <h2>存檔時實際發生的事</h2>
+        <p class="dek">不是直接往原檔上蓋，是先寫暫存檔再換掉。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 220" role="img" aria-label="原子儲存流程圖">
+              <rect x="0" y="0" width="960" height="220" fill="#FAFBFD"/>
+              <defs><marker id="arrow21" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="30" y="52" width="190" height="80" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="125" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#12314F">① 寫暫存檔</text>
+              <text x="125" y="106" text-anchor="middle" font-size="13" fill="#3F485D">寫在原檔的同一個目錄</text>
+
+              <rect x="260" y="52" width="190" height="80" rx="10" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="355" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#7A382F">② 落盤</text>
+              <text x="355" y="106" text-anchor="middle" font-size="13" fill="#3F485D">確認內容真的寫進磁碟</text>
+
+              <rect x="490" y="52" width="190" height="80" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="585" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#7A5312">③ 換名字</text>
+              <text x="585" y="106" text-anchor="middle" font-size="13" fill="#3F485D">一步換掉原檔</text>
+
+              <rect x="720" y="52" width="210" height="80" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="825" y="82" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1E5C39">④ 還原權限</text>
+              <text x="825" y="106" text-anchor="middle" font-size="13" fill="#3F485D">Unix 上保留原本的模式</text>
+
+              <path d="M220 92 L256 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+              <path d="M450 92 L486 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+              <path d="M680 92 L716 92" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow21)"/>
+
+              <text x="480" y="176" text-anchor="middle" font-size="14.5" fill="#3F485D">任何一步失敗，原檔都維持在存檔前的樣子——不會出現寫到一半的半截檔案</text>
+              <text x="480" y="200" text-anchor="middle" font-size="13.5" fill="#98A2B3">因為暫存檔跟原檔在同一個目錄，換名字才會是同一個檔案系統內的原子操作</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 2.1.1</b>　原子儲存。中途斷電、磁碟滿了、程式被殺掉，原檔都還是完整的舊版本。</figcaption>
+        </figure>
+
+        <ul>
+          <li><strong>暫存檔一定跟原檔同目錄</strong>。所以目錄本身要有寫入權限——只有檔案可寫但目錄不可寫時，儲存會失敗。</li>
+          <li><strong>Unix 上會保留原檔的權限</strong>。存完之後 <span class="path">chmod</span> 不會被打回預設值，指令稿的執行位元也還在。</li>
+          <li>存成 UTF-8 時採用分塊串流寫入，大文件不會為了存檔再複製一份完整內容到記憶體。</li>
+          <li>存檔會順便把<strong>編碼與換行格式的轉換</strong>一起寫進去（見 3.1.2）。</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 2.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.1.7</span>
+        <h2>檔案被別的程式改掉了</h2>
+        <p class="dek">爾雅每 250 毫秒看一次磁碟，反應方式看你有沒有改過。</p>
+
+        <div class="duo">
+          <div>
+            <h4>你沒改過（乾淨的文件）</h4>
+            <p><strong>自動重新載入</strong>，訊息列說「偵測到外部更新；已安全重新載入檔案」。你看到的永遠是磁碟上的最新內容。</p>
+            <p>常見情境：另一個視窗剛存了檔、<span class="path">git pull</span> 換掉了檔案。</p>
+          </div>
+          <div>
+            <h4>你改過（有未儲存內容）</h4>
+            <p><strong>不會自動蓋掉你的東西</strong>。訊息列先提醒「檔案已被外部程式修改；儲存前需要確認」，等你按 <kbd>Ctrl+S</kbd> 時才跳出紅色確認列。</p>
+            <p>常見情境：你正在改，同事也存了一版。</p>
+          </div>
+        </div>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn"> 外部檔案已有更新：[O]覆寫、[R]重新載入、[N/Esc]取消</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">按鍵</th><th style="width:22%">動作</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>O</kbd></td><td>覆寫</td><td>用你手上的版本蓋過去。<strong>磁碟上那一版的改動就沒了。</strong></td></tr>
+            <tr><td><kbd>R</kbd></td><td>重新載入</td><td>丟掉你的修改，讀進磁碟上的版本。<strong>你剛剛打的字就沒了。</strong></td></tr>
+            <tr><td><kbd>N</kbd> / <kbd>Esc</kbd></td><td>取消</td><td>什麼都不做，回到編輯。兩邊的內容都還在，可以先另存新檔再慢慢處理。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">不確定的時候按 <kbd>N</kbd>，然後 <kbd>F12</kbd> 另存一份</span>
+          <p><kbd>O</kbd> 跟 <kbd>R</kbd> 都會弄丟一邊的內容，而且<strong>沒辦法復原</strong>。安全的做法是先按 <kbd>N</kbd> 取消，用 <kbd>F12</kbd> 把手上的版本另存成別的檔名，之後再用雙欄比對（<kbd>F4</kbd>）把兩版合起來（見 3.4）。</p>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">自動重新載入會清掉復原紀錄</span>
+          <p>乾淨文件被自動重新載入之後，<strong>原本的復原／重做紀錄會一併清空</strong>——因為那些步驟是對舊內容做的，套回新內容只會出事。這是刻意的行為，但第一次遇到常會嚇一跳。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">2.1.8</span>
+        <h2>未儲存就要離開</h2>
+        <p class="dek">兩個場合會被攔下來，選項都是 S／Y／N。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn"> 文件尚未儲存：S 儲存後離開／Y 放棄變更／N 返回編輯</div>
+            <div class="s-msg warn"> 頁籤尚未儲存：S 儲存後關閉／Y 放棄變更／N 返回編輯</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>S</kbd></td><td>先存檔再繼續離開／關閉。沒有檔名的話會先問你檔名。</td></tr>
+            <tr><td><kbd>Y</kbd></td><td><strong>放棄變更</strong>，直接離開／關閉。這一步之後救不回來。</td></tr>
+            <tr><td><kbd>N</kbd> / <kbd>Esc</kbd></td><td>取消，回到編輯。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>Y</kbd> 不是「是」，是「放棄」</span>
+          <p>看到問句就反射性按 <kbd>Y</kbd> 是最容易弄丟內容的動作。<strong>爾雅的 <kbd>Y</kbd> 一律代表「放棄變更」</strong>，要存檔請按 <kbd>S</kbd>。三個確認列（離開、關頁籤、外部衝突）都把每個字母的意思寫在同一列上，按之前讀一下。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">2.1.9</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">存檔與開檔最容易卡住的六個狀況。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>「儲存失敗：Permission denied」</td><td>檔案或<strong>所在目錄</strong>沒有寫入權限。原子儲存需要在同目錄建暫存檔，所以目錄權限也算（2.1.6）。</td></tr>
+            <tr><td>「儲存失敗：No such file or directory」</td><td>路徑中的目錄不存在。爾雅不會自動建目錄，先在外面 <span class="path">mkdir -p</span>。</td></tr>
+            <tr><td>「無法將文件儲存成目錄」</td><td>另存新檔時給的路徑是既有目錄。補上檔名。</td></tr>
+            <tr><td>「檔名不可為空」</td><td>輸入列直接按了 <kbd>Enter</kbd>。它會再問一次，打完檔名再確認。</td></tr>
+            <tr><td>改了半天發現改到舊版本</td><td>檔案在你開啟之後被外部改過，而你沒注意到訊息列的提醒。先按 <kbd>N</kbd> 取消再另存一份（2.1.7）。</td></tr>
+            <tr><td>復原按不動了</td><td>文件剛剛被自動重新載入，復原紀錄一起清空了（2.1.7）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

@@ -1,0 +1,16 @@
+name = "VSCode"
+
+[bindings]
+open_file = "Ctrl+O"
+save_as = "Ctrl+Shift+S"
+close_tab = "Ctrl+W"
+quit = "Ctrl+Shift+W"
+search = "Ctrl+F"
+redo = "Ctrl+Shift+Z"
+format_document = "Alt+Shift+F"
+cut_line = "Ctrl+K"
+delete_line = "Ctrl+Shift+K"
+cut = "Ctrl+X"
+copy = "Ctrl+C"
+cursor_position = "Alt+C"
+open_settings = "Ctrl+,"

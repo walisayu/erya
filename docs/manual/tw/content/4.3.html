@@ -1,0 +1,206 @@
+      <!-- ══════════ 4.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.3.1</span>
+        <h2>怎麼用這一章</h2>
+        <p class="dek">依「症狀」找，不是依功能找。</p>
+
+        <p>爾雅幾乎所有的回饋都在<strong>最後一列（訊息列）</strong>，所以卡住的時候第一件事永遠是：<strong>把最後一列讀完</strong>。它多半已經告訴你原因，甚至告訴你該按什麼鍵。</p>
+
+        <ol class="rule-list">
+          <li><b>看最後一列。</b>黃色是回報、白色是等你輸入、紅色是等你做決定（見 1.3.6）。</li>
+          <li><b>看第二列。</b>它列著你現在按得動的鍵；如果不是你熟悉的那幾個，代表你不在編輯畫面，或換過按鍵配置。</li>
+          <li><b>按 <kbd>Esc</kbd>。</b>不確定自己在哪裡時，<kbd>Esc</kbd> 一定是往回一層，而且不會改壞東西。</li>
+          <li><b>按 <kbd>F1</kbd>。</b>要找某個功能的按鍵時，這份清單就是功能總表。</li>
+        </ol>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症狀</th><th>看這一節</th></tr></thead>
+          <tbody>
+            <tr><td>程式跑不起來</td><td>4.3.2</td></tr>
+            <tr><td>檔案打不開、開起來怪怪的</td><td>4.3.3</td></tr>
+            <tr><td>存不進去</td><td>4.3.4</td></tr>
+            <tr><td>按鍵沒反應</td><td>4.3.5</td></tr>
+            <tr><td>畫面破圖、對不齊、顏色怪</td><td>4.3.6</td></tr>
+            <tr><td>中文變亂碼或問號</td><td>4.3.7</td></tr>
+            <tr><td>某個功能整個不見了</td><td>4.3.8</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.3.2</span>
+        <h2>啟動不了</h2>
+        <p class="dek">還沒進到爾雅畫面之前的問題。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">看到的</th><th>怎麼辦</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">command not found: erya</span></td><td>執行檔不在 <span class="path">PATH</span> 裡。先用完整路徑試試看能不能跑（1.2.3）。</td></tr>
+            <tr><td><span class="path">Permission denied</span></td><td><span class="path">chmod +x erya</span>。</td></tr>
+            <tr><td>macOS 說無法驗證開發者</td><td><span class="path">xattr -d com.apple.quarantine erya</span>（1.2.3）。</td></tr>
+            <tr><td><span class="path">cannot execute binary file</span></td><td>下載到別的架構。<span class="path">uname -m</span> 重新確認（1.2.2）。</td></tr>
+            <tr><td>必須在互動式 Terminal 中執行</td><td>不能接管線或重導向。直接在終端機裡跑（1.2.8）。</td></tr>
+            <tr><td>終端視窗太小</td><td>至少要 24 欄 × 6 列，實務上請給 80×24（1.2.8）。</td></tr>
+            <tr><td>不支援的選項：…</td><td>選項打錯，或檔名以減號開頭——在檔名前面加 <span class="path">--</span>（1.2.6）。</td></tr>
+            <tr><td>… 是目錄，不是文字檔</td><td>參數給了目錄。開起來之後再用 <kbd>Ctrl+O</kbd> 瀏覽（1.2.5）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.3.3</span>
+        <h2>開不了檔案</h2>
+        <p class="dek">或是開起來跟預期的不一樣。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>「開啟失敗：Permission denied」</td><td>沒有讀取權限。用 <span class="path">ls -l</span> 確認，必要時 <span class="path">sudo</span>。</td></tr>
+            <tr><td>開起來是空的</td><td>檔案<strong>不存在</strong>。爾雅把不存在的路徑當成新檔案，第一次儲存才建立（1.2.5）。檢查路徑有沒有打錯。</td></tr>
+            <tr><td>開起來變成十六進位</td><td>檔案含 NUL 位元組，被當成二進位檔（3.3.5）；或是非 UTF-8 的大檔（3.2.1）。</td></tr>
+            <tr><td>「detected unsupported text encoding: UTF-16LE」</td><td>UTF-16／UTF-32 不支援。先用其他工具轉成 UTF-8（3.1.1）。</td></tr>
+            <tr><td>狀態列寫「大型檔案唯讀」</td><td>檔案 64 MiB 以上，只能看不能改（3.2）。</td></tr>
+            <tr><td>「報告.txt 已在頁籤中開啟」</td><td>不是錯誤。爾雅切到既有頁籤，避免同一個檔開兩份（2.1.1）。</td></tr>
+            <tr><td>只看得到檔案開頭幾行</td><td>捲動就好。大型檔案是按需讀取的，往下捲才會讀（3.2.3）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.3.4</span>
+        <h2>存不進去</h2>
+        <p class="dek">存檔是最不能出錯的一步，所以爾雅擋得比較兇。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>「儲存失敗：Permission denied」</td><td>檔案<strong>或所在目錄</strong>不可寫。原子儲存要在同目錄建暫存檔，所以目錄權限也算（2.1.6）。</td></tr>
+            <tr><td>「儲存失敗：No such file or directory」</td><td>路徑中的目錄不存在。爾雅不會自動建目錄（2.1.9）。</td></tr>
+            <tr><td>「無法將文件儲存成目錄」</td><td>另存新檔給的是既有目錄，補上檔名（2.1.5）。</td></tr>
+            <tr><td>「大型檔案使用唯讀模式；無法修改內容」</td><td>這個模式不能存檔（3.2.2）。</td></tr>
+            <tr><td>「此二進位檔案為唯讀，無法修改」</td><td>64 MiB 以上的二進位檔是串流唯讀（3.3.8）。</td></tr>
+            <tr><td>紅色問「外部檔案已有更新」</td><td>檔案被別的程式改過。不確定就按 <kbd>N</kbd>，再 <kbd>F12</kbd> 另存一份（2.1.7）。</td></tr>
+            <tr><td>「無法切換為 Big5：…無法表示的字元」</td><td>目標編碼表示不了文件裡的某個字。爾雅寧可不轉也不破壞內容（3.1.3）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.3.5</span>
+        <h2>按鍵沒反應</h2>
+        <p class="dek">四個可能，由高到低。</p>
+
+        <ol class="rule-list">
+          <li><b>這個動作預設就沒綁鍵。</b>常用語、巨集、矩形填滿與搬動、顯示游標位置，在預設配置裡全部是空的（2.4.8、2.2.6）。按 <kbd>F1</kbd> 看該動作右邊是不是空白。</li>
+          <li><b>你不在編輯畫面。</b>每個畫面能按的鍵不一樣，看第二列的提示列（1.3.3）。</li>
+          <li><b>這個模式下不允許。</b>大型檔案唯讀擋掉了編輯類動作（3.2.2）；十六進位檢視對文字檔是唯讀的（3.3.1）。訊息列會說原因。</li>
+          <li><b>終端機沒把這個組合送進來。</b><kbd>Alt</kbd> 組合與修飾方向鍵最常見（4.1.1）。改綁一個按得動的鍵（4.1.4）。</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">怎麼確定終端機到底送了什麼</span>
+          <p>把要測的鍵綁到一個看得出效果的動作（例如 <span class="path">cursor_position</span>，它會把游標位置印在訊息列），按下去有反應就代表終端機送得出來。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.3.6</span>
+        <h2>畫面顯示怪怪的</h2>
+        <p class="dek">大部分是終端機那邊的事。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td>中文對不齊、游標跑掉</td><td>終端機的字型不是等寬，或全形字寬度設定不一致。換一個 CJK 等寬字型（Sarasa、Noto Sans Mono CJK 等）。</td></tr>
+            <tr><td>框線變成奇怪的符號</td><td>終端機或字型不支援框線字元。換字型，或改用支援度好的終端機。</td></tr>
+            <tr><td>顏色很難看／看不清楚</td><td>爾雅用的是終端機的十六色，實際顏色由你的終端機主題決定。調主題就好。</td></tr>
+            <tr><td>畫面只剩一行黃字</td><td>視窗小於 24×6。放大就會自動恢復，內容不會掉（1.2.8）。</td></tr>
+            <tr><td>畫面有殘影</td><td>SSH 連線不穩或終端機重繪出問題。改變一下視窗大小可以強制重畫。</td></tr>
+            <tr><td>看不到行的後半段</td><td>行比視窗寬。<kbd>Ctrl+L</kbd> 開自動換行，或用 <kbd>End</kbd> 水平捲過去（2.2.9）。</td></tr>
+            <tr><td>離開之後終端機怪怪的</td><td>正常情況下爾雅會還原終端狀態。真的異常時執行 <span class="path">reset</span> 即可。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.3.7</span>
+        <h2>字變成亂碼或問號</h2>
+        <p class="dek">先分清楚是「開錯編碼」還是「終端機顯示不出來」。</p>
+
+        <div class="duo">
+          <div>
+            <h4>整份都是亂碼</h4>
+            <p><strong>編碼猜錯了。</strong>按 <kbd>F7</kbd> 換一種試試看，對了再存檔（3.1.2）。狀態列倒數第二格會顯示目前是哪一種。</p>
+          </div>
+          <div>
+            <h4>只有某些字是方框或問號</h4>
+            <p><strong>終端機字型缺字。</strong>檔案內容其實是好的——換一個字型就會出現。特別容易發生在 Emoji 與罕用字上。</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">亂碼的時候不要存檔</span>
+          <p>如果是編碼猜錯造成的亂碼，<strong>存檔會把亂碼寫死進檔案</strong>。先按 <kbd>F7</kbd> 找到正確的編碼，確認內容正常了再存。真的不確定就先關掉頁籤（不存），原檔還是好的。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.3.8</span>
+        <h2>功能整個不見了</h2>
+        <p class="dek">爾雅沒有選單，所以「找不到」通常是「沒綁鍵」或「這裡不支援」。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">找不到的東西</th><th>實際狀況</th></tr></thead>
+          <tbody>
+            <tr><td>全選</td><td><strong>沒有這個動作。</strong><kbd>Ctrl+Home</kbd> 再 <kbd>Ctrl+Shift+End</kbd>（2.2.4）。</td></tr>
+            <tr><td>取代並逐一確認</td><td>沒有這個模式，用 <kbd>F3</kbd> ＋ <kbd>F5</kbd> 代替（2.3.4）。</td></tr>
+            <tr><td>只在選取範圍內取代</td><td>目前不支援（2.3.7）。</td></tr>
+            <tr><td>正規表示式搜尋</td><td>不支援，搜尋是完全比對（2.3.1）。</td></tr>
+            <tr><td>分割視窗</td><td>沒有。要對照兩份檔案請用雙欄比對（3.4）。</td></tr>
+            <tr><td>自動存檔／崩潰還原</td><td>沒有。只有 <kbd>Ctrl+S</kbd>（1.1.7）。</td></tr>
+            <tr><td>常用語、巨集、矩形填滿</td><td>功能在，但預設沒綁鍵（2.4.8）。</td></tr>
+            <tr><td>系統剪貼簿整合</td><td>爾雅的剪貼區是內部的，跨程式請用終端機的複製貼上（2.2.7）。</td></tr>
+            <tr><td>Git 整合、外掛</td><td>沒有，也不在範圍內（1.1.2）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">4.3.9</span>
+        <h2>還是解決不了</h2>
+        <p class="dek">回報問題時附上這幾樣，會快很多。</p>
+
+        <ol class="rule-list">
+          <li><b>版本</b>：<span class="path">erya --version</span> 的輸出。</li>
+          <li><b>平台</b>：作業系統與版本、<span class="path">uname -m</span> 的架構、用的是哪一個終端機程式。</li>
+          <li><b>按鍵配置</b>：按 <kbd>F2</kbd> 看到的配置名稱，或你自己的 <span class="path">keymap.toml</span>。</li>
+          <li><b>訊息列上那一整句話</b>：一字不漏地抄下來，那是最有用的線索。</li>
+          <li><b>重現步驟</b>：從 <span class="path">erya 檔名</span> 開始，一個鍵一個鍵寫下來。</li>
+          <li><b>檔案特徵</b>：多大、什麼編碼、什麼換行格式（狀態列上都有）。</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">先試試看預設配置</span>
+          <p>回報之前用 <span class="path">ERYA_KEYMAP= erya</span> 或在 <kbd>F2</kbd> 切回 <span class="term">Erya Terminal Safe</span> 再試一次。如果問題消失，那就是按鍵配置的事，範圍一下子縮小很多。</p>
+        </div>
+      </section>

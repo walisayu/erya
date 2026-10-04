@@ -1,0 +1,374 @@
+      <!-- ══════════ 1.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.1.1</span>
+        <h2>この手引きの読み方</h2>
+        <p class="dek">4 部 14 章。最初から順に読む必要はありません。</p>
+
+        <p>本書は 4 部構成です。<strong>第 1 部は考え方と導入</strong>（Erya とは何か、インストール、画面の見方）、<strong>第 2 部は日常の編集</strong>（開く、入力、検索、元に戻す）、<strong>第 3 部は応用機能</strong>（文字コード、大容量ファイル、16 進数、比較）、<strong>第 4 部は設定と付録</strong>（キー変更、言語、早見表）です。</p>
+
+        <p>番号は「<strong>部-章</strong>」です。<span class="path">3.4</span> なら第 3 部の第 4 章、節はさらに 1 桁足して <span class="path">1.1.1</span> のように書きます。本文で「4.1 参照」とあれば第 4 部第 1 章のことで、左のメニューから開けます。</p>
+
+        <h3>3 通りの読み方</h3>
+        <ul>
+          <li><strong>Erya がはじめての方</strong>：1.1 から 1.3 を読み、続けて 2.1（開くと保存）へ。この 4 章で実務に入れます。</li>
+          <li><strong>他のエディターを使ってきた方</strong>：1.3（画面）と 4.4（キー一覧）だけ読み、必要になったら戻ってください。nano や vim をお使いなら先に 4.1 を。慣れたキー配列に変えるほうが覚え直すより早道です。</li>
+          <li><strong>いますぐ 1 ファイル開きたいだけの方</strong>：起動は 1.2.5、画面は 1.3、終了は <kbd>Ctrl+X</kbd>。3 分で済みます。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">検索ボックスの使い方</span>
+          <p>左上の検索ボックス（または <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd>）は 2 つのことをします。<strong>この章の本文</strong>で一致した箇所を黄色で示し <kbd>Enter</kbd> で順に移動できるようにすること、そして同じ話題を扱う<strong>他の章</strong>を一覧に出すことです。画面イメージの中の文字も検索対象です。</p>
+        </div>
+
+        <p>本書では <kbd>Ctrl+S</kbd> のような表記がキー、<span class="path">~/.config/erya/keymap.toml</span> のような表記がファイルパスやコマンドです。注意していただきたいのは、<strong>Erya のショートカットはまるごと差し替えられる</strong>という点です（4.1 参照）。本書は内蔵の <span class="term">Erya Terminal Safe</span> を基準にしています。プロファイルを変更した方は、画面 2 行目のヒント行と <kbd>F1</kbd> ヘルプをご覧ください。そこに出ているのが実際に使えるキーです。</p>
+
+        <div class="callout">
+          <span class="co-title">本書は「現在の姿」を書いています</span>
+          <p>内容はすべて現在のソースコードに基づきます。<strong>計画中の機能も、「本来こうあるべき」という話も書きません。</strong>「既定ではキーが割り当てられていない」「このモードでは使えない」と書いてあれば、それが現状です。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.1.2</span>
+        <h2>Erya がすること・しないこと</h2>
+        <p class="dek">一言でいえば、ターミナルの中で動き、CJK 文書を真剣に扱うテキストエディターです。</p>
+
+        <p>名前は「<span class="term">爾、近なり；雅、正なり</span>」という古い訓詁に由来し、DOS 時代の中国語文書システム『漢書』を Rust で蘇らせたものです。仕様先行でゼロから書き直しており、<strong>オリジナルのソースコードや素材は一切含みません</strong>。当時の開発チームとの関係もありません。</p>
+
+        <p>ターミナル（Terminal.app、iTerm2、Windows Terminal、SSH 接続のいずれでも）の中で動き、実行中はウィンドウ全体を使い、終了すると元の画面に戻します。見た目はこうです：</p>
+
+        <figure>
+          <div class="screen-scroll">
+            <div class="screen">
+              <div class="s-title"> 爾雅 Erya │ [報告.txt] 付録.md</div>
+              <div class="s-bar"> F1 ヘルプ  Ctrl+S 保存  Ctrl+W 検索  Ctrl+R 置換  Ctrl+B 矩形選択  Ctrl+K 行切取  Ctrl+X 終了</div>
+              <div class="s-body">第一章　プロジェクトの背景
+
+　　本プロジェクトは二〇二六年三月に始動しました。既存の
+　　文書一式をプレーンテキストへ変換し、元の文字コードと
+　　改行コードを保つことが目標です。<em>現</em>在は第一段階まで完了。
+<i>~</i>
+<i>~</i></div>
+              <div class="s-status"> 報告.txt │ 5:30 │ 挿入 │ UTF-8 │ LF </div>
+              <div class="s-msg"> 報告.txt を保存しました</div>
+            </div>
+          </div>
+          <figcaption><b>図 1.1.1</b>　メイン画面。上 2 行と下 2 行が固定の枠で、その間が文書です。反転しているマスがカーソル位置を示します。各行の意味は 1.3 で 1 行ずつ説明します。</figcaption>
+        </figure>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:50%">Erya がすること</th><th>Erya がしないこと</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>プレーンテキストを開く・編集する・保存する</td>
+              <td>レイアウト、フォント、太字や斜体（ワープロではありません）</td>
+            </tr>
+            <tr>
+              <td>UTF-8／UTF-8 BOM／Big5／GBK／Shift_JIS の判定と変換</td>
+              <td>UTF-16・UTF-32（開いた時点で非対応と表示）</td>
+            </tr>
+            <tr>
+              <td>複数タブ、検索と置換、元に戻す・やり直す</td>
+              <td>画面分割、同じファイルの 2 か所を同時に表示</td>
+            </tr>
+            <tr>
+              <td>ファイル名によるシンタックスハイライト</td>
+              <td>静的解析、補完、定義へ移動（IDE ではありません）</td>
+            </tr>
+            <tr>
+              <td>TOML／YAML／JSON の整形</td>
+              <td>その他の形式の整形（外部ツールは呼びません）</td>
+            </tr>
+            <tr>
+              <td>16 進数表示と、バイナリファイルのバイト編集</td>
+              <td>逆アセンブル、構造解析（バイナリ解析ツールではありません）</td>
+            </tr>
+            <tr>
+              <td>左右 2 ペイン比較と差分の双方向コピー</td>
+              <td>3 方向マージ、バージョン管理連携（Git 機能はありません）</td>
+            </tr>
+            <tr>
+              <td>64 MiB 以上のファイルの読み取り専用閲覧とログ追跡</td>
+              <td>大容量ファイルモードでの編集</td>
+            </tr>
+            <tr>
+              <td>定型文とキーボードマクロ</td>
+              <td>プラグイン、スクリプト言語、パッケージ管理</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">いちばん多い誤解</span>
+          <p><strong>Erya には自動保存もクラッシュ復元もありません。</strong><kbd>Ctrl+S</kbd> を押していない内容はメモリーの中だけにあります。タブを閉じるときと終了するときには確認しますが（2.1.8 参照）、ターミナルを閉じる・SSH が切れる・マシンが落ちる、といった場合は未保存の内容は失われます。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.1.3</span>
+        <h2>vim や nano との違い</h2>
+        <p class="dek">短く言えば、モードを覚えなくてよいこと、そして CJK が主役であることです。</p>
+
+        <p>ターミナル用エディターは他にもあります。Erya が狙っているのは具体的な問題群です：<strong>CJK 文書</strong>がターミナルで揃わない、変換で文字コードが壊れる、古いファイルがいまだに Big5 である。設計の判断はそこから来ています。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:22%"></th><th style="width:26%">Erya</th><th style="width:26%">vim</th><th>nano</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>モードの学習</td><td>不要。開いてすぐ入力できる</td><td>必要（コマンド／挿入）</td><td>不要</td></tr>
+            <tr><td>キーの見つけ方</td><td>2 行目に常時表示、<kbd>F1</kbd> に全一覧</td><td>先に覚える</td><td>下 2 行に表示</td></tr>
+            <tr><td>CJK 文字コード</td><td>自動判定、常時表示、<kbd>F7</kbd> で変換</td><td>fileencoding を手動設定</td><td>扱わない</td></tr>
+            <tr><td>全角の桁揃え</td><td>端末の桁で計算し、全角は 2 桁</td><td>おおむね可</td><td>おおむね可</td></tr>
+            <tr><td>絵文字・結合文字</td><td>書記素クラスター単位で移動・削除</td><td>ビルド次第</td><td>分割されがち</td></tr>
+            <tr><td>矩形選択</td><td>内蔵。文字で埋める・まとめて動かす</td><td>あり（Ctrl+V ブロック）</td><td>なし</td></tr>
+            <tr><td>ファイル比較</td><td>内蔵（<kbd>F4</kbd>）</td><td>vimdiff を起動</td><td>なし</td></tr>
+            <tr><td>16 進数表示</td><td>内蔵（<kbd>Ctrl+P</kbd>）</td><td>xxd に通す</td><td>なし</td></tr>
+            <tr><td>キーの変更</td><td>TOML 1 つ。12 種類同梱</td><td>vimrc（強力だが要学習）</td><td>nanorc（限定的）</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">すでに nano や vim をお使いなら</span>
+          <p><span class="path">keymap/</span> ディレクトリには <strong>nano・vim・emacs</strong> のプロファイルに加え、VS Code、Visual Studio、IntelliJ、Eclipse、macOS 版も入っています。<kbd>F2</kbd> を押して選び <kbd>Enter</kbd>。設定ファイルは不要です（4.1.3 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.1.4</span>
+        <h2>全体像：5 つのブロック</h2>
+        <p class="dek">Erya のどの画面も、この 5 つのどれかに属します。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 400" role="img" aria-label="Erya の 5 つの機能ブロック">
+              <rect x="0" y="0" width="960" height="400" fill="#FAFBFD"/>
+
+              <rect x="24" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#C7D8EA" stroke-width="2"/>
+              <rect x="24" y="24" width="176" height="46" rx="12" fill="#E8EFF7"/>
+              <text x="112" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#12314F">① 編集</text>
+              <text x="42" y="102" font-size="14" fill="#3F485D">入力・選択・切り貼り</text>
+              <text x="42" y="130" font-size="14" fill="#3F485D">検索と置換</text>
+              <text x="42" y="158" font-size="14" fill="#3F485D">元に戻す・やり直す</text>
+              <text x="42" y="186" font-size="14" fill="#3F485D">矩形選択</text>
+              <text x="42" y="214" font-size="14" fill="#3F485D">定型文とマクロ</text>
+              <text x="42" y="258" font-size="13" fill="#98A2B3">毎日使うのは</text>
+              <text x="42" y="278" font-size="13" fill="#98A2B3">このブロック</text>
+              <text x="42" y="330" font-size="13.5" fill="#1F4E79">→ 第 2 部</text>
+
+              <rect x="216" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#E6CCC7" stroke-width="2"/>
+              <rect x="216" y="24" width="176" height="46" rx="12" fill="#F6EBE9"/>
+              <text x="304" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#7A382F">② ファイル</text>
+              <text x="234" y="102" font-size="14" fill="#3F485D">ファイルダイアログ</text>
+              <text x="234" y="130" font-size="14" fill="#3F485D">タブ</text>
+              <text x="234" y="158" font-size="14" fill="#3F485D">保存・名前を付けて保存</text>
+              <text x="234" y="186" font-size="14" fill="#3F485D">外部変更の検出</text>
+              <text x="234" y="214" font-size="14" fill="#3F485D">大容量ファイル</text>
+              <text x="234" y="258" font-size="13" fill="#98A2B3">読み込みと書き戻しに</text>
+              <text x="234" y="278" font-size="13" fill="#98A2B3">関わるすべて</text>
+              <text x="234" y="330" font-size="13.5" fill="#9B4B3F">→ 2.1、3.2</text>
+
+              <rect x="408" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#EDD9AE" stroke-width="2"/>
+              <rect x="408" y="24" width="176" height="46" rx="12" fill="#FBF3E3"/>
+              <text x="496" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#7A5312">③ 文字と書式</text>
+              <text x="426" y="102" font-size="14" fill="#3F485D">文字コード判定・変換</text>
+              <text x="426" y="130" font-size="14" fill="#3F485D">LF／CRLF</text>
+              <text x="426" y="158" font-size="14" fill="#3F485D">シンタックスハイライト</text>
+              <text x="426" y="186" font-size="14" fill="#3F485D">TOML/YAML/JSON</text>
+              <text x="426" y="214" font-size="14" fill="#3F485D">段落の再整形</text>
+              <text x="426" y="258" font-size="13" fill="#98A2B3">古い文書でいちばん</text>
+              <text x="426" y="278" font-size="13" fill="#98A2B3">つまずくところ</text>
+              <text x="426" y="330" font-size="13.5" fill="#7A5312">→ 3.1</text>
+
+              <rect x="600" y="24" width="176" height="352" rx="12" fill="#fff" stroke="#D6CFE6" stroke-width="2"/>
+              <rect x="600" y="24" width="176" height="46" rx="12" fill="#EFECF6"/>
+              <text x="688" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#4C3F72">④ 調査ツール</text>
+              <text x="618" y="102" font-size="14" fill="#3F485D">16 進数表示</text>
+              <text x="618" y="130" font-size="14" fill="#3F485D">バイト編集</text>
+              <text x="618" y="158" font-size="14" fill="#3F485D">左右 2 ペイン比較</text>
+              <text x="618" y="186" font-size="14" fill="#3F485D">差分のコピー</text>
+              <text x="618" y="214" font-size="14" fill="#3F485D">ログの追跡</text>
+              <text x="618" y="258" font-size="13" fill="#98A2B3">出番は少ないが、</text>
+              <text x="618" y="278" font-size="13" fill="#98A2B3">要るときは代えがたい</text>
+              <text x="618" y="330" font-size="13.5" fill="#4C3F72">→ 3.3、3.4</text>
+
+              <rect x="792" y="24" width="144" height="352" rx="12" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <rect x="792" y="24" width="144" height="46" rx="12" fill="#F4F6FA"/>
+              <text x="864" y="54" text-anchor="middle" font-size="17" font-weight="700" fill="#3F485D">⑤ 設定</text>
+              <text x="810" y="102" font-size="14" fill="#3F485D">キープロファイル</text>
+              <text x="810" y="130" font-size="14" fill="#3F485D">キーマップエディター</text>
+              <text x="810" y="158" font-size="14" fill="#3F485D">表示言語</text>
+              <text x="810" y="186" font-size="14" fill="#3F485D">キー操作ヘルプ</text>
+              <text x="810" y="230" font-size="13" fill="#98A2B3">一度決めれば</text>
+              <text x="810" y="250" font-size="13" fill="#98A2B3">当分触りません</text>
+              <text x="810" y="330" font-size="13.5" fill="#667085">→ 第 4 部</text>
+            </svg>
+          </div>
+          <figcaption><b>図 1.1.2</b>　5 つのブロック。①②は毎日の作業、③は古いファイルで効いてきます。④は普段は使いませんが必要なときに代わりがなく、⑤は最初に決めるだけです。</figcaption>
+        </figure>
+
+        <p>ひとつ注意を。<strong>この 5 つにメニューはありません。</strong>Erya にはメニューバーがなく、すべての機能はキーで呼び出します。見つからないときは <kbd>F1</kbd> を押してください。その一覧が機能の総目次です（1.3.8 参照）。</p>
+      </section>
+
+      <!-- ══════════ 1.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.1.5</span>
+        <h2>文書の一生</h2>
+        <p class="dek">開いてから書き戻すまで、5 つの駅を通ります。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 300" role="img" aria-label="文書を開いてから保存するまでの流れ">
+              <rect x="0" y="0" width="960" height="300" fill="#FAFBFD"/>
+              <defs><marker id="arrow11" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="24" y="60" width="168" height="86" rx="10" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="108" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#7A382F">① 開く</text>
+              <text x="108" y="116" text-anchor="middle" font-size="13" fill="#3F485D">コマンドラインか</text>
+              <text x="108" y="136" text-anchor="middle" font-size="13" fill="#3F485D">Ctrl+O で</text>
+
+              <rect x="216" y="60" width="168" height="86" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="300" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#7A5312">② 種別判定</text>
+              <text x="300" y="116" text-anchor="middle" font-size="13" fill="#3F485D">テキスト／大容量／</text>
+              <text x="300" y="136" text-anchor="middle" font-size="13" fill="#3F485D">バイナリ＋文字コード</text>
+
+              <rect x="408" y="60" width="168" height="86" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="492" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#12314F">③ 編集</text>
+              <text x="492" y="116" text-anchor="middle" font-size="13" fill="#3F485D">入力・検索・置換</text>
+              <text x="492" y="136" text-anchor="middle" font-size="13" fill="#3F485D">最大 100 手まで戻せる</text>
+
+              <rect x="600" y="60" width="168" height="86" rx="10" fill="#EFECF6" stroke="#D6CFE6" stroke-width="2"/>
+              <text x="684" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#4C3F72">④ 変換</text>
+              <text x="684" y="116" text-anchor="middle" font-size="13" fill="#3F485D">F7 文字コード／F8 改行</text>
+              <text x="684" y="136" text-anchor="middle" font-size="13" fill="#3F485D">（省略可）</text>
+
+              <rect x="792" y="60" width="144" height="86" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="864" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#1E5C39">⑤ 保存</text>
+              <text x="864" y="116" text-anchor="middle" font-size="13" fill="#3F485D">Ctrl+S</text>
+              <text x="864" y="136" text-anchor="middle" font-size="13" fill="#3F485D">一時ファイル→差し替え</text>
+
+              <path d="M192 103 L214 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M384 103 L406 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M576 103 L598 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+              <path d="M768 103 L790 103" stroke="#98A2B3" stroke-width="2" marker-end="url(#arrow11)"/>
+
+              <path d="M492 146 L492 186" stroke="#98A2B3" stroke-width="2" stroke-dasharray="5 4"/>
+              <rect x="228" y="186" width="528" height="60" rx="10" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <text x="492" y="212" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3F485D">編集中ずっと、Erya はディスク上の原本が変わっていないか見ています</text>
+              <text x="492" y="234" text-anchor="middle" font-size="13" fill="#667085">未編集なら自動再読み込み、編集済みなら先に確認します（2.1.7 参照）</text>
+
+              <text x="480" y="278" text-anchor="middle" font-size="13.5" fill="#98A2B3">②が分岐点：バイナリはテキスト編集に入らず、大容量ファイルは編集できません</text>
+            </svg>
+          </div>
+          <figcaption><b>図 1.1.3</b>　②で行き先が決まります。通常のテキストは全工程を通り、64 MiB 以上は読み取り専用（3.2）、テキストでないものは 16 進数表示（3.3）へ進みます。</figcaption>
+        </figure>
+
+        <ol class="rule-list">
+          <li><b>開く。</b>コマンドラインでファイル名を渡すか、<kbd>Ctrl+O</kbd> でファイルダイアログを開きます。同じパスがすでにタブにあれば、Erya はそちらへ切り替え、二重には開きません（2.1.1）。</li>
+          <li><b>種別を判定する。</b>サイズと先頭 8 KiB に NUL バイトがあるかを見てモードを決め、同時に文字コードを推定します（3.1.1）。</li>
+          <li><b>編集する。</b>通常のテキストファイルはここで大半の時間を過ごします。各タブがカーソル位置・検索条件・最大 100 手の履歴を個別に保持します（2.4.1）。</li>
+          <li><b>変換する（任意）。</b>古い Big5 を UTF-8 に、CRLF を LF に変えるなら保存前に <kbd>F7</kbd>／<kbd>F8</kbd> を。変換は次回保存時に行われ、押した瞬間ではありません（3.1.2）。</li>
+          <li><b>保存する。</b><kbd>Ctrl+S</kbd> は同じディレクトリに一時ファイルを書き、原子的に差し替え、Unix では元の権限も戻します（2.1.6）。</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 1.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.1.6</span>
+        <h2>3 種類の読者、3 つの道順</h2>
+        <p class="dek">自分がどれかを決めてから、必要な章だけ読んでください。</p>
+
+        <div class="role-grid">
+          <div class="role-card">
+            <h4>文章を書く方</h4>
+            <p class="who">原稿、メモ、古い文書の整理</p>
+            <ul>
+              <li>開く・タブ・保存</li>
+              <li>検索と置換、元に戻す</li>
+              <li>文字コードと改行の変換</li>
+              <li>段落の再整形、定型文</li>
+            </ul>
+            <p class="go">道順：1.2 → 1.3 → 2.1〜2.4 → 3.1</p>
+          </div>
+          <div class="role-card mgr">
+            <h4>サーバーの設定を触る方</h4>
+            <p class="who">SSH で入り、conf を直し、ログを見て、2 つの設定を比べる</p>
+            <ul>
+              <li>オプションと環境変数</li>
+              <li>ハイライトと TOML/YAML/JSON 整形</li>
+              <li>大容量ファイルとログ追跡</li>
+              <li>設定ファイル 2 つの比較</li>
+            </ul>
+            <p class="go">道順：1.2 → 1.3 → 2.1 → 3.1 → 3.2 → 3.4</p>
+          </div>
+          <div class="role-card hr">
+            <h4>自分の手になじませたい方</h4>
+            <p class="who">キーや言語を変える、チームで設定を揃える</p>
+            <ul>
+              <li>同梱の 12 プロファイル</li>
+              <li>キーマップエディターと保存</li>
+              <li>設定ファイルが読まれる場所</li>
+              <li>表示言語と自作翻訳</li>
+            </ul>
+            <p class="go">道順：1.3 → 4.1 → 4.2 → 4.4</p>
+          </div>
+        </div>
+
+        <p>3 つを兼ねているのが普通です。その場合は第 1 部と第 2 部を順に読み、第 3 部・第 4 部は必要になってから開いてください。</p>
+      </section>
+
+      <!-- ══════════ 1.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.1.7</span>
+        <h2>まず覚える 6 つのこと</h2>
+        <p class="dek">どれも後の章で再登場しますが、出発点としてここに置きます。</p>
+
+        <ol class="rule-list">
+          <li><b>自動保存はありません。</b>Erya が勝手に保存することはなく、クラッシュ復元もありません。ディスクに書くのは <kbd>Ctrl+S</kbd> だけです（2.1.5）。</li>
+          <li><b>終了は <kbd>Ctrl+X</kbd>。<kbd>Ctrl+C</kbd> ではありません。</b>既定では <kbd>Ctrl+C</kbd> はコピーで、中断ではありません。タブを閉じるのは <kbd>F11</kbd> です（2.1.3）。</li>
+          <li><b>ショートカットは差し替え可能なので、手引きと手元が違うことがあります。</b>2 行目と <kbd>F1</kbd> が常に実際のキーを示します（4.1）。</li>
+          <li><b>文字コードと改行は「次の保存」で反映されます。</b><kbd>F7</kbd>／<kbd>F8</kbd> はステータス行を変えるだけです（3.1.2）。</li>
+          <li><b>編集できないモードが 3 つあります。</b>大容量ファイル読み取り専用、テキストファイルの 16 進数表示、ストリーム読みのバイナリ。どれもステータス行に明記されます（3.2、3.3）。</li>
+          <li><b>矩形選択と折り返し表示は同時に使えません。</b>座標の考え方が衝突するため排他で、片方が有効なときにもう片方を有効にしようとするとメッセージで止められます（2.2.5）。</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ 1.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.1.8</span>
+        <h2>用語はどの章にあるか</h2>
+        <p class="dek">この章に出た用語です。全用語は 4.4.8 にあります。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:22%">用語</th><th>ひとことで言うと</th><th style="width:12%">参照</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>タブ</td><td>同時に開いている複数のファイル。カーソルや履歴を個別に持ちます。</td><td>2.1.3</td></tr>
+            <tr><td>ヒント行</td><td>2 行目。その画面で使えるキーを常に並べています。</td><td>1.3.3</td></tr>
+            <tr><td>ステータス行</td><td>下から 2 行目。ファイル名、行と列、モード、文字コード、改行。</td><td>1.3.5</td></tr>
+            <tr><td>メッセージ行</td><td>最終行。操作の結果や確認の問いが出ます。</td><td>1.3.6</td></tr>
+            <tr><td>キープロファイル</td><td>操作とキーの対応を書いた TOML。まるごと差し替えられます。</td><td>4.1</td></tr>
+            <tr><td>書記素クラスター</td><td>画面上で 1 文字に見える単位。何個のコードポイントでできていても 1 つ。</td><td>2.2.3</td></tr>
+            <tr><td>矩形選択</td><td>長方形の選択。文字で埋めたり、まとめて動かせます。</td><td>2.2.5</td></tr>
+            <tr><td>大容量ファイルモード</td><td>64 MiB 以上で自動的に入る読み取り専用の閲覧モード。</td><td>3.2</td></tr>
+            <tr><td>16 進数表示</td><td>文書をバイト単位で見る画面。テキストファイルでは読み取り専用。</td><td>3.3</td></tr>
+            <tr><td>バイナリファイル</td><td>NUL を含む、または復号できないファイル。開くと直接バイト表示になります。</td><td>3.3.5</td></tr>
+            <tr><td>一時コピー</td><td>比較中の作業ファイル。適用するまで元のファイルは変わりません。</td><td>3.4.1</td></tr>
+            <tr><td>定型文</td><td>登録して繰り返し挿入する文字列。JSON に保存します。</td><td>2.4.3</td></tr>
+            <tr><td>マクロ</td><td>記録して再生するキー列。JSON に保存します。</td><td>2.4.6</td></tr>
+            <tr><td>アトミック保存</td><td>一時ファイルを書いてから差し替える方式。半端なファイルが残りません。</td><td>2.1.6</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

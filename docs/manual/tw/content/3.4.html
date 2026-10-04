@@ -1,0 +1,251 @@
+      <!-- ══════════ 3.4.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.4.1</span>
+        <h2>進入比對</h2>
+        <p class="dek"><kbd>F4</kbd>，然後用同一個檔案對話盒選兩次。</p>
+
+        <ol class="rule-list">
+          <li><b>按 <kbd>F4</kbd>。</b>第一列顯示「選擇左側檔案」，操作方式跟開檔完全一樣（見 2.1.2）。</li>
+          <li><b>選左邊那個檔。</b>訊息列說「已選左側：/etc/nginx/nginx.conf；請選擇右側檔案」，第一列換成「選擇右側檔案」。</li>
+          <li><b>選右邊那個檔。</b>進入比對畫面，訊息列說「比對完成：共 7 個差異區塊」。</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">原始檔案不會馬上被碰到</span>
+          <p>進入比對時，爾雅會<strong>先把兩個檔案各複製一份到暫存目錄</strong>，之後所有的差異互抄都寫在暫存副本上。原始檔案要等你明確確認才會被覆蓋（見 3.4.7）。所以放心抄來抄去，反悔了直接 <kbd>Esc</kbd> 放棄就好。</p>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">兩種檔案進不了比對</span>
+          <ul>
+            <li><strong>大型檔案</strong>（64 MiB 以上）：「大型檔案唯讀模式暫不支援雙欄比對，以避免載入完整內容造成記憶體耗盡」。</li>
+            <li><strong>二進位檔案</strong>：「二進位檔案不支援雙欄比對」。</li>
+          </ul>
+          <p>選到這兩種時會在選檔階段就被擋下來，不會進到比對畫面。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.4.2</span>
+        <h2>畫面怎麼看</h2>
+        <p class="dek">左右各一半，中間一條直線；每一側都有自己的行號欄。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ 檔案比對</div>
+            <div class="s-bar"> 左 │ nginx.conf              │ 右 │ nginx.conf.new</div>
+            <div class="s-body">   1   worker_processes 4;      │   1   worker_processes 4;
+   2                            │   2
+<s>   3≠  keepalive_timeout 65;   </s>│<s>   3≠  keepalive_timeout 75;   </s>
+   4   gzip on;                 │   4   gzip on;
+<b>   5 ▶ client_max_body_size 8m;</b>│<b>   5 ▶ client_max_body_size 8m;</b>
+   6-  access_log off;          │
+   7   server {                 │   6   server {
+       │                        │   7+    listen 8443 ssl;</div>
+            <div class="s-status"> 游標第 5/9 列　目前差異 2/7　水平欄 1 │ 圖例：亮列／▶ 游標　≠ 修改　- 僅左側　+ 僅右側 </div>
+            <div class="s-msg">N 下一個差異　P 上一個差異　Shift+→ 游標處左→右　Shift+← 游標處右→左　Ctrl+S 套用　Esc 返回</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">畫面元素</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td>第二列（提示列）</td><td>換成<strong>左右兩個檔名</strong>，各佔畫面一半，中間的分隔線跟底下的內容對齊。</td></tr>
+            <tr><td>行號欄</td><td>每側四位數行號，後面接兩個標記欄：<strong>差異種類</strong>與<strong>游標</strong>。</td></tr>
+            <tr><td>空白列</td><td>某一側沒有對應內容時該側留空——這就是「對齊」的效果，讓相同的行排在同一列上。</td></tr>
+            <tr><td>狀態列</td><td>游標在第幾列／共幾列、目前是第幾個差異／共幾個、水平捲到第幾欄，後面接圖例。</td></tr>
+            <tr><td>訊息列</td><td>常駐顯示比對專用的操作說明。做了動作之後會換成該動作的回報。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.4.3</span>
+        <h2>三種差異標記</h2>
+        <p class="dek">不必只靠顏色判讀——每一種差異都有自己的符號。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">符號</th><th style="width:22%">意思</th><th>畫面上長怎樣</th></tr></thead>
+          <tbody>
+            <tr><td><b style="font-size:1.1em">≠</b></td><td>兩側都有，但內容不同</td><td>兩側都標，而且<strong>行內不一樣的那幾個字會用更強的顏色再標一次</strong></td></tr>
+            <tr><td><b style="font-size:1.1em">-</b></td><td>只有左側有</td><td>左側標記，右側該列留空</td></tr>
+            <tr><td><b style="font-size:1.1em">+</b></td><td>只有右側有</td><td>右側標記，左側該列留空</td></tr>
+            <tr><td>（空白）</td><td>兩側相同</td><td>沒有標記</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>另外兩個標記跟差異無關，是位置指示：</p>
+        <ul>
+          <li><strong>▶ 是游標</strong>，左右兩側同時出現在同一列——兩邊的游標是綁在一起的。</li>
+          <li><strong>整列變亮</strong>代表游標所在的列。</li>
+          <li><strong>行號變成黃底</strong>代表這是「目前這個差異區塊」，也就是 <kbd>N</kbd>／<kbd>P</kbd> 停下來的地方。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">連續的差異行算一個「區塊」</span>
+          <p>狀態列說「目前差異 2/7」的 7，數的是<strong>區塊</strong>不是行。連著改的五行算一個區塊，<kbd>N</kbd> 一次就跳過整塊，抄的時候也是整塊一起抄。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.4.4</span>
+        <h2>游標與差異是兩件事</h2>
+        <p class="dek">這是比對畫面最容易搞混的一點。</p>
+
+        <div class="duo">
+          <div>
+            <h4>游標（▶）</h4>
+            <p>用 <kbd>↑</kbd> <kbd>↓</kbd>、<kbd>PageUp</kbd> <kbd>PageDown</kbd>、<kbd>Home</kbd> <kbd>End</kbd> 移動，<strong>一次一列</strong>，相同的行也會停。</p>
+            <p><strong>複製差異看的是游標在哪一列。</strong></p>
+          </div>
+          <div>
+            <h4>目前差異（黃底行號）</h4>
+            <p>用 <kbd>N</kbd>／<kbd>P</kbd> 跳，<strong>一次一個區塊</strong>，只停在有差異的地方。</p>
+            <p>跳過去的時候游標也會跟著移動，所以跳完就可以直接抄。</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">游標停在相同的行上就抄不動</span>
+          <p>按了 <kbd>Shift+→</kbd> 卻沒反應、訊息列說「游標所在位置沒有可複製的差異區塊」，就是這個原因。<strong>先按 <kbd>N</kbd> 跳到差異上，再抄。</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.4.5</span>
+        <h2>移動與捲動</h2>
+        <p class="dek">兩側永遠同步，不會各捲各的。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>游標上下一列，畫面跟著跑</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>整頁移動</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>到比對結果的最前面／最後面</td></tr>
+            <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td><strong>兩側同步水平捲動</strong>，看行很長的內容時用</td></tr>
+            <tr><td><kbd>Ctrl+←</kbd> <kbd>Ctrl+→</kbd></td><td>水平一次捲 8 欄</td></tr>
+            <tr><td><kbd>N</kbd></td><td>下一個差異區塊</td></tr>
+            <tr><td><kbd>P</kbd></td><td>上一個差異區塊</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p><kbd>N</kbd>／<kbd>P</kbd> 走到最後一個差異之後會<strong>繞回第一個</strong>，所以連按下去可以繞著整份文件檢查。</p>
+      </section>
+
+      <!-- ══════════ 3.4.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.4.6</span>
+        <h2>把差異抄到另一邊</h2>
+        <p class="dek">兩個鍵，方向就是箭頭的方向。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">按鍵</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Shift+→</kbd></td><td>把游標所在的差異區塊<strong>從左邊抄到右邊</strong>（寫進右側暫存檔）</td></tr>
+            <tr><td><kbd>Shift+←</kbd></td><td>把游標所在的差異區塊<strong>從右邊抄到左邊</strong></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>抄完訊息列說「已將目前差異從左側複製到右側暫存檔；剩餘 6 個差異區塊」——<strong>剩幾個是直接告訴你的</strong>。</li>
+          <li>抄完之後<strong>游標與畫面位置不動</strong>，讓你確認結果對不對。要去下一個差異請自己按 <kbd>N</kbd>。</li>
+          <li>整個區塊一起抄，不是一行一行抄。</li>
+          <li>寫暫存檔失敗時（磁碟滿、權限問題）會說「更新暫存檔失敗：…」。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">標準的合併流程</span>
+          <p><kbd>N</kbd> 跳到差異 → 看一眼 → 要抄就 <kbd>Shift+→</kbd> 或 <kbd>Shift+←</kbd>，不抄就再按 <kbd>N</kbd> → 一路走到繞回第一個 → 最後按 <kbd>Ctrl+S</kbd> 套用。全程只用四個鍵。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.4.7</span>
+        <h2>套用回原始檔案</h2>
+        <p class="dek">按目前配置的儲存鍵（預設 <kbd>Ctrl+S</kbd>），然後回答 Y 或 N。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn">確定以暫存比對結果覆蓋原始檔案？Y 覆蓋／N 取消</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b>按 <kbd>Ctrl+S</kbd>。</b>沒有任何暫存變更時會直接說「目前沒有需要套用的暫存變更」，不會問你。</li>
+          <li><b>按 <kbd>Y</kbd> 確認。</b>爾雅會<strong>先檢查原始檔案有沒有被外部程式改過</strong>，沒問題才覆蓋。</li>
+          <li><b>成功。</b>訊息列說「已確認並覆蓋 2 個原始檔案」——只有真的改過的那一側會被寫入。</li>
+          <li><b>失敗。</b>說「未覆蓋原始檔案：…」，<strong>兩邊都不會被改</strong>。最常見的原因就是原檔在比對期間被別人動過。</li>
+          <li><b>按 <kbd>N</kbd> 取消。</b>「已取消覆蓋，暫存變更仍保留」——你抄的東西還在，可以繼續改或稍後再套用。</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">覆蓋前的外部檢查是硬性的</span>
+          <p>這跟一般編輯的存檔保護是同一套機制（見 2.1.7）。比對通常要花一點時間，中間原檔被 <span class="path">git checkout</span> 換掉是很常見的事，爾雅不會默默把它蓋回去。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.4.8</span>
+        <h2>離開時的三個選擇</h2>
+        <p class="dek">還有沒套用的暫存變更時，<kbd>Esc</kbd> 會先問。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn">暫存變更尚未套用：Y 覆蓋並離開／N 放棄並離開／Esc 返回</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:16%">按鍵</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Y</kbd></td><td>覆蓋原始檔案然後離開（一樣會先檢查外部修改）。</td></tr>
+            <tr><td><kbd>N</kbd></td><td><strong>放棄暫存變更</strong>並離開。你抄的東西全部不算數，原始檔案維持原樣。</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>回到比對畫面，什麼都不做。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>沒有任何暫存變更時，<kbd>Esc</kbd> 直接離開，不會問。</p>
+
+        <div class="callout">
+          <span class="co-title">離開之後暫存副本就清掉了</span>
+          <p>暫存目錄只在比對期間存在。<strong>按 <kbd>N</kbd> 放棄離開之後，抄過的內容沒辦法救回來</strong>——重新比對一次就是了，反正原檔還在。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.4.9</span>
+        <h2>常見錯誤</h2>
+        <p class="dek">雙欄比對的七個常見狀況。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">現象</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Shift+→</kbd> 沒反應</td><td>游標停在相同的行上。先按 <kbd>N</kbd> 跳到差異（3.4.4）。</td></tr>
+            <tr><td>選檔時就被擋下來</td><td>選到大型檔案或二進位檔（3.4.1）。</td></tr>
+            <tr><td>抄完了但原檔沒變</td><td>改的是暫存副本。要按 <kbd>Ctrl+S</kbd> 再按 <kbd>Y</kbd> 才會寫回去（3.4.7）。</td></tr>
+            <tr><td>套用時說未覆蓋原始檔案</td><td>原檔在比對期間被外部改過。離開後重新比對一次（3.4.7）。</td></tr>
+            <tr><td>離開後發現抄的東西不見了</td><td>離開時按了 <kbd>N</kbd>（放棄並離開）（3.4.8）。</td></tr>
+            <tr><td>看不到行的後半段</td><td>用 <kbd>←</kbd> <kbd>→</kbd> 水平捲動，兩側會同步（3.4.5）。</td></tr>
+            <tr><td>差異數量跟預期不一樣</td><td>數的是<strong>區塊</strong>不是行；連續的差異行算一個（3.4.3）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

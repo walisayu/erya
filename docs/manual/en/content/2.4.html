@@ -1,0 +1,268 @@
+      <!-- ══════════ 2.4.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.4.1</span>
+        <h2>Undo and redo</h2>
+        <p class="dek"><kbd>Ctrl+Z</kbd> goes back, <kbd>Ctrl+Y</kbd> goes forward, 100 steps each.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">Key</th><th style="width:20%">Action</th><th>Message row</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+Z</kbd></td><td>Undo</td><td>Undid last action / Nothing to undo</td></tr>
+            <tr><td><kbd>Ctrl+Y</kbd></td><td>Redo</td><td>Redid last action / Nothing to redo</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>Undo <strong>restores the cursor position too</strong>, taking you back to where the edit happened.</li>
+          <li>As long as you do not type anything new, you can redo your way forward again.</li>
+          <li><strong>Typing after an undo clears the redo history</strong> — as in every editor.</li>
+          <li>Each tab has its own history (see 2.1.4).</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">Two things wipe the history</span>
+          <ul>
+            <li><strong>An automatic reload after an external change</strong>: the old steps no longer fit the new content, so they are dropped (see 2.1.7).</li>
+            <li><strong>Closing the tab</strong>: the history belongs to the tab and reopening the file does not restore it.</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Erya Classic redoes with a different key</span>
+          <p>Redo is <kbd>Ctrl+Y</kbd> in the default profile but <kbd>Ctrl+R</kbd> in Erya Classic — where <kbd>Ctrl+Y</kbd> deletes a line instead. This is the pair people press by mistake most often after switching; check the hint bar (see 4.1.2).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.4.2</span>
+        <h2>How big is one step</h2>
+        <p class="dek">Usually one keystroke, except for five actions that count as one.</p>
+
+        <div class="duo">
+          <div>
+            <h4>One keystroke, one step</h4>
+            <ul>
+              <li>Typing a character</li>
+              <li>Deleting one (<kbd>Backspace</kbd> / <kbd>Delete</kbd>)</li>
+              <li>One <kbd>Enter</kbd></li>
+              <li>Cutting or deleting a line</li>
+              <li>One paste</li>
+            </ul>
+            <p style="margin-top:8px"><strong>So 100 steps is roughly 100 characters.</strong> Undo is a poor way to roll back a long passage you have just typed.</p>
+          </div>
+          <div>
+            <h4>One step for the whole batch</h4>
+            <ul>
+              <li><strong>Replace all</strong> (<kbd>F6</kbd>) — however many matches</li>
+              <li><strong>Formatting</strong> (<kbd>Ctrl+T</kbd>)</li>
+              <li><strong>Paragraph reflow</strong></li>
+              <li><strong>Inserting a phrase</strong></li>
+              <li><strong>Running a macro</strong> — no matter what it did</li>
+            </ul>
+            <p style="margin-top:8px">All five are “one command, wide effect”, so they are deliberately merged: one <kbd>Ctrl+Z</kbd> takes the lot back.</p>
+          </div>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">Byte editing has its own rule</span>
+          <p>Writing a byte takes two hexadecimal digits (high nibble, then low), and <strong>the two presses count as one step</strong>. See 3.3.6.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.4.3</span>
+        <h2>What phrases are for</h2>
+        <p class="dek">Capture text you keep retyping, insert it with one key, and it advances to the next entry.</p>
+
+        <p>Phrases suit standard closings in correspondence, code templates, paths and names you type constantly, or a set of tags you insert repeatedly. What makes them unusual is that <strong>each insertion advances to the next phrase</strong>, so pressing the key several times lays out the whole set in order.</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 200" role="img" aria-label="Phrases cycle through the library">
+              <rect x="0" y="0" width="960" height="200" fill="#FAFBFD"/>
+              <defs><marker id="arrow24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#1F4E79"/></marker></defs>
+
+              <rect x="60" y="46" width="200" height="60" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="160" y="72" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">Phrase 1</text>
+              <text x="160" y="94" text-anchor="middle" font-size="13" fill="#3F485D">Yours sincerely,</text>
+
+              <rect x="300" y="46" width="200" height="60" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="400" y="72" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">Phrase 2</text>
+              <text x="400" y="94" text-anchor="middle" font-size="13" fill="#3F485D">Prepared by:</text>
+
+              <rect x="540" y="46" width="200" height="60" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="640" y="72" text-anchor="middle" font-size="14.5" font-weight="700" fill="#12314F">Phrase 3</text>
+              <text x="640" y="94" text-anchor="middle" font-size="13" fill="#3F485D">(end of document)</text>
+
+              <path d="M262 76 L296 76" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow24)"/>
+              <path d="M502 76 L536 76" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow24)"/>
+              <path d="M740 76 C800 76 800 150 400 150 C120 150 100 110 108 108" stroke="#1F4E79" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow24)"/>
+              <text x="440" y="172" text-anchor="middle" font-size="13.5" fill="#1F4E79">after the last one, the next press starts again at phrase 1</text>
+            </svg>
+          </div>
+          <figcaption><b>Figure 2.4.1</b>　The phrase library is a cycle. Each insertion moves to the next entry, and the message row says “Inserted phrase 2/3” so you know where you are.</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 2.4.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.4.4</span>
+        <h2>Capturing and inserting phrases</h2>
+        <p class="dek">Four actions: capture, insert, load, save.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Action name</th><th style="width:20%">Key in Classic</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">capture_phrase</span></td><td><kbd>F9</kbd></td><td>Captures <strong>the selection</strong>, or <strong>the whole current line</strong> if nothing is selected.</td></tr>
+            <tr><td><span class="path">insert_phrase</span></td><td><kbd>F10</kbd></td><td>Inserts the next phrase at the cursor, replacing any selection.</td></tr>
+            <tr><td><span class="path">load_phrases</span></td><td><kbd>Shift+F9</kbd></td><td>Loads <span class="path">.erya-phrases.json</span>.</td></tr>
+            <tr><td><span class="path">save_phrases</span></td><td><kbd>Shift+F10</kbd></td><td>Writes <span class="path">.erya-phrases.json</span>.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>What the message row tells you:</p>
+        <ul>
+          <li>Captured: “Phrase captured; 3 phrase(s) available”</li>
+          <li>Already there: “That phrase is already in the library” — <strong>duplicates are never stored twice</strong></li>
+          <li>Nothing to capture: “There is no text to capture as a phrase”</li>
+          <li>Nothing to insert: “The phrase library is empty; capture a phrase first”</li>
+          <li>Inserted: “Inserted phrase 2/3”</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 2.4.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.4.5</span>
+        <h2>Where phrases are stored</h2>
+        <p class="dek">Next to the document you are editing, and only when you ask.</p>
+
+        <div class="callout warn">
+          <span class="co-title">Capturing is not saving</span>
+          <p>Capturing only puts a phrase in memory. <strong>Exit without running “save phrases” and it is gone.</strong> Erya never writes that file by itself — deliberately, so it does not leave files in other people's directories.</p>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">File</th><th>Location</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">.erya-phrases.json</span></td><td rowspan="2">The directory of the current document. Editing <span class="path">/home/user/docs/report.txt</span> means <span class="path">/home/user/docs/</span>.</td></tr>
+            <tr><td><span class="path">.erya-macro.json</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>In effect, phrases and macros <strong>follow the folder</strong>: one set beside project A, another beside project B. Copy the JSON across to share them.</p>
+
+        <div class="callout tip">
+          <span class="co-title">You can edit the JSON in Erya</span>
+          <p>The phrase file is simply an array of strings. Open it with <kbd>Ctrl+O</kbd>, tidy it with <kbd>Ctrl+T</kbd> (see 3.1.7), add a few entries by hand and save; the next <span class="path">load_phrases</span> picks them up.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.4.6</span>
+        <h2>Recording and running macros</h2>
+        <p class="dek">Record a sequence of keys, then replay the whole thing.</p>
+
+        <ol class="rule-list">
+          <li><b>Start recording.</b> The message row says “Macro recording started; run the record-macro action again to stop”. From now on every key you press is captured.</li>
+          <li><b>Do the thing you want to repeat.</b> Movement, typing, deletion, searching — all fine. <strong>The macro management keys themselves are not recorded.</strong></li>
+          <li><b>Press again to stop.</b> “Macro recording stopped with 12 key(s)”.</li>
+          <li><b>Run it.</b> “Macro executed with 12 key(s)”. Press it repeatedly to repeat the effect.</li>
+        </ol>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">Action name</th><th style="width:24%">Key in Classic</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">toggle_macro_recording</span></td><td><kbd>Ctrl+F2</kbd></td><td>Start / stop recording</td></tr>
+            <tr><td><span class="path">run_macro</span></td><td><kbd>Ctrl+F3</kbd></td><td>Run the recorded macro</td></tr>
+            <tr><td><span class="path">load_macro</span></td><td><kbd>Ctrl+Shift+F2</kbd></td><td>Load <span class="path">.erya-macro.json</span></td></tr>
+            <tr><td><span class="path">save_macro</span></td><td><kbd>Ctrl+Shift+F3</kbd></td><td>Write <span class="path">.erya-macro.json</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout ok">
+          <span class="co-title">A whole macro run is one undo step</span>
+          <p>However much it changed, one <kbd>Ctrl+Z</kbd> afterwards returns the document to the state before the run. Experiment freely — if the result is wrong, undo and adjust.</p>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">You cannot run while recording</span>
+          <p>You get “Stop recording before running the macro”. And running before anything has been recorded gives “There is no macro to run”.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.4.7</span>
+        <h2>Where macros are stored</h2>
+        <p class="dek">Same as phrases: the document's directory, saved on request.</p>
+
+        <ul>
+          <li>The file is <span class="path">.erya-macro.json</span> and holds the recorded key sequence.</li>
+          <li>Loading <strong>replaces the macro currently in memory</strong> and stops recording if it was on.</li>
+          <li>A failed load or save (permissions, broken JSON) reports “Phrase/macro operation failed: …”.</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">A macro records keys, not actions</span>
+          <p>What is stored are the <strong>physical keys</strong> (<kbd>Ctrl+K</kbd>), not the meaning “cut the current line”. <strong>Replay an old macro under a different key profile and the result can be entirely different.</strong> If you share macro files, agree on a profile first.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">2.4.8</span>
+        <h2>Bind a key before you can use them</h2>
+        <p class="dek">All eight phrase and macro actions are empty in the default profile.</p>
+
+        <div class="callout warn">
+          <span class="co-title">Pressing them and getting nothing is normal</span>
+          <p>To work in as many terminals as possible, Erya Terminal Safe leaves the eight phrase and macro actions — and five block actions — <strong>unbound</strong> (see 1.3.9). In <kbd>F1</kbd> help their key column is blank, meaning “the feature is here, but no key calls it”.</p>
+        </div>
+
+        <p>Two ways to get them working:</p>
+
+        <div class="duo">
+          <div>
+            <h4>① Switch to Erya Classic</h4>
+            <p><kbd>F2</kbd> → <kbd>←</kbd> <kbd>→</kbd> to <span class="term">Erya Classic</span> → <kbd>Enter</kbd>.</p>
+            <p>All eight get keys immediately (<kbd>F9</kbd>, <kbd>F10</kbd>, <kbd>Ctrl+F2</kbd>…), at the price of changing every other shortcut to the older set.</p>
+          </div>
+          <div>
+            <h4>② Bind only what you need</h4>
+            <p><kbd>F2</kbd> → <kbd>E</kbd> on the key-bindings row → find the action, <kbd>Enter</kbd>, type a key → <kbd>S</kbd> to save as your own TOML.</p>
+            <p>Everything else in the default profile stays as it is (see 4.1.4).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.4.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">2.4.9</span>
+        <h2>Common problems</h2>
+        <p class="dek">Six situations around undo, phrases, and macros.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>Undo runs out before you are done</td><td>Only 100 steps, one character each (2.4.2). To discard a lot, close the tab without saving and reopen.</td></tr>
+            <tr><td>Undo stops working entirely</td><td>The document was reloaded after an external change (2.1.7).</td></tr>
+            <tr><td>Phrases are gone after a restart</td><td>They were never saved. Run “save phrases” after capturing (2.4.5).</td></tr>
+            <tr><td>Phrases will not load in another directory</td><td>The JSON follows the document's directory. Copy it across (2.4.5).</td></tr>
+            <tr><td>A macro replays into nonsense</td><td>It records keys, and the profile changed (2.4.7).</td></tr>
+            <tr><td>None of these keys do anything</td><td>They have no default binding (2.4.8).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

@@ -1,0 +1,17 @@
+# Emacs-inspired single-chord shortcuts. Multi-key prefixes are not required.
+name = "emacs"
+
+[bindings]
+save = "Alt+S"
+quit = "Ctrl+Q"
+search = "Ctrl+S"
+go_to_position = "Alt+G"
+replace = "Alt+R"
+toggle_line_wrap = "Ctrl+Alt+L"
+paste = "Ctrl+Y"
+redo = []
+delete_line = "Ctrl+Delete"
+cut = "Ctrl+W"
+copy = "Alt+W"
+cursor_position = "Alt+C"
+open_settings = "F2"

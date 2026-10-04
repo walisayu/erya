@@ -1,0 +1,260 @@
+      <!-- ══════════ 1.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.2.1</span>
+        <h2>兩種安裝方式</h2>
+        <p class="dek">下載現成的執行檔，或用 Rust 自己編。</p>
+
+        <div class="duo">
+          <div>
+            <h4>① 下載 Release（建議）</h4>
+            <p>從 GitHub Releases 抓對應平台的壓縮檔，解開就是一個執行檔，不用裝任何東西。</p>
+            <ul>
+              <li>七種平台都有現成檔</li>
+              <li>附 SHA-256 可以驗</li>
+              <li>要自己放進 <span class="path">PATH</span></li>
+            </ul>
+          </div>
+          <div>
+            <h4>② 從原始碼安裝</h4>
+            <p>有 Rust 環境的話，<span class="path">cargo install</span> 一行就好，之後也方便跟著更新。</p>
+            <ul>
+              <li>需要 Rust <strong>1.85</strong> 或更新版本</li>
+              <li>裝到 Cargo 的 bin 目錄，通常已經在 <span class="path">PATH</span> 裡</li>
+              <li>第一次編譯要等幾分鐘</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">爾雅只有一個執行檔</span>
+          <p>沒有安裝程式、沒有服務、不寫登錄檔，也不會在系統裡散落設定。它唯一會主動讀的設定檔是<strong>按鍵配置</strong>（見 4.1.7），而且沒有也能跑；唯一會主動寫的檔案是你按下儲存的文件，以及你自己叫它存的常用語與巨集 JSON（見 2.4.5）。要移除就是把執行檔刪掉。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.2.2</span>
+        <h2>下載對應平台的壓縮檔</h2>
+        <p class="dek">先確認自己是哪一種 CPU，再挑檔名。</p>
+
+        <p>到 <span class="path">github.com/walisayu/erya/releases/latest</span> 挑一個 <span class="path">.tar.gz</span>：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th style="width:30%">系統</th><th style="width:26%">架構</th><th>Release target（檔名裡的字串）</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Linux</td><td>Intel／AMD 64-bit</td><td><span class="path">x86_64-unknown-linux-gnu</span></td></tr>
+            <tr><td>Linux／Raspberry Pi OS 64-bit</td><td>ARM64</td><td><span class="path">aarch64-unknown-linux-gnu</span></td></tr>
+            <tr><td>Raspberry Pi OS 32-bit</td><td>ARMv7 hard-float</td><td><span class="path">armv7-unknown-linux-gnueabihf</span></td></tr>
+            <tr><td>macOS</td><td>Intel</td><td><span class="path">x86_64-apple-darwin</span></td></tr>
+            <tr><td>macOS</td><td>Apple Silicon（M 系列）</td><td><span class="path">aarch64-apple-darwin</span></td></tr>
+            <tr><td>Windows</td><td>Intel／AMD 64-bit</td><td><span class="path">x86_64-pc-windows-msvc</span></td></tr>
+            <tr><td>Windows</td><td>ARM64</td><td><span class="path">aarch64-pc-windows-msvc</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>不確定自己是哪一種</h3>
+        <ul>
+          <li><strong>macOS</strong>：終端機打 <span class="path">uname -m</span>，<span class="path">arm64</span> 就是 Apple Silicon，<span class="path">x86_64</span> 就是 Intel。</li>
+          <li><strong>Linux／樹莓派</strong>：一樣是 <span class="path">uname -m</span>。<span class="path">aarch64</span> 選 ARM64，<span class="path">armv7l</span> 選 ARMv7，<span class="path">x86_64</span> 選 Intel／AMD。</li>
+          <li><strong>Windows</strong>：設定 →「系統」→「系統資訊」看「系統類型」。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">樹莓派要看的是作業系統，不是硬體</span>
+          <p>Raspberry Pi 4／5 的 CPU 是 64 位元，但 Raspberry Pi OS 有 32 位元版本。<strong>系統是 32 位元就得選 ARMv7</strong>，選了 ARM64 會跑不起來。用 <span class="path">uname -m</span> 看到的是系統實際位元數，最準。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.2.3</span>
+        <h2>驗證檔案與放進 PATH</h2>
+        <p class="dek">解壓縮之後只有一個檔：<span class="path">erya</span>（Windows 是 <span class="path">erya.exe</span>）。</p>
+
+        <p>每個壓縮檔都附一個同名的 <span class="path">.sha256</span>，Release 頁面上也有整包的 <span class="path">SHA256SUMS</span>。想確認下載沒壞（或沒被動過手腳）：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">系統</th><th>指令</th></tr></thead>
+          <tbody>
+            <tr><td>macOS</td><td><span class="path">shasum -a 256 erya-*.tar.gz</span></td></tr>
+            <tr><td>Linux</td><td><span class="path">sha256sum -c erya-*.tar.gz.sha256</span></td></tr>
+            <tr><td>Windows</td><td><span class="path">certutil -hashfile erya-*.tar.gz SHA256</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>算出來的字串要跟 <span class="path">.sha256</span> 檔裡的一致。接著把執行檔放到 <span class="path">PATH</span> 內的任何一個目錄：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">系統</th><th>常用位置</th></tr></thead>
+          <tbody>
+            <tr><td>macOS／Linux（只給自己用）</td><td><span class="path">~/.local/bin</span>　或　<span class="path">~/bin</span></td></tr>
+            <tr><td>macOS／Linux（全機共用）</td><td><span class="path">/usr/local/bin</span>（需要 <span class="path">sudo</span>）</td></tr>
+            <tr><td>Windows</td><td>自己建一個 <span class="path">C:\Tools</span>，再把它加進「環境變數 → Path」</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">macOS 第一次執行會被擋</span>
+          <p>從網路下載的執行檔帶有隔離屬性，macOS 會說「無法打開，因為無法驗證開發者」。解法是把屬性清掉：</p>
+          <p><span class="path">xattr -d com.apple.quarantine ~/.local/bin/erya</span></p>
+          <p>或是在「系統設定 →『隱私權與安全性』」裡按一次「仍要打開」。這是 macOS 對所有未經 App Store 簽章的程式一視同仁的行為，不是爾雅特有的。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.2.4</span>
+        <h2>從原始碼安裝</h2>
+        <p class="dek">需要 Rust 1.85 或更新版本。</p>
+
+        <p>先確認 Rust 版本夠新（<span class="path">rustc --version</span>），沒有的話用 <span class="path">rustup</span> 裝。接著在專案目錄裡：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:44%">指令</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">cargo run --release -- [檔案]</span></td><td>編譯並直接跑一次，不安裝。<span class="path">--</span> 後面的東西才會傳給爾雅。</td></tr>
+            <tr><td><span class="path">cargo install --path .</span></td><td>編譯並把 <span class="path">erya</span> 裝到 Cargo 的 bin 目錄（通常是 <span class="path">~/.cargo/bin</span>）。</td></tr>
+            <tr><td><span class="path">erya [檔案]</span></td><td>裝好之後就這樣用。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">別忘了那個 <span class="path">--</span></span>
+          <p><span class="path">cargo run --release 檔案.txt</span> 會被 Cargo 當成自己的參數而出錯。<strong>要開檔案一定得寫成 <span class="path">cargo run --release -- 檔案.txt</span></strong>，兩個減號告訴 Cargo：後面的東西是給程式的，不是給我的。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.2.5</span>
+        <h2>啟動：帶檔名或不帶</h2>
+        <p class="dek">後面可以接零個、一個或多個檔案。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:40%">指令</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">erya</span></td><td>開一個空白的未命名文件。第一次儲存時會問檔名。</td></tr>
+            <tr><td><span class="path">erya 報告.txt</span></td><td>開這個檔。<strong>檔案不存在也不會報錯</strong>，會開一個空白文件，第一次儲存時才真的建立檔案。</td></tr>
+            <tr><td><span class="path">erya a.txt b.txt c.txt</span></td><td>一次開三個頁籤，停在第一個。</td></tr>
+            <tr><td><span class="path">erya -- -奇怪的檔名.txt</span></td><td><span class="path">--</span> 之後的東西一律當檔名，不會被當成選項。</td></tr>
+            <tr><td><span class="path">erya 某個目錄</span></td><td><strong>會失敗</strong>並印出「<span class="path">某個目錄 是目錄，不是文字檔</span>」。爾雅不接受用目錄當參數，要瀏覽目錄請進去之後按 <kbd>Ctrl+O</kbd>（見 2.1.2）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">檔案是符號連結的話</span>
+          <p>爾雅會先把符號連結解析成真正的目標路徑再開，儲存時也是<strong>寫回目標檔</strong>，不會把連結本身換成一般檔案。用 <span class="path">erya ~/.zshrc</span> 這種常常是連結的路徑時，行為會跟你預期的一樣。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.2.6</span>
+        <h2>命令列選項</h2>
+        <p class="dek">五個，全部都是「印個東西就結束」或「換一份設定」。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:32%">選項</th><th>做什麼</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">-h</span>, <span class="path">--help</span></td><td>印出說明後結束。內容包含用法、選項、環境變數與常用按鍵，而且<strong>會照你的介面語言顯示</strong>。</td></tr>
+            <tr><td><span class="path">-V</span>, <span class="path">--version</span></td><td>印出版本後結束，例如 <span class="path">erya 1.0.0</span>。</td></tr>
+            <tr><td><span class="path">--languages</span></td><td>列出翻譯目錄裡實際找得到的語言，一行一個，格式是「代碼<span class="path">Tab</span>名稱」。</td></tr>
+            <tr><td><span class="path">--keymap &lt;檔案&gt;</span></td><td>這一次執行改用指定的按鍵配置檔（見 4.1.5）。後面沒接路徑會直接失敗。</td></tr>
+            <tr><td><span class="path">--print-default-keymap</span></td><td>把完整的預設按鍵配置印到標準輸出，通常拿來重導成自己的設定檔起點。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>常見用法：</p>
+        <ul>
+          <li><span class="path">erya --print-default-keymap &gt; keymap.toml</span> — 產生一份含全部動作名稱的起始設定檔。</li>
+          <li><span class="path">erya --keymap keymap.toml 報告.txt</span> — 用改好的設定檔開檔。</li>
+          <li><span class="path">erya --languages</span> — 確認 <span class="path">ERYA_LANG</span> 該填什麼代碼。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">不認得的選項會直接讓程式結束</span>
+          <p>任何以 <span class="path">-</span> 開頭又不在上表裡的參數，都會得到「<span class="path">erya: 不支援的選項：-x</span>」並以失敗狀態結束，<strong>不會忽略它繼續開檔</strong>。檔名剛好以減號開頭時，記得先寫 <span class="path">--</span>。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.2.7</span>
+        <h2>四個環境變數</h2>
+        <p class="dek">全部都是選用的；一個都不設也能跑。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">變數</th><th>管什麼</th><th style="width:14%">詳見</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">ERYA_LANG</span></td><td>介面語言代碼，例如 <span class="path">zh-TW</span>、<span class="path">zh-CN</span>、<span class="path">en</span>、<span class="path">ja</span>。沒設時依序看 <span class="path">LC_ALL</span>、<span class="path">LC_MESSAGES</span>、<span class="path">LANG</span>。</td><td>4.2.4</td></tr>
+            <tr><td><span class="path">ERYA_LOCALES_DIR</span></td><td>翻譯檔目錄，預設是 <span class="path">locales/</span>。想放自己翻的語言就指到那裡。</td><td>4.2.5</td></tr>
+            <tr><td><span class="path">ERYA_KEYMAP</span></td><td>按鍵配置檔路徑，等同於每次都加 <span class="path">--keymap</span>。</td><td>4.1.7</td></tr>
+            <tr><td><span class="path">ERYA_KEYMAPS_DIR</span></td><td>系統設定（<kbd>F2</kbd>）那一頁列出的配置要從哪個目錄讀，預設是 <span class="path">keymap/</span>。</td><td>4.1.3</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>臨時用一次就寫在指令前面：</p>
+        <ul>
+          <li><span class="path">ERYA_LANG=en erya 報告.txt</span> — 這一次用英文介面。</li>
+          <li><span class="path">ERYA_KEYMAP=~/my.toml erya</span> — 這一次用自己的按鍵配置。</li>
+        </ul>
+        <p>想長期生效就寫進 <span class="path">~/.zshrc</span>、<span class="path">~/.bashrc</span>（Windows 則寫進使用者環境變數）。</p>
+      </section>
+
+      <!-- ══════════ 1.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.2.8</span>
+        <h2>終端機需要滿足的條件</h2>
+        <p class="dek">兩個硬條件：要是真的終端機，而且不能太小。</p>
+
+        <ol class="rule-list">
+          <li><b>必須是互動式終端機。</b>標準輸入與標準輸出兩邊都要是 TTY。<strong>把爾雅接到管線或重導向會直接失敗</strong>並顯示「爾雅 Erya 必須在互動式 Terminal 中執行」。<span class="path">cat a.txt | erya</span>、<span class="path">erya &gt; out.txt</span> 這種寫法都不行——它是編輯器，不是過濾器。</li>
+          <li><b>視窗至少要 24 欄 × 6 列。</b>比這個小的話，畫面會整片換成一行黃字「終端視窗太小，請放大後繼續」，放大之後自動恢復，不會弄丟你正在編輯的內容。實務上請給它 80 × 24 以上；十六進位檢視要顯示每列 32 位元組還需要 144 欄（見 3.3.3）。</li>
+          <li><b>建議支援 bracketed paste。</b>現在的終端機幾乎都支援。有它的話，貼上大段文字會被當成一次貼上，而不是被當成一連串按鍵處理。爾雅會在啟動時開啟、離開時關掉。</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">離開之後畫面會還原</span>
+          <p>爾雅用的是終端機的「替代畫面」，離開時會把你原本的畫面、游標與各種模式一併還原，<strong>不會在捲動紀錄裡留下一整片編輯畫面</strong>。就算是異常結束，還原程序也會跑。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.2.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">1.2.9</span>
+        <h2>啟動不了的時候</h2>
+        <p class="dek">照訊息對號入座；完整的疑難排解在 4.3。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:38%">看到的訊息</th><th>原因與處理</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">command not found: erya</span></td><td>執行檔沒放進 <span class="path">PATH</span>。先用完整路徑試 <span class="path">~/.local/bin/erya</span>，能跑就是 <span class="path">PATH</span> 的問題（1.2.3）。</td></tr>
+            <tr><td><span class="path">Permission denied</span></td><td>執行權限沒開。<span class="path">chmod +x erya</span>。</td></tr>
+            <tr><td>macOS：無法驗證開發者</td><td>隔離屬性。<span class="path">xattr -d com.apple.quarantine erya</span>（1.2.3）。</td></tr>
+            <tr><td><span class="path">cannot execute binary file</span></td><td>下載到不同架構的版本。用 <span class="path">uname -m</span> 重新確認（1.2.2）。</td></tr>
+            <tr><td>必須在互動式 Terminal 中執行</td><td>用了管線或重導向。直接在終端機裡執行（1.2.8）。</td></tr>
+            <tr><td>終端視窗太小</td><td>視窗小於 24×6。放大就好（1.2.8）。</td></tr>
+            <tr><td>不支援的選項：…</td><td>打錯選項，或檔名以減號開頭。加 <span class="path">--</span>（1.2.6）。</td></tr>
+            <tr><td>… 是目錄，不是文字檔</td><td>參數給了目錄。改給檔案，或先開爾雅再按 <kbd>Ctrl+O</kbd>（1.2.5）。</td></tr>
+            <tr><td>無法載入按鍵設定，已使用預設值：…</td><td><strong>這不是錯誤，程式照跑</strong>。設定檔有語法問題或按鍵衝突，爾雅退回完整預設值並在訊息列說明原因（4.1.8）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

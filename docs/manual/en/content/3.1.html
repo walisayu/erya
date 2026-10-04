@@ -1,0 +1,271 @@
+      <!-- ══════════ 3.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.1.1</span>
+        <h2>Encoding detection on open</h2>
+        <p class="dek">Erya works it out and then keeps telling you, in the status bar.</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 280" role="img" aria-label="How the encoding is decided when a file opens">
+              <rect x="0" y="0" width="960" height="280" fill="#FAFBFD"/>
+              <defs><marker id="arrow31" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="30" y="112" width="150" height="56" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="105" y="146" text-anchor="middle" font-size="15.5" font-weight="700" fill="#12314F">Read the bytes</text>
+
+              <rect x="220" y="24" width="230" height="52" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="335" y="46" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1E5C39">Starts with a UTF-8 BOM</text>
+              <text x="335" y="66" text-anchor="middle" font-size="13" fill="#3F485D">→ UTF-8 BOM</text>
+
+              <rect x="220" y="86" width="230" height="52" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="335" y="108" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1E5C39">Valid UTF-8 throughout</text>
+              <text x="335" y="128" text-anchor="middle" font-size="13" fill="#3F485D">→ UTF-8</text>
+
+              <rect x="220" y="148" width="230" height="52" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="335" y="170" text-anchor="middle" font-size="14.5" font-weight="700" fill="#7A5312">Handed to the detector</text>
+              <text x="335" y="190" text-anchor="middle" font-size="13" fill="#3F485D">→ Big5 / GBK / Shift_JIS</text>
+
+              <rect x="220" y="210" width="230" height="52" rx="10" fill="#FBEDEC" stroke="#EFCFCC" stroke-width="2"/>
+              <text x="335" y="232" text-anchor="middle" font-size="14.5" font-weight="700" fill="#8C2B2B">Undecidable, or NUL bytes</text>
+              <text x="335" y="252" text-anchor="middle" font-size="13" fill="#3F485D">→ error, or the byte view</text>
+
+              <path d="M180 140 L214 50" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 112" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 174" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 236" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+
+              <rect x="500" y="86" width="430" height="108" rx="10" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <text x="715" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="#1F4E79">Whatever it decides goes in the status bar</text>
+              <text x="715" y="144" text-anchor="middle" font-size="13.5" fill="#3F485D">report.txt │ 5:24 │ Insert │ Big5 │ CRLF</text>
+              <text x="715" y="172" text-anchor="middle" font-size="13" fill="#667085">Leave it alone and the file is written back in the same encoding</text>
+            </svg>
+          </div>
+          <figcaption><b>Figure 3.1.1</b>　The order: BOM first, then “is the whole file valid UTF-8?”, and only then a statistical guess between Big5, GBK, and Shift_JIS.</figcaption>
+        </figure>
+
+        <ul>
+          <li><strong>Erya knows five encodings</strong>: UTF-8, UTF-8 BOM, Big5, GBK, and Shift_JIS.</li>
+          <li><strong>Opening a file never changes it.</strong> The detected encoding is only the default for the next save.</li>
+          <li>Detection is statistical, so <strong>short files can be guessed wrong</strong> (a Big5 file with a handful of characters may come out as GBK). If the text looks wrong, press <kbd>F7</kbd> and try the next one (see 3.1.2).</li>
+          <li>UTF-16 and UTF-32 are <strong>outside the supported set</strong>. Erya reports “detected unsupported text encoding: UTF-16LE” rather than decoding them into nonsense — and rather than presenting them as an editable byte dump.</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 3.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.1.2</span>
+        <h2><kbd>F7</kbd> changes the save encoding</h2>
+        <p class="dek">One press, one step through a cycle of five.</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 150" role="img" aria-label="The F7 encoding cycle">
+              <rect x="0" y="0" width="960" height="150" fill="#FAFBFD"/>
+              <defs><marker id="arrow32" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#1F4E79"/></marker></defs>
+
+              <rect x="24" y="34" width="150" height="46" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="99" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#12314F">UTF-8</text>
+              <rect x="210" y="34" width="164" height="46" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="292" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#12314F">UTF-8 BOM</text>
+              <rect x="410" y="34" width="140" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="480" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">Big5</text>
+              <rect x="586" y="34" width="140" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="656" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">GBK</text>
+              <rect x="762" y="34" width="164" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="844" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">Shift_JIS</text>
+
+              <path d="M174 57 L206 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M374 57 L406 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M550 57 L582 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M726 57 L758 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M926 57 C946 57 946 118 480 118 C60 118 40 92 44 84" stroke="#1F4E79" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow32)"/>
+              <text x="480" y="140" text-anchor="middle" font-size="13.5" fill="#1F4E79">one more press returns to UTF-8</text>
+            </svg>
+          </div>
+          <figcaption><b>Figure 3.1.2</b>　The cycle. The second-to-last status cell follows along, and the message row says “Switched to Big5; save to complete the encoding conversion”.</figcaption>
+        </figure>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>F7</kbd> does not change the file straight away</span>
+          <p>It changes <strong>which encoding the next save will use</strong>. The conversion happens on <kbd>Ctrl+S</kbd>. So after pressing <kbd>F7</kbd>: save if you meant it, press again to cycle back if you did not, or simply <kbd>Ctrl+Z</kbd> — <strong>an encoding switch is an undoable step like any other</strong>.</p>
+        </div>
+
+        <p>The commonest use is converting an old Big5 document to UTF-8: open it (the status bar says Big5), press <kbd>F7</kbd> until it says UTF-8, then <kbd>Ctrl+S</kbd>. Going the other way, for a system that only accepts Big5, is exactly the same procedure.</p>
+      </section>
+
+      <!-- ══════════ 3.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.1.3</span>
+        <h2>When the conversion is impossible</h2>
+        <p class="dek">Erya skips that encoding rather than replacing your characters with question marks.</p>
+
+        <p>Big5 has no 𠮟; Shift_JIS has no heart emoji. Many tools would quietly write <span class="path">?</span> or <span class="path">□</span> and let you discover it later. Erya does something else:</p>
+
+        <ol class="rule-list">
+          <li><b>It tries the conversion.</b> Success means every character in the document is representable.</li>
+          <li><b>If even one is not, that encoding is skipped</b> and the next is tried. This is why a single press of <kbd>F7</kbd> can jump from UTF-8 straight to GBK — Big5 in between could not hold something in your text.</li>
+          <li><b>If all five fail</b>, you get “Cannot switch to …: it cannot represent every document character”, and <strong>the current encoding is left untouched</strong>.</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">Better not to convert than to damage the content</span>
+          <p>This is Erya's central rule about encodings. <strong>A saved file is either complete or still in its original encoding</strong> — never half correct and half question marks. If you cannot work out which character is at fault, save a UTF-8 copy and compare it elsewhere.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.1.4</span>
+        <h2><kbd>F8</kbd> switches LF and CRLF</h2>
+        <p class="dek">Like the encoding, it takes effect on the next save.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">Shown</th><th style="width:26%">What it is</th><th>Usual home</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">LF</span></td><td>Line feed <span class="path">\n</span></td><td>Linux, macOS, most languages and config formats</td></tr>
+            <tr><td><span class="path">CRLF</span></td><td>Carriage return + line feed <span class="path">\r\n</span></td><td>Windows text files, exports from older systems</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>Erya detects which one the file uses and shows it in the last status cell.</li>
+          <li><kbd>F8</kbd> toggles: “Switched to CRLF; save to complete the line-ending conversion”.</li>
+          <li>It is undoable with <kbd>Ctrl+Z</kbd>.</li>
+          <li><strong>A missing trailing newline is preserved too</strong>: a file that did not end with one will not gain one.</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">Git says the entire file changed?</span>
+          <p>That is usually the line endings. Open the file, look at the last status cell, press <kbd>F8</kbd> to put it back, and save — the diff goes clean again.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.1.5</span>
+        <h2>How syntax highlighting is chosen</h2>
+        <p class="dek">By the full filename first, then the extension; otherwise plain text.</p>
+
+        <ul>
+          <li>A recognised language appears in <strong>the fourth status cell</strong> (for example <span class="path">Markdown</span> or <span class="path">TOML</span>). <strong>No cell means no highlighting.</strong></li>
+          <li>The usual languages are covered: Rust, C/C++, Go, Python, Java, JavaScript/TypeScript, shell, SQL, Markdown, and more.</li>
+          <li>So are structured formats: TOML, YAML, JSON, XML, <span class="path">.ini</span>, <span class="path">.conf</span>.</li>
+          <li>The grey of a selection sits on top of the colours, so <strong>the two never interfere</strong>.</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">Very long lines are handled conservatively</span>
+          <p>When a single line is longer than 64 KiB, or the cursor jumps across a great many lines at once, Erya switches to a <strong>bounded highlighting strategy</strong> so that parsing cannot freeze the screen. Some lines may briefly appear uncoloured; the content is untouched. <strong>Large-file mode disables highlighting entirely</strong> (see 3.2.2).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.1.6</span>
+        <h2>Linux configuration files too</h2>
+        <p class="dek">Many of them have no extension, so Erya matches <strong>whole filenames</strong>.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">Category</th><th>Filenames and extensions recognised</th></tr></thead>
+          <tbody>
+            <tr><td>General config</td><td><span class="path">.conf</span>, <span class="path">.ini</span>, <span class="path">.editorconfig</span></td></tr>
+            <tr><td>systemd units</td><td><span class="path">.service</span>, <span class="path">.socket</span>, <span class="path">.timer</span>, <span class="path">.mount</span>, <span class="path">.target</span>, <span class="path">.network</span></td></tr>
+            <tr><td>Environment files</td><td><span class="path">.env</span>, <span class="path">.env.*</span></td></tr>
+            <tr><td>Structured formats</td><td>TOML, YAML, JSON, XML</td></tr>
+            <tr><td>Shell startup</td><td><span class="path">.bashrc</span>, <span class="path">.profile</span>, <span class="path">.zshrc</span>, <span class="path">/etc/default/*</span></td></tr>
+            <tr><td>System configuration</td><td><span class="path">.gitconfig</span>, <span class="path">sshd_config</span>, <span class="path">ssh_config</span>, <span class="path">sudoers</span>, <span class="path">fstab</span>, <span class="path">hosts</span>, <span class="path">resolv.conf</span></td></tr>
+            <tr><td>Services</td><td><span class="path">nginx.conf</span>, Apache configs, <span class="path">crontab</span>, <span class="path">Dockerfile</span>/<span class="path">Containerfile</span>, <span class="path">Makefile</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>That list is a deliberate requirement rather than an accident: one of Erya's expected uses is <strong>SSH into a server and edit a config file</strong>.</p>
+      </section>
+
+      <!-- ══════════ 3.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.1.7</span>
+        <h2><kbd>Ctrl+T</kbd> formats the document</h2>
+        <p class="dek">Three formats only: TOML, YAML, JSON.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:42%">Message row</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Document formatted; Ctrl+Z to undo</td><td>Done — and it counts as <strong>one</strong> undo step (see 2.4.2).</td></tr>
+            <tr><td>Document is already formatted</td><td>It was already tidy; nothing changed.</td></tr>
+            <tr><td>Formatting currently supports TOML, YAML, and JSON documents</td><td>This file is none of those. Erya goes by the extension.</td></tr>
+            <tr><td>Formatting failed; document unchanged: …</td><td><strong>A syntax error.</strong> The message usually names the line, and the document is left exactly as it was.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout ok">
+          <span class="co-title">Comments in TOML and YAML are preserved</span>
+          <p>Many formatters throw comments away; Erya does not. That matters most in configuration files, where the comment is often the only record of <em>why</em> a setting is what it is.</p>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">Use it as a syntax check</span>
+          <p>After editing a <span class="path">.yaml</span>, press <kbd>Ctrl+T</kbd>. Silence means the syntax is valid; an error tells you exactly where it is not. <strong>Considerably faster than finding out at deploy time.</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.1.8</span>
+        <h2>Paragraph reflow and width</h2>
+        <p class="dek">Rewrap a paragraph to a given width. No default key.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">Action name</th><th style="width:20%">Key in Classic</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">set_paragraph_width</span></td><td><kbd>Alt+M</kbd></td><td>Sets the reflow width, from <strong>20 to 500</strong> columns; the default is 80.</td></tr>
+            <tr><td><span class="path">reflow_paragraph</span></td><td><kbd>Alt+Q</kbd></td><td>Rewraps <strong>the paragraph containing the cursor</strong> to that width.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>Paragraph boundaries are <strong>blank lines</strong>: Erya searches up and down for the nearest one.</li>
+          <li>Reflowing from a blank line gives “The cursor is not inside a paragraph”.</li>
+          <li>Success reports “Paragraph reflowed to 80 columns”, and counts as <strong>one</strong> undo step.</li>
+          <li>A width outside 20–500 gives “Paragraph width must be an integer from 20 to 500”.</li>
+          <li>The reflow measures in terminal columns, so <strong>full-width characters count as two</strong> and the right edge really does line up.</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">Both of these are unbound by default</span>
+          <p>As with phrases and macros (see 2.4.8). Switch to Erya Classic, or bind them yourself in the keymap editor (see 4.1.4).</p>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">Reflow changes the file; line wrap only changes the view</span>
+          <p><kbd>Ctrl+L</kbd> wrapping <strong>affects the screen only</strong> and never touches a byte of the file; paragraph reflow <strong>inserts real line breaks</strong>. Use reflow for plain-text documents you hand over, and wrapping for reading long lines yourself.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.1.9</span>
+        <h2>Common problems</h2>
+        <p class="dek">The six that come up most around encodings and formats.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr><td>The whole file is garbled</td><td>The detection guessed wrong. Press <kbd>F7</kbd> until it reads correctly, then save (3.1.2).</td></tr>
+            <tr><td><kbd>F7</kbd> pressed, file unchanged</td><td>The conversion happens on save (3.1.2).</td></tr>
+            <tr><td><kbd>F7</kbd> skipped an encoding</td><td>It cannot represent something in your text, so it was skipped (3.1.3).</td></tr>
+            <tr><td>Git shows the whole file as modified</td><td>The line endings changed. Put them back with <kbd>F8</kbd> (3.1.4).</td></tr>
+            <tr><td>A config file has no highlighting</td><td>The filename is not on the list (3.1.6), or the file is in large-file mode (3.2.2).</td></tr>
+            <tr><td><kbd>Ctrl+T</kbd> says unsupported</td><td>Only TOML, YAML, and JSON are formatted (3.1.7).</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

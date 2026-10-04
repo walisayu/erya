@@ -1,0 +1,263 @@
+      <!-- ══════════ 2.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">2.2.1</span>
+        <h2>カーソル移動のキー一覧</h2>
+        <p class="dek">矢印キーのグループは固定で、変更できません。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">キー</th><th style="width:24%">操作</th><th>補足</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd></td><td>カーソル移動</td><td>固定キー。左右は 1「文字」単位で、バイト単位ではありません（2.2.3 参照）。</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>1 ページ上下</td><td>固定キー。1 ページ＝内容領域の高さ。</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>行頭／行末</td><td>固定キー。</td></tr>
+            <tr><td><kbd>Ctrl+A</kbd> <kbd>Ctrl+E</kbd></td><td>行頭／行末</td><td>変更可。<kbd>Home</kbd>／<kbd>End</kbd> が押しにくいキーボード向け。</td></tr>
+            <tr><td><kbd>Ctrl+Home</kbd> <kbd>Ctrl+End</kbd></td><td>文書の先頭／末尾</td><td>固定キー。</td></tr>
+            <tr><td><kbd>Ctrl+G</kbd></td><td>行／列へ移動</td><td>2.2.2 参照。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li><strong>行末で <kbd>→</kbd> を押すと次の行の先頭へ</strong>、行頭で <kbd>←</kbd> を押すと前の行の末尾へ移ります。</li>
+          <li>上下に動くとき、<strong>元の列を覚えています</strong>。短い行を通り過ぎて長い行に戻ると、元の位置に戻ります。</li>
+          <li>行がウィンドウより広いと、右へ動くにつれて横スクロールします。折り返しを切っているときによく見られます（2.2.9 参照）。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">いま何行目か知りたいときはステータス行</span>
+          <p>下から 2 行目に <span class="path">行:列</span> が常に出ています。「カーソル位置を表示」という操作もありますが、<strong>既定ではキーが割り当てられていません</strong>。ステータス行に出ているからです（4.4.6 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">2.2.2</span>
+        <h2>行と列を指定して移動</h2>
+        <p class="dek"><kbd>Ctrl+G</kbd>。行番号だけでも、「行:列」でも構いません。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> Enter 確定  Esc 取消  ←/→ カーソル移動  Backspace/Delete 削除</div>
+            <div class="s-msg ask">行／列へ移動（例：42 または 42:8）：120:16<em> </em></div>
+          </div>
+        </div>
+
+        <ul>
+          <li><span class="path">42</span> なら 42 行目の先頭へ。</li>
+          <li><span class="path">42:8</span> なら 42 行目の 8 文字目へ。</li>
+          <li>行番号が文書より大きければ最終行で止まり、列が行より長ければ行末で止まります。</li>
+          <li>形式が不正（負数や英字）なら「位置の形式が正しくありません。正の行番号または 行:列 を入力してください」と出て、もう一度尋ねます。</li>
+          <li>成功すると「120 行 16 列へ移動しました」と報告します。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">コンパイラーのエラー位置はそのまま貼れます</span>
+          <p><span class="path">error[E0308]: src/main.rs:120:16</span> のような出力なら、<span class="path">120:16</span> を <kbd>Ctrl+G</kbd> に入れれば到着します。16 進数表示でオフセットへ飛ぶのも同じキーです（3.3.4 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">2.2.3</span>
+        <h2>「1 文字」ずつ動く</h2>
+        <p class="dek">Erya の単位は Unicode の書記素クラスターです。バイトでもコードポイントでもありません。</p>
+
+        <p>普段は意識しませんが、次の場面で差が出ます：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">内容</th><th style="width:22%"><kbd>←</kbd> 1 回で</th><th>他のエディターでありがちな挙動</th></tr></thead>
+          <tbody>
+            <tr><td>漢字「漢」</td><td>1 文字ぶん移動</td><td>おおむね同じ</td></tr>
+            <tr><td>絵文字 👨‍👩‍👧‍👦</td><td><strong>ひとかたまりで移動</strong></td><td>構成要素ごとに進み、止まって見えたり崩れたりする</td></tr>
+            <tr><td>結合文字（濁点など）</td><td>1 文字ぶん移動</td><td>本体と分離してしまう</td></tr>
+            <tr><td>肌色修飾子 👍🏽</td><td>ひとかたまりで移動</td><td>修飾子だけ外れて 👍 が残る</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>削除・上書き・選択も同じ単位なので、<strong><kbd>Backspace</kbd> 1 回で消えるのは目に見えている 1 文字</strong>であり、半端な残骸は生じません。</p>
+
+        <div class="callout">
+          <span class="co-title">「列」と「画面上の桁」は別物です</span>
+          <p>ステータス行の <span class="path">行:列</span> は<strong>何文字目</strong>、画面上の位置は<strong>何桁目</strong>です。全角は 2 桁、タブはタブ幅に展開されます。したがって全角だけの行の 5 文字目は画面上の 9 桁目にあります。<kbd>Ctrl+G</kbd> に入力する列はステータス行と同じ「文字数」です。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">2.2.4</span>
+        <h2>通常の選択</h2>
+        <p class="dek"><kbd>Shift</kbd> を押しながら移動するだけです。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-body">第一章　プロジェクトの背景
+
+　　本プロジェクトは<u>二〇二六年三月</u>に始動しました。
+　　既存の文書をプレーンテキストへ変換します。</div>
+            <div class="s-status"> 報告.txt │ 3:20 │ 選択 │ UTF-8 │ LF </div>
+            <div class="s-msg"> 7 文字を選択しました</div>
+          </div>
+        </div>
+
+        <ul>
+          <li><kbd>Shift</kbd> はすべての移動キーと組み合わせられます：矢印、<kbd>Home</kbd>／<kbd>End</kbd>、<kbd>PageUp</kbd>／<kbd>PageDown</kbd>、<kbd>Ctrl+A</kbd>／<kbd>Ctrl+E</kbd>。</li>
+          <li><strong>逆方向へ動かすと縮みます</strong>。選び直しにはなりません。</li>
+          <li>選択範囲は灰地に黒で、複数行にまたがれます。</li>
+          <li>ステータス行のモードが <span class="path">選択</span> になり、メッセージ行が文字数を報告します。</li>
+          <li><kbd>Esc</kbd> で解除。そのまま入力すると<strong>選択範囲を置き換えます</strong>。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">「すべて選択」はありません</span>
+          <p>Erya に 1 キーの全選択はありません。<kbd>Ctrl+Home</kbd> で先頭へ移動し、<kbd>Ctrl+Shift+End</kbd> を使ってください。ターミナルがその組み合わせを送れない場合は <kbd>Shift+PageDown</kbd> を何度か押します。（Erya の <kbd>Ctrl+A</kbd> は「行頭へ」で、全選択ではありません。）</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">2.2.5</span>
+        <h2>矩形選択</h2>
+        <p class="dek">長方形の選択。桁のそろった表やコードに向いています。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-body">No.   品名            数量  単価
+<u>001 </u> モニターアーム    2   1280
+<u>002 </u> キーボード        1   3200
+<u>003 </u> マウスパッド      5    180</div>
+            <div class="s-status"> 注文.txt │ 4:5 │ 矩形選択 │ UTF-8 │ LF </div>
+            <div class="s-msg"> 12 文字を矩形選択しました</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b><kbd>Ctrl+B</kbd> で起点を決めます。</b>メッセージ行に「矩形選択を開始しました；矢印キーで範囲を広げます」と出ます。</li>
+          <li><b>矢印キーで長方形を描きます。</b>上下が行、左右が桁を決めます。</li>
+          <li><b>もう一度 <kbd>Ctrl+B</kbd>（または <kbd>Esc</kbd>）で解除します。</b></li>
+        </ol>
+
+        <p>矩形選択も切り取り・コピー・貼り付け・削除ができ、さらに専用の操作が 2 つあります（埋める・動かす、2.2.6 参照）。</p>
+
+        <div class="callout warn">
+          <span class="co-title">矩形選択と折り返し表示は同時に使えません</span>
+          <p>折り返すと 1 行が複数行に分かれ、「何桁目」が意味を失うため、両者は排他です：</p>
+          <ul>
+            <li>矩形選択中に <kbd>Ctrl+L</kbd>：「矩形選択中は折り返し表示を有効にできません。先に矩形選択を解除してください」</li>
+            <li>折り返し中に <kbd>Ctrl+B</kbd>：「折り返し表示中は矩形選択を使用できません。先に折り返しを無効にしてください」</li>
+          </ul>
+          <p><kbd>Ctrl+L</kbd> で折り返しを切ってから矩形選択を始めてください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">2.2.6</span>
+        <h2>矩形を埋める・動かす</h2>
+        <p class="dek">とても便利ですが、既定ではキーが割り当てられていません。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">操作名</th><th style="width:22%">Classic でのキー</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">fill_rectangle</span></td><td><kbd>Alt+F</kbd></td><td>文字を 1 つ尋ね、矩形範囲全体をその文字で埋めます。区切り線や桁揃えに便利です。</td></tr>
+            <tr><td><span class="path">move_rectangle_left</span></td><td><kbd>Alt+Shift+←</kbd></td><td rowspan="4">矩形の中身を<strong>まとめて</strong>移動します。方向ごとに 1 操作。端に来ると「矩形選択範囲をその方向へ移動できません」と出ます。</td></tr>
+            <tr><td><span class="path">move_rectangle_right</span></td><td><kbd>Alt+Shift+→</kbd></td></tr>
+            <tr><td><span class="path">move_rectangle_up</span></td><td><kbd>Alt+Shift+↑</kbd></td></tr>
+            <tr><td><span class="path">move_rectangle_down</span></td><td><kbd>Alt+Shift+↓</kbd></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">既定プロファイルではこの 5 つが空です</span>
+          <p><kbd>Alt</kbd> 組み合わせと修飾付き矢印は多くのターミナルに届かないためです（1.3.9 参照）。使うには <strong>Erya Classic に切り替える</strong>（<kbd>F2</kbd> で選ぶだけ）か、<strong>押せるキーを自分で割り当てる</strong>（4.1.4 参照）かのどちらかです。それまでは <kbd>F1</kbd> ヘルプでキー欄が空欄になります。</p>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">先に選択、それから操作</span>
+          <p>矩形選択が無い状態で埋めようとすると「先に矩形選択範囲を作成してください」と出ます。順序は <kbd>Ctrl+B</kbd> →矢印キー→操作キーです。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">2.2.7</span>
+        <h2>切り取り・コピー・貼り付け</h2>
+        <p class="dek">選択が無いとき、切り取りとコピーは「現在の行」が対象です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">キー</th><th style="width:22%">選択あり</th><th>選択なし</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+C</kbd></td><td>選択範囲をコピー</td><td><strong>1 行まるごとコピー</strong></td></tr>
+            <tr><td><kbd>Shift+Delete</kbd></td><td>選択範囲を切り取り</td><td><strong>1 行まるごと切り取り</strong></td></tr>
+            <tr><td><kbd>Ctrl+K</kbd></td><td colspan="2">現在の行を切り取り（選択の有無を問わず）</td></tr>
+            <tr><td><kbd>Ctrl+V</kbd> / <kbd>Shift+Insert</kbd></td><td colspan="2">貼り付け。選択があれば置き換えます</td></tr>
+            <tr><td><kbd>Ctrl+D</kbd></td><td colspan="2">現在の行を削除（<strong>クリップボードには入りません</strong>）</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">Erya のクリップボードはシステムのものとは別です</span>
+          <p><kbd>Ctrl+C</kbd> でコピーした内容は<strong>Erya の中だけ</strong>にあります。タブ間では使えますが、ブラウザーには貼れません。逆も同じで、他のプログラムから持ち込むには<strong>ターミナル自身の貼り付け</strong>（macOS は <kbd>⌘V</kbd>、Windows Terminal や多くの Linux 端末は <kbd>Ctrl+Shift+V</kbd>、マウス中ボタン）を使います。Erya は bracketed paste に対応しているので、その方法で入った文字列は 1 回の貼り付けとして扱われ、「N 文字を貼り付けました」と報告されます。</p>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">Erya から外へ持ち出すとき</span>
+          <p>マウスで選択してターミナル側のコピーを使います。これはターミナルの機能なので、その行にある他の要素も一緒に選ばれます。ステータス行をまたがないようにしてください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 2.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">2.2.8</span>
+        <h2>行の切り取りと挿入／上書き</h2>
+        <p class="dek">毎日使う小さな操作が 3 つ。</p>
+
+        <h3>行の切り取りと削除</h3>
+        <ul>
+          <li><kbd>Ctrl+K</kbd> は<strong>現在の行を切り取り</strong>、クリップボードに入れます。連続して押せば複数行を移動できます。</li>
+          <li><kbd>Ctrl+D</kbd> は<strong>現在の行を削除</strong>し、<strong>クリップボードには入れません</strong>。コピー済みの内容はそのまま残ります。</li>
+          <li>どちらも <kbd>Ctrl+Z</kbd> で戻せます。</li>
+        </ul>
+
+        <h3>挿入と上書き</h3>
+        <ul>
+          <li><kbd>Insert</kbd> で切り替えます。モードのマスが <span class="path">挿入</span> と <span class="path">上書き</span> で入れ替わり、メッセージ行にも「上書きモードに切り替えました」と出ます。</li>
+          <li><strong>挿入</strong>：入力すると後ろが右へ動きます。既定。</li>
+          <li><strong>上書き</strong>：入力するとカーソル位置の文字を置き換えます。桁のそろった表の数字を直すときに便利です。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">Mac のキーボードには <kbd>Insert</kbd> がありません</span>
+          <p>対処は 2 つ。キーマップエディターで <span class="path">toggle_insert</span> を別のキーに割り当てるか、<kbd>Insert</kbd> と <kbd>Alt+I</kbd> の両方を割り当てている Erya Classic に切り替えるかです（4.1.2 参照）。16 進数表示のバイト編集には専用の <kbd>I</kbd> キーがあります（3.3.7 参照）。</p>
+        </div>
+
+        <h3>インデントの引き継ぎ</h3>
+        <p><kbd>Enter</kbd> で改行すると、Erya は<strong>現在行の先頭にある空白とタブをそのまま引き継ぎます</strong>。YAML やコード、箇条書きを書くときに毎回入れ直す必要がありません。不要なときは <kbd>Backspace</kbd> で消してください。</p>
+      </section>
+
+      <!-- ══════════ 2.2.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">2.2.9</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">移動と選択で多い 6 つです。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl+A</kbd> で全選択できない</td><td>Erya では「行頭へ移動」です。全選択の操作はありません（2.2.4）。</td></tr>
+            <tr><td><kbd>Ctrl+C</kbd> で中断できない</td><td>コピーです。終了は <kbd>Ctrl+X</kbd>（1.1.7）。</td></tr>
+            <tr><td>行の後半が見えない</td><td>行がウィンドウより広いだけです。<kbd>Ctrl+L</kbd> で折り返すか <kbd>End</kbd> で横スクロールします。</td></tr>
+            <tr><td><kbd>Ctrl+B</kbd> が折り返しを理由に断られる</td><td>両者は排他です。<kbd>Ctrl+L</kbd> で折り返しを切ります（2.2.5）。</td></tr>
+            <tr><td>矩形の埋める・動かすが効かない</td><td>既定でキーがありません。Classic に切り替えるか自分で割り当てます（2.2.6）。</td></tr>
+            <tr><td>ブラウザーからコピーした文字が貼れない</td><td>Erya の <kbd>Ctrl+V</kbd> ではなく、ターミナルの貼り付けを使います（2.2.7）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

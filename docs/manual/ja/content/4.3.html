@@ -1,0 +1,206 @@
+      <!-- ══════════ 4.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.3.1</span>
+        <h2>この章の使い方</h2>
+        <p class="dek">機能ではなく「症状」から引いてください。</p>
+
+        <p>Erya の反応はほぼすべて<strong>最終行</strong>に出ます。うまくいかないときにまずすべきことは、<strong>その行を最後まで読むこと</strong>です。たいてい原因が書いてあり、押すべきキーまで書いてあることも少なくありません。</p>
+
+        <ol class="rule-list">
+          <li><b>最終行を読む。</b>黄は報告、白は入力待ち、赤は判断待ちです（1.3.6 参照）。</li>
+          <li><b>2 行目を読む。</b>いま使えるキーが並んでいます。見慣れないキーなら、別の画面にいるか別のプロファイルです。</li>
+          <li><b><kbd>Esc</kbd> を押す。</b>どこにいるか分からないとき、必ず 1 階層戻り、何も壊しません。</li>
+          <li><b><kbd>F1</kbd> を押す。</b>機能のキーを探すなら、この一覧が目次です。</li>
+        </ol>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>参照</th></tr></thead>
+          <tbody>
+            <tr><td>起動できない</td><td>4.3.2</td></tr>
+            <tr><td>ファイルが開けない／様子がおかしい</td><td>4.3.3</td></tr>
+            <tr><td>保存できない</td><td>4.3.4</td></tr>
+            <tr><td>キーが効かない</td><td>4.3.5</td></tr>
+            <tr><td>画面が崩れる・そろわない・色がおかしい</td><td>4.3.6</td></tr>
+            <tr><td>文字化けする</td><td>4.3.7</td></tr>
+            <tr><td>機能が丸ごと見当たらない</td><td>4.3.8</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.3.2</span>
+        <h2>起動できない</h2>
+        <p class="dek">Erya の画面が出る前の問題です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">表示</th><th>対処</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">command not found: erya</span></td><td><span class="path">PATH</span> にありません。まずフルパスで試し、動くなら PATH の問題です（1.2.3）。</td></tr>
+            <tr><td><span class="path">Permission denied</span></td><td><span class="path">chmod +x erya</span>。</td></tr>
+            <tr><td>macOS が開発元を検証できない</td><td>隔離属性：<span class="path">xattr -d com.apple.quarantine erya</span>（1.2.3）。</td></tr>
+            <tr><td><span class="path">cannot execute binary file</span></td><td>アーキテクチャ違いです。<span class="path">uname -m</span> で確認（1.2.2）。</td></tr>
+            <tr><td>対話型ターミナルで実行してください</td><td>パイプやリダイレクトは不可。直接実行します（1.2.8）。</td></tr>
+            <tr><td>ターミナルが小さすぎます</td><td>最低 24×6、実用上は 80×24（1.2.8）。</td></tr>
+            <tr><td>未対応のオプション：…</td><td>綴り違いか、ハイフン始まりのファイル名。<span class="path">--</span> を前に置きます（1.2.6）。</td></tr>
+            <tr><td>… はディレクトリであり…</td><td>ファイルを渡すか、起動後に <kbd>Ctrl+O</kbd>（1.2.5）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.3.3</span>
+        <h2>ファイルが開けない</h2>
+        <p class="dek">あるいは、思っていたのと違う形で開く場合です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>「開けませんでした：Permission denied」</td><td>読み取り権限がありません。<span class="path">ls -l</span> で確認し、必要なら <span class="path">sudo</span>。</td></tr>
+            <tr><td>中身が空で開く</td><td>ファイルが<strong>存在しません</strong>。Erya は未知のパスを新規ファイルとして扱い、最初の保存で作ります（1.2.5）。パスの打ち間違いを確認してください。</td></tr>
+            <tr><td>16 進数表示で開く</td><td>NUL バイトを含むためバイナリ扱い（3.3.5）、または非 UTF-8 の大きなファイルです（3.2.1）。</td></tr>
+            <tr><td>「detected unsupported text encoding: UTF-16LE」</td><td>UTF-16・UTF-32 は非対応です。先に UTF-8 へ変換してください（3.1.1）。</td></tr>
+            <tr><td>ステータス行が「大容量ファイル・読み取り専用」</td><td>64 MiB 以上で、読めますが編集できません（3.2）。</td></tr>
+            <tr><td>「報告.txt はすでにタブで開いています」</td><td>エラーではありません。二重に開かず既存のタブへ切り替えました（2.1.1）。</td></tr>
+            <tr><td>先頭の数行しか見えない</td><td>スクロールしてください。大きなファイルは必要になってから読みます（3.2.3）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.3.4</span>
+        <h2>保存できない</h2>
+        <p class="dek">失敗の代償がいちばん大きい場面なので、Erya は厳しめです。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>「保存に失敗しました：Permission denied」</td><td>ファイル<strong>またはディレクトリ</strong>に書き込み権限がありません。アトミック保存はそこに一時ファイルを作ります（2.1.6）。</td></tr>
+            <tr><td>「保存に失敗しました：No such file or directory」</td><td>パス途中のディレクトリがありません。Erya は作りません（2.1.9）。</td></tr>
+            <tr><td>「文書をディレクトリとして保存できません」</td><td>保存先にディレクトリを指定しています。ファイル名を足してください（2.1.5）。</td></tr>
+            <tr><td>「大容量ファイルは読み取り専用モードのため編集できません」</td><td>このモードに保存はありません（3.2.2）。</td></tr>
+            <tr><td>「このバイナリファイルは読み取り専用のため変更できません」</td><td>64 MiB 以上のバイナリはストリーム読みの読み取り専用です（3.3.8）。</td></tr>
+            <tr><td>赤い行が外部変更について尋ねる</td><td>他のプログラムがファイルを変更しました。迷ったら <kbd>N</kbd>、次に <kbd>F12</kbd> で控えを（2.1.7）。</td></tr>
+            <tr><td>「Big5 に切り替えられません：…」</td><td>その文字コードで表現できない文字があり、壊すより拒否する設計です（3.1.3）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.3.5</span>
+        <h2>キーが効かない</h2>
+        <p class="dek">可能性は 4 つ。ありがちな順に。</p>
+
+        <ol class="rule-list">
+          <li><b>その操作に既定のキーがない。</b>定型文、マクロ、矩形の埋め・移動、段落の再整形、「カーソル位置の表示」は既定プロファイルで未割り当てです（2.4.8、2.2.6）。<kbd>F1</kbd> でキー欄が空欄かどうか見てください。</li>
+          <li><b>編集画面にいない。</b>画面ごとに使えるキーが違います。2 行目を確認してください（1.3.3）。</li>
+          <li><b>そのモードで禁止されている。</b>大容量ファイル読み取り専用は編集系を止め（3.2.2）、テキストファイルの 16 進数表示は読み取り専用です（3.3.1）。メッセージ行に理由が出ます。</li>
+          <li><b>ターミナルが送っていない。</b><kbd>Alt</kbd> 組み合わせと修飾付き矢印でよく起きます（4.1.1）。押せるキーに割り当て直してください（4.1.4）。</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">ターミナルが実際に何を送っているか調べる</span>
+          <p>試したいキーを、効果が見える操作に割り当てます。<span class="path">cursor_position</span> はカーソル位置をメッセージ行に出します。押して反応があれば、そのターミナルはその組み合わせを送れています。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.3.6</span>
+        <h2>画面の表示がおかしい</h2>
+        <p class="dek">たいていは Erya ではなくターミナル側の問題です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>日本語がそろわない／カーソルがずれる</td><td>等幅でないフォント、または全角の扱いが一致していません。CJK 等幅フォント（Sarasa、Noto Sans Mono CJK など）にしてください。</td></tr>
+            <tr><td>罫線が変な記号になる</td><td>ターミナルかフォントが対応していません。フォントを変えるか、対応の良いターミナルを使ってください。</td></tr>
+            <tr><td>色が見づらい</td><td>Erya はターミナルの 16 色を使い、実際の色合いはテーマ次第です。テーマを調整してください。</td></tr>
+            <tr><td>黄色い 1 行だけになる</td><td>ウィンドウが 24×6 未満です。広げれば戻ります（1.2.8）。</td></tr>
+            <tr><td>描画のゴミが残る</td><td>SSH が不安定、または再描画の問題です。ウィンドウサイズを変えると全体を描き直します。</td></tr>
+            <tr><td>長い行が切れている</td><td><kbd>Ctrl+L</kbd> で折り返すか、<kbd>End</kbd> で横スクロールします（2.2.9）。</td></tr>
+            <tr><td>終了後にターミナルが変になる</td><td>通常は Erya が状態を復元します。異常時は <span class="path">reset</span> を実行してください。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.3.7</span>
+        <h2>文字化けする</h2>
+        <p class="dek">まず「文字コード違い」か「フォントに字が無い」かを切り分けます。</p>
+
+        <div class="duo">
+          <div>
+            <h4>全体が読めない</h4>
+            <p><strong>文字コードの判定が外れています。</strong><kbd>F7</kbd> で正しく読めるものを探し、保存してください（3.1.2）。ステータス行の後ろから 2 番目に現在の想定が出ています。</p>
+          </div>
+          <div>
+            <h4>一部が □ や ? になる</h4>
+            <p><strong>ターミナルのフォントに字が無いだけ</strong>です。ファイル自体は無事で、フォントを変えれば出ます。絵文字や珍しい漢字でよく起きます。</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">化けているあいだは保存しないでください</span>
+          <p>文字コード違いによる化けは、<strong>保存するとファイルに固定されます</strong>。<kbd>F7</kbd> で正しい文字コードを見つけ、本文を確かめてから保存してください。分からなければ保存せずタブを閉じます。ディスク上のファイルは無事です。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.3.8</span>
+        <h2>機能が丸ごと見当たらない</h2>
+        <p class="dek">メニューが無いので、「見つからない」はたいてい「未割り当て」か「ここでは非対応」です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:36%">探しているもの</th><th>実際のところ</th></tr></thead>
+          <tbody>
+            <tr><td>すべて選択</td><td><strong>ありません。</strong><kbd>Ctrl+Home</kbd> のあと <kbd>Ctrl+Shift+End</kbd> を（2.2.4）。</td></tr>
+            <tr><td>確認しながら置換</td><td>そのモードはありません。<kbd>F3</kbd> と <kbd>F5</kbd> で代用します（2.3.4）。</td></tr>
+            <tr><td>選択範囲内だけ置換</td><td>対応していません（2.3.7）。</td></tr>
+            <tr><td>正規表現検索</td><td>対応していません。完全一致です（2.3.1）。</td></tr>
+            <tr><td>画面分割</td><td>ありません。2 ファイルを見比べるには比較機能を（3.4）。</td></tr>
+            <tr><td>自動保存・クラッシュ復元</td><td>どちらもありません。<kbd>Ctrl+S</kbd> だけです（1.1.7）。</td></tr>
+            <tr><td>定型文・マクロ・矩形の塗りつぶし</td><td>機能はありますが既定のキーがありません（2.4.8）。</td></tr>
+            <tr><td>システムのクリップボード連携</td><td>Erya のクリップボードは内部用です。ターミナルのコピー＆ペーストを（2.2.7）。</td></tr>
+            <tr><td>Git 連携、プラグイン</td><td>ありませんし、対象範囲にも入っていません（1.1.2）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">4.3.9</span>
+        <h2>それでも解決しないとき</h2>
+        <p class="dek">報告に次の情報を添えると、解決がぐっと早くなります。</p>
+
+        <ol class="rule-list">
+          <li><b>バージョン</b>：<span class="path">erya --version</span> の出力。</li>
+          <li><b>環境</b>：OS とバージョン、<span class="path">uname -m</span> のアーキテクチャ、使っているターミナル。</li>
+          <li><b>キープロファイル</b>：<kbd>F2</kbd> に出ている名前、または自分の <span class="path">keymap.toml</span>。</li>
+          <li><b>メッセージ行の文言</b>：一字一句そのまま。いちばん有力な手がかりです。</li>
+          <li><b>再現手順</b>：<span class="path">erya ファイル名</span> から、押したキーを順に。</li>
+          <li><b>ファイルの特徴</b>：サイズ、文字コード、改行コード。すべてステータス行に出ています。</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">まず既定プロファイルで試してください</span>
+          <p>報告の前に <span class="path">ERYA_KEYMAP= erya</span> で起動するか、<kbd>F2</kbd> で <span class="term">Erya Terminal Safe</span> に戻して再現するか確かめてください。消えるならキーバインドの問題で、範囲が一気に狭まります。</p>
+        </div>
+      </section>

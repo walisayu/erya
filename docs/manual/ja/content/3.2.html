@@ -1,0 +1,215 @@
+      <!-- ══════════ 3.2.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.2.1</span>
+        <h2>大容量ファイルモードに入る条件</h2>
+        <p class="dek">数字はひとつだけ：<strong>64 MiB</strong>。</p>
+
+        <p>ファイルが 64 MiB 以上なら、Erya はメモリーに読み込みません。<strong>読み取り専用の閲覧モード</strong>に切り替え、「access.log を大容量ファイルの読み取り専用モードで開きました（512 MB）」と表示し、ステータス行のモードが <span class="path">大容量ファイル・読み取り専用</span> になります。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [access.log]</div>
+            <div class="s-bar"> F1 ヘルプ  Ctrl+S 保存  Ctrl+W 検索  Ctrl+R 置換  Ctrl+B 矩形選択  Ctrl+K 行切取  Ctrl+X 終了</div>
+            <div class="s-body">198.51.100.24 - - [26/Aug/2026:09:14:02 +0900] "GET /api/v1/orders HTTP/1.1" 200
+198.51.100.31 - - [26/Aug/2026:09:14:02 +0900] "POST /api/v1/login HTTP/1.1" 302
+203.0.113.10 - - [26/Aug/2026:09:14:03 +0900] "GET /static/app.js HTTP/1.1" 304</div>
+            <div class="s-status"> access.log │ 1284391:1 │ 大容量ファイル・読み取り専用 │ UTF-8 │ LF </div>
+            <div class="s-msg"> access.log を大容量ファイルの読み取り専用モードで開きました（512 MB）</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">大きなファイルは 3 通りに分かれます</span>
+          <ul>
+            <li><strong>大きな UTF-8 テキスト</strong> → 大容量ファイル読み取り専用モード（本章）。</li>
+            <li><strong>大きなバイナリ</strong> → ストリーム読みの 16 進数表示。こちらも読み取り専用（3.3.8 参照）。</li>
+            <li><strong>大きな非 UTF-8 テキスト</strong>（200 MB の Big5 出力など）→ ストリームで復号できないため、<strong>バイナリとして 16 進数表示で開きます</strong>。編集したいなら外部で UTF-8 に変換してください。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.2.2</span>
+        <h2>このモードでできること</h2>
+        <p class="dek">読む・探す・コピーする。ただし変更はできません。</p>
+
+        <div class="duo">
+          <div>
+            <h4>できること</h4>
+            <ul>
+              <li>スクロール、ページ送り、<kbd>Ctrl+Home</kbd>／<kbd>Ctrl+End</kbd></li>
+              <li><kbd>Ctrl+G</kbd> で行へ移動</li>
+              <li><kbd>Ctrl+W</kbd> 検索と <kbd>F3</kbd></li>
+              <li>選択と <kbd>Ctrl+C</kbd> コピー</li>
+              <li><kbd>Ctrl+L</kbd> 折り返し表示</li>
+              <li><kbd>Ctrl+P</kbd> 16 進数表示</li>
+              <li>タブの追加・切り替え・終了</li>
+            </ul>
+          </div>
+          <div>
+            <h4>できないこと（「大容量ファイルは読み取り専用モードのため編集できません」）</h4>
+            <ul>
+              <li>入力、削除、貼り付け、切り取り、行削除</li>
+              <li>保存、名前を付けて保存</li>
+              <li>置換（<kbd>Ctrl+R</kbd>／<kbd>F5</kbd>／<kbd>F6</kbd>）</li>
+              <li>元に戻す・やり直す</li>
+              <li>文字コード・改行コードの変換（<kbd>F7</kbd>／<kbd>F8</kbd>）</li>
+              <li>整形、段落の再整形、矩形の埋め・移動</li>
+              <li>定型文の挿入、マクロの実行</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">このモードで起きない 2 つのこと</span>
+          <ul>
+            <li><strong>シンタックスハイライトはありません。</strong>ハイライトは全体の解析が必要なので、意図的に無効です。</li>
+            <li><strong>左右比較もできません。</strong><kbd>F4</kbd> で選ぶと「ファイル全体の読み込みによるメモリー不足を避けるため、大容量ファイルの読み取り専用モードでは左右比較を利用できません」と断られます（3.4.9 参照）。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.2.3</span>
+        <h2>メモリーを節約する仕組み</h2>
+        <p class="dek">道しるべだけを覚え、必要な行だけディスクから読みます。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 260" role="img" aria-label="疎な行インデックス">
+              <rect x="0" y="0" width="960" height="260" fill="#FAFBFD"/>
+
+              <rect x="40" y="40" width="880" height="52" rx="8" fill="#EFECF6" stroke="#D6CFE6" stroke-width="2"/>
+              <text x="60" y="72" font-size="14.5" font-weight="700" fill="#4C3F72">ディスク上の 512 MB のファイル</text>
+              <text x="880" y="72" text-anchor="end" font-size="13" fill="#667085">ストリームで 1 回だけ走査</text>
+
+              <g fill="#1F4E79">
+                <rect x="60" y="120" width="10" height="26" rx="2"/>
+                <rect x="230" y="120" width="10" height="26" rx="2"/>
+                <rect x="400" y="120" width="10" height="26" rx="2"/>
+                <rect x="570" y="120" width="10" height="26" rx="2"/>
+                <rect x="740" y="120" width="10" height="26" rx="2"/>
+                <rect x="898" y="120" width="10" height="26" rx="2"/>
+              </g>
+              <text x="60" y="166" font-size="12.5" fill="#12314F">1 行目</text>
+              <text x="216" y="166" font-size="12.5" fill="#12314F">4097 行目</text>
+              <text x="386" y="166" font-size="12.5" fill="#12314F">8193 行目</text>
+              <text x="556" y="166" font-size="12.5" fill="#12314F">12289 行目</text>
+              <text x="726" y="166" font-size="12.5" fill="#12314F">16385 行目</text>
+              <text x="884" y="166" text-anchor="end" font-size="12.5" fill="#12314F">…</text>
+
+              <text x="480" y="200" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1F4E79">メモリーに残すのはこのチェックポイントだけ：4096 行ごとに 1 つの位置</text>
+              <text x="480" y="228" text-anchor="middle" font-size="13.5" fill="#3F485D">9000 行目を出すときは、8193 行目のチェックポイントから 807 行ぶん読み進めます</text>
+              <text x="480" y="250" text-anchor="middle" font-size="13" fill="#98A2B3">メモリーマッピングは使わず、1 行が極端に長い場合も先頭 1 MiB までのプレビューにとどめます</text>
+            </svg>
+          </div>
+          <figcaption><b>図 3.2.1</b>　疎な行インデックス。開くときに 1 回走査してチェックポイントを作り、以後は画面が必要とする行だけ読みます。512 MB でもメモリーを使い切りません。500 MiB のファイルで実測済みです。</figcaption>
+        </figure>
+      </section>
+
+      <!-- ══════════ 3.2.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.2.4</span>
+        <h2>伸び続けるログを追う</h2>
+        <p class="dek">250 ミリ秒ごとに確認し、新しい内容が自然に現れます。</p>
+
+        <p>このモードがいちばん役に立つ場面です。<strong>検索もでき、遡ってもスクロールできる <span class="path">tail -f</span></strong> だと思ってください。</p>
+
+        <ol class="rule-list">
+          <li><b>追記なら軽い処理です。</b>「まだ書き終わっていない最終行」と新しい内容だけを作り直し、ファイル全体を走査し直しません。だから大きくても遅くなりません。</li>
+          <li><b>カーソルが末尾にあれば追従します。</b>最終行の行末にいると、新しい内容が来るたび画面が進みます。これが追従モードです。</li>
+          <li><b>離れれば止まります。</b>遡って読んでいるあいだは、その位置に固定されます。追従に戻すには <kbd>Ctrl+End</kbd> を押してください。</li>
+          <li><b>更新時には</b>「外部ファイルの更新を検出し、内容を再読み込みしました」と出ます。</li>
+        </ol>
+
+        <div class="callout tip">
+          <span class="co-title">ログを見るときの定番手順</span>
+          <p><span class="path">erya /var/log/nginx/access.log</span> → <kbd>Ctrl+End</kbd> で追従開始 → 調べたくなったら <kbd>Ctrl+W</kbd> と <kbd>F3</kbd> → 終わったら <kbd>Ctrl+End</kbd> で追従へ復帰。エディターから出る必要はありません。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.2.5</span>
+        <h2>切り詰めとローテーション</h2>
+        <p class="dek">「伸びる」のではなく「入れ替わる」場合の話です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">ディスク上で起きたこと</th><th style="width:26%">Erya の対応</th><th>よくある原因</th></tr></thead>
+          <tbody>
+            <tr><td>末尾へ追記</td><td>新しい部分だけ足す。高速</td><td>サービスがログを書き続けている</td></tr>
+            <tr><td>中身が空になった（切り詰め）</td><td><strong>開き直してインデックスを作り直す</strong></td><td><span class="path">&gt; access.log</span>、logrotate の copytruncate</td></tr>
+            <tr><td>その場で書き換えられた</td><td>開き直してインデックスを作り直す</td><td>作り直された帳票など</td></tr>
+            <tr><td>ファイルが入れ替わった（ローテーション）</td><td>開き直してインデックスを作り直す</td><td>logrotate が旧ファイルを退避</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">ローテーション後は新しいファイルを見ています</span>
+          <p>Erya が追うのは<strong>パス</strong>です。<span class="path">access.log</span> が入れ替われば、見えているのは新しいほう（たいてい空か短い）で、古い内容は <span class="path">access.log.1</span> にあります。必要なら別タブで開いてください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.2.6</span>
+        <h2>通常ファイルの外部変更</h2>
+        <p class="dek">小さなファイルも見ています。違うのは反応の仕方だけです。</p>
+
+        <p>同じ 250 ミリ秒の確認は通常ファイルにも走ります。違いは、通常ファイルは<strong>編集できる</strong>ため、あなたが編集したかどうかを見分ける必要がある点です（詳細は 2.1.7）：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">種類</th><th style="width:26%">未編集</th><th>編集済み</th></tr></thead>
+          <tbody>
+            <tr><td>通常のテキスト</td><td>自動再読み込み。<strong>元に戻す履歴は消えます</strong></td><td>警告のみ。保存時に赤い確認行（O／R／N）</td></tr>
+            <tr><td>大容量ファイル</td><td>自動で再読み込み</td><td>起こりません。編集できないモードです</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.2.7</span>
+        <h2>外部変更の 3 つの結末</h2>
+        <p class="dek">遭遇したときに見る表です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">メッセージ行</th><th style="width:14%">色</th><th>すべきこと</th></tr></thead>
+          <tbody>
+            <tr><td>外部更新を検出し、ファイルを安全に再読み込みしました</td><td>黄</td><td>何もしなくて構いません。内容は最新ですが、<strong>元に戻す履歴は消えています</strong>。</td></tr>
+            <tr><td>外部ファイルの更新を検出し、内容を再読み込みしました</td><td>黄</td><td>大容量ファイルモードの自動更新です。何もしません。</td></tr>
+            <tr><td>ファイルが外部で変更されました。保存前に確認が必要です</td><td>黄</td><td>警告のみで、まだ止められていません。<strong>確認は保存時に出ます。</strong></td></tr>
+            <tr><td>外部ファイルが更新されています：[O]上書き、[R]再読込、[N/Esc]取消</td><td><b style="color:#8C2B2B">赤</b></td><td>判断が必要です。迷ったら <kbd>N</kbd>、次に <kbd>F12</kbd> で控えを保存（2.1.7）。</td></tr>
+            <tr><td>外部ファイルの再読み込みに失敗しました：…</td><td>黄</td><td>削除された、権限が変わった、ディスクの問題など。ファイルの存在を確認してください。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.2.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.2.8</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">大容量ファイルモードの疑問 6 つ。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>入力しても反応せず、読み取り専用と出る</td><td>64 MiB 以上のためです（3.2.2）。編集するには外部で分割するか、必要な部分を取り出します。</td></tr>
+            <tr><td>シンタックスハイライトが無い</td><td>このモードでは意図的に無効です（3.2.2）。</td></tr>
+            <tr><td>画面が勝手に末尾へ飛ぶ</td><td>カーソルが末尾にあり追従中です。遡れば止まります（3.2.4）。</td></tr>
+            <tr><td>画面が更新されなくなった</td><td>カーソルが末尾から離れています。<kbd>Ctrl+End</kbd> を（3.2.4）。</td></tr>
+            <tr><td>ログが急に空になった</td><td>切り詰めかローテーションで、新しいファイルを見ています（3.2.5）。</td></tr>
+            <tr><td>大きな日本語ファイルが 16 進数で開く</td><td>非 UTF-8 の大きなファイルはストリームで復号できません（3.2.1）。先に UTF-8 へ変換を。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

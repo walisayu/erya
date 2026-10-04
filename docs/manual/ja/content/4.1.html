@@ -1,0 +1,292 @@
+      <!-- ══════════ 4.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">4.1.1</span>
+        <h2>既定が「ターミナル安全」な理由</h2>
+        <p class="dek">押した組み合わせをターミナルが必ず届けてくれるとは限らないからです。</p>
+
+        <p>内蔵の既定プロファイルは <span class="term">Erya Terminal Safe</span> といいます。多くの環境で失敗する 3 種類の組み合わせを意図的に避けています：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">避けているもの</th><th>理由</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Ctrl</kbd>＋ファンクションキー</td><td>macOS がシステム用に予約しており（Spaces、Mission Control）、プログラムまで届きません。</td></tr>
+            <tr><td><kbd>Alt</kbd>／Option に依存する組み合わせ</td><td>macOS では Option が特殊文字の入力に使われ、多くのターミナルは設定しないと Meta として送りません。</td></tr>
+            <tr><td>修飾付き矢印（<kbd>Alt+Shift+←</kbd> など）</td><td>そもそも報告しないターミナルが相当数あります。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>その代償として<strong>16 の応用操作が未割り当て</strong>です：定型文とマクロの 8 つ（2.4.8 参照）、矩形の移動 4 つと塗りつぶし 1 つ（2.2.6 参照）、段落の再整形 2 つ（3.1.8 参照）、そしてステータス行で足りている「カーソル位置の表示」。機能自体はすべてあり、キーを与えるだけです。一覧は 4.4.6 にあります。</p>
+
+        <div class="callout ok">
+          <span class="co-title">旧セットは無くなっていません</span>
+          <p>1.0 の完全な組み合わせは <span class="term">Erya Classic</span> として残っており、<strong><kbd>F2</kbd> を押して選ぶだけで戻せます</strong>。修飾付き矢印や <kbd>Alt</kbd> 組み合わせを報告するターミナル（GNOME Terminal や Windows Terminal など）なら、Classic のほうが快適です。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">4.1.2</span>
+        <h2>同梱の 12 プロファイル</h2>
+        <p class="dek">すべて <span class="path">keymap/</span> にあり、そのまま選べます。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">ファイル</th><th>向いている人</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">erya-terminal-safe.toml</span></td><td><strong>既定。</strong>どのターミナルでも動き、プラットフォームを問わず安全です。</td></tr>
+            <tr><td><span class="path">erya-classic.toml</span></td><td>定型文・マクロ・矩形移動を含む完全な組み合わせが欲しい人。</td></tr>
+            <tr><td><span class="path">nano.toml</span></td><td>nano から来た人。</td></tr>
+            <tr><td><span class="path">vim.toml</span></td><td>vim のキーが欲しい人（<strong>モード編集ではなく</strong>キー配列だけです）。</td></tr>
+            <tr><td><span class="path">emacs.toml</span></td><td>emacs から来た人。</td></tr>
+            <tr><td><span class="path">macos.toml</span></td><td>macOS アプリの慣習に合わせたい人。</td></tr>
+            <tr><td><span class="path">vscode.toml</span> / <span class="path">vscode-macos.toml</span></td><td>VS Code から来た人。</td></tr>
+            <tr><td><span class="path">visual-studio.toml</span> / <span class="path">visual-studio-macos.toml</span></td><td>Visual Studio から来た人。</td></tr>
+            <tr><td><span class="path">intellij-idea-classic.toml</span></td><td>IntelliJ IDEA から来た人。</td></tr>
+            <tr><td><span class="path">eclipse.toml</span></td><td>Eclipse から来た人。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>既定と Classic でとくに違うキー</h3>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">操作</th><th style="width:24%">Terminal Safe</th><th>Erya Classic</th></tr></thead>
+          <tbody>
+            <tr><td>ファイルを開く</td><td><kbd>Ctrl+O</kbd></td><td><kbd>Alt+O</kbd></td></tr>
+            <tr><td>名前を付けて保存</td><td><kbd>F12</kbd></td><td><kbd>Ctrl+O</kbd></td></tr>
+            <tr><td>置換</td><td><kbd>Ctrl+R</kbd></td><td><kbd>Ctrl+H</kbd></td></tr>
+            <tr><td><strong>やり直す</strong></td><td><kbd>Ctrl+Y</kbd></td><td><kbd>Ctrl+R</kbd></td></tr>
+            <tr><td><strong>行を削除</strong></td><td><kbd>Ctrl+D</kbd></td><td><kbd>Ctrl+Y</kbd></td></tr>
+            <tr><td>コピー</td><td><kbd>Ctrl+C</kbd></td><td><kbd>Ctrl+Insert</kbd></td></tr>
+            <tr><td>タブを閉じる</td><td><kbd>F11</kbd></td><td><kbd>Ctrl+F4</kbd></td></tr>
+            <tr><td>前／次のタブ</td><td><kbd>F9</kbd> / <kbd>F10</kbd></td><td><kbd>Ctrl+Shift+Tab</kbd> / <kbd>Ctrl+Tab</kbd></td></tr>
+            <tr><td>16 進数表示</td><td><kbd>Ctrl+P</kbd></td><td><kbd>Alt+H</kbd></td></tr>
+            <tr><td>矩形選択</td><td><kbd>Ctrl+B</kbd></td><td><kbd>Alt+B</kbd></td></tr>
+            <tr><td>文書の整形</td><td><kbd>Ctrl+T</kbd></td><td><kbd>Ctrl+Shift+F</kbd></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>Ctrl+Y</kbd> と <kbd>Ctrl+R</kbd> は 2 つのプロファイルで逆です</span>
+          <p>既定では <kbd>Ctrl+Y</kbd> が<strong>やり直す</strong>、Classic では<strong>行削除</strong>で、<kbd>Ctrl+R</kbd> もちょうど反対です。切り替え後にいちばん押し間違えやすい組なので、まずヒント行を見てください（1.3.3 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">4.1.3</span>
+        <h2>システム設定で切り替える</h2>
+        <p class="dek">いちばん簡単な方法で、ファイルを触りません。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ システム設定</div>
+            <div class="s-bar"> ↑/↓ 項目  ←/→ 選択  E キー編集  Enter 適用  Esc キャンセル</div>
+            <div class="s-body"><u> ▶ キーバインド:  ◀ Erya Terminal Safe ▶        </u>
+
+   表示言語:  ◀ 日本語 (ja) ▶</div>
+            <div class="s-status"> Erya Terminal Safe │ 日本語 </div>
+            <div class="s-msg"> 矢印キーで選択し、Enter ですべてのタブに適用します</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b><kbd>F2</kbd> を押します。</b></li>
+          <li><b><kbd>↑</kbd> <kbd>↓</kbd> でキーバインドの行へ</b>（選択中の行は反転し ▶ が付きます）。</li>
+          <li><b><kbd>←</kbd> <kbd>→</kbd> でプロファイルを変えます。</b>一覧は <span class="path">keymap/</span> から読み込まれます。</li>
+          <li><b><kbd>Enter</kbd> で適用。</b>「設定を適用しました：Erya Classic／日本語」と出て、<strong>すべてのタブに即座に反映</strong>されます。</li>
+          <li><b><kbd>Esc</kbd> で取り消し</b>、何も変わりません。</li>
+        </ol>
+
+        <div class="callout">
+          <span class="co-title">一覧が空のときは</span>
+          <p><span class="path">keymap/</span> ディレクトリが見つかっていません。<span class="path">ERYA_KEYMAPS_DIR</span> で場所を指定してください（1.2.7 参照）。リリースのアーカイブから実行ファイルだけ取り出したときによく起きます。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">4.1.4</span>
+        <h2>キーマップエディター</h2>
+        <p class="dek">Erya の中でキーを変え、自分の TOML として保存します。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ キーマップエディター │ Erya Terminal Safe</div>
+            <div class="s-bar"> ↑/↓ 選択  Enter 編集  Delete 無効化  S 名前を付けて保存  Esc 戻る</div>
+            <div class="s-body"> 文書を保存                        Ctrl+S
+ 別名で文書を保存                  F12
+ Erya を終了                       Ctrl+X
+<u> 選択範囲または現在の行を定型文として登録                        </u>
+ 次の定型文を挿入
+ 矩形選択を指定した文字で埋める</div>
+            <div class="s-status"> Erya Terminal Safe │ 32/62 </div>
+            <div class="s-msg"> 操作を選択して Enter で編集し、完了後に S で名前を付けて保存します</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:22%">キー</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>操作を選びます。左が説明、右が現在のキー（<strong>空欄は未割り当て</strong>）。</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>その操作のキーを編集します。現在値が入っており、<strong>複数はカンマ区切り</strong>です。</td></tr>
+            <tr><td><kbd>Delete</kbd></td><td>無効化します（空欄と同じ）。「選択した操作のショートカットを無効にしました」。</td></tr>
+            <tr><td><kbd>S</kbd></td><td>プロファイル全体を新しい TOML として保存します。</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>システム設定へ戻ります。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>解釈できないキーや他の操作と競合するキーを入れると「キーマップを更新できません：…」と出て、<strong>変更されません</strong>。</li>
+          <li>保存ではファイル名を尋ね、成功すると「キーマップを保存しました：…」。</li>
+          <li><strong>名前を付けて保存は既存ファイルを上書きしません。</strong>同名があると失敗し、他人の設定を黙って潰しません。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">自分のプロファイルを常用にするには</span>
+          <p>2 通りあります。<span class="path">keymap/</span> に保存して <kbd>F2</kbd> の一覧から選べるようにするか、プラットフォームの既定パスに置いて起動のたびに読ませるかです（4.1.7 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">4.1.5</span>
+        <h2>設定ファイルの書き方</h2>
+        <p class="dek"><span class="path">name</span> と <span class="path">[bindings]</span> だけです。</p>
+
+        <p>まず全操作が載った雛形を作ります：</p>
+        <p><span class="path">erya --print-default-keymap &gt; keymap.toml</span></p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>記述例</th></tr></thead>
+          <tbody>
+            <tr><td>
+              <span class="path">name = "私の設定"</span><br><br>
+              <span class="path">[bindings]</span><br>
+              <span class="path">save = "Alt+S"</span><br>
+              <span class="path">quit = "Ctrl+X"</span><br>
+              <span class="path">search = ["Ctrl+W", "Ctrl+F"]</span><br>
+              <span class="path">toggle_rectangular_selection = "Alt+M"</span><br>
+              <span class="path">redo = []</span>
+            </td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li><strong>1 つの操作に複数のキー</strong>を割り当てるには配列で書きます。</li>
+          <li><strong>空の配列 <span class="path">[]</span> は無効化</strong>です。</li>
+          <li><strong>書かなかった操作は既定のまま</strong>です。2 つだけ変えたいなら、その 2 行だけ書けば十分です。</li>
+          <li><span class="path">name</span> はシステム設定と、キーマップエディターの 1 行目に表示されます。</li>
+          <li>操作名の一覧は 4.4、または <span class="path">--print-default-keymap</span> の出力にあります。</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 4.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">4.1.6</span>
+        <h2>キー名の書き方</h2>
+        <p class="dek">修飾キーは <span class="path">+</span> でつなぎ、大文字小文字は問いません。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">種類</th><th>使える名前</th></tr></thead>
+          <tbody>
+            <tr><td>修飾キー</td><td><span class="path">Ctrl</span>、<span class="path">Alt</span>、<span class="path">Shift</span>、<span class="path">Super</span>、<span class="path">Hyper</span>、<span class="path">Meta</span></td></tr>
+            <tr><td>通常の文字</td><td><span class="path">A</span>〜<span class="path">Z</span>、<span class="path">0</span>〜<span class="path">9</span>、記号</td></tr>
+            <tr><td>ファンクションキー</td><td><span class="path">F1</span> から <span class="path">F24</span></td></tr>
+            <tr><td>移動・編集キー</td><td><span class="path">Left</span>、<span class="path">Right</span>、<span class="path">Up</span>、<span class="path">Down</span>、<span class="path">Home</span>、<span class="path">End</span>、<span class="path">PageUp</span>、<span class="path">PageDown</span>、<span class="path">Insert</span>、<span class="path">Delete</span>、<span class="path">Backspace</span>、<span class="path">Tab</span>、<span class="path">Enter</span>、<span class="path">Esc</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>例：<span class="path">"Ctrl+S"</span>、<span class="path">"Alt+Shift+Right"</span>、<span class="path">"F12"</span>、<span class="path">"ctrl+shift+f"</span>（大文字小文字は不問）。</p>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>F1</kbd> は割り当てられません</span>
+          <p>単独の <kbd>F1</kbd> はキー操作ヘルプ用に予約されており、設定ファイルに書くとエラーになります（1.3.8 参照）。意図的な非常口で、プロファイルをどう変えても全一覧を呼べるキーが 1 つ残ります。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">4.1.7</span>
+        <h2>設定ファイルの置き場所</h2>
+        <p class="dek">指定方法は 3 つ。優先度の高い順です。</p>
+
+        <ol class="rule-list">
+          <li><b><span class="path">--keymap &lt;ファイル&gt;</span></b>——この実行だけ。最優先です。</li>
+          <li><b>環境変数 <span class="path">ERYA_KEYMAP</span></b>——<span class="path">--keymap</span> が無いときに使われます。</li>
+          <li><b>プラットフォームの既定パス</b>——上の 2 つが無いときに探します：</li>
+        </ol>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">プラットフォーム</th><th>パス</th></tr></thead>
+          <tbody>
+            <tr><td>macOS</td><td><span class="path">~/Library/Application Support/Erya/keymap.toml</span></td></tr>
+            <tr><td>Linux</td><td><span class="path">$XDG_CONFIG_HOME/erya/keymap.toml</span>、未設定なら <span class="path">~/.config/erya/keymap.toml</span></td></tr>
+            <tr><td>Windows</td><td><span class="path">%APPDATA%\Erya\keymap.toml</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">既定パスにファイルが無いのは正常です</span>
+          <p>Erya は自分で作りません。無ければ内蔵の既定値を使い、<strong>警告も出しません</strong>。一方、<span class="path">--keymap</span> や <span class="path">ERYA_KEYMAP</span> で明示したパスが読めないときは<strong>メッセージが出ます</strong>。使うと宣言されたものだからです。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">4.1.8</span>
+        <h2>競合とフォールバック</h2>
+        <p class="dek">設定が壊れていてもプログラムは止まりません。使われないだけです。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg"> キーバインドを読み込めないため、既定値を使用します：save と search が両方 F9 です</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b>2 つの操作が同じキー</b>——競合です。どちらを実行すべきか決められません。</li>
+          <li><b>キー名の綴り違い、TOML の構文エラー</b>——解析に失敗します。</li>
+          <li><b>単独の <kbd>F1</kbd> を割り当てた</b>——予約キーなので受け付けません。</li>
+        </ol>
+
+        <p>いずれの場合も Erya は<strong>完全な既定プロファイルに戻し</strong>（問題の行だけ無視するのではありません）、起動時のメッセージ行に理由を出します。プログラムはそのまま動きます。</p>
+
+        <div class="callout tip">
+          <span class="co-title">いま何を使っているか確かめる</span>
+          <p>2 行目のヒント行（実際のキーが出ます）、<kbd>F1</kbd> の全一覧、<kbd>F2</kbd> のプロファイル名。3 か所とも本当のことを教えてくれます。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 4.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">4.1.9</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">キーを変えるときの 7 つの場面。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>設定を変えたのに反映されない</td><td>Erya が読む場所に無い（4.1.7）か、却下されて既定に戻っています（4.1.8）。起動時のメッセージを確認してください。</td></tr>
+            <tr><td>起動時に「キーバインドを読み込めない」</td><td>競合か構文エラーです。コロンの後に理由が出ます（4.1.8）。</td></tr>
+            <tr><td><kbd>F2</kbd> の一覧が空</td><td><span class="path">keymap/</span> が見つかりません。<span class="path">ERYA_KEYMAPS_DIR</span> を設定します（4.1.3）。</td></tr>
+            <tr><td><kbd>Alt</kbd> の割り当てが効かない</td><td>ターミナルが Option／Alt を Meta として送っていません。別のキーにするか、ターミナル側で有効にします（4.1.1）。</td></tr>
+            <tr><td><kbd>F1</kbd> の割り当てが拒否される</td><td><kbd>F1</kbd> は予約キーです（4.1.6）。</td></tr>
+            <tr><td>名前を付けて保存が失敗する</td><td>同名のファイルがあります。上書きしない設計なので別名にしてください（4.1.4）。</td></tr>
+            <tr><td>切り替えたら元に戻すが行削除になった</td><td><kbd>Ctrl+Y</kbd> の意味が 2 つのプロファイルで違います（4.1.2）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

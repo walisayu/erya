@@ -1,0 +1,327 @@
+      <!-- ══════════ 1.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.3.1</span>
+        <h2>The four framing rows</h2>
+        <p class="dek">Two rows on top, two at the bottom, everything else is your document.</p>
+
+        <p>Whichever screen you are on — editing, opening, comparing, hex, settings — the layout is the same: <strong>four framing rows around a content area</strong>. Learn to read them and you never get lost.</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 330" role="img" aria-label="The four framing rows of the Erya screen">
+              <rect x="0" y="0" width="960" height="330" fill="#FAFBFD"/>
+
+              <rect x="180" y="24" width="600" height="40" rx="6" fill="#1D3E77"/>
+              <text x="196" y="50" font-size="14.5" fill="#fff" font-family="monospace"> 爾雅 Erya │ [report.txt] appendix.md</text>
+              <text x="164" y="50" text-anchor="end" font-size="14" font-weight="700" fill="#7A382F">Row 1</text>
+              <text x="796" y="44" font-size="13.5" fill="#3F485D">Tabs / screen name</text>
+              <text x="796" y="62" font-size="12.5" fill="#98A2B3">white on dark blue</text>
+
+              <rect x="180" y="70" width="600" height="40" rx="6" fill="#34A6B6"/>
+              <text x="196" y="96" font-size="14.5" fill="#06222B" font-family="monospace"> F1 Help  Ctrl+S Save  Ctrl+W Search  …</text>
+              <text x="164" y="96" text-anchor="end" font-size="14" font-weight="700" fill="#1A4268">Row 2</text>
+              <text x="796" y="90" font-size="13.5" fill="#3F485D">Hint bar: what works now</text>
+              <text x="796" y="108" font-size="12.5" fill="#98A2B3">black on cyan</text>
+
+              <rect x="180" y="116" width="600" height="118" rx="6" fill="#000"/>
+              <text x="196" y="146" font-size="14.5" fill="#5CC9D6" font-family="monospace">Chapter 1  Background</text>
+              <text x="196" y="172" font-size="14.5" fill="#5CC9D6" font-family="monospace">    The project began in March 2026 …</text>
+              <text x="196" y="198" font-size="14.5" fill="#35637A" font-family="monospace">~</text>
+              <text x="196" y="222" font-size="14.5" fill="#35637A" font-family="monospace">~</text>
+              <text x="164" y="176" text-anchor="end" font-size="14" font-weight="700" fill="#12314F">Content</text>
+              <text x="796" y="164" font-size="13.5" fill="#3F485D">Document, list, or comparison</text>
+              <text x="796" y="182" font-size="12.5" fill="#98A2B3">height = window height − 4</text>
+
+              <rect x="180" y="240" width="600" height="40" rx="6" fill="#34A6B6"/>
+              <text x="196" y="266" font-size="14.5" fill="#06222B" font-family="monospace"> report.txt │ 5:24 │ Insert │ UTF-8 │ LF</text>
+              <text x="164" y="266" text-anchor="end" font-size="14" font-weight="700" fill="#1A4268">Row −2</text>
+              <text x="796" y="260" font-size="13.5" fill="#3F485D">Status bar: current state</text>
+              <text x="796" y="278" font-size="12.5" fill="#98A2B3">black on cyan</text>
+
+              <rect x="180" y="286" width="600" height="34" rx="6" fill="#000"/>
+              <text x="196" y="309" font-size="14.5" fill="#E4C23C" font-family="monospace"> Saved report.txt</text>
+              <text x="164" y="309" text-anchor="end" font-size="14" font-weight="700" fill="#7A5312">Last row</text>
+              <text x="796" y="309" font-size="13.5" fill="#3F485D">Message row: what just happened</text>
+            </svg>
+          </div>
+          <figcaption><b>Figure 1.3.1</b>　The frame. The content area is the window height minus these four rows, so a taller window simply shows more lines.</figcaption>
+        </figure>
+
+        <div class="callout">
+          <span class="co-title">Two on top, two at the bottom, deliberately</span>
+          <p>The top two answer “<strong>where am I and what can I press</strong>”; the bottom two answer “<strong>what state am I in and what just happened</strong>”. When you are stuck, check row 2 for the key you want, then the last row to see whether Erya said something to you.</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.3.2</span>
+        <h2>Row 1: tabs and titles</h2>
+        <p class="dek">Tabs while editing, a screen name everywhere else.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [report.txt*] appendix.md nginx.conf</div>
+            <div class="s-body"><i>(editing: three tabs open, the first one active and not yet saved)</i></div>
+          </div>
+        </div>
+
+        <ul>
+          <li><strong>The active tab is in square brackets</strong>: <span class="path">[report.txt]</span>.</li>
+          <li><strong>An asterisk means unsaved changes</strong>: <span class="path">[report.txt*]</span>. It disappears when you save.</li>
+          <li>Tabs show the <strong>filename only</strong>, without the path; a new document shows <span class="path">[Untitled]</span>.</li>
+          <li>When there are too many tabs, a <span class="path">‹</span> on the left means more are hidden. The active tab is always visible.</li>
+        </ul>
+
+        <p>On other screens this row becomes the screen name, sometimes with extra context:</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Screen</th><th>Row 1 shows</th></tr></thead>
+          <tbody>
+            <tr><td>Editing</td><td><span class="path"> 爾雅 Erya │ [report.txt] appendix.md</span></td></tr>
+            <tr><td>Open file (<kbd>Ctrl+O</kbd>)</td><td><span class="path"> 爾雅 Erya │ Open file │ /home/user/docs</span> (current directory)</td></tr>
+            <tr><td>Choosing files to compare (<kbd>F4</kbd>)</td><td><span class="path"> 爾雅 Erya │ Select left file │ /home/user</span></td></tr>
+            <tr><td>Comparison</td><td><span class="path"> 爾雅 Erya │ File comparison</span></td></tr>
+            <tr><td>Keyboard help (<kbd>F1</kbd>)</td><td><span class="path"> 爾雅 Erya │ Keyboard help</span></td></tr>
+            <tr><td>System settings (<kbd>F2</kbd>)</td><td><span class="path"> 爾雅 Erya │ System settings</span></td></tr>
+            <tr><td>Keymap editor</td><td><span class="path"> 爾雅 Erya │ Keymap editor │ Erya Terminal Safe</span> (profile name)</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">If row 1 is not tabs, you are not editing</span>
+          <p>That is the fastest way to work out where you are. <kbd>Esc</kbd> usually takes you back (see 1.3.7).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.3.3</span>
+        <h2>Row 2: the hint bar</h2>
+        <p class="dek">It lists the keys you can press right now, and it follows your key profile.</p>
+
+        <p>While editing it always shows the same seven actions:</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> F1 Help  Ctrl+S Save  Ctrl+W Search  Ctrl+R Replace  Ctrl+B Block  Ctrl+K Cut line  Ctrl+X Exit</div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">This row shows <em>your</em> keys, not the manual's</span>
+          <p>Apart from <kbd>F1</kbd>, which never changes, all of them come from <strong>the current key profile</strong>. Switch to the nano profile and this row becomes nano's keys. So: <strong>when the manual and the screen disagree, the screen is right</strong> (see 4.1).</p>
+        </div>
+
+        <p>On other screens the row is replaced with that screen's instructions. This is why Erya can do without menus:</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">Screen</th><th>Hint bar</th></tr></thead>
+          <tbody>
+            <tr><td>Open file</td><td><span class="path">↑/↓ select  Enter/→ open  ←/Backspace parent  Esc/Q cancel</span></td></tr>
+            <tr><td>Single-line input</td><td><span class="path"> Enter confirm  Esc cancel  ←/→ move caret  Backspace/Delete edit</span></td></tr>
+            <tr><td>Replacement input</td><td><span class="path"> Enter/F5 replace next  F6 replace all  Esc cancel</span></td></tr>
+            <tr><td>Hexadecimal view</td><td><span class="path">W 16/32 bytes  O dec/hex offsets  Ctrl+G/G go to offset  Ctrl+P/Esc back</span></td></tr>
+            <tr><td>Comparison</td><td>The two filenames, half the width each (see 3.4.2)</td></tr>
+            <tr><td>Keyboard help</td><td><span class="path"> ↑/↓ Scroll  PageUp/PageDown Page  Home/End First/last  F1/Esc Return</span></td></tr>
+            <tr><td>System settings</td><td><span class="path"> ↑/↓ Field  ←/→ Choose  E Edit keys  Enter Apply  Esc Cancel</span></td></tr>
+            <tr><td>Keymap editor</td><td><span class="path"> ↑/↓ Select  Enter Edit  Delete Disable  S Save as  Esc Back</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.3.4</span>
+        <h2>The document area and the ~ marks</h2>
+        <p class="dek">The large middle block, and those dim blue tildes.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-body">Chapter 1  Background
+
+    The project began in March 2026. The goal is to convert
+    the existing document set to plain text.
+<i>~</i>
+<i>~</i>
+<i>~</i></div>
+          </div>
+        </div>
+
+        <ul>
+          <li><strong>A dim blue <span class="path">~</span> means “the document ends here”</strong> — it is not a blank line. A real blank line is simply empty.</li>
+          <li>The content area is <strong>the window height minus four</strong>. A taller window shows more.</li>
+          <li>The cursor is drawn by the terminal itself; its shape (block, underline, or bar) comes from your terminal settings.</li>
+          <li>Selections are <strong>black on grey</strong>; search hits and comparison differences are <strong>black on yellow</strong>.</li>
+          <li>Syntax highlighting is applied from the filename (see 3.1.5); the grey of a selection sits on top of it without interfering.</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">Full-width characters take two columns</span>
+          <p>Erya measures in terminal columns: CJK characters, full-width punctuation, and most emoji take <strong>two columns</strong>; ASCII takes one; tabs expand to the tab width. That is why mixed CJK and Latin text lines up correctly, and why the “column” in the status bar counts characters rather than bytes (see 2.2.3).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.3.5</span>
+        <h2>Second from bottom: the status bar</h2>
+        <p class="dek">Five to seven cells separated by │, each one a fact about right now.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-status"> /home/user/docs/report.txt │ 5:24 │ Insert │ Markdown │ Wrap │ UTF-8 │ LF </div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">Cell</th><th style="width:26%">Example</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Filename</td><td><span class="path">/home/user/docs/report.txt</span></td><td>The path you opened, not just the name. A new document shows <span class="path">[Untitled]</span>.</td></tr>
+            <tr><td>Line:column</td><td><span class="path">5:24</span></td><td>Line 5, character 24. Both count from 1.</td></tr>
+            <tr><td>Mode</td><td><span class="path">Insert</span></td><td>Five possibilities; see below.</td></tr>
+            <tr><td>Syntax</td><td><span class="path">Markdown</span></td><td><strong>Only present when a syntax was recognised.</strong> Plain text has no such cell.</td></tr>
+            <tr><td>Wrap</td><td><span class="path">Wrap</span></td><td><strong>Only present while line wrap is on</strong> (<kbd>Ctrl+L</kbd>).</td></tr>
+            <tr><td>Encoding</td><td><span class="path">UTF-8</span></td><td>What the next save will write (see 3.1.2).</td></tr>
+            <tr><td>Line endings</td><td><span class="path">LF</span></td><td>What the next save will write (see 3.1.4).</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>The five possible modes</h3>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Shown</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">Insert</span></td><td>Typing pushes the rest of the line right. The default.</td></tr>
+            <tr><td><span class="path">Overwrite</span></td><td>Typing replaces the character under the cursor (<kbd>Insert</kbd> toggles).</td></tr>
+            <tr><td><span class="path">Selection</span></td><td>An ordinary selection exists. <strong>It replaces the insert/overwrite display.</strong></td></tr>
+            <tr><td><span class="path">Block selection</span></td><td>A block selection exists (see 2.2.5).</td></tr>
+            <tr><td><span class="path">Large file read-only</span></td><td>The file is past 64 MiB and cannot be edited (see 3.2).</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>The hexadecimal view and the comparison screen have their own status formats, described in 3.3.2 and 3.4.2.</p>
+      </section>
+
+      <!-- ══════════ 1.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.3.6</span>
+        <h2>The last row: messages and colours</h2>
+        <p class="dek">The colour is the severity: yellow reports, white waits for input, red waits for a decision.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg"> Saved report.txt</div>
+            <div class="s-msg ask">Search: target string<em> </em></div>
+            <div class="s-msg warn"> Unsaved document: S save and exit / Y discard / N return</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:16%">Colour</th><th style="width:28%">Means</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td><b style="color:#7A5312">Yellow</b></td><td>A report of what just happened</td><td>Saved, Undid last action, No match found, Selection cancelled</td></tr>
+            <tr><td><b style="color:#3F485D">White</b></td><td>Waiting for you to type</td><td>Search:, Save as:, Go to line/column:</td></tr>
+            <tr><td><b style="color:#8C2B2B">Red</b></td><td><strong>Waiting for a decision; nothing continues until you answer</strong></td><td>Unsaved document, Unsaved tab, File changed externally</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">When it is red, read it before you press anything</span>
+          <p>There are exactly three red confirmations: <strong>unsaved changes on exit</strong> (S/Y/N), <strong>unsaved changes on closing a tab</strong> (S/Y/N), and <strong>an externally changed file on save</strong> (O/R/N). Each spells out what every letter does on the same row, and pressing the wrong one really can lose text — in particular <span class="path">Y</span> always means “discard” (see 2.1.8).</p>
+        </div>
+
+        <p>The message row is not cleared by your next keystroke; it stays until something replaces it. So when you read a message, check that it refers to what you <strong>just</strong> did.</p>
+      </section>
+
+      <!-- ══════════ 1.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.3.7</span>
+        <h2>Six modes, one Esc</h2>
+        <p class="dek">Six full-screen views besides editing, all left the same way.</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Screen</th><th style="width:20%">Enter with</th><th style="width:20%">Leave with</th><th>See</th></tr></thead>
+          <tbody>
+            <tr><td>File dialog</td><td><kbd>Ctrl+O</kbd> / <kbd>F4</kbd></td><td><kbd>Esc</kbd> or <kbd>Q</kbd></td><td>2.1.2</td></tr>
+            <tr><td>Comparison</td><td><kbd>F4</kbd> after two files</td><td><kbd>Esc</kbd></td><td>3.4</td></tr>
+            <tr><td>Hexadecimal view</td><td><kbd>Ctrl+P</kbd></td><td><kbd>Esc</kbd> or <kbd>Ctrl+P</kbd></td><td>3.3</td></tr>
+            <tr><td>Keyboard help</td><td><kbd>F1</kbd></td><td><kbd>Esc</kbd> or <kbd>F1</kbd></td><td>1.3.8</td></tr>
+            <tr><td>System settings</td><td><kbd>F2</kbd></td><td><kbd>Esc</kbd></td><td>4.2.1</td></tr>
+            <tr><td>Keymap editor</td><td><kbd>E</kbd> in settings</td><td><kbd>Esc</kbd> back to settings</td><td>4.1.4</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>Two more states affect only the last row: <strong>single-line input</strong> (search, replace, go to line, save as…) and <strong>confirmations</strong> (the red ones). <kbd>Esc</kbd> cancels both.</p>
+
+        <div class="callout ok">
+          <span class="co-title"><kbd>Esc</kbd> always means “one level back”</span>
+          <p>It cancels a selection while editing, abandons an input, and leaves any full-screen view. <strong>When you have no idea where you are and do not want to break anything, <kbd>Esc</kbd> is always safe.</strong> The one exception is the hexadecimal view of a binary file — there is no text editing to return to, so <kbd>Esc</kbd> merely repeats the way out (see 3.3.5).</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.3.8</span>
+        <h2>F1 keyboard help</h2>
+        <p class="dek">Erya has no menus, so this list is the feature index.</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ Keyboard help</div>
+            <div class="s-bar"> ↑/↓ Scroll  PageUp/PageDown Page  Home/End First/last  F1/Esc Return</div>
+            <div class="s-body"> F1                       Open or close keyboard help
+ Up / Down / Left / Right Move the cursor
+ Shift+Up/Down/Left/Right Extend or reverse the selection
+ PageUp / PageDown        Move one page up or down
+ Home / End               Move to the start or end of the current line
+ Ctrl+Home / Ctrl+End     Move to the start or end of the document
+ Ctrl+N                   Create a blank tab
+ Ctrl+O                   Open a file in a new tab</div>
+            <div class="s-status"> Keyboard help │ 1-8 / 62 </div>
+            <div class="s-msg"> F1 is the fixed Help key and cannot be changed by a custom keymap</div>
+          </div>
+        </div>
+
+        <ul>
+          <li>Keys on the left, descriptions on the right; scroll with <kbd>↑</kbd><kbd>↓</kbd>, <kbd>PageUp</kbd><kbd>PageDown</kbd>, <kbd>Home</kbd><kbd>End</kbd>.</li>
+          <li>The status bar shows <strong>which entries you are looking at, out of how many</strong>.</li>
+          <li>The first ten are the <strong>fixed keys</strong> (arrows, <kbd>Enter</kbd>, <kbd>Backspace</kbd>, <kbd>Tab</kbd>, <kbd>Esc</kbd>…); the rest are configurable actions.</li>
+          <li><strong>The list shows the keys you actually have.</strong> Change profile and it changes with you.</li>
+          <li>Actions with no default key (phrases, macros, block shifting…) show a blank key column: the feature exists, but no key calls it yet (see 2.4.8).</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title"><kbd>F1</kbd> is always <kbd>F1</kbd></span>
+          <p>Every other action can be rebound; this one cannot. It is a deliberate escape hatch: <strong>however unrecognisable your profile becomes, one key still lists everything.</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">1.3.9</span>
+        <h2>How this manual writes shortcuts</h2>
+        <p class="dek">A small convention, so you do not press keys that do nothing.</p>
+
+        <ol class="rule-list">
+          <li><b><kbd>Ctrl+S</kbd> in this manual always means “the save key in the Erya Terminal Safe profile”.</b> That is the built-in default, and what you have if you have not changed anything.</li>
+          <li><b>If you have switched profiles, work from the action name instead.</b> Every feature has a fixed action name in the program (saving is <span class="path">save</span>), and the tables in 4.4 list both. Those names are also what you write in a config file (see 4.1.5).</li>
+          <li><b>The screen is the final authority.</b> Row 2 and <kbd>F1</kbd> show your current keys; when they disagree with the manual, believe them.</li>
+        </ol>
+
+        <div class="callout">
+          <span class="co-title">Why the defaults avoid the obvious combinations</span>
+          <p>Because terminals do not deliver every combination. macOS reserves <kbd>Ctrl</kbd>+function keys, <kbd>Alt</kbd> combinations are often used for special characters, and modified arrows (<kbd>Ctrl+←</kbd> and friends) simply never arrive in many terminals. The default profile avoids all of these, so <strong>it works in the widest range of terminals</strong>, at the cost of leaving a few advanced actions unbound. The original full set survives as <span class="term">Erya Classic</span> and is one keystroke away (see 4.1.1).</p>
+        </div>
+      </section>

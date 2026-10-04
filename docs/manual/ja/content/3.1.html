@@ -1,0 +1,271 @@
+      <!-- ══════════ 3.1.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.1.1</span>
+        <h2>開いたときの文字コード判定</h2>
+        <p class="dek">Erya が推定し、その結果をステータス行に出し続けます。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 280" role="img" aria-label="開いたときの文字コード判定の流れ">
+              <rect x="0" y="0" width="960" height="280" fill="#FAFBFD"/>
+              <defs><marker id="arrow31" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#98A2B3"/></marker></defs>
+
+              <rect x="30" y="112" width="150" height="56" rx="10" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="105" y="146" text-anchor="middle" font-size="15.5" font-weight="700" fill="#12314F">バイトを読む</text>
+
+              <rect x="220" y="24" width="230" height="52" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="335" y="46" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1E5C39">先頭に UTF-8 BOM</text>
+              <text x="335" y="66" text-anchor="middle" font-size="13" fill="#3F485D">→ UTF-8 BOM</text>
+
+              <rect x="220" y="86" width="230" height="52" rx="10" fill="#E8F2EB" stroke="#C3DECD" stroke-width="2"/>
+              <text x="335" y="108" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1E5C39">全体が正しい UTF-8</text>
+              <text x="335" y="128" text-anchor="middle" font-size="13" fill="#3F485D">→ UTF-8</text>
+
+              <rect x="220" y="148" width="230" height="52" rx="10" fill="#FBF3E3" stroke="#EDD9AE" stroke-width="2"/>
+              <text x="335" y="170" text-anchor="middle" font-size="14.5" font-weight="700" fill="#7A5312">判定器に渡す</text>
+              <text x="335" y="190" text-anchor="middle" font-size="13" fill="#3F485D">→ Big5／GBK／Shift_JIS</text>
+
+              <rect x="220" y="210" width="230" height="52" rx="10" fill="#FBEDEC" stroke="#EFCFCC" stroke-width="2"/>
+              <text x="335" y="232" text-anchor="middle" font-size="14.5" font-weight="700" fill="#8C2B2B">判定不能、または NUL</text>
+              <text x="335" y="252" text-anchor="middle" font-size="13" fill="#3F485D">→ エラー、またはバイト表示</text>
+
+              <path d="M180 140 L214 50" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 112" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 174" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+              <path d="M180 140 L214 236" stroke="#98A2B3" stroke-width="1.6" marker-end="url(#arrow31)"/>
+
+              <rect x="500" y="86" width="430" height="108" rx="10" fill="#fff" stroke="#E8ECF2" stroke-width="2"/>
+              <text x="715" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="#1F4E79">判定結果はそのままステータス行へ</text>
+              <text x="715" y="144" text-anchor="middle" font-size="13.5" fill="#3F485D">報告.txt │ 5:24 │ 挿入 │ Big5 │ CRLF</text>
+              <text x="715" y="172" text-anchor="middle" font-size="13" fill="#667085">触らなければ、保存も同じ文字コードで行われます</text>
+            </svg>
+          </div>
+          <figcaption><b>図 3.1.1</b>　判定順序。まず BOM、次に「全体を UTF-8 として読めるか」、それでも駄目なときに Big5・GBK・Shift_JIS のあいだで統計的に推定します。</figcaption>
+        </figure>
+
+        <ul>
+          <li><strong>Erya が扱う文字コードは 5 つ</strong>：UTF-8、UTF-8 BOM、Big5、GBK、Shift_JIS。</li>
+          <li><strong>開くだけではファイルは変わりません。</strong>判定結果は「次の保存で使う既定値」にすぎません。</li>
+          <li>判定は統計的な推定なので、<strong>短いファイルでは外れることがあります</strong>（数文字しかない Big5 が GBK と判定されるなど）。文字化けしていたら <kbd>F7</kbd> で次を試してください（3.1.2 参照）。</li>
+          <li>UTF-16・UTF-32 は<strong>対応範囲外</strong>です。「detected unsupported text encoding: UTF-16LE」のように報告し、無理に復号して文字化けさせたり、編集可能なバイト列として見せたりはしません。</li>
+        </ul>
+      </section>
+
+      <!-- ══════════ 3.1.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.1.2</span>
+        <h2><kbd>F7</kbd> で保存時の文字コードを変える</h2>
+        <p class="dek">1 回押すごとに、5 つの循環を 1 つ進みます。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 150" role="img" aria-label="F7 の文字コード循環">
+              <rect x="0" y="0" width="960" height="150" fill="#FAFBFD"/>
+              <defs><marker id="arrow32" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#1F4E79"/></marker></defs>
+
+              <rect x="24" y="34" width="150" height="46" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="99" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#12314F">UTF-8</text>
+              <rect x="210" y="34" width="164" height="46" rx="9" fill="#E8EFF7" stroke="#C7D8EA" stroke-width="2"/>
+              <text x="292" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#12314F">UTF-8 BOM</text>
+              <rect x="410" y="34" width="140" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="480" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">Big5</text>
+              <rect x="586" y="34" width="140" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="656" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">GBK</text>
+              <rect x="762" y="34" width="164" height="46" rx="9" fill="#F6EBE9" stroke="#E6CCC7" stroke-width="2"/>
+              <text x="844" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="#7A382F">Shift_JIS</text>
+
+              <path d="M174 57 L206 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M374 57 L406 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M550 57 L582 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M726 57 L758 57" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow32)"/>
+              <path d="M926 57 C946 57 946 118 480 118 C60 118 40 92 44 84" stroke="#1F4E79" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow32)"/>
+              <text x="480" y="140" text-anchor="middle" font-size="13.5" fill="#1F4E79">もう 1 回押すと UTF-8 に戻ります</text>
+            </svg>
+          </div>
+          <figcaption><b>図 3.1.2</b>　循環の順序。ステータス行の後ろから 2 番目のマスが変わり、メッセージ行に「Big5 に切り替えました；保存すると文字コード変換が完了します」と出ます。</figcaption>
+        </figure>
+
+        <div class="callout warn">
+          <span class="co-title"><kbd>F7</kbd> を押してもファイルはすぐ変わりません</span>
+          <p>変わるのは「<strong>次の保存で使う文字コード</strong>」です。実際の変換は <kbd>Ctrl+S</kbd> のときに行われます。押したあと、変換するなら保存、やめるなら押して一周させるか <kbd>Ctrl+Z</kbd> で戻せます。<strong>文字コードの切り替えも 1 手として元に戻せます。</strong></p>
+        </div>
+
+        <p>いちばん多い使い方は、古い Big5 の文書を UTF-8 にすることです。開いて（ステータス行に Big5）、<kbd>F7</kbd> で UTF-8 にし、<kbd>Ctrl+S</kbd>。Big5 しか受け付けない古いシステムへ渡すときも手順は同じです。</p>
+      </section>
+
+      <!-- ══════════ 3.1.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.1.3</span>
+        <h2>変換できないとき</h2>
+        <p class="dek">その文字コードを飛ばします。「？」で文字を潰したりはしません。</p>
+
+        <p>Big5 に「𠮟」は無く、Shift_JIS に絵文字はありません。多くのツールは黙って <span class="path">?</span> や <span class="path">□</span> を書き、後から気づくことになります。Erya は違います：</p>
+
+        <ol class="rule-list">
+          <li><b>まず変換を試みます。</b>文書中のすべての文字を表現できたときだけ成功です。</li>
+          <li><b>1 文字でも表現できなければ、その文字コードを飛ばして</b>次を試します。<kbd>F7</kbd> を 1 回押しただけで UTF-8 から GBK へ飛ぶのはこのためです。間の Big5 が本文の何かを表現できなかったのです。</li>
+          <li><b>5 つとも駄目なら</b>「… に切り替えられません：表現できない文字が文書に含まれています」と出て、<strong>元の文字コードのまま</strong>です。</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">内容を壊すくらいなら変換しない</span>
+          <p>これが文字コードに関する Erya の中心的な原則です。<strong>保存されたファイルは、完全であるか、元の文字コードのままか、どちらか</strong>です。半分正しく半分「？」になることはありません。どの文字が原因か分からないときは、いったん UTF-8 で保存して別のツールで比べてください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.1.4</span>
+        <h2><kbd>F8</kbd> で LF／CRLF を切り替える</h2>
+        <p class="dek">文字コードと同じく、次の保存で反映されます。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">表示</th><th style="width:26%">内容</th><th>よく使われる場所</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">LF</span></td><td>改行 <span class="path">\n</span></td><td>Linux、macOS、多くの言語や設定ファイル</td></tr>
+            <tr><td><span class="path">CRLF</span></td><td>復帰＋改行 <span class="path">\r\n</span></td><td>Windows のテキスト、古いシステムの出力</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>Erya は開いた時点でどちらかを判定し、ステータス行の最後のマスに出します。</li>
+          <li><kbd>F8</kbd> で切り替え、「CRLF に切り替えました；保存すると改行コード変換が完了します」と出ます。</li>
+          <li><kbd>Ctrl+Z</kbd> で元に戻せます。</li>
+          <li><strong>末尾の改行の有無も保たれます。</strong>元が改行で終わっていなければ、勝手に足されることはありません。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">Git が「ファイル全体が変わった」と言うとき</span>
+          <p>たいていは改行コードです。開いてステータス行の最後のマスを見て、<kbd>F8</kbd> で元に戻して保存すれば、差分はきれいになります。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.1.5</span>
+        <h2>シンタックスハイライトの決まり方</h2>
+        <p class="dek">まずファイル名全体、次に拡張子。分からなければプレーンテキストです。</p>
+
+        <ul>
+          <li>認識できた言語は<strong>ステータス行の 4 番目のマス</strong>に出ます（<span class="path">Markdown</span>、<span class="path">TOML</span> など）。<strong>マスが無ければハイライトも無し</strong>です。</li>
+          <li>主要な言語は網羅しています：Rust、C／C++、Go、Python、Java、JavaScript／TypeScript、シェル、SQL、Markdown など。</li>
+          <li>構造化フォーマットも同様：TOML、YAML、JSON、XML、<span class="path">.ini</span>、<span class="path">.conf</span>。</li>
+          <li>選択の灰色は色の上に重なるので、<strong>互いに干渉しません</strong>。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">極端に長い行では控えめになります</span>
+          <p>1 行が 64 KiB を超える場合や、カーソルが一度に大量の行を飛び越えた場合、Erya は<strong>範囲を限定したハイライト</strong>に切り替え、解析で画面が固まらないようにします。一時的に色の付かない行が見えることがありますが、内容は無事です。<strong>大容量ファイルモードではハイライトを完全に無効にします</strong>（3.2.2 参照）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.1.6</span>
+        <h2>Linux の設定ファイルも対象</h2>
+        <p class="dek">拡張子の無い設定ファイルが多いので、<strong>ファイル名全体</strong>で判定します。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">分類</th><th>認識するファイル名・拡張子</th></tr></thead>
+          <tbody>
+            <tr><td>一般の設定</td><td><span class="path">.conf</span>、<span class="path">.ini</span>、<span class="path">.editorconfig</span></td></tr>
+            <tr><td>systemd unit</td><td><span class="path">.service</span>、<span class="path">.socket</span>、<span class="path">.timer</span>、<span class="path">.mount</span>、<span class="path">.target</span>、<span class="path">.network</span></td></tr>
+            <tr><td>環境変数</td><td><span class="path">.env</span>、<span class="path">.env.*</span></td></tr>
+            <tr><td>構造化フォーマット</td><td>TOML、YAML、JSON、XML</td></tr>
+            <tr><td>シェル起動ファイル</td><td><span class="path">.bashrc</span>、<span class="path">.profile</span>、<span class="path">.zshrc</span>、<span class="path">/etc/default/*</span></td></tr>
+            <tr><td>システム設定</td><td><span class="path">.gitconfig</span>、<span class="path">sshd_config</span>、<span class="path">ssh_config</span>、<span class="path">sudoers</span>、<span class="path">fstab</span>、<span class="path">hosts</span>、<span class="path">resolv.conf</span></td></tr>
+            <tr><td>サービス設定</td><td><span class="path">nginx.conf</span>、Apache の設定、<span class="path">crontab</span>、<span class="path">Dockerfile</span>／<span class="path">Containerfile</span>、<span class="path">Makefile</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>この一覧は偶然ではなく必須要件です。<strong>SSH でサーバーに入り設定ファイルを直す</strong>ことが、Erya の想定用途の 1 つだからです。</p>
+      </section>
+
+      <!-- ══════════ 3.1.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.1.7</span>
+        <h2><kbd>Ctrl+T</kbd> で文書を整形する</h2>
+        <p class="dek">対象は 3 形式だけ：TOML、YAML、JSON。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:42%">メッセージ行</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td>ドキュメントを整形しました。Ctrl+Zで元に戻せます</td><td>成功。まとめて<strong>1 手</strong>です（2.4.2 参照）。</td></tr>
+            <tr><td>ドキュメントはすでに整形されています</td><td>もともと整っており、何も変わりませんでした。</td></tr>
+            <tr><td>現在、TOML、YAML、JSONドキュメントの整形に対応しています</td><td>このファイルはその 3 つではありません。拡張子で判断します。</td></tr>
+            <tr><td>整形に失敗しました。ドキュメントは変更されていません：…</td><td><strong>構文エラーです。</strong>たいてい行番号が示され、文書はそのまま残ります。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout ok">
+          <span class="co-title">TOML と YAML のコメントは保たれます</span>
+          <p>コメントを捨ててしまう整形ツールは少なくありませんが、Erya は残します。設定ファイルでは「なぜこの値なのか」を書いた唯一の記録がコメントであることが多いからです。</p>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">構文チェック代わりに使えます</span>
+          <p><span class="path">.yaml</span> を直したら <kbd>Ctrl+T</kbd> を 1 回。何も言われなければ構文は正しく、間違っていれば場所を教えてくれます。<strong>デプロイして気づくよりずっと速いです。</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.1.8</span>
+        <h2>段落の再整形と段落幅</h2>
+        <p class="dek">段落を指定幅に折り直します。既定ではキーがありません。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:28%">操作名</th><th style="width:20%">Classic のキー</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">set_paragraph_width</span></td><td><kbd>Alt+M</kbd></td><td>再整形の幅を設定します。範囲は <strong>20〜500</strong> 桁、既定は 80。</td></tr>
+            <tr><td><span class="path">reflow_paragraph</span></td><td><kbd>Alt+Q</kbd></td><td><strong>カーソルのある段落</strong>を、その幅で折り直します。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>段落の境目は<strong>空行</strong>です。カーソルから上下に、いちばん近い空行までを 1 段落とみなします。</li>
+          <li>空行の上で実行すると「カーソルは段落内にありません」と出ます。</li>
+          <li>成功すると「段落を 80 桁で再整形しました」。まとめて<strong>1 手</strong>です。</li>
+          <li>20〜500 の範囲外だと「段落幅は 20〜500 の整数で指定してください」と出ます。</li>
+          <li>再整形は端末の桁で計算するので、<strong>全角は 2 桁</strong>として扱われ、右端が実際にそろいます。</li>
+        </ul>
+
+        <div class="callout warn">
+          <span class="co-title">この 2 つも既定では空です</span>
+          <p>定型文やマクロと同様です（2.4.8 参照）。Erya Classic に切り替えるか、キーマップエディターで自分で割り当ててください（4.1.4 参照）。</p>
+        </div>
+
+        <div class="callout">
+          <span class="co-title">再整形は中身を変え、折り返しは見た目だけ変えます</span>
+          <p><kbd>Ctrl+L</kbd> の折り返しは<strong>画面だけ</strong>の話で、ファイルは 1 バイトも変わりません。段落の再整形は<strong>実際に改行を入れます</strong>。人に渡すプレーンテキストは再整形、自分で長い行を読むだけなら折り返しを使ってください。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.1.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.1.9</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">文字コードと書式まわりで多い 6 つ。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td>全体が文字化けしている</td><td>判定が外れています。<kbd>F7</kbd> で正しく読めるものを探し、保存します（3.1.2）。</td></tr>
+            <tr><td><kbd>F7</kbd> を押したのにファイルが変わらない</td><td>変換は保存時です（3.1.2）。</td></tr>
+            <tr><td><kbd>F7</kbd> がある文字コードを飛ばした</td><td>本文に表現できない文字があり、飛ばされました（3.1.3）。</td></tr>
+            <tr><td>Git の差分がファイル全体になる</td><td>改行コードが変わっています。<kbd>F8</kbd> で戻します（3.1.4）。</td></tr>
+            <tr><td>設定ファイルに色が付かない</td><td>認識リストに無い（3.1.6）か、大容量ファイルです（3.2.2）。</td></tr>
+            <tr><td><kbd>Ctrl+T</kbd> が非対応と言う</td><td>整形は TOML／YAML／JSON の 3 つだけです（3.1.7）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

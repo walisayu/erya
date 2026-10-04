@@ -1,0 +1,251 @@
+      <!-- ══════════ 3.4.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">3.4.1</span>
+        <h2>比較を開始する</h2>
+        <p class="dek"><kbd>F4</kbd> を押し、同じファイルダイアログで 2 回選びます。</p>
+
+        <ol class="rule-list">
+          <li><b><kbd>F4</kbd> を押します。</b>1 行目が「左ファイルを選択」になり、操作はファイルを開くときと同じです（2.1.2 参照）。</li>
+          <li><b>左側のファイルを選びます。</b>「左を選択済み：/etc/nginx/nginx.conf；右ファイルを選択してください」と出て、1 行目が「右ファイルを選択」に変わります。</li>
+          <li><b>右側のファイルを選びます。</b>比較画面に入り、「比較完了：差分ブロック 7 件」と表示されます。</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">元のファイルはまだ触られていません</span>
+          <p>比較に入るとき、Erya は<strong>両方のファイルを一時ディレクトリにコピー</strong>し、以後のコピー操作はすべてその一時ファイルに書かれます。元のファイルが変わるのは、あなたが確認したときだけです（3.4.7 参照）。心置きなくコピーしてください。やめたくなったら <kbd>Esc</kbd> で破棄できます。</p>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">比較できないファイルが 2 種類あります</span>
+          <ul>
+            <li><strong>大容量ファイル</strong>（64 MiB 以上）：「ファイル全体の読み込みによるメモリー不足を避けるため、大容量ファイルの読み取り専用モードでは左右比較を利用できません」。</li>
+            <li><strong>バイナリファイル</strong>：「バイナリファイルは左右2ペイン比較に対応していません」。</li>
+          </ul>
+          <p>どちらも選択の段階で断られるので、比較画面には入りません。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">3.4.2</span>
+        <h2>画面の読み方</h2>
+        <p class="dek">左右半分ずつ、間に 1 本の線。両側に行番号欄があります。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ ファイル比較</div>
+            <div class="s-bar"> 左 │ nginx.conf               │ 右 │ nginx.conf.new</div>
+            <div class="s-body">   1   worker_processes 4;      │   1   worker_processes 4;
+   2                            │   2
+<s>   3≠  keepalive_timeout 65;   </s>│<s>   3≠  keepalive_timeout 75;   </s>
+   4   gzip on;                 │   4   gzip on;
+<b>   5 ▶ client_max_body_size 8m;</b>│<b>   5 ▶ client_max_body_size 8m;</b>
+   6-  access_log off;          │
+   7   server {                 │   6   server {
+       │                        │   7+    listen 8443 ssl;</div>
+            <div class="s-status"> カーソル行 5/9　現在の差分 2/7　横位置 1 │ 凡例：強調行／▶ カーソル　≠ 変更　- 左のみ　+ 右のみ </div>
+            <div class="s-msg">N 次の差分　P 前の差分　Shift+→ カーソル位置を左→右　Shift+← カーソル位置を右→左　Ctrl+S 適用　Esc 戻る</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">画面の要素</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td>2 行目（ヒント行）</td><td><strong>左右のファイル名</strong>が半分ずつ入り、区切り線は下の内容とそろいます。</td></tr>
+            <tr><td>行番号欄</td><td>片側 4 桁の行番号に続き、マーク欄が 2 つ：<strong>差分の種類</strong>と<strong>カーソル</strong>。</td></tr>
+            <tr><td>空行</td><td>片側に対応する行が無いところです。これが「整列」の効果で、同じ行が向かい合います。</td></tr>
+            <tr><td>ステータス行</td><td>何行目／全何行、何件目の差分／全何件、横位置、そして凡例。</td></tr>
+            <tr><td>メッセージ行</td><td>比較用の操作説明が常駐し、操作するとその結果に入れ替わります。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">3.4.3</span>
+        <h2>3 種類の差分マーク</h2>
+        <p class="dek">色だけに頼らずに済むよう、種類ごとに記号があります。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:14%">記号</th><th style="width:24%">意味</th><th>画面での見え方</th></tr></thead>
+          <tbody>
+            <tr><td><b style="font-size:1.1em">≠</b></td><td>両側にあるが内容が違う</td><td>両側に付き、<strong>行内で違う文字はさらに強い色で示されます</strong></td></tr>
+            <tr><td><b style="font-size:1.1em">-</b></td><td>左だけにある</td><td>左に付き、右は空行</td></tr>
+            <tr><td><b style="font-size:1.1em">+</b></td><td>右だけにある</td><td>右に付き、左は空行</td></tr>
+            <tr><td>（空白）</td><td>同一</td><td>マーク無し</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>差分とは別に、位置を示すマークが 2 つあります：</p>
+        <ul>
+          <li><strong>▶ はカーソル</strong>で、左右同時に出ます。両側のカーソルは連動しています。</li>
+          <li><strong>明るくなった行</strong>がカーソルのある行です。</li>
+          <li><strong>行番号が黄色</strong>なのが「現在の差分ブロック」で、<kbd>N</kbd>／<kbd>P</kbd> が止まる場所です。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">連続する差分行は 1 ブロックです</span>
+          <p>ステータス行の「現在の差分 2/7」の 7 は<strong>ブロック数</strong>で、行数ではありません。連続して変わった 5 行は 1 ブロックで、<kbd>N</kbd> はブロックごと飛び、コピーもブロック単位です。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">3.4.4</span>
+        <h2>カーソルと現在の差分は別物</h2>
+        <p class="dek">この画面でいちばん混同しやすいところです。</p>
+
+        <div class="duo">
+          <div>
+            <h4>カーソル（▶）</h4>
+            <p><kbd>↑</kbd> <kbd>↓</kbd>、<kbd>PageUp</kbd> <kbd>PageDown</kbd>、<kbd>Home</kbd> <kbd>End</kbd> で<strong>1 行ずつ</strong>動き、同じ内容の行にも止まります。</p>
+            <p><strong>差分のコピーはカーソルのある行を見ます。</strong></p>
+          </div>
+          <div>
+            <h4>現在の差分（黄色い行番号）</h4>
+            <p><kbd>N</kbd>／<kbd>P</kbd> で<strong>ブロック単位</strong>に飛び、差分のある場所にだけ止まります。</p>
+            <p>飛ぶときにカーソルも一緒に動くので、そのままコピーできます。</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">同じ内容の行ではコピーできません</span>
+          <p><kbd>Shift+→</kbd> を押しても何も起きず「カーソル位置にコピーできる差分ブロックがありません」と出るのはこのためです。<strong>先に <kbd>N</kbd> で差分へ移動してください。</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">3.4.5</span>
+        <h2>移動とスクロール</h2>
+        <p class="dek">左右は常に同期して動きます。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">キー</th><th>動作</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>カーソルを 1 行、画面も追随</td></tr>
+            <tr><td><kbd>PageUp</kbd> <kbd>PageDown</kbd></td><td>1 ページずつ</td></tr>
+            <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>比較結果の先頭／末尾へ</td></tr>
+            <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td><strong>左右を同期して横スクロール</strong>。長い行を見るときに</td></tr>
+            <tr><td><kbd>Ctrl+←</kbd> <kbd>Ctrl+→</kbd></td><td>横方向に 8 桁ずつ</td></tr>
+            <tr><td><kbd>N</kbd></td><td>次の差分ブロック</td></tr>
+            <tr><td><kbd>P</kbd></td><td>前の差分ブロック</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p><kbd>N</kbd>／<kbd>P</kbd> は最後まで行くと<strong>先頭へ戻る</strong>ので、押し続ければ全体を一周できます。</p>
+      </section>
+
+      <!-- ══════════ 3.4.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">3.4.6</span>
+        <h2>差分を反対側へコピーする</h2>
+        <p class="dek">キーは 2 つ。矢印の向きがそのまま方向です。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">キー</th><th>動作</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Shift+→</kbd></td><td>カーソル位置のブロックを<strong>左から右へ</strong>（右の一時ファイルへ）</td></tr>
+            <tr><td><kbd>Shift+←</kbd></td><td>カーソル位置のブロックを<strong>右から左へ</strong></td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ul>
+          <li>コピー後：「現在の差分を左から右の一時ファイルへコピーしました。残り 6 ブロック」——<strong>残り件数まで教えてくれます</strong>。</li>
+          <li>コピー後も<strong>カーソルと画面位置は動きません</strong>。結果を確認できます。次へ行くときは <kbd>N</kbd> を押してください。</li>
+          <li>ブロック全体がコピーされます。1 行ずつではありません。</li>
+          <li>一時ファイルへの書き込みに失敗すると（ディスク不足、権限など）「一時ファイルを更新できませんでした：…」と出ます。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title">統合の定番の流れ</span>
+          <p><kbd>N</kbd> で差分へ→内容を見る→取り込むなら <kbd>Shift+→</kbd> か <kbd>Shift+←</kbd>、取り込まないならまた <kbd>N</kbd>→一周したら <kbd>Ctrl+S</kbd> で適用。使うキーは 4 つだけです。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">3.4.7</span>
+        <h2>元のファイルへ適用する</h2>
+        <p class="dek">プロファイルの保存キー（既定は <kbd>Ctrl+S</kbd>）を押し、Y か N で答えます。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn">一時的な比較結果で元のファイルを上書きしますか？Y 上書き／N キャンセル</div>
+          </div>
+        </div>
+
+        <ol class="rule-list">
+          <li><b><kbd>Ctrl+S</kbd> を押します。</b>まだ何もコピーしていなければ「適用する一時変更はありません」と出るだけで、確認は出ません。</li>
+          <li><b><kbd>Y</kbd> で確定します。</b>Erya は<strong>まず元のファイルが外部で変更されていないか確認</strong>し、問題が無ければ書き込みます。</li>
+          <li><b>成功。</b>「確認後、元のファイル 2 件を上書きしました」——実際に変更した側だけが書かれます。</li>
+          <li><b>失敗。</b>「元のファイルは上書きされませんでした：…」と出て、<strong>どちらも変更されません</strong>。多くは比較中に原本が動かされた場合です。</li>
+          <li><b><kbd>N</kbd> でキャンセル。</b>「上書きをキャンセルしました。一時変更は保持されています」——作業内容は残るので、続きも後からの適用もできます。</li>
+        </ol>
+
+        <div class="callout ok">
+          <span class="co-title">外部変更の確認は省略されません</span>
+          <p>通常の保存と同じ仕組みです（2.1.7 参照）。比較には時間がかかり、その途中で <span class="path">git checkout</span> により原本が入れ替わることは珍しくありません。Erya はそれを黙って上書きしません。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">3.4.8</span>
+        <h2>終了時の 3 つの選択</h2>
+        <p class="dek">未適用の変更があると、<kbd>Esc</kbd> は先に尋ねます。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg warn">一時変更は未適用です：Y 上書きして終了／N 破棄して終了／Esc 戻る</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:16%">キー</th><th>結果</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Y</kbd></td><td>元のファイルを上書きして終了します（同じ外部確認が入ります）。</td></tr>
+            <tr><td><kbd>N</kbd></td><td><strong>一時変更を破棄</strong>して終了します。コピーした内容は無効になり、元のファイルはそのままです。</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>比較画面に戻り、何もしません。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>一時変更が 1 つも無ければ、<kbd>Esc</kbd> は何も尋ねずに終了します。</p>
+
+        <div class="callout">
+          <span class="co-title">終了時に一時コピーは削除されます</span>
+          <p>一時ディレクトリは比較のあいだだけ存在します。<strong><kbd>N</kbd> で終了したあと、コピー内容は取り戻せません</strong>。ただし元のファイルは残っているので、やり直しても失うのは時間だけです。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 3.4.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">3.4.9</span>
+        <h2>よくあるつまずき</h2>
+        <p class="dek">比較画面での 7 つの場面。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">症状</th><th>原因と対処</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>Shift+→</kbd> が効かない</td><td>カーソルが同じ内容の行にあります。先に <kbd>N</kbd> を（3.4.4）。</td></tr>
+            <tr><td>ファイル選択の段階で断られる</td><td>大容量ファイルかバイナリを選んでいます（3.4.1）。</td></tr>
+            <tr><td>コピーしたのに原本が変わらない</td><td>変更先は一時コピーです。<kbd>Ctrl+S</kbd> のあと <kbd>Y</kbd> で確定します（3.4.7）。</td></tr>
+            <tr><td>「元のファイルは上書きされませんでした」</td><td>比較中に原本が外部で変わりました。いったん終了してやり直します（3.4.7）。</td></tr>
+            <tr><td>終了後に作業内容が消えた</td><td>終了時に <kbd>N</kbd>（破棄して終了）を押しています（3.4.8）。</td></tr>
+            <tr><td>長い行の後半が見えない</td><td><kbd>←</kbd> <kbd>→</kbd> で横スクロールします。左右は同期します（3.4.5）。</td></tr>
+            <tr><td>差分の件数が思ったより少ない</td><td>数えているのは<strong>ブロック</strong>で、連続した変更は 1 件です（3.4.3）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>

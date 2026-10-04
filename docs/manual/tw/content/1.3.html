@@ -1,0 +1,327 @@
+      <!-- ══════════ 1.3.1 ══════════ -->
+      <section id="s1">
+        <span class="sec-no">1.3.1</span>
+        <h2>畫面的四條橫列</h2>
+        <p class="dek">上面兩列、下面兩列固定，中間全部給你的文件。</p>
+
+        <p>不管你在哪一個畫面——編輯、開檔、比對、十六進位、設定——版面永遠是同一套：<strong>四列框架加中間的內容區</strong>。認得這四列，就不會迷路。</p>
+
+        <figure>
+          <div class="fig-frame">
+            <svg viewBox="0 0 960 330" role="img" aria-label="爾雅畫面的四條橫列">
+              <rect x="0" y="0" width="960" height="330" fill="#FAFBFD"/>
+
+              <rect x="180" y="24" width="600" height="40" rx="6" fill="#1D3E77"/>
+              <text x="196" y="50" font-size="14.5" fill="#fff" font-family="monospace"> 爾雅 Erya │ [報告.txt] 附錄.md</text>
+              <text x="164" y="50" text-anchor="end" font-size="14" font-weight="700" fill="#7A382F">第 1 列</text>
+              <text x="796" y="44" font-size="13.5" fill="#3F485D">頁籤／畫面名稱</text>
+              <text x="796" y="62" font-size="12.5" fill="#98A2B3">白字深藍底</text>
+
+              <rect x="180" y="70" width="600" height="40" rx="6" fill="#34A6B6"/>
+              <text x="196" y="96" font-size="14.5" fill="#06222B" font-family="monospace"> F1 說明  Ctrl+S 儲存  Ctrl+W 搜尋  …</text>
+              <text x="164" y="96" text-anchor="end" font-size="14" font-weight="700" fill="#1A4268">第 2 列</text>
+              <text x="796" y="90" font-size="13.5" fill="#3F485D">提示列：現在能按什麼</text>
+              <text x="796" y="108" font-size="12.5" fill="#98A2B3">黑字青底</text>
+
+              <rect x="180" y="116" width="600" height="118" rx="6" fill="#000"/>
+              <text x="196" y="146" font-size="14.5" fill="#5CC9D6" font-family="monospace">第一章　專案背景</text>
+              <text x="196" y="172" font-size="14.5" fill="#5CC9D6" font-family="monospace">　　本專案自二〇二六年三月啟動……</text>
+              <text x="196" y="198" font-size="14.5" fill="#35637A" font-family="monospace">~</text>
+              <text x="196" y="222" font-size="14.5" fill="#35637A" font-family="monospace">~</text>
+              <text x="164" y="176" text-anchor="end" font-size="14" font-weight="700" fill="#12314F">內容區</text>
+              <text x="796" y="164" font-size="13.5" fill="#3F485D">文件、清單或比對內容</text>
+              <text x="796" y="182" font-size="12.5" fill="#98A2B3">高度＝視窗高度 − 4</text>
+
+              <rect x="180" y="240" width="600" height="40" rx="6" fill="#34A6B6"/>
+              <text x="196" y="266" font-size="14.5" fill="#06222B" font-family="monospace"> 報告.txt │ 5:24 │ 插入 │ UTF-8 │ LF</text>
+              <text x="164" y="266" text-anchor="end" font-size="14" font-weight="700" fill="#1A4268">倒數第 2 列</text>
+              <text x="796" y="260" font-size="13.5" fill="#3F485D">狀態列：現在的狀態</text>
+              <text x="796" y="278" font-size="12.5" fill="#98A2B3">黑字青底</text>
+
+              <rect x="180" y="286" width="600" height="34" rx="6" fill="#000"/>
+              <text x="196" y="309" font-size="14.5" fill="#E4C23C" font-family="monospace"> 已儲存 報告.txt</text>
+              <text x="164" y="309" text-anchor="end" font-size="14" font-weight="700" fill="#7A5312">最後 1 列</text>
+              <text x="796" y="309" font-size="13.5" fill="#3F485D">訊息列：剛剛發生了什麼</text>
+            </svg>
+          </div>
+          <figcaption><b>圖 1.3.1</b>　四列框架。內容區的高度就是視窗高度扣掉這四列，所以視窗越高，一次看得到的行數越多。</figcaption>
+        </figure>
+
+        <div class="callout">
+          <span class="co-title">兩列在上、兩列在下，是刻意的</span>
+          <p>上面兩列回答「<strong>我在哪、我能按什麼</strong>」，下面兩列回答「<strong>現在是什麼狀態、剛剛發生了什麼</strong>」。卡住的時候，先看第 2 列有沒有你要的鍵，再看最後一列它有沒有跟你說話。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.2 ══════════ -->
+      <section id="s2">
+        <span class="sec-no">1.3.2</span>
+        <h2>第一列：頁籤與標題</h2>
+        <p class="dek">在編輯畫面它是頁籤列，在其他畫面它是畫面名稱。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ [報告.txt*] 附錄.md nginx.conf</div>
+            <div class="s-body"><i>（編輯畫面：開了三個頁籤，正在編輯第一個，而且還沒存）</i></div>
+          </div>
+        </div>
+
+        <ul>
+          <li><strong>目前的頁籤用方括號框起來</strong>：<span class="path">[報告.txt]</span>。</li>
+          <li><strong>檔名後面的星號代表還沒儲存</strong>：<span class="path">[報告.txt*]</span>。存檔之後星號會消失。</li>
+          <li>頁籤顯示的是<strong>檔名</strong>（不含路徑）；沒有檔名的新文件顯示 <span class="path">[未命名]</span>。</li>
+          <li>頁籤太多排不下時，左邊會出現 <span class="path">‹</span> 表示前面還有，目前頁籤永遠看得到。</li>
+        </ul>
+
+        <p>換到其他畫面時，這一列會改成畫面名稱，有些還會多帶一段資訊：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:34%">畫面</th><th>第一列顯示</th></tr></thead>
+          <tbody>
+            <tr><td>編輯</td><td><span class="path"> 爾雅 Erya │ [報告.txt] 附錄.md</span></td></tr>
+            <tr><td>開啟檔案（<kbd>Ctrl+O</kbd>）</td><td><span class="path"> 爾雅 Erya │ 開啟檔案 │ /home/user/docs</span>（後面是目前目錄）</td></tr>
+            <tr><td>選擇比對檔案（<kbd>F4</kbd>）</td><td><span class="path"> 爾雅 Erya │ 選擇左側檔案 │ /home/user</span></td></tr>
+            <tr><td>雙欄比對</td><td><span class="path"> 爾雅 Erya │ 檔案比對</span></td></tr>
+            <tr><td>按鍵說明（<kbd>F1</kbd>）</td><td><span class="path"> 爾雅 Erya │ 按鍵說明</span></td></tr>
+            <tr><td>系統設定（<kbd>F2</kbd>）</td><td><span class="path"> 爾雅 Erya │ 系統設定</span></td></tr>
+            <tr><td>按鍵配置編輯器</td><td><span class="path"> 爾雅 Erya │ 按鍵配置編輯器 │ Erya Terminal Safe</span>（後面是配置名稱）</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout tip">
+          <span class="co-title">看到第一列不是頁籤，就代表你不在編輯畫面</span>
+          <p>這是最快的定位方法。想回到編輯，通常按 <kbd>Esc</kbd> 就行（見 1.3.7）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.3 ══════════ -->
+      <section id="s3">
+        <span class="sec-no">1.3.3</span>
+        <h2>第二列：提示列</h2>
+        <p class="dek">它列的是「你現在按得動的鍵」，而且會跟著你的按鍵配置變。</p>
+
+        <p>編輯畫面的提示列固定列出七個最常用的動作：</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-bar"> F1 說明  Ctrl+S 儲存  Ctrl+W 搜尋  Ctrl+R 取代  Ctrl+B 矩形選取  Ctrl+K 剪行  Ctrl+X 離開</div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">這一列顯示的是「你的」按鍵，不是手冊寫的按鍵</span>
+          <p>除了固定不變的 <kbd>F1</kbd>，其他六個都是從<strong>目前的按鍵配置</strong>抓出來的。換成 nano 配置之後，這一列會變成 nano 的鍵。所以：<strong>手冊和畫面不一致時，以畫面為準</strong>（見 4.1）。</p>
+        </div>
+
+        <p>換到其他畫面時，這一列會整條換成那個畫面的操作說明。這是爾雅沒有選單也不會迷路的原因：</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:30%">畫面</th><th>提示列內容</th></tr></thead>
+          <tbody>
+            <tr><td>開啟檔案</td><td><span class="path">↑/↓ 選取　Enter/→ 開啟　←/Backspace 上層　Esc/Q 取消</span></td></tr>
+            <tr><td>單行輸入（搜尋、跳行…）</td><td><span class="path"> Enter 確認  Esc 取消  ←/→ 移動游標  Backspace/Delete 刪除字元</span></td></tr>
+            <tr><td>取代輸入</td><td><span class="path"> Enter/F5 取代下一個  F6 全部取代  Esc 取消</span></td></tr>
+            <tr><td>十六進位檢視</td><td><span class="path">W 每列 16/32  O 位移 10/16  Ctrl+G/G 跳至位移  Ctrl+P/Esc 返回編輯</span></td></tr>
+            <tr><td>雙欄比對</td><td>左右兩個檔名各佔一半（見 3.4.2）</td></tr>
+            <tr><td>按鍵說明</td><td><span class="path"> ↑/↓ 捲動  PageUp/PageDown 翻頁  Home/End 首尾  F1/Esc 返回</span></td></tr>
+            <tr><td>系統設定</td><td><span class="path"> ↑/↓ 切換項目  ←/→ 選擇  E 編輯按鍵  Enter 套用  Esc 取消</span></td></tr>
+            <tr><td>按鍵配置編輯器</td><td><span class="path"> ↑/↓ 選取  Enter 編輯  Delete 停用  S 另存新檔  Esc 返回</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.4 ══════════ -->
+      <section id="s4">
+        <span class="sec-no">1.3.4</span>
+        <h2>內文區與 ~ 記號</h2>
+        <p class="dek">中間那一大塊，以及那些暗藍色的波浪號。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-body">第一章　專案背景
+
+　　本專案自二〇二六年三月啟動，目標是把既有的
+　　文件系統整批轉成純文字格式。
+<i>~</i>
+<i>~</i>
+<i>~</i></div>
+          </div>
+        </div>
+
+        <ul>
+          <li><strong>暗藍色的 <span class="path">~</span> 代表「文件到這裡就沒了」</strong>，不是空行。真正的空行是完全空白的一列。</li>
+          <li>內文區的高度是<strong>視窗高度減 4</strong>。視窗拉高就看得更多。</li>
+          <li>游標是終端機自己畫的，形狀（方塊、底線或直線）由你的終端機設定決定。</li>
+          <li>選取範圍是<strong>灰底黑字</strong>；搜尋命中與比對差異則是<strong>黃底黑字</strong>。</li>
+          <li>語法高亮會依副檔名自動套用（見 3.1.5）；選取的灰底會蓋在高亮顏色上面，不會互相干擾。</li>
+        </ul>
+
+        <div class="callout">
+          <span class="co-title">全形字算兩欄</span>
+          <p>爾雅依照終端機的欄寬計算位置：中文、全形標點與大部分 Emoji 佔<strong>兩欄</strong>，英數字佔一欄，Tab 依 Tab 寬度展開。所以中英混排時游標的位置是準的，狀態列的「欄」也是照字元數算，不是照位元組（見 2.2.3）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.5 ══════════ -->
+      <section id="s5">
+        <span class="sec-no">1.3.5</span>
+        <h2>倒數第二列：狀態列</h2>
+        <p class="dek">用 │ 隔成五到七格，每一格都是「現在的事實」。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-status"> /home/user/docs/報告.txt │ 5:24 │ 插入 │ Markdown │ 自動換行 │ UTF-8 │ LF </div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:20%">格子</th><th style="width:26%">例子</th><th>意思</th></tr></thead>
+          <tbody>
+            <tr><td>檔名</td><td><span class="path">/home/user/docs/報告.txt</span></td><td>你開檔時給的路徑（不是只有檔名）。新文件顯示 <span class="path">[未命名]</span>。</td></tr>
+            <tr><td>行:欄</td><td><span class="path">5:24</span></td><td>游標在第 5 行第 24 個字元。兩邊都從 1 開始算。</td></tr>
+            <tr><td>模式</td><td><span class="path">插入</span></td><td>五種可能，見下表。</td></tr>
+            <tr><td>語法</td><td><span class="path">Markdown</span></td><td><strong>只有認得出語法時才出現</strong>。純文字檔沒有這一格。</td></tr>
+            <tr><td>自動換行</td><td><span class="path">自動換行</span></td><td><strong>只有開啟時才出現</strong>（<kbd>Ctrl+L</kbd> 切換）。</td></tr>
+            <tr><td>編碼</td><td><span class="path">UTF-8</span></td><td>下次儲存會用的編碼（見 3.1.2）。</td></tr>
+            <tr><td>換行</td><td><span class="path">LF</span></td><td>下次儲存會用的換行格式（見 3.1.4）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>模式那一格的五種可能</h3>
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:24%">顯示</th><th>代表</th></tr></thead>
+          <tbody>
+            <tr><td><span class="path">插入</span></td><td>打字會把後面的字往右推。預設就是這個。</td></tr>
+            <tr><td><span class="path">覆寫</span></td><td>打字會蓋掉游標所在的字（<kbd>Insert</kbd> 切換）。</td></tr>
+            <tr><td><span class="path">選取</span></td><td>目前有一般選取範圍。<strong>它會蓋掉插入／覆寫的顯示</strong>。</td></tr>
+            <tr><td><span class="path">矩形選取</span></td><td>目前有矩形選取範圍（見 2.2.5）。</td></tr>
+            <tr><td><span class="path">大型檔案唯讀</span></td><td>檔案超過 64 MiB，內容不能改（見 3.2）。</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>十六進位檢視與雙欄比對有自己的狀態列格式，分別在 3.3.2 與 3.4.2 說明。</p>
+      </section>
+
+      <!-- ══════════ 1.3.6 ══════════ -->
+      <section id="s6">
+        <span class="sec-no">1.3.6</span>
+        <h2>最後一列：訊息列與顏色</h2>
+        <p class="dek">顏色就是嚴重度：黃色是回報，白色是要你打字，紅色是要你做決定。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-msg"> 已儲存 報告.txt</div>
+            <div class="s-msg ask">搜尋文字：目標字串<em> </em></div>
+            <div class="s-msg warn"> 文件尚未儲存：S 儲存後離開／Y 放棄變更／N 返回編輯</div>
+          </div>
+        </div>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:16%">顏色</th><th style="width:26%">代表</th><th>例子</th></tr></thead>
+          <tbody>
+            <tr><td><b style="color:#7A5312">黃色</b></td><td>剛剛做了什麼的回報，看過就算</td><td>已儲存、已復原上次動作、找不到相符文字、已取消選取</td></tr>
+            <tr><td><b style="color:#3F485D">白色</b></td><td>正在等你輸入東西</td><td>搜尋文字：、另存新檔：、跳至行／欄：</td></tr>
+            <tr><td><b style="color:#8C2B2B">紅色</b></td><td><strong>正在等你做決定，不回答不會繼續</strong></td><td>文件尚未儲存、頁籤尚未儲存、外部檔案已有更新</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="callout warn">
+          <span class="co-title">看到紅色就先讀完再按鍵</span>
+          <p>爾雅只有三種紅色確認：<strong>離開前的未儲存確認</strong>（S／Y／N）、<strong>關頁籤前的未儲存確認</strong>（S／Y／N）、<strong>外部檔案被改過的存檔確認</strong>（O／R／N）。每一個字母的意思都寫在那一列上，按錯了有可能真的弄丟內容——尤其 <span class="path">Y</span> 一律是「放棄變更」（見 2.1.8）。</p>
+        </div>
+
+        <p>訊息列在你下一次操作之後不一定會清掉，它會停在那裡直到有新訊息。所以看到一句訊息時，先確認那是不是<strong>剛剛</strong>發生的事。</p>
+      </section>
+
+      <!-- ══════════ 1.3.7 ══════════ -->
+      <section id="s7">
+        <span class="sec-no">1.3.7</span>
+        <h2>六種模式，一個 Esc</h2>
+        <p class="dek">編輯以外還有六個全螢幕畫面，回去的鍵都一樣。</p>
+
+        <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:26%">畫面</th><th style="width:18%">怎麼進去</th><th style="width:18%">怎麼出來</th><th>詳見</th></tr></thead>
+          <tbody>
+            <tr><td>檔案對話盒</td><td><kbd>Ctrl+O</kbd> / <kbd>F4</kbd></td><td><kbd>Esc</kbd> 或 <kbd>Q</kbd></td><td>2.1.2</td></tr>
+            <tr><td>雙欄比對</td><td><kbd>F4</kbd> 選完兩個檔</td><td><kbd>Esc</kbd></td><td>3.4</td></tr>
+            <tr><td>十六進位檢視</td><td><kbd>Ctrl+P</kbd></td><td><kbd>Esc</kbd> 或 <kbd>Ctrl+P</kbd></td><td>3.3</td></tr>
+            <tr><td>按鍵說明</td><td><kbd>F1</kbd></td><td><kbd>Esc</kbd> 或 <kbd>F1</kbd></td><td>1.3.8</td></tr>
+            <tr><td>系統設定</td><td><kbd>F2</kbd></td><td><kbd>Esc</kbd></td><td>4.2.1</td></tr>
+            <tr><td>按鍵配置編輯器</td><td>系統設定裡按 <kbd>E</kbd></td><td><kbd>Esc</kbd> 回設定</td><td>4.1.4</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>另外還有兩種不佔滿整個畫面的狀態，只影響最後一列：<strong>單行輸入</strong>（搜尋、取代、跳行、另存新檔…）與<strong>確認</strong>（紅色那些）。兩種都可以用 <kbd>Esc</kbd> 取消。</p>
+
+        <div class="callout ok">
+          <span class="co-title"><kbd>Esc</kbd> 一律是「往回一層」</span>
+          <p>在編輯畫面它取消選取，在輸入列它取消輸入，在任何一個全螢幕畫面它回到上一層。<strong>不確定自己在哪裡、也不想改壞任何東西的時候，按 <kbd>Esc</kbd> 一定是安全的</strong>。唯一的例外是二進位檔案的十六進位檢視——那裡沒有文字編輯可以回去，按 <kbd>Esc</kbd> 只會在訊息列告訴你離開的方法（見 3.3.5）。</p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.8 ══════════ -->
+      <section id="s8">
+        <span class="sec-no">1.3.8</span>
+        <h2>F1 按鍵說明</h2>
+        <p class="dek">爾雅沒有選單，這份清單就是它的功能總表。</p>
+
+        <div class="screen-scroll">
+          <div class="screen">
+            <div class="s-title"> 爾雅 Erya │ 按鍵說明</div>
+            <div class="s-bar"> ↑/↓ 捲動  PageUp/PageDown 翻頁  Home/End 首尾  F1/Esc 返回</div>
+            <div class="s-body"> F1                       開啟或關閉按鍵說明
+ Up / Down / Left / Right 移動游標
+ Shift+Up/Down/Left/Right 延伸或反向縮減選取範圍
+ PageUp / PageDown        向上或向下翻頁
+ Home / End               移到目前行的開頭或結尾
+ Ctrl+Home / Ctrl+End     移到文件開頭或結尾
+ Ctrl+N                   新增空白頁籤
+ Ctrl+O                   在新頁籤開啟檔案</div>
+            <div class="s-status"> 按鍵說明 │ 1-8 / 62 </div>
+            <div class="s-msg"> F1 為固定說明鍵，不受自訂快捷鍵設定影響</div>
+          </div>
+        </div>
+
+        <ul>
+          <li>左欄是按鍵、右欄是說明，可以用 <kbd>↑</kbd><kbd>↓</kbd>、<kbd>PageUp</kbd><kbd>PageDown</kbd>、<kbd>Home</kbd><kbd>End</kbd> 捲動。</li>
+          <li>狀態列顯示<strong>目前看到第幾筆／共幾筆</strong>。</li>
+          <li>前十筆是<strong>固定不可改的按鍵</strong>（方向鍵、<kbd>Enter</kbd>、<kbd>Backspace</kbd>、<kbd>Tab</kbd>、<kbd>Esc</kbd> 這些），之後才是可自訂的動作。</li>
+          <li><strong>清單裡顯示的是你當下真正在用的鍵。</strong>換過按鍵配置的話，這裡會跟著變。</li>
+          <li>預設沒有綁按鍵的動作（常用語、巨集、矩形移動…）在這裡會顯示成空的，代表「有這個功能，但還沒有鍵可以叫它」（見 2.4.8）。</li>
+        </ul>
+
+        <div class="callout tip">
+          <span class="co-title"><kbd>F1</kbd> 永遠是 <kbd>F1</kbd></span>
+          <p>其他每一個動作都能重新綁鍵，只有 <kbd>F1</kbd> 不行。這是刻意留的逃生門：<strong>就算你把配置改到面目全非，還是有一個鍵能叫出完整清單。</strong></p>
+        </div>
+      </section>
+
+      <!-- ══════════ 1.3.9 ══════════ -->
+      <section id="s9">
+        <span class="sec-no">1.3.9</span>
+        <h2>手冊怎麼標快捷鍵</h2>
+        <p class="dek">一個小約定，避免你照著按卻沒反應。</p>
+
+        <ol class="rule-list">
+          <li><b>手冊裡的 <kbd>Ctrl+S</kbd> 一律指「Erya Terminal Safe 這套配置底下的儲存鍵」。</b>這是內建的預設配置，剛裝好沒改過就是它。</li>
+          <li><b>如果你換過配置，請用動作名稱去對照。</b>每個功能在程式裡都有一個固定的動作名稱（例如儲存是 <span class="path">save</span>），4.4 的對照表兩邊都列了。改設定檔時要寫的也是這個名稱（見 4.1.5）。</li>
+          <li><b>畫面永遠是最終答案。</b>第二列提示列與 <kbd>F1</kbd> 說明顯示的是你當下的鍵；兩者跟手冊不一致時，以畫面為準。</li>
+        </ol>
+
+        <div class="callout">
+          <span class="co-title">為什麼預設不是 <kbd>Ctrl+Q</kbd> 這種常見組合</span>
+          <p>因為終端機不是每一個組合鍵都收得到。macOS 保留了 <kbd>Ctrl</kbd>+功能鍵、<kbd>Alt</kbd> 組合常被拿去輸入特殊字元、修飾方向鍵（<kbd>Ctrl+←</kbd> 這類）在很多終端機裡根本傳不進來。預設配置刻意避開了這些，所以它<strong>在最多的終端機上都按得動</strong>，代價是少數進階功能預設沒有綁鍵。原本那套完整綁定改名為 <span class="term">Erya Classic</span> 保留下來，隨時可以換回去（見 4.1.1）。</p>
+        </div>
+      </section>
